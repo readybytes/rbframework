@@ -7,9 +7,3 @@ dir.packages=${dir.root}/packages
 dir.tmp		=${dir.packages}/tmp
 dir.src		=${dir.root}/source
 dir.report	=${dir.root}/data/report
-
-# Output settings
-file.version		= 1.0.0
-file.package		= ${project.shortform}_v${file.version}
-file.compression	= gzip
-file.extension		= .zip
