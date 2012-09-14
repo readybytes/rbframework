@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<project name="XiDP builder" basedir="." default="build" description="Phing build script for XiDP">
+
+	<target name="config" description="Load configuration file">
+		<property file="xidp.prop"  override="true" />
+	</target>
+
+	<target name="build" description="Build Installable XiDP Component " depends="config">
+		<echo msg="Building the PayPlans component...." />
+<!-- Nothing to be done
+		<delete file="${dir.packages}/${file.package}${svn.lastrevision}${file.extension}" />
+		<zip destfile="${dir.packages}/${file.package}${svn.lastrevision}${file.extension}" 
+			basedir="${dir.tmp}" />
+-->
+	</target>
+</project>

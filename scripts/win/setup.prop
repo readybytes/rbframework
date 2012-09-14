@@ -1,0 +1,25 @@
+pkg.version=J3.0
+pkg.location=C:\Dropbox\TEAM\dev\xiec
+
+## joomla installation configuration on windows
+joomla.owner=xidp
+joomla.version=latest
+joomla.rootpath=C:\xampp\htdocs
+joomla.folder=${joomla.owner}${joomla.now}
+joomla.sitename=${joomla.folder}
+joomla.dbuser=${joomla.owner}${joomla.now}
+joomla.dbpassword=password${joomla.now}
+joomla.dbname=${joomla.owner}${joomla.now}
+joomla.dbprefix=j${joomla.random3}_
+joomla.mysqlpath=C:\xampp\mysql\bin\mysql.exe
+joomla.createUserQuery="CREATE USER '${joomla.dbuser}'@'localhost' IDENTIFIED BY '${joomla.dbpassword}';"
+joomla.createDBQuery="CREATE DATABASE ${joomla.dbname};"
+joomla.createAcessQuery="GRANT ALL PRIVILEGES ON ${joomla.dbname}.* TO ${joomla.dbuser};"
+joomla.importDBQuery="source ${joomla.dbdump}"
+joomla.bakpath=.\${joomla.version}
+joomla.dbdump=${joomla.rootpath}\${joomla.folder}\database.sql
+dropbox.package.folder=${pkg.location}
+
+## default admin account should be
+joomla.admin=admin
+joomla.password=ssv445

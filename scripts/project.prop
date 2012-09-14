@@ -1,0 +1,4 @@
+#change project code names
+project.shortform	= RbslFramework
+project.shortform.small = rbsl
+project.codename	= RBSL

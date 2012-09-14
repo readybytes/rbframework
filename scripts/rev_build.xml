@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Copying PayPlans data to SVN" basedir="." default="copy_to_svn">
+
+	<property name="target" value="@local.repository.location@"
+		override="true" />
+	<property name="source" value="${project.basedir}" override="true" />
+	<property name="global.version" value="@global.version@" override="true" />
+	<property name="svn.lastrevision" value="@svn.lastrevision@" override="true" />
+	<property name="A@T" value="@" />
+	
+	<!-- Copy Target -->
+	<target name="copy_to_svn" description="copy target">
+		<phingcall target="copy_xidppkg" />
+	</target>
+
+	<target name="copy_xidppkg">
+
+		<copy file="${source}/language/en-GB/en-GB.com_xidp.ini" 
+			tofile="${target}/source/languages/site/en-GB.com_xidp.ini" />
+
+		<copy file="${source}/administrator/language/en-GB/en-GB.com_xidp.ini"
+			tofile="${target}/source/languages/admin/en-GB.com_xidp.ini" />
+		
+		<copy file="${source}/administrator/language/en-GB/en-GB.com_payplans.sys.ini"
+			tofile="${target}/source/languages/admin/en-GB.com_payplans.sys.ini" />
+
+		<copy todir="${target}/source/admin">
+			<fileset dir="${source}/administrator/components/com_xidp">
+				<include name="**/*.*" />
+			</fileset>
+		</copy>
+
+		<move file="${target}/source/admin/xidp.xml" tofile="${target}/source/xidp.xml" />
+
+		<copy todir="${target}/source/site">
+			<fileset dir="${source}/components/com_xidp">
+				<include name="**/*.*" />
+				<exclude  name="**/*-min.js" />
+			</fileset>			
+		</copy>
+		
+		
+		<copy todir="${target}/test">
+			<fileset dir="${source}/test/">
+				<include name="**/*.*" />
+				<exclude name="**/screenshots/*_log.png" />
+			</fileset>
+		</copy>	
+		
+		<copy file="${source}/build.xml"  tofile="${target}/scripts/rev_build.xml" />
+		<copy file="${source}/delete.xml" tofile="${target}/scripts/rev_delete.xml" />
+	</target>
+	
+	
+	<!-- Delete testing screen shots before running phing -->
+	<fileset dir="./test/test/" id="deleteScreenshots">
+		<include name="sel/com/site/order/SCSOScreenshotTest/screenshots/*.png" />
+	</fileset>
+	<target name="screenshots">
+		<delete>
+			<fileset refid="deleteScreenshots" />
+		</delete>
+	</target>
+
+	<target name="versionclean">
+		<php function="str_replace" returnProperty="versionString1">
+			    <param value="."/>
+		      	<param value="\."/>
+		      	<param value="${global.version}"/>
+		</php>
+		<php function="str_replace" returnProperty="versionString2">
+					    <param value="."/>
+				      	<param value="\."/>
+				      	<param value="${svn.lastrevision}"/>
+		</php>
+		
+		<reflexive>
+			<fileset dir="${target}/source">
+				<include name="**/*.xml" />
+				<include name="**/*.php" />
+				<include name="**/*.js" />
+				<include name="**/*.css" />
+				<include name="**/*.ini" />
+				<include name="**/*.html" />
+				<include name="**/*.sql" />
+			</fileset>
+		 <filterchain>
+		 	    <replaceregexp>
+		 	       <regexp pattern="${versionString1}" replace="${A@T}global.version${A@T}"/>
+		 	       <regexp pattern="${versionString2}" replace="${A@T}svn.lastrevision${A@T}"/>
+		 	    	
+		 	    </replaceregexp>
+		</filterchain>
+		</reflexive>
+	</target>
+</project>
+

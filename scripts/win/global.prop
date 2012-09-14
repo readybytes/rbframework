@@ -1,0 +1,27 @@
+### Version 1.0
+### We store globally definition here
+
+
+# The root folder location
+dir.root	=${project.basedir}\..
+dir.packages	=${dir.root}\packages
+dir.tmp		=${dir.packages}\tmp
+dir.src		=${dir.root}\source
+dir.report	=${dir.root}\data\report
+
+# where to pick source code
+code.source	=wc
+
+#change project code names
+project.shortform	= DATAPIPES
+project.shortform.small = xidp
+project.codename	= XiDP
+
+
+# Output settings
+file.version		= 1.0.0
+file.package		= ${project.shortform}_ver${file.version}
+file.compression	= gzip
+file.extension		= .zip
+
+
