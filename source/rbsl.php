@@ -15,10 +15,7 @@ $fileName 	= dirname(__FILE__).DIRECTORY_SEPARATOR.'rbsl'.DIRECTORY_SEPARATOR.'i
 
 //do not load RB framework in backend installation screen
 $option	= JRequest::getVar('option');
-if($option == 'com_installer'){
-	return true;
-}else{
-
+if($option !== 'com_installer'){
 	//Load framework
 	require_once $fileName;
 
