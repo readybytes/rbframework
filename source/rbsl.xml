@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="2.5" type="plugin" group="system" method="upgrade">
+    <name>RBSL Framework!</name>
+    <version>@build.version@-@build.number@</version>
+	<creationDate>July 2012</creationDate>
+	<copyright>Copyright (C) 2009 - 2012 Ready Bytes Softwrae Labs. All rights reserved.</copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	<authorEmail>team@readybytes.in</authorEmail>
+	<authorUrl>www.readybytes.in</authorUrl>
+    <description>RBSL Framework: Should be Enabled for JoomlaXi extensions</description>
+	<files>
+		<filename plugin="rbsl">rbsl.php</filename>
+		<filename>index.html</filename>
+		<folder>rbsl</folder>
+	</files>
+<!-- Enable it when required - - - - - - - - -
+	<languages>
+		<language tag="en-GB">en-GB.plg_system_rbsl.ini</language>
+		<language tag="en-GB">en-GB.plg_system_rbsl.sys.ini</language>
+	</languages>
+-->
+	<config>
+	</config>
+</extension>
