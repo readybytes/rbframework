@@ -25,7 +25,7 @@ if($option !== 'com_installer'){
 	 * @package	Payplans
 	 * @subpackage	Plugin
 	 */
-	class  plgSystemRbsl extends RBPlugin
+	class  plgSystemRbsl extends JPlugin
 	{
 
 
