@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="Deleting Project" basedir="@joomla.rootpath@/@joomla.folder@" default="delete">
+<project name="Deleting Project" basedir="/var/www/rbsl7797" default="delete">
 <property name="source" value="${project.basedir}" override="true" />
 <target name="delete">
 	<if>
 		<equals arg1="host.fstype" arg2="UNIX" />
 		<then>
-			<exec command='sudo mysql -uroot -ppassword --execute="DROP DATABASE IF EXISTS @joomla.dbname@;"' passthru="true" />
-			<exec command='sudo mysql -uroot -ppassword --execute="DROP USER @joomla.dbuser@;"' passthru="true" />
-			<exec command="sudo chmod -R 777 ." dir="@joomla.rootpath@/@joomla.folder@" />
+			<exec command='sudo mysql -uroot -ppassword --execute="DROP DATABASE IF EXISTS rbsl7797;"' passthru="true" />
+			<exec command='sudo mysql -uroot -ppassword --execute="DROP USER rbsl7797;"' passthru="true" />
+			<exec command="sudo chmod -R 777 ." dir="/var/www/rbsl7797" />
 		</then>
 		<else>
-			<exec command='C:\xampp\mysql\bin\mysql -uroot -ppassword --execute="DROP DATABASE IF EXISTS @joomla.dbname@;"' passthru="true" />
-			<exec command='C:\xampp\mysql\bin\mysql -uroot -ppassword --execute="DROP USER @joomla.dbuser@;"' passthru="true" />
+			<exec command='C:\xampp\mysql\bin\mysql -uroot -ppassword --execute="DROP DATABASE IF EXISTS rbsl7797;"' passthru="true" />
+			<exec command='C:\xampp\mysql\bin\mysql -uroot -ppassword --execute="DROP USER rbsl7797;"' passthru="true" />
 		</else>
 	</if>
 			<delete dir="${source}" includeemptydirs="true" failonerror="true" />

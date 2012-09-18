@@ -48,7 +48,18 @@
 			    <include name="delete.xml" />
 			</fileset>
 			<filterchain>
-			    <expandproperties />
+			    <replacetokens>
+				    <token key="local.repository.location" 	value="${project.basedir}/../"/>
+				    <token key="joomla.sitename" 		value="${joomla.sitename}/"/>
+				    <token key="joomla.dbuser"   		value="${joomla.dbuser}"/>
+				    <token key="joomla.dbpassword"   	value="${joomla.dbpassword}"/>
+				    <token key="joomla.dbname"   		value="${joomla.dbname}"/>
+				    <token key="joomla.dbprefix"   		value="${joomla.dbprefix}"/>
+				    <token key="joomla.rootpath"   		value="${joomla.rootpath}"/>
+				    <token key="joomla.folder"   		value="${joomla.folder}"/>
+				    <token key="build.number" 			value="${build.number}" />
+				    <token key="build.version"   		value="${build.version}" />
+				</replacetokens>
  			</filterchain>
 		</reflexive>
 	</target>
@@ -67,7 +78,21 @@
 			    <include name="system/jdefines.php" />
 			</fileset>
 			<filterchain>
-				<expandproperties />
+				<replacetokens>
+					<token key="joomla.folder" 		value="${joomla.folder}"/>
+				    <token key="dropbox.package.folder"  	value="${pkg.location}"/>
+				    <token key="pkg.location"            	value="${pkg.location}"/>
+				    <token key="local.repository.location" 	value="${project.basedir}/../"/>
+				    <token key="joomla.sitename" 		value="${joomla.sitename}/"/>
+				    <token key="joomla.dbuser"   		value="${joomla.dbuser}"/>
+				    <token key="joomla.dbpassword"   	value="${joomla.dbpassword}"/>
+				    <token key="joomla.dbname"   		value="${joomla.dbname}"/>
+				    <token key="joomla.dbprefix"   		value="${joomla.dbprefix}"/>
+				    <token key="joomla.rootpath"   		value="${joomla.rootpath}"/>
+				    <token key="joomla.mysqlpath"   	value="${joomla.mysqlpath}"/>
+					<token key="build.number" 			value="${build.number}" />
+				    <token key="build.version"   		value="${build.version}" />
+				</replacetokens>
 			</filterchain>
 		</reflexive>
 	</target>

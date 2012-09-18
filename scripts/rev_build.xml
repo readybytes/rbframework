@@ -1,44 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Copying PayPlans data to SVN" basedir="." default="copy_to_svn">
 
-	<property name="target" value="@local.repository.location@"
-		override="true" />
-	<property name="source" value="${project.basedir}" override="true" />
-	<property name="global.version" value="@global.version@" override="true" />
-	<property name="svn.lastrevision" value="@svn.lastrevision@" override="true" />
-	<property name="A@T" value="@" />
+	<property name="target" 		value="/vobs/rbsl/scripts/../" 	override="true" />
+	<property name="source" 		value="${project.basedir}" 		override="true" />
+	<property name="build.version" 	value="0.9.0" 					override="true" />
+	<property name="build.number" 	value="0.9-6-g0c56a2c" 			override="true" />
+	<property name="A@T" 			value="@" />
 	
 	<!-- Copy Target -->
 	<target name="copy_to_svn" description="copy target">
-		<phingcall target="copy_xidppkg" />
+		<phingcall target="copy_rbslfw" />
 	</target>
 
-	<target name="copy_xidppkg">
+	<target name="copy_rbslfw">
 
-		<copy file="${source}/language/en-GB/en-GB.com_xidp.ini" 
-			tofile="${target}/source/languages/site/en-GB.com_xidp.ini" />
-
-		<copy file="${source}/administrator/language/en-GB/en-GB.com_xidp.ini"
-			tofile="${target}/source/languages/admin/en-GB.com_xidp.ini" />
+		<copy file="${source}/administrator/language/en-GB/en-GB.plg_system_rbsl.ini" 
+			tofile="${target}/source/languages/en-GB.plg_system_rbsl.ini" />
 		
-		<copy file="${source}/administrator/language/en-GB/en-GB.com_payplans.sys.ini"
-			tofile="${target}/source/languages/admin/en-GB.com_payplans.sys.ini" />
+		<copy file="${source}/administrator/language/en-GB/en-GB.plg_system_rbsl.sys.ini"
+			tofile="${target}/source/languages/en-GB.plg_system_rbsl.sys.ini" />
 
-		<copy todir="${target}/source/admin">
-			<fileset dir="${source}/administrator/components/com_xidp">
+		<copy todir="${target}/source/">
+			<fileset dir="${source}/plugins/system/rbsl">
 				<include name="**/*.*" />
+				<depend targetdir="${target}/source/"/>
 			</fileset>
 		</copy>
-
-		<move file="${target}/source/admin/xidp.xml" tofile="${target}/source/xidp.xml" />
-
-		<copy todir="${target}/source/site">
-			<fileset dir="${source}/components/com_xidp">
-				<include name="**/*.*" />
-				<exclude  name="**/*-min.js" />
-			</fileset>			
-		</copy>
-		
 		
 		<copy todir="${target}/test">
 			<fileset dir="${source}/test/">
@@ -66,12 +53,12 @@
 		<php function="str_replace" returnProperty="versionString1">
 			    <param value="."/>
 		      	<param value="\."/>
-		      	<param value="${global.version}"/>
+		      	<param value="${build.version}"/>
 		</php>
 		<php function="str_replace" returnProperty="versionString2">
 					    <param value="."/>
 				      	<param value="\."/>
-				      	<param value="${svn.lastrevision}"/>
+				      	<param value="${build.number}"/>
 		</php>
 		
 		<reflexive>
@@ -86,12 +73,11 @@
 			</fileset>
 		 <filterchain>
 		 	    <replaceregexp>
-		 	       <regexp pattern="${versionString1}" replace="${A@T}global.version${A@T}"/>
-		 	       <regexp pattern="${versionString2}" replace="${A@T}svn.lastrevision${A@T}"/>
-		 	    	
+		 	       <regexp pattern="${versionString1}" replace="${A@T}build.version${A@T}"/>
+		 	       <regexp pattern="${versionString2}" replace="${A@T}build.number${A@T}"/>
 		 	    </replaceregexp>
 		</filterchain>
 		</reflexive>
 	</target>
+	
 </project>
-

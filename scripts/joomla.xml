@@ -23,9 +23,17 @@
 			    <include name="database.sql" />
                 <include name="test/system/jdefines.php" />
 			</fileset>
-			<filterchain>
-			    <expandproperties />
- 			</filterchain>
+			 <filterchain>
+				<replacetokens>
+				    <token key="joomla.sitename" 		value="${joomla.sitename}/"/>
+				    <token key="joomla.dbuser"   		value="${joomla.dbuser}"/>
+				    <token key="joomla.dbpassword"   	value="${joomla.dbpassword}"/>
+				    <token key="joomla.dbname"   		value="${joomla.dbname}"/>
+				    <token key="joomla.dbprefix"   		value="${joomla.dbprefix}"/>
+				    <token key="joomla.rootpath"   		value="${joomla.rootpath}"/>
+				    <token key="joomla.folder"   		value="${joomla.folder}"/>
+				</replacetokens>
+			</filterchain>
 		</reflexive>
 		<echo msg="Joomla files copied .." />
 	</target>
@@ -42,13 +50,14 @@
 			</fileset>
 		</untar>
 
+<!--
 		<copy todir="${joomla.rootpath}/${joomla.folder}" verbose="false" >
 		  <fileset dir="${joomla.rootpath}/${joomla.folder}/Joomla/">
 			<include name="**" />
 		  </fileset>
 		</copy>
 		<delete dir="${joomla.rootpath}/${joomla.folder}/Joomla/" includeemptydirs="true" verbose="false" failonerror="true" />
-
+-->
 
 		<echo msg="Joomla files copied .." />
 		
