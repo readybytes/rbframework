@@ -21,26 +21,17 @@
 			<fileset dir="${joomla.rootpath}/${joomla.folder}">
 			    <include name="configuration.php" />
 			    <include name="database.sql" />
-   			    <include name="acctexp.dump.sql" />
-   			    <include name="ambrasubs.dump.sql" />
-                            <include name="test/system/jdefines.php" />
+                <include name="test/system/jdefines.php" />
 			</fileset>
-			 <filterchain>
-				<replacetokens>
-				    <token key="joomla.sitename" 		value="${joomla.sitename}/"/>
-				    <token key="joomla.dbuser"   		value="${joomla.dbuser}"/>
-				    <token key="joomla.dbpassword"   		value="${joomla.dbpassword}"/>
-				    <token key="joomla.dbname"   		value="${joomla.dbname}"/>
-				    <token key="joomla.dbprefix"   		value="${joomla.dbprefix}"/>
-				    <token key="joomla.rootpath"   		value="${joomla.rootpath}"/>
-				    <token key="joomla.folder"   		value="${joomla.folder}"/>
-				</replacetokens>
-			</filterchain>
+			<filterchain>
+			    <expandproperties />
+ 			</filterchain>
 		</reflexive>
 		<echo msg="Joomla files copied .." />
 	</target>
 
 	<target name="install_joomla" depends="jconfig">
+
 		<echo msg="Installing Joomla Files..." />
 		<!-- Copy Joomla Folder to ROOT // FOLDERNAME  -->
 		<mkdir dir="${joomla.rootpath}/${joomla.folder}" />
@@ -51,18 +42,18 @@
 			</fileset>
 		</untar>
 
-
-		<copy todir="${joomla.rootpath}/${joomla.folder}" >
+		<copy todir="${joomla.rootpath}/${joomla.folder}" verbose="false" >
 		  <fileset dir="${joomla.rootpath}/${joomla.folder}/Joomla/">
 			<include name="**" />
 		  </fileset>
 		</copy>
-		<delete dir="${joomla.rootpath}/${joomla.folder}/Joomla/" includeemptydirs="true" verbose="true" failonerror="true" />
+		<delete dir="${joomla.rootpath}/${joomla.folder}/Joomla/" includeemptydirs="true" verbose="false" failonerror="true" />
 
 
 		<echo msg="Joomla files copied .." />
 		
 		<!--  for linux only change owner of files to www-data -->
+		<exec command="sudo chmod -R 777 ." dir="${joomla.rootpath}/${joomla.folder}" />
 		<exec command="sudo chown -R www-data ." dir="${joomla.rootpath}/${joomla.folder}" />
 
 	</target>

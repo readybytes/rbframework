@@ -1,37 +1,25 @@
 <?xml version="1.0" ?>
 <project name="Package Builder" basedir="." default="build" description="Phing build script for package.">
 
-	<target name="loadPropFile" description="Load configuration file">
-		<php expression="(PHP_OS == 'WINNT') ? 'win/' :'unix/'" returnProperty="IF_OS"/>
-		<property file="${arg_propfile}"  			override="false" />
-		<property file="${IF_OS}${arg_propfile}"  	override="true" />
-	</target>
+	<target name="get_build_number">
+		<exec command="git describe" dir="${dir.root}" outputProperty="build.number"  />
+		<property name='build.number' value="${build.number}"  override="true" />
 
-	<target name="get_build_number" depends="config">
-		<exec command="git describe" dir="${dir.root}" outputProperty="build.number" />
-		<echo msg="Build number is []${build.number}] as per git describe" />
 	</target>
 
 	<target name="config" description="Load configuration file">
 	    <php expression="(PHP_OS == 'WINNT') ? 'win/' :'unix/'" returnProperty="IF_OS"/>
-		
-		<phingcall target="loadPropFile">
-				<property name="arg_propfile" value="project.prop" />
-			</phingcall>
 
-		<phingcall target="loadPropFile">
-				<property name="arg_propfile" value="global.prop" />
-			</phingcall>
-
-		<phingcall target="loadPropFile">
-				<property name="arg_propfile" value="build.prop" />
-			</phingcall>
-
+		<property file="${IF_OS}global.prop" override="true" />
 		<phingcall target="get_build_number" />
+
+		<property file="${IF_OS}project.prop" override="true" />
+		<property file="${IF_OS}build.prop" override="true" />
 	</target>
 
 	
 	<target name="build" description="build installable package only" depends="config">
+		<exec command="git describe" dir="${dir.root}" outputProperty="build.number"  />
 
 		<delete dir="${dir.packages}" includeemptydirs="true" />
 		<delete dir="${dir.tmp}" includeemptydirs="true" />
@@ -42,7 +30,8 @@
 		
 		<phing phingfile="${project.shortform.small}.xml" inheritAll="true" target="build" />
 
-		<zip destfile="${dir.packages}/${project.shortform}-${file.version}.${svn.lastrevision}.zip" 
+
+		<zip destfile="${dir.packages}/${file.package}.${build.number}.${file.extension}" 
 			basedir="${dir.tmp}" />
 	</target>
 
@@ -63,7 +52,7 @@
 			 <filterchain>
 				<replacetokens>
 				    <token key="build.version" 	value="${build.version}" />
-				    <token key="build.number"   value="${build.version}" />
+				    <token key="build.number"   value="${build.number}" />
 				</replacetokens>
 			</filterchain>
 		</reflexive>		
