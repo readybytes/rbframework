@@ -12,9 +12,12 @@ if(defined('XI_FRAMEWORK_LOADED')){
 	return;
 }
 
+if(!defined('DS')){
+	define('DS',DIRECTORY_SEPARATOR);
+}
+
 //include basic required files
 jimport('joomla.utilities.string');
-jimport('joomla.utilities.date');
 
 //load basic defines
 require_once dirname(__FILE__).DS.'defines.php'	;

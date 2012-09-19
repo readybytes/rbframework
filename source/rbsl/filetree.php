@@ -58,7 +58,7 @@ class XiFileTree
 		
 		if(self::$tree_class_not_loaded)
 		{
-			$tmpPath = JFactory::getConfig()->getValue('config.tmp_path');
+			$tmpPath = JFactory::getConfig()->get('config.tmp_path');
 			$file = $tmpPath.DS.'_filetree.php';
 		    if(JFile::exists($file) == false){
 		    	$file = dirname(__FILE__).DS.'_filetree.php'; 

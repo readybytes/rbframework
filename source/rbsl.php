@@ -11,7 +11,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 jimport('joomla.filesystem.file');
 
 // Load particular autoloading required
-$fileName 	= dirname(__FILE__).DIRECTORY_SEPARATOR.'rbsl'.DIRECTORY_SEPARATOR.'include.php';
+$fileName 	= dirname(__FILE__).DIRECTORY_SEPARATOR.'rbsl'.DIRECTORY_SEPARATOR.'includes.php';
 
 //do not load RB framework in backend installation screen
 $option	= JRequest::getVar('option');
