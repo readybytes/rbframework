@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -14,7 +14,7 @@ if(defined('_JEXEC')===false) die();
  * @param $tableName : table name to test (with or without prefix)
  * @return boolean
  */
-class XiHelperTable
+class Rb_HelperTable
 {
 	
 	
@@ -24,7 +24,7 @@ class XiHelperTable
 		$db		 	   = JFactory::getDBO();
 
 		//clean cache if required
-		if(XiFactory::cleanStaticCache()){
+		if(Rb_Factory::cleanStaticCache()){
 			$tables = null;
 		}
 

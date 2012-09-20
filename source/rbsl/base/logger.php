@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -8,7 +8,7 @@
 */
 if(defined('_JEXEC')===false) die();
 
-class XiLogger 
+class Rb_Logger 
 {
 	const LEVEL_DEBUG   = 0;
 	const LEVEL_INFO    = 1;
@@ -21,7 +21,7 @@ class XiLogger
 	
 	static $_levels  = null;
 		
-	public function __construct($level=XiLogger::LEVEL_INFO) {
+	public function __construct($level=Rb_Logger::LEVEL_INFO) {
 		// init vars
 		$this->_level = $level;
 		
@@ -33,8 +33,8 @@ class XiLogger
 			$log_id = $this->_log($level, $message, $object_id, $class, $content);
 			if($level == self::LEVEL_ERROR )
 			{
-				$mailer  = XiFactory::getMailer();
-				$subject = XiText::_('COM_PAYPLANS_ERROR_LOG_SUBJECT');
+				$mailer  = Rb_Factory::getMailer();
+				$subject = Rb_Text::_('COM_PAYPLANS_ERROR_LOG_SUBJECT');
 				$mailer->setSubject($subject);
 				// if base64 decoded
 				$decoded_content = base64_decode($content,true);
@@ -44,10 +44,10 @@ class XiLogger
 					$content = unserialize(base64_decode(end($log)));
 				}
 				$args   = array('message'=>$message,'object_id'=>$object_id,'class'=>$class,'content'=>$content);
-				$body   = XiHelperTemplate::partial('default_partial_email_errorlog',$args);
+				$body   = Rb_HelperTemplate::partial('default_partial_email_errorlog',$args);
 				$mailer->setBody($body);
 				$mailer->IsHTML(1);
-				$admins = XiHelperJoomla::getUsersToSendSystemEmail();		
+				$admins = Rb_HelperJoomla::getUsersToSendSystemEmail();		
 
 				// IMP: when there are no users who can receive system emails then return log_id
 				if(empty($admins)){
@@ -83,22 +83,22 @@ class XiLogger
 	static public function getLevels() {
 		
 		if(self::$_levels === null){
-			self::$_levels[self::LEVEL_INFO] 		= XiText::_('COM_PAYPLANS_LOGGER_LEVEL_INFO');
-			self::$_levels[self::LEVEL_NOTICE] 	= XiText::_('COM_PAYPLANS_LOGGER_LEVEL_NOTICE');
-			self::$_levels[self::LEVEL_WARNING] 	= XiText::_('COM_PAYPLANS_LOGGER_LEVEL_WARNING');
-			self::$_levels[self::LEVEL_ERROR] 		= XiText::_('COM_PAYPLANS_LOGGER_LEVEL_ERROR');
-			self::$_levels[self::LEVEL_DEBUG] 		= XiText::_('COM_PAYPLANS_LOGGER_LEVEL_DEBUG');
+			self::$_levels[self::LEVEL_INFO] 		= Rb_Text::_('COM_PAYPLANS_LOGGER_LEVEL_INFO');
+			self::$_levels[self::LEVEL_NOTICE] 	= Rb_Text::_('COM_PAYPLANS_LOGGER_LEVEL_NOTICE');
+			self::$_levels[self::LEVEL_WARNING] 	= Rb_Text::_('COM_PAYPLANS_LOGGER_LEVEL_WARNING');
+			self::$_levels[self::LEVEL_ERROR] 		= Rb_Text::_('COM_PAYPLANS_LOGGER_LEVEL_ERROR');
+			self::$_levels[self::LEVEL_DEBUG] 		= Rb_Text::_('COM_PAYPLANS_LOGGER_LEVEL_DEBUG');
 		}
 		
 		return self::$_levels;
 	}
 	
 	public function getLevelText($level) {
-		$levels[self::LEVEL_INFO] 		= XiText::_('COM_PAYPLANS_LOGGER_LEVEL_INFO');
-		$levels[self::LEVEL_NOTICE] 	= XiText::_('COM_PAYPLANS_LOGGER_LEVEL_NOTICE');
-		$levels[self::LEVEL_WARNING] 	= XiText::_('COM_PAYPLANS_LOGGER_LEVEL_WARNING');
-		$levels[self::LEVEL_ERROR] 		= XiText::_('COM_PAYPLANS_LOGGER_LEVEL_ERROR');
-		$levels[self::LEVEL_DEBUG] 		= XiText::_('COM_PAYPLANS_LOGGER_LEVEL_DEBUG');
+		$levels[self::LEVEL_INFO] 		= Rb_Text::_('COM_PAYPLANS_LOGGER_LEVEL_INFO');
+		$levels[self::LEVEL_NOTICE] 	= Rb_Text::_('COM_PAYPLANS_LOGGER_LEVEL_NOTICE');
+		$levels[self::LEVEL_WARNING] 	= Rb_Text::_('COM_PAYPLANS_LOGGER_LEVEL_WARNING');
+		$levels[self::LEVEL_ERROR] 		= Rb_Text::_('COM_PAYPLANS_LOGGER_LEVEL_ERROR');
+		$levels[self::LEVEL_DEBUG] 		= Rb_Text::_('COM_PAYPLANS_LOGGER_LEVEL_DEBUG');
 
 		return isset($levels[$level]) ? $levels[$level] : XIText::_('COM_PAYPLANS_LOGGER_UNKNOWN_LEVEL');
 	}
@@ -109,16 +109,16 @@ class XiLogger
 		$data['log_id'] 	= 0 ;
 		
 		//get userId from session in case of autoRegistration
-		$data['user_id'] 	= XiFactory::getUser()->get('id') != null ? XiFactory::getUser()->get('id') : XiFactory::getSession()->get('REGISTRATION_USER_ID');
+		$data['user_id'] 	= Rb_Factory::getUser()->get('id') != null ? Rb_Factory::getUser()->get('id') : Rb_Factory::getSession()->get('REGISTRATION_USER_ID');
 		$data['object_id'] 	= $object_id; 
 		$data['class'] 		= $class ;
 		$data['user_ip'] 	= isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] 
-								: ( isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : XiText::_('COM_PAYPLANS_LOGGER_REMOTE_IP_NOT_DEFINED')) ;
+								: ( isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : Rb_Text::_('COM_PAYPLANS_LOGGER_REMOTE_IP_NOT_DEFINED')) ;
 		$data['message']    = $message ;
 		$data['content'] 	= $content ;
 		$data['level'] 		= $level ;
 
-		$model = XiFactory::getInstance('log','model');
+		$model = Rb_Factory::getInstance('log','model');
 		return $model->save($data, 0);
 	}
 }

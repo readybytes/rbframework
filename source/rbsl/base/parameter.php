@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -9,7 +9,7 @@
 if(defined('_JEXEC')===false) die();
 
 jimport('joomla.html.parameter');
-class XiParameter extends JParameter
+class Rb_Parameter extends JParameter
 {
 	// overrride it to addElementPath
 	function __construct($data='', $path = '')
@@ -32,7 +32,7 @@ class XiParameter extends JParameter
 		}
 
 		$parameter = $this;
-		return XiHelperTemplate::partial('default_partial_parameters',compact('parameter', 'name', 'group'));
+		return Rb_HelperTemplate::partial('default_partial_parameters',compact('parameter', 'name', 'group'));
 	}
 	
 	function renderToArray($name = 'params', $group = '_default')
@@ -45,8 +45,8 @@ class XiParameter extends JParameter
 		$params = $this->getParams($name, $group);
 		foreach($params as $result) {
 			//$result = $this->getParam($param, $name);
-			$result[2] = XiText::_($result[2]);
-			$result[3] = XiText::_($result[3]);
+			$result[2] = Rb_Text::_($result[2]);
+			$result[3] = Rb_Text::_($result[3]);
 			$result['name'] = $name;
 			$result['group'] = $group;
 			
@@ -63,7 +63,7 @@ class XiParameter extends JParameter
 		}
 		
 		//for 1.6+ we will use our own writer
-		return $this->loadString($data, 'XiINI', $options);
+		return $this->loadString($data, 'Rb_INI', $options);
 	}
 	
 	//need to use it as binding forwards to loadJSON, rathern then INI

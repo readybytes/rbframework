@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -10,11 +10,11 @@ if(defined('_JEXEC')===false) die();
 
 jimport( 'joomla.access.rules' );
 
-class XiAbstractJ16HelperJoomla extends XiAbstractHelperJoomlaBase
+class Rb_AbstractJ16HelperJoomla extends Rb_AbstractHelperJoomlaBase
 {
 	public static function changePluginState($element, $folder = 'system', $state=parent::ENABLE)
 	{
-		$db		= XiFactory::getDBO();
+		$db		= Rb_Factory::getDBO();
 		$query	= 'UPDATE '. $db->nameQuote( '#__extensions' )
 				. ' SET   '. $db->nameQuote('enabled').'='.$db->Quote($newState)
 				. ' WHERE '. $db->nameQuote('element').'='.$db->Quote($name)
@@ -27,7 +27,7 @@ class XiAbstractJ16HelperJoomla extends XiAbstractHelperJoomlaBase
 	
 	public static function getPluginPath($plugin)
 	{
-		return  JPATH_PLUGINS.DS.$plugin->get('_type').DS.$plugin->get('_name').DS.$plugin->get('_name');
+		return  JPATH_PLUGINS.'/'.$plugin->get('_type').'/'.$plugin->get('_name').'/'.$plugin->get('_name');
 	}
 	
 	public static function isMenuExist($link, $cid, $published=null, $alias=null)
@@ -39,7 +39,7 @@ class XiAbstractJ16HelperJoomla extends XiAbstractHelperJoomlaBase
 					  . ( ($alias !==null) ? " AND `alias`= '$alias' " : " ") 
 					  ;
 
-		$db = XiFactory::getDBO();
+		$db = Rb_Factory::getDBO();
 		$db->setQuery($strQuery);
 		return $db->loadResult() ? true : false;
 	}
@@ -54,7 +54,7 @@ class XiAbstractJ16HelperJoomla extends XiAbstractHelperJoomlaBase
 		$defaultMenuType	= JApplication::getInstance('site')->getMenu()->getDefault('workaround_joomla_bug')->menutype;
 	
 		//find order
-		$db = XiFactory::getDBO();
+		$db = Rb_Factory::getDBO();
 		$query 	= 'SELECT ' . $db->nameQuote( 'ordering' ) . ' '
 				. 'FROM ' . $db->nameQuote( '#__menu' ) . ' '
 				. 'ORDER BY ' . $db->nameQuote( 'ordering' ) . ' DESC LIMIT 1';
@@ -102,7 +102,7 @@ class XiAbstractJ16HelperJoomla extends XiAbstractHelperJoomlaBase
 	
 	public static function isAdmin($userId)
 	{
-		if(!$userId || !XiFactory::getUser($userId)->authorise('core.admin')){
+		if(!$userId || !Rb_Factory::getUser($userId)->authorise('core.admin')){
 			return false;
 		}
 		
@@ -181,14 +181,14 @@ class XiAbstractJ16HelperJoomla extends XiAbstractHelperJoomlaBase
 		$script[] = '	}';
 
 		// Add the script to the document head.
-		XiFactory::getDocument()->addScriptDeclaration(implode("\n", $script));
+		Rb_Factory::getDocument()->addScriptDeclaration(implode("\n", $script));
 
 
 		// Setup variables for display.
 		$html	= array();
 		$link	= 'index.php?option=com_content&amp;view=articles&amp;layout=modal&amp;tmpl=component&amp;function=jSelectArticle_'.$control_name.'_'.$name;
 
-		$db	= XiFactory::getDBO();
+		$db	= Rb_Factory::getDBO();
 		$db->setQuery(
 			'SELECT title' .
 			' FROM #__content' .
@@ -197,11 +197,11 @@ class XiAbstractJ16HelperJoomla extends XiAbstractHelperJoomlaBase
 		$title = $db->loadResult();
 
 		if ($error = $db->getErrorMsg()) {
-			XiError::assert(false, $error, XiError::ERROR);
+			Rb_Error::assert(false, $error, Rb_Error::ERROR);
 		}
 
 		if (empty($title)) {
-			$title = XiText::_('COM_PAYPLANS_APP_CONTENT_JOOMLA_SELECT_ARTICLE');
+			$title = Rb_Text::_('COM_PAYPLANS_APP_CONTENT_JOOMLA_SELECT_ARTICLE');
 		}
 		$title = htmlspecialchars($title, ENT_QUOTES, 'UTF-8');
 
@@ -213,7 +213,7 @@ class XiAbstractJ16HelperJoomla extends XiAbstractHelperJoomlaBase
 		// The user select button.
 		$html[] = '<div class="button2-left">';
 		$html[] = '  <div class="blank">';
-		$html[] = '	<a class="modal" title="'.XiText::_('COM_PAYPLANS_APP_CONTENT_JOOMLA_SELECT_ARTICLE').'"  href="'.$link.'" rel="{handler: \'iframe\', size: {x: 800, y: 450}}">'.JText::_('COM_PAYPLANS_APP_CONTENT_JOOMLA_SELECT_ARTICLE_BUTTON').'</a>';
+		$html[] = '	<a class="modal" title="'.Rb_Text::_('COM_PAYPLANS_APP_CONTENT_JOOMLA_SELECT_ARTICLE').'"  href="'.$link.'" rel="{handler: \'iframe\', size: {x: 800, y: 450}}">'.JText::_('COM_PAYPLANS_APP_CONTENT_JOOMLA_SELECT_ARTICLE_BUTTON').'</a>';
 		$html[] = '  </div>';
 		$html[] = '</div>';
 
@@ -235,8 +235,8 @@ class XiAbstractJ16HelperJoomla extends XiAbstractHelperJoomlaBase
 	public static function getUserTimeZone($config = null, $user = null)
 	{
 		//$user and $config is for testing purpose only
-		$config = ($config==null) ? XiFactory::getConfig() 	: $config;
-		$my		= ($user==null)   ? XiFactory::getUser() 	: $user;
+		$config = ($config==null) ? Rb_Factory::getConfig() 	: $config;
+		$my		= ($user==null)   ? Rb_Factory::getUser() 	: $user;
 		
 		//default offset
 		$timezone = $config->offset;
@@ -257,7 +257,7 @@ class XiAbstractJ16HelperJoomla extends XiAbstractHelperJoomlaBase
 	  $usergroups = JUserHelper::getUserGroups($userid);
 	  if(PAYPLANS_JVERSION_25)
 	  {
-	  	$db      = XiFactory::getDBO();
+	  	$db      = Rb_Factory::getDBO();
 	  	$groups  = implode(',', $usergroups);
 		$db->setQuery( 'SELECT `title`'
 				. ' FROM #__usergroups'
@@ -271,7 +271,7 @@ class XiAbstractJ16HelperJoomla extends XiAbstractHelperJoomlaBase
 
 	public static function getUserEditLink($user)
 	{
-		return XiRoute::_("index.php?option=com_users&task=user.edit&id=".$user->getId(), false);
+		return Rb_Route::_("index.php?option=com_users&task=user.edit&id=".$user->getId(), false);
 	}
 	
 	// in j1.7+ doesn't have sections
@@ -286,7 +286,7 @@ class XiAbstractJ16HelperJoomla extends XiAbstractHelperJoomlaBase
 		$groups = $rules->getData();
 		$adminGroup = array_keys($groups['core.admin']->getData());
 				
-		$db = XiFactory::getDBO();
+		$db = Rb_Factory::getDBO();
 		//get all super administrator
 		$query = "SELECT *
 				FROM #__users
@@ -301,4 +301,4 @@ class XiAbstractJ16HelperJoomla extends XiAbstractHelperJoomlaBase
 	}
 }
 
-class XiAbstractHelperJoomla extends XiAbstractJ16HelperJoomla{}
+class Rb_AbstractHelperJoomla extends Rb_AbstractJ16HelperJoomla{}

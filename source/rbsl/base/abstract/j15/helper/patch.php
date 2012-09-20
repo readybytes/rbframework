@@ -10,7 +10,7 @@
 */
 if(defined('_JEXEC')===false) die();
 
-class XiAbstractJ15HelperPatch extends XiAbstractHelperPatchBase
+class Rb_AbstractJ15HelperPatch extends Rb_AbstractHelperPatchBase
 {
 	static function uninstallPlugin($name, $folder)
 	{
@@ -45,4 +45,4 @@ class XiAbstractJ15HelperPatch extends XiAbstractHelperPatchBase
 	}
 }
 
-class XiAbstractHelperPatch extends XiAbstractJ15HelperPatch{}
+class Rb_AbstractHelperPatch extends Rb_AbstractJ15HelperPatch{}

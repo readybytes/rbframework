@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -8,9 +8,9 @@
 */
 if(defined('_JEXEC')===false) die();
 
-require_once JPATH_ADMINISTRATOR.DS."includes".DS."toolbar.php";
+require_once JPATH_ADMINISTRATOR.'/includes/toolbar.php';
 
-class XiAbstractHelperToolbarBase extends JToolBarHelper
+class Rb_AbstractHelperToolbarBase extends JToolBarHelper
 {
 	public static function openPopup($task, $icon = '', $iconOver = '', $alt = 'COM_PAYPLANS_TOOLBAR_NEW')
 	{
@@ -22,7 +22,7 @@ class XiAbstractHelperToolbarBase extends JToolBarHelper
 	{
 		$selected 	= ($menu==$selMenu);
 		$link 		= "index.php?option=".$comName."&view=$menu";
-		$title 		= XiText::_('COM_PAYPLANS_SM_'.JString::strtoupper($menu));
+		$title 		= Rb_Text::_('COM_PAYPLANS_SM_'.JString::strtoupper($menu));
 		JSubMenuHelper::addEntry($title,$link, $selected);
 	}
 	
@@ -43,14 +43,14 @@ class XiAbstractHelperToolbarBase extends JToolBarHelper
 	
 	public static function _delete($alt = 'Delete')
 	{
-		class_exists('JButtonXiDelete', true);
-		JToolBar::getInstance('toolbar')->appendButton('XiDelete', 'delete', 'Delete', 'remove', true, false );
+		class_exists('JButtonRb_Delete', true);
+		JToolBar::getInstance('toolbar')->appendButton('Rb_Delete', 'delete', 'Delete', 'remove', true, false );
 	}
 	
 	public static function _deleteRecord($alt = 'Delete')
 	{
-		class_exists('JButtonXiDelete', true);
-		JToolBar::getInstance('toolbar')->appendButton('XiDelete', 'delete', 'Delete', 'remove', false, false );
+		class_exists('JButtonRb_Delete', true);
+		JToolBar::getInstance('toolbar')->appendButton('Rb_Delete', 'delete', 'Delete', 'remove', false, false );
 	}
 	
 	public static function _cancel($task = 'cancel', $alt = 'COM_PAYPLANS_TOOLBAR_CLOSE')
@@ -69,5 +69,5 @@ class XiAbstractHelperToolbarBase extends JToolBarHelper
 }
 
 
-// Include the Joomla Version Specific class, which will ad XiAbstractHelperToolbar class automatically
-XiError::assert(class_exists('XiAbstractJ'.PAYPLANS_JVERSION_FAMILY.'HelperToolbar',true), XiError::ERROR);
+// Include the Joomla Version Specific class, which will ad Rb_AbstractHelperToolbar class automatically
+Rb_Error::assert(class_exists('Rb_AbstractJ'.PAYPLANS_JVERSION_FAMILY.'HelperToolbar',true), Rb_Error::ERROR);

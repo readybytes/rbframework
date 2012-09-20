@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Elements
@@ -10,13 +10,13 @@ if(defined('_JEXEC')===false) die();
 
 if(PAYPLANS_JVERSION_15){
 	//a dummy class for 1.5
-	class XiField{}
+	class Rb_Field{}
 }
 else
 {
 	jimport('joomla.form.formfield');
 	
-	class XiField extends JFormField
+	class Rb_Field extends JFormField
 	{
 		//copied from J1.6 for J1.5 compatibility
 		public function getControlName()
@@ -85,12 +85,12 @@ else
 		
 		public function hasAttrib($node, $attrib)
 		{
-			return call_user_func(array("XiElement","hasAttrib"), $node, $attrib);
+			return call_user_func(array("Rb_Element","hasAttrib"), $node, $attrib);
 		}
 		
 		public function getAttrib($node, $attrib, $default = false)
 		{
-			return call_user_func(array("XiElement","getAttrib"), $node, $attrib, $default);
+			return call_user_func(array("Rb_Element","getAttrib"), $node, $attrib, $default);
 		}
 	}
 

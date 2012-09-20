@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -9,7 +9,7 @@
 if(defined('_JEXEC')===false) die();
 
 
-class XiLanguage extends JLanguage
+class Rb_Language extends JLanguage
 {
 	public static function getStrings(JLanguage $instance)
 	{

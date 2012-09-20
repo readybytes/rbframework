@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -15,14 +15,14 @@ if(defined('_JEXEC')===false) die();
  * @author shyam
  *
  */
-class XiLib extends JObject
+class Rb_Lib extends JObject
 {
 	// class variable startinf from _ are not part of DB columns
 	// they cannot be updated via bind
 
 	// trigger tells if we need to trigger onBeforeSave/onAfterSave events
 	public 		$_trigger   		= true;
-	protected	$_component			= XI_COMPONENT_NAME;
+	protected	$_component			= RB_COMPONENT_NAME;
 
 	/*
 	 * We want to make error handling to common objects
@@ -31,13 +31,13 @@ class XiLib extends JObject
 	 */
 	public function getError($i = null, $toString = true )
 	{
-		$errObj	=	XiFactory::getErrorObject();
+		$errObj	=	Rb_Factory::getErrorObject();
 		return $errObj->getError($i, $toString);
 	}
 
 	public function setError($errMsg)
 	{
-		$errObj	=	XiFactory::getErrorObject();
+		$errObj	=	Rb_Factory::getErrorObject();
 		return $errObj->setError($errMsg);
 	}
 
@@ -50,7 +50,7 @@ class XiLib extends JObject
 
 	public function getName()
 	{
-		XiError::assert($this);
+		Rb_Error::assert($this);
 
 		if(empty($this->_name))
 		{
@@ -65,18 +65,18 @@ class XiLib extends JObject
 	}
 
 	/**
-	 * @return : XiModel
+	 * @return : Rb_Model
 	 */
 	public function getModel()
 	{
-		XiError::assert($this);
-		return XiFactory::getInstance($this->getName(), 'Model');
+		Rb_Error::assert($this);
+		return Rb_Factory::getInstance($this->getName(), 'Model');
 	}
 
 
 	public function getPrefix()
 	{
-		XiError::assert($this);
+		Rb_Error::assert($this);
 		return $this->_component;
 	}
 
@@ -91,7 +91,7 @@ class XiLib extends JObject
 		static $instance=array();
 
 		//clean cache if required
-		if(XiFactory::cleanStaticCache()){
+		if(Rb_Factory::cleanStaticCache()){
 			$instance=array();
 		}
 
@@ -106,7 +106,7 @@ class XiLib extends JObject
 				if($bindData !== null){
 					$item = $bindData;
 				}else{
-					$item = XiFactory::getInstance('app','model')
+					$item = Rb_Factory::getInstance('app','model')
 								->loadRecords(array('id' => $id));
 					$item = array_shift($item);
 				}
@@ -114,7 +114,7 @@ class XiLib extends JObject
 				$type = $item->type;
 			}
 
-			XiError::assert($type!==null, XiText::_('COM_PAYPLANS_ERROR_INVALID_TYPE_OF_APPLICATION'));
+			Rb_Error::assert($type!==null, Rb_Text::_('COM_PAYPLANS_ERROR_INVALID_TYPE_OF_APPLICATION'));
 
 			//IMP autoload apps
 			PayplansHelperApp::getApps();
@@ -146,18 +146,18 @@ class XiLib extends JObject
 
 	public function toArray($strict=false, $forReadOnly=false)
 	{
-		XiError::assert($this);
+		Rb_Error::assert($this);
 
 		$arr = get_object_vars($this);
 		$ret = array();
 		foreach($arr as $key => $value)
 		{
-			if($strict === false && is_object($this->$key) && method_exists($this->$key, 'toString') && is_a($this->$key, 'XiParameter')){
-				$ret[$key] = $this->$key->toString('XiINI');
+			if($strict === false && is_object($this->$key) && method_exists($this->$key, 'toString') && is_a($this->$key, 'Rb_Parameter')){
+				$ret[$key] = $this->$key->toString('Rb_INI');
 				continue;
 			}
 
-			if($value instanceof XiDate && $forReadOnly == true){
+			if($value instanceof Rb_Date && $forReadOnly == true){
 				$ret[$key] = PayplansHelperFormat::date($value);
 				continue;
 			}
@@ -176,7 +176,7 @@ class XiLib extends JObject
 
 	public function getClassname()
 	{
-		XiError::assert($this);
+		Rb_Error::assert($this);
 		return get_class($this);
 	}
 
@@ -184,8 +184,8 @@ class XiLib extends JObject
 	{
 		$name = JString::strtolower($name);
 
-		XiError::assert(is_object($this->$name), XiText::_('COM_PAYPLANS_ERROR_PARAMETER_MUST_BE_AN_OBJECT'));
-		XiError::assert(method_exists($this->$name,'render'), XiText::_('COM_PAYPLANS_ERROR_INVALID_PARAMETER_NAME_TO_RENDER'));
+		Rb_Error::assert(is_object($this->$name), Rb_Text::_('COM_PAYPLANS_ERROR_PARAMETER_MUST_BE_AN_OBJECT'));
+		Rb_Error::assert(method_exists($this->$name,'render'), Rb_Text::_('COM_PAYPLANS_ERROR_INVALID_PARAMETER_NAME_TO_RENDER'));
 
 		$key = ($key === null) ? $name : $key;
 		return $this->$name->render($key);
@@ -195,11 +195,11 @@ class XiLib extends JObject
 	 * @param Object/Array $data
 	 * @param Array $ignore
 	 *
-	 * @return XiLib
+	 * @return Rb_Lib
 	 */
 	public function bind($data, $ignore=array())
 	{
-		XiError::assert($this);
+		Rb_Error::assert($this);
 		if(empty($data) || $data == null){
 			return $this;
 		}
@@ -209,7 +209,7 @@ class XiLib extends JObject
 		}
 
 		// $data must be now an array
-		XiError::assert(is_array($data), 'GIVEN DATA IS NOT AN ARRAY : '.var_export($data,true));
+		Rb_Error::assert(is_array($data), 'GIVEN DATA IS NOT AN ARRAY : '.var_export($data,true));
 
 		// also accept strings
 		if(!is_array($ignore)) {
@@ -252,25 +252,25 @@ class XiLib extends JObject
 
 //	public function getEntityId()
 //	{
-//		XiError::assert($this);
+//		Rb_Error::assert($this);
 //		return PayplansHelperEntity::getIdFromName($this->getName());
 //	}
 
 	public function getId()
 	{
-		XiError::assert($this);
+		Rb_Error::assert($this);
 		$varName = $this->getName().'_id';
 		return $this->$varName;
 	}
 
 	function getKey()
 	{
-		return XiHelperUtils::getKeyFromId($this->getId());
+		return Rb_HelperUtils::getKeyFromId($this->getId());
 	}
 	
 	public function setId($id)
 	{
-		XiError::assert($this);
+		Rb_Error::assert($this);
 		$varName = $this->getName().'_id';
 		$this->$varName = $id;
 		return $this;
@@ -278,11 +278,11 @@ class XiLib extends JObject
 
 	public function load($id)
 	{
-		XiError::assert($this);
-		XiError::assert($id);
+		Rb_Error::assert($this);
+		Rb_Error::assert($id);
 
 		//if we are working on a single element then we need to clear the limit from query
-		$item = XiFactory::getInstance($this->getName(), 'model')->loadRecords(array('id' => $id), array('limit'));
+		$item = Rb_Factory::getInstance($this->getName(), 'model')->loadRecords(array('id' => $id), array('limit'));
 
 		// if no items found
 		if(count($item) === 0){
@@ -300,7 +300,7 @@ class XiLib extends JObject
 	 */
 	public function loadIf($filters=array(), $clean=array())
 	{
-		XiError::assert($this);
+		Rb_Error::assert($this);
 		$records = $this->getModel()->loadRecords($filters, $clean);
 		//if records exist then load the first one.
 		if(empty($records)===false){
@@ -312,7 +312,7 @@ class XiLib extends JObject
 	}
 
 	/**
-	 * @return XiLib
+	 * @return Rb_Lib
 	 */
 	public function save()
 	{
@@ -376,10 +376,10 @@ class XiLib extends JObject
 			$event = 'onPayplans'.JString::ucfirst($this->getName()).'BeforeDelete';
 			if($this instanceof PayplansApp){
 				$event = 'onPayplansAppBeforeDelete';
-				//XITODO : add __clone function to lib, for better readibility
-				XiFactory::getSession()->set('OBJECT_TO_BE_DELETED_'.$this->getId().'_APP', $this->getClone());
+				//RBFW_TODO : add __clone function to lib, for better readibility
+				Rb_Factory::getSession()->set('OBJECT_TO_BE_DELETED_'.$this->getId().'_APP', $this->getClone());
 			}else{
-				XiFactory::getSession()->set('OBJECT_TO_BE_DELETED_'.$this->getId().'_'.JString::strtoupper($this->getName()), $this->getClone());
+				Rb_Factory::getSession()->set('OBJECT_TO_BE_DELETED_'.$this->getId().'_'.JString::strtoupper($this->getName()), $this->getClone());
 			}
 
 			$result = PayplansHelperEvent::trigger($event, $args, '', $this);
@@ -418,7 +418,7 @@ class XiLib extends JObject
 	
 	public function setParam($key, $value)
 	{
-		XiError::assert($this);
+		Rb_Error::assert($this);
 		$this->params->set($key,$value);
 		return $this;
 	}

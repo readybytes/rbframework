@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -8,7 +8,7 @@
 */
 if(defined('_JEXEC')===false) die();
 
-class XiHtmlText
+class Rb_HtmlText
 {
 	function filter($name, $view, Array $filters = array(), $prefix='filter_payplans')
 	{

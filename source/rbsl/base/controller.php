@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -9,7 +9,7 @@
 if(defined('_JEXEC')===false) die();
 
 
-abstract class XiController extends XiAbstractController
+abstract class Rb_Controller extends Rb_AbstractController
 {
 	protected 	$_defaultTask = 'display';
 
@@ -27,7 +27,7 @@ abstract class XiController extends XiAbstractController
 	 */
 	function notask()
 	{
-		echo XiText::_('COM_PAYPLANS_NO_TASK_PROVIDED');
+		echo Rb_Text::_('COM_PAYPLANS_NO_TASK_PROVIDED');
 		return false;
 	}
 
@@ -66,7 +66,7 @@ abstract class XiController extends XiAbstractController
 	public function edit()
 	{
 		$itemId = null;
-		$userId = XiFactory::getUser()->id;
+		$userId = Rb_Factory::getUser()->id;
 
 		//set editing template
 		$this->setTemplate('edit');
@@ -78,7 +78,7 @@ abstract class XiController extends XiAbstractController
 
 		//user want to edit record
 		if($this->_edit($itemId, $userId)===false){
-			//XITODO : enqueue message that item is already checkedout
+			//RBFW_TODO : enqueue message that item is already checkedout
 			$this->setRedirect(null,$this->getError());
 			return false;
 		}
@@ -93,7 +93,7 @@ abstract class XiController extends XiAbstractController
 
 		//find the user, if nothing mentioned
 		if($userId	=== null)
-			$userId = XiFactory::getUser()->id;
+			$userId = Rb_Factory::getUser()->id;
 
 		//if Item Id is given then set to model
 		if($itemId !== null)
@@ -136,7 +136,7 @@ abstract class XiController extends XiAbstractController
 
 	public function save()
 	{
-		//XITODO : verify form token
+		//RBFW_TODO : verify form token
 		//try to save
 		$post	=	JRequest::get('post');
 		//Currently not required
@@ -150,7 +150,7 @@ abstract class XiController extends XiAbstractController
 			$msgType	=	'error';
 		}
 		else
-			$this->setMessage(XiText::_('COM_PAYPLANS_ITEM_SAVED_SUCCESSFULLY'));
+			$this->setMessage(Rb_Text::_('COM_PAYPLANS_ITEM_SAVED_SUCCESSFULLY'));
 
 		//perform redirection
 		$redirect  = "index.php?option=com_{$this->_component}&view={$this->getName()}";
@@ -165,7 +165,7 @@ abstract class XiController extends XiAbstractController
 			$redirect  .= "&task=new";
 		}
 		
-		$redirect = XiRoute::_($redirect);
+		$redirect = Rb_Route::_($redirect);
 		$this->setRedirect( $redirect , $this->getMessage(), $msgType);
 		return false;
 	}
@@ -179,7 +179,7 @@ abstract class XiController extends XiAbstractController
 //		//we need to remove the prefix
 //		foreach($post as $key=>$data){
 //			$r = null;
-//			if (!preg_match('/'.XI_FORM_VARIABLE_PREFIX.'(.*)/i', $key, $r))
+//			if (!preg_match('/'.RB_FORM_VARIABLE_PREFIX.'(.*)/i', $key, $r))
 //				continue;
 //
 //			// xi_order_0 -> data[order][0]
@@ -198,7 +198,7 @@ abstract class XiController extends XiAbstractController
 	public function _save(array $data, $itemId=null, $type=null)
 	{
 		//create new lib instance
-		return XiLib::getInstance($this->getName(), $itemId, $type)
+		return Rb_Lib::getInstance($this->getName(), $itemId, $type)
 						->bind($data)
 						->save();
 	}
@@ -210,7 +210,7 @@ abstract class XiController extends XiAbstractController
 	{
 		$errMsg				= '';
 		$messagetype 	= 'message';
-		$message 		= XiText::_('COM_PAYPLANS_ITEMS_DELETED');
+		$message 		= Rb_Text::_('COM_PAYPLANS_ITEMS_DELETED');
 
 
 		//ensure model state is blank, so no mishappening :-)
@@ -242,9 +242,9 @@ abstract class XiController extends XiAbstractController
 		}
 		//find the user, if nothing mentioned
 		if($userId	== null)
-			$userId 	= XiFactory::getUser()->id;
+			$userId 	= Rb_Factory::getUser()->id;
 
-		$item = XiLib::getInstance($this->getName(), $itemId, null)
+		$item = Rb_Lib::getInstance($this->getName(), $itemId, null)
 				->delete();
 
 		if(!$item){
@@ -262,7 +262,7 @@ abstract class XiController extends XiAbstractController
 	{
 		$errMsg				= '';
 		$messagetype 	= 'message';
-		$message 		= XiText::_('COM_PAYPLANS_ITEMS_COPIED');
+		$message 		= Rb_Text::_('COM_PAYPLANS_ITEMS_COPIED');
 		
 		$cids = JRequest::getVar('cid', $cids, 'request', 'array');
 		foreach ($cids as $cid)
@@ -303,7 +303,7 @@ abstract class XiController extends XiAbstractController
 		if($this->_order($change, $cids[0])===false)
 			$this->setMessage($this->getError());
 		else
-			$this->setMessage(XiText::_('COM_PAYPLANS_ITEM_ORDERED_SUCCESSFULLY'));
+			$this->setMessage(Rb_Text::_('COM_PAYPLANS_ITEM_ORDERED_SUCCESSFULLY'));
 
 		//perform redirection
 		$this->setRedirect();
@@ -319,9 +319,9 @@ abstract class XiController extends XiAbstractController
 	{
 		$errMsg				= '';
 		$this->messagetype 	= 'notice';
-		$this->message 		= XiText::_('COM_PAYPLANS_ITEMS_REORDERED');
+		$this->message 		= Rb_Text::_('COM_PAYPLANS_ITEMS_REORDERED');
 
-		//XITODO : User proper variable names
+		//RBFW_TODO : User proper variable names
 		$ordering 	= JRequest::getVar('ordering', array(0), 'post', 'array');
 		$cids 		= JRequest::getVar('cid', array (0), 'post', 'array');
 
@@ -373,7 +373,7 @@ abstract class XiController extends XiAbstractController
 		//setup error message, if no mapping exists
 		if(array_key_exists($task, $this->_boolMap)===false)
 		{
-			$this->setRedirect(null, XiText::_('COM_PAYPLANS_NO_MAPPING_FOUND_FOR_CURRENT_ACTION'), 'error');
+			$this->setRedirect(null, Rb_Text::_('COM_PAYPLANS_NO_MAPPING_FOUND_FOR_CURRENT_ACTION'), 'error');
 			return false;
 		}
 
@@ -416,7 +416,7 @@ abstract class XiController extends XiAbstractController
 	{
 		$errMsg				= '';
 		$this->messagetype 	= 'notice';
-		$this->message 		= XiText::_('COM_PAYPLANS_ITEMS_REORDERED');
+		$this->message 		= Rb_Text::_('COM_PAYPLANS_ITEMS_REORDERED');
 
 		$task	= JRequest::getVar('task',	'enable');
 
@@ -426,7 +426,7 @@ abstract class XiController extends XiAbstractController
 			$offpattern = '/^switchOff/';
 			$onpattern = '/^switchOn/';
 			if(!preg_match($onpattern, $task) && !preg_match($offpattern, $task)){
-				$this->setRedirect(null, XiText::_('COM_PAYPLANS_NO_MAPPING_FOUND_FOR_CURRENT_ACTION'), 'error');
+				$this->setRedirect(null, Rb_Text::_('COM_PAYPLANS_NO_MAPPING_FOUND_FOR_CURRENT_ACTION'), 'error');
 				return false;
 			}
 			else{
@@ -439,7 +439,7 @@ abstract class XiController extends XiAbstractController
 				}
 				else if(preg_match($offpattern, $task)){
 					$switch		= false;
-					//XITODO : Convert it to str_replace, so that code can be somewaht clean from magic numbers
+					//RBFW_TODO : Convert it to str_replace, so that code can be somewaht clean from magic numbers
 					//$columninfo = str_split($task,strlen('switchOff'));
 					$columninfo = explode('switchOff',$task);
 					$column		= array_key_exists(1,$columninfo) ? $columninfo[1] : '';
@@ -505,7 +505,7 @@ abstract class XiController extends XiAbstractController
 	public function _getArgs()
 	{
 		// collect params
-		// XITODO : loop array till argument count
+		// RBFW_TODO : loop array till argument count
 		$args = array(); 
 		for($i=1 ; $i < 10 ; $i++){
 			$arg = JRequest::getVar('arg'.$i,null);
@@ -536,9 +536,9 @@ abstract class XiController extends XiAbstractController
 
 	public function trigger($event=null,$args=null)
 	{
-		//XITODO:High : Event should be filtered
+		//RBFW_TODO:High : Event should be filtered
 		$event 		= JRequest::getVar('event', $event);
-		XiError::assert($event,XiText::_('COM_PAYPLANS_ERROR_PAYPLANS_UNKNOWN_EVENT_TRIGGER_REQUESTED'));
+		Rb_Error::assert($event,Rb_Text::_('COM_PAYPLANS_ERROR_PAYPLANS_UNKNOWN_EVENT_TRIGGER_REQUESTED'));
 
 		$args = $this->_getArgs();
 
@@ -550,11 +550,11 @@ abstract class XiController extends XiAbstractController
 	public function _checkSessionExpiry()
 	{
 		 // if session of the user is expired 
-	     $id = XiFactory::getUser()->get('id');
+	     $id = Rb_Factory::getUser()->get('id');
          // if user is newly registered
-	     $reg_id = XiFactory::getSession()->get('REGISTRATION_NEW_USER_ID', 0);
+	     $reg_id = Rb_Factory::getSession()->get('REGISTRATION_NEW_USER_ID', 0);
 	     if(!$reg_id && !$id){
-	           $this->setRedirect(XiRoute::_("index.php?option=".PAYPLANS_COM_USER."&view=login"),XiText::_('COM_PAYPLANS_SESSION_EXPIRED_LOGIN_AGAIN'));
+	           $this->setRedirect(Rb_Route::_("index.php?option=".PAYPLANS_COM_USER."&view=login"),Rb_Text::_('COM_PAYPLANS_SESSION_EXPIRED_LOGIN_AGAIN'));
 	           return false;
 	      }
 	     return true;

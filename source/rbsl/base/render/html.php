@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -9,9 +9,9 @@
 if(defined('_JEXEC')===false) die();
 
 
-class XiRenderHtml extends XiRender
+class Rb_RenderHtml extends Rb_Render
 {
-	protected function _injectScripts(XiView $view)
+	protected function _injectScripts(Rb_View $view)
 	{
 		// load html assets required
 		$view->loadTemplate('assets');
@@ -19,13 +19,13 @@ class XiRenderHtml extends XiRender
 		//Get dynamic java script
 		$jsScript	=	$view->getDynamicJavaScript();
 		if($jsScript){
-			$document	=& XiFactory::getDocument();
+			$document	=& Rb_Factory::getDocument();
 			$document->addScriptDeclaration($jsScript);
 		}
 		
 	}
 	
-	protected function _render(XiView $view, $html, $options)
+	protected function _render(Rb_View $view, $html, $options)
 	{
 		$this->_injectScripts($view);
 		// inject security tokens and echo string

@@ -10,7 +10,7 @@
 // Use mb_substr() if it is available (for multibyte characters).
 // ******************************************************************************
 
-class XiEncryptor{
+class Rb_Encryptor{
 
     var $scramble1 = '';     // 1st string of ASCII characters
     var $scramble2 = '';     // 2nd string of ASCII characters
@@ -38,7 +38,7 @@ class XiEncryptor{
 		$this->sourcelen = 12;
 		
         if (strlen($this->scramble1) <> strlen($this->scramble2)) {
-            XiError::assert(false, XiText::_('COM_PAYPLANS_ERROR_ENCRYPTOR_SCRAMBLE'), XiError::ERROR);
+            Rb_Error::assert(false, Rb_Text::_('COM_PAYPLANS_ERROR_ENCRYPTOR_SCRAMBLE'), Rb_Error::ERROR);
         } // if
 
         $this->adj = 1.75;  // this value is added to the rolling fudgefactors

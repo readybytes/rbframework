@@ -10,7 +10,7 @@
 */
 if(defined('_JEXEC')===false) die();
 
-class XiHelperPatch extends XiAbstractHelperPatch
+class Rb_HelperPatch extends Rb_AbstractHelperPatch
 {
 	static function isTableExist($tableName, $prefix='#__')
 	{
@@ -72,7 +72,7 @@ class XiHelperPatch extends XiAbstractHelperPatch
 	static function applySqlFile($fileName)
 	{
 
-		//XITODO : return error log $errorLog
+		//RBFW_TODO : return error log $errorLog
 		$db	= JFactory::getDBO();
 		//read file
 		if(!($sql = JFile::read($fileName)))
@@ -131,7 +131,7 @@ class XiHelperPatch extends XiAbstractHelperPatch
 	 */
 	static function is_applicable($patch) 
 	{
-		$query = new XiQuery;
+		$query = new Rb_Query;
 
 		$query->select('value')
 			  ->from('#__payplans_support')
@@ -156,7 +156,7 @@ class XiHelperPatch extends XiAbstractHelperPatch
 		
 	 	if(is_array($patch)) { $patch = (array) $patch; }
 	 	
-	 	$query = new XiQuery();
+	 	$query = new Rb_Query();
 	 	$query->insert('#__payplans_support');
 		foreach ($patches as $patch) {
 			$query->set("key   = '$patch' ");
@@ -169,18 +169,18 @@ class XiHelperPatch extends XiAbstractHelperPatch
 	
 	static function get_session_value($name, $default = null,$namespace='payplans_patches')
 	{
-		return XiFactory::getSession()->get($name,$default,$namespace);
+		return Rb_Factory::getSession()->get($name,$default,$namespace);
 	}
 	
 	static function set_session_value($name, $default = null,$namespace='payplans_patches')
 	{
-		XiFactory::getSession()->set($name,$default,$namespace);
+		Rb_Factory::getSession()->set($name,$default,$namespace);
 		
 	}
 
 	static function clear_session_value($name,$namespace='payplans_patches')
 	{
-		XiFactory::getSession()->clear($name,$namespace);;
+		Rb_Factory::getSession()->clear($name,$namespace);;
 	}
 
 	static function updatePatch($patch)
@@ -204,7 +204,7 @@ class XiHelperPatch extends XiAbstractHelperPatch
 	 */
 	static function updateVersion()
 	{
-		require_once JPATH_ROOT .DS. 'components' .DS. 'com_payplans' .DS.'includes'.DS. 'defines.php';
+		require_once JPATH_ROOT .'/'. 'components' .'/'. 'com_payplans' .'/includes'.'/'. 'defines.php';
 		$db		= JFactory::getDBO();
 		$query = array();
 		$query[]	= 'UPDATE #__payplans_support'
@@ -242,11 +242,11 @@ class XiHelperPatch extends XiAbstractHelperPatch
 	
 	static function createIndex($tablename, $columnname)
 	{
-		if(XiHelperPatch::indexExists($tablename, 'idx_'.$columnname)){
+		if(Rb_HelperPatch::indexExists($tablename, 'idx_'.$columnname)){
 			return true;
 		}
 		
-		$db  = XiFactory::getDBO();
+		$db  = Rb_Factory::getDBO();
 		$sql = "CREATE INDEX idx_".$columnname." ON ".$tablename." (".$columnname.")";
 		$db->setQuery($sql);
 		return $db->query();
@@ -254,7 +254,7 @@ class XiHelperPatch extends XiAbstractHelperPatch
 	
 	static function indexExists($tablename, $keyname)
 	{
-		$db  = XiFactory::getDBO();
+		$db  = Rb_Factory::getDBO();
 		$sql = "SHOW INDEX FROM  ".$tablename." WHERE Key_name = '".$keyname."'";
 		$db->setQuery($sql);
 		
@@ -267,11 +267,11 @@ class XiHelperPatch extends XiAbstractHelperPatch
 	
 	static function dropIndex($tablename, $keyname)
 	{
-		if(XiHelperPatch::indexExists($tablename, $keyname) == false){
+		if(Rb_HelperPatch::indexExists($tablename, $keyname) == false){
 			return true;
 		}
 
-		$db  = XiFactory::getDBO();
+		$db  = Rb_Factory::getDBO();
 		$sql = "DROP INDEX ".$keyname." ON ".$tablename;
 		$db->setQuery($sql);
 		return $db->query();

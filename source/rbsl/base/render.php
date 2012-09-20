@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -9,7 +9,7 @@
 if(defined('_JEXEC')===false) die();
 
 
-class XiRender
+class Rb_Render
 {
 	public $headerFooters = true;
 	
@@ -18,9 +18,9 @@ class XiRender
 		$this->headerFooters = JRequest::getBool('headerFooter', $this->headerFooters);
 	}
 	
-	final public function render(XiView $view, $data, $options)
+	final public function render(Rb_View $view, $data, $options)
 	{
-		XiError::assert($this);
+		Rb_Error::assert($this);
 		
 		ob_start();
 		if($this->headerFooters){
@@ -45,7 +45,7 @@ class XiRender
 		return $this->_render($view, $html, $options);
 	}
 	
-	protected function _render(XiView $view, $html, $options)
+	protected function _render(Rb_View $view, $html, $options)
 	{
 		echo $html;
 		return true;
@@ -63,9 +63,9 @@ class XiRender
 			$format	= 'Json';
 		}
 
-		$className = 'XiRender'.$format; 
+		$className = 'Rb_Render'.$format; 
 		if(class_exists($className, true)===false){
-			return XiError::raiseError("Class $className not found");
+			return Rb_Error::raiseError("Class $className not found");
 		}
 		
 		return new $className();

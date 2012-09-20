@@ -10,7 +10,7 @@
 */
 if(defined('_JEXEC')===false) die();
 
-class XiAbstractJ16HelperPatch extends XiAbstractHelperPatchBase
+class Rb_AbstractJ16HelperPatch extends Rb_AbstractHelperPatchBase
 {
 
 	static function changeModuleState($name,$position,$newState = 1)
@@ -77,4 +77,4 @@ class XiAbstractJ16HelperPatch extends XiAbstractHelperPatchBase
 	
 }
 
-class XiAbstractHelperPatch extends XiAbstractJ16HelperPatch{}
+class Rb_AbstractHelperPatch extends Rb_AbstractJ16HelperPatch{}

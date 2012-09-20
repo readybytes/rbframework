@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -8,7 +8,7 @@
 */
 if(defined('_JEXEC')===false) die();
 
-class XiHtmlCombo extends XiHtml
+class Rb_HtmlCombo extends Rb_Html
 {
 	function edit($arr, $name, $attributes=null, $key='value', $text='text', $selected = null) 
 	{
@@ -41,10 +41,10 @@ class XiHtmlCombo extends XiHtml
 
 		//add script
 		if($notLoaded){
-			XiHelperTemplate::loadSetupEnv();
-			XiHelperTemplate::loadSetupScripts();
+			Rb_HelperTemplate::loadSetupEnv();
+			Rb_HelperTemplate::loadSetupScripts();
 			
-			XiFactory::getDocument()->addScriptDeclaration($js);
+			Rb_Factory::getDocument()->addScriptDeclaration($js);
 		}
 		
 		$options = array();

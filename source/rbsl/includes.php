@@ -1,14 +1,14 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
-* @package		XiFramework
+* @package		Rb_Framework
 * @contact 		shyam@readybytes.in
 */
 if(defined('_JEXEC')===false) die();
 
 // if already loaded do not load
-if(defined('XI_FRAMEWORK_LOADED')){
+if(defined('RB_FRAMEWORK_LOADED')){
 	return;
 }
 
@@ -20,12 +20,12 @@ if(!defined('DS')){
 jimport('joomla.utilities.string');
 
 //load basic defines
-require_once dirname(__FILE__).DS.'defines.php'	;
-require_once XI_PATH_FRAMEWORK.DS.'filetree.php'; // load filetree, will help in reducing filesystem IO
-require_once XI_PATH_FRAMEWORK.DS.'loader.php'	;
+require_once dirname(__FILE__).'/defines.php'	;
+require_once RB_PATH_FRAMEWORK.'/filetree.php'; // load filetree, will help in reducing filesystem IO
+require_once RB_PATH_FRAMEWORK.'/loader.php'	;
 
-// adding JRegistryFormatXiINI formatter
-require_once XI_PATH_INCLUDES.DS.'ini.php'	;
+// adding JRegistryFormatRb_INI formatter
+require_once RB_PATH_INCLUDES.'/ini.php'	;
 
 // System profiler
 if (JDEBUG) {
@@ -33,12 +33,12 @@ if (JDEBUG) {
 	$_PROFILER =& JProfiler::getInstance( 'Application' );
 }
 
-JDEBUG ? $_PROFILER->mark( 'payplans-XiFramework-Before-Load' ) : null;
+JDEBUG ? $_PROFILER->mark( 'RB-Framework-Before-Load' ) : null;
 
 //autoload core library
-XiHelperLoader::addAutoLoadFolder(XI_PATH_CORE,		'',				'Xi');
-XiHelperLoader::addAutoLoadFolder(XI_PATH_ELEMENTS, 	'Element', 		'J');
-XiHelperLoader::addAutoLoadFolder(XI_PATH_ELEMENTS, 	'FormField',	'J');
-XiHelperLoader::addAutoLoadFolder(XI_PATH_JOOMLA_EXTENDED, 	'',	'J');
+Rb_HelperLoader::addAutoLoadFolder(RB_PATH_CORE,		'',				'Rb_');
+Rb_HelperLoader::addAutoLoadFolder(RB_PATH_ELEMENTS, 	'Element', 		'J');
+Rb_HelperLoader::addAutoLoadFolder(RB_PATH_ELEMENTS, 	'FormField',	'J');
+Rb_HelperLoader::addAutoLoadFolder(RB_PATH_JOOMLA_EXTENDED, 	'',	'J');
 
-JDEBUG ? $_PROFILER->mark( 'payplans-XiFramework-After-Load' ) : null;
+JDEBUG ? $_PROFILER->mark('RB-Framework-After-Load') : null;

@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -8,7 +8,7 @@
 */
 if(defined('_JEXEC')===false) die();
 
-class XiAbstractFactoryBase extends JFactory
+class Rb_AbstractFactoryBase extends JFactory
 {
 	//Returns a MVCT object
 	static function getInstance($name, $type='', $prefix='Payplans', $refresh=false)
@@ -56,7 +56,7 @@ class XiAbstractFactoryBase extends JFactory
 	}
 
 	/**
-	 * @return XiSession
+	 * @return Rb_Session
 	 */
 	static function _getSession($reset=false)
 	{
@@ -65,13 +65,13 @@ class XiAbstractFactoryBase extends JFactory
 		if($instance !== null && $reset===false)
 			return $instance;
 
-		$instance	= new XiSession();
+		$instance	= new Rb_Session();
 
 		return $instance;
 	}
 
 	/**
-	 * @return XiAjaxResponse
+	 * @return Rb_AjaxResponse
 	 */
 	static public function getAjaxResponse()
   	{
@@ -80,7 +80,7 @@ class XiAbstractFactoryBase extends JFactory
  		static $response = null;
 
  		if ($response === null)
- 			$response = XiAjaxResponse::getInstance();
+ 			$response = Rb_AjaxResponse::getInstance();
 
   		return $response;
   	}
@@ -92,8 +92,8 @@ class XiAbstractFactoryBase extends JFactory
 	static $config = null;
   	static public function _getConfig()
   	{
-		//XITODO : Implement reset logic for whole component
-		if(self::$config && XiFactory::cleanStaticCache() != true)
+		//RBFW_TODO : Implement reset logic for whole component
+		if(self::$config && Rb_Factory::cleanStaticCache() != true)
   			return self::$config;
 
   		$records 	= self::getInstance('config', 'model')->loadRecords();
@@ -101,7 +101,7 @@ class XiAbstractFactoryBase extends JFactory
 		// load parent global joomla configuration first
 		$arr = JFactory::getConfig()->toArray();
 
-		// load all configurations of Xi, and merge them
+		// load all configurations of Rb_, and merge them
 		foreach($records as $record){
 			//IMP : by sending record we can reduce one query on each loop iteration
 			$obj = PayplansConfig::getInstance($record->config_id, null, $record);
@@ -147,7 +147,7 @@ class XiAbstractFactoryBase extends JFactory
 	}
 	
 	/**
-	 * @return XiEncryptor
+	 * @return Rb_Encryptor
 	 */
 	public static function getEncryptor($reset=false)
 	{
@@ -156,20 +156,20 @@ class XiAbstractFactoryBase extends JFactory
 		if($instance !== null && $reset===false)
 			return $instance;
 
-		// XITODO : raise error if key is not defined
+		// RBFW_TODO : raise error if key is not defined
 		$key = JString::strtoupper(self::_getConfig()->expert_encryption_key);
-		$instance	= new XiEncryptor($key);
+		$instance	= new Rb_Encryptor($key);
 
 		return $instance;
 	}
 	
 	/**
-	 * @return XiLogger
+	 * @return Rb_Logger
 	 */
 	static protected $_logger = array();
 	public static function getLogger($name='')
 	{
-		$className = 'XiLogger'.$name;
+		$className = 'Rb_Logger'.$name;
 		if(isset(self::$_logger[$className])===false){
 			self::$_logger[$className] = new $className();
 		}
@@ -180,5 +180,5 @@ class XiAbstractFactoryBase extends JFactory
 
 
 
-// Include the Joomla Version Specific class, which will ad XiAbstractFactory class automatically
-XiError::assert(class_exists('XiAbstractJ'.PAYPLANS_JVERSION_FAMILY.'Factory',true), XiError::ERROR);
+// Include the Joomla Version Specific class, which will ad Rb_AbstractFactory class automatically
+Rb_Error::assert(class_exists('Rb_AbstractJ'.PAYPLANS_JVERSION_FAMILY.'Factory',true), Rb_Error::ERROR);

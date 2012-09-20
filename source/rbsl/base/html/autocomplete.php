@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -8,7 +8,7 @@
 */
 if(defined('_JEXEC')===false) die();
 
-class XiHtmlAutocomplete extends XiHtml
+class Rb_HtmlAutocomplete extends Rb_Html
 {
 	/**
 	 * @return multiselect html
@@ -27,17 +27,17 @@ class XiHtmlAutocomplete extends XiHtml
 			$name = $name.'[]';
 		}
 		
-		// XITODO : load assests because this is being used in module params also
-		XiHelperTemplate::loadSetupEnv();
-		XiHelperTemplate::loadSetupScripts();
+		// RBFW_TODO : load assests because this is being used in module params also
+		Rb_HelperTemplate::loadSetupEnv();
+		Rb_HelperTemplate::loadSetupScripts();
 		
-		$jsElemId = XiHelperUtils::jsCompatibleId($name,'_');
-		//$name 	  = XiHelperUtils::jsCompatibleId($name,'_');
+		$jsElemId = Rb_HelperUtils::jsCompatibleId($name,'_');
+		//$name 	  = Rb_HelperUtils::jsCompatibleId($name,'_');
 		
 		// IMP : the giver $arr must be indexed by field given in $key
-		$scriptPath = dirname(__FILE__).DS.'autocomplete';
-		XiHtml::script('jquery.tokeninput.js', 	$scriptPath);
-		XiHtml::stylesheet('token.input.facebook.css', $scriptPath);
+		$scriptPath = dirname(__FILE__).'/autocomplete';
+		Rb_Html::script('jquery.tokeninput.js', 	$scriptPath);
+		Rb_Html::stylesheet('token.input.facebook.css', $scriptPath);
 		
 		$options = array();
 		// Pass options only if 
@@ -53,7 +53,7 @@ class XiHtmlAutocomplete extends XiHtml
 			}
 		}
 		$selectedOptions = array();
-		//XITODO : move the logic of unifying-data-into-array into a function so we can unit test
+		//RBFW_TODO : move the logic of unifying-data-into-array into a function so we can unit test
 		//When only one item is selected 
 		if(is_array($selected)==false && !empty($selected)){
 			$selected = array($selected);

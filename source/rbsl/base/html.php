@@ -8,12 +8,12 @@
 */
 if(defined('_JEXEC')===false) die();
 
-class XiHtml
+class Rb_Html
 {
 	public static function _($key)
 	{
 		$parts = explode('.', $key);
-		$prefix 	= 'XiHtml';
+		$prefix 	= 'Rb_Html';
 		$className	= $prefix.ucfirst($parts[0]);
 		$extraArgs 	= func_get_args();
 		
@@ -27,27 +27,27 @@ class XiHtml
 	
 	public static function stylesheet($filename, $path = null, $attribs = array())
 	{
-		$path = ($path === null)?  XI_PATH_MEDIA.DS.'css' : $path;
+		$path = ($path === null)?  RB_PATH_MEDIA.'/css' : $path;
 		
 		//load minimized css if required
 		if(isset($config->expert_useminjs) && $config->expert_useminjs){
-			$filename = XiHtml::minFile($filename, $path, 'css');
+			$filename = Rb_Html::minFile($filename, $path, 'css');
 		}
 		
-		$path = XiHelperTemplate::mediaURI($path);
+		$path = Rb_HelperTemplate::mediaURI($path);
 		return JHTML::stylesheet($filename, $path, $attribs);
 	}
 
 	public static function script($filename, $path =null)
 	{
-		$path = ($path === null) ? XI_PATH_MEDIA.DS.'js' : $path;
+		$path = ($path === null) ? RB_PATH_MEDIA.'/js' : $path;
 		
-		$config =  XiFactory::getConfig();
+		$config =  Rb_Factory::getConfig();
 		if(isset($config->expert_useminjs) && $config->expert_useminjs){
-			$filename = XiHtml::minFile($filename, $path);
+			$filename = Rb_Html::minFile($filename, $path);
 		}
 		
-		$path = XiHelperTemplate::mediaURI($path);
+		$path = Rb_HelperTemplate::mediaURI($path);
 		if(PAYPLANS_JVERSION_15){
 			return JHTML::script($filename, $path, true);
 		}
@@ -72,7 +72,7 @@ class XiHtml
 		
 		// add absolute root path
 		if(strpos($path, JPATH_ROOT) !== 0) {
-			$path =  JPATH_ROOT.DS.$path;
+			$path =  JPATH_ROOT.'/'.$path;
 		}
 		
 		// use minified only if it exists

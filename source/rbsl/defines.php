@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -9,19 +9,19 @@
 if(defined('_JEXEC')===false) die();
 
 // If file is already included
-if(defined('XI_FRAMEWORK_LOADED')){
+if(defined('RB_FRAMEWORK_LOADED')){
 	return;
 }
 
-define('XI_FRAMEWORK_LOADED', true);
+define('RB_FRAMEWORK_LOADED', true);
 
 //paths 
-define('XI_PATH_FRAMEWORK', dirname(__FILE__));
-define('XI_PATH_CORE',		XI_PATH_FRAMEWORK.DS.'base');
-define('XI_PATH_INCLUDES',	XI_PATH_FRAMEWORK.DS.'includes');
-define('XI_PATH_MEDIA',		XI_PATH_FRAMEWORK.DS.'media');
-define('XI_PATH_ELEMENTS',	XI_PATH_FRAMEWORK.DS.'elements');
-define('XI_PATH_JOOMLA_EXTENDED',	XI_PATH_FRAMEWORK.DS.'joomla');
+define('RB_PATH_FRAMEWORK', dirname(__FILE__));
+define('RB_PATH_CORE',		RB_PATH_FRAMEWORK.'/base');
+define('RB_PATH_INCLUDES',	RB_PATH_FRAMEWORK.'/includes');
+define('RB_PATH_MEDIA',		RB_PATH_FRAMEWORK.'/media');
+define('RB_PATH_ELEMENTS',	RB_PATH_FRAMEWORK.'/elements');
+define('RB_PATH_JOOMLA_EXTENDED',	RB_PATH_FRAMEWORK.'/joomla');
 
 
 // define the joomla version
@@ -43,12 +43,12 @@ $xi_family  = '15';
 	}
 
 // version is current code
-define('XI_JVERSION', 		$xi_major);
-define('XI_JEXACTVERSION', 	$xi_version);
-define('XI_JFAMILY', 		$xi_family);
+define('RB_JVERSION', 		$xi_major);
+define('RB_JEXACTVERSION', 	$xi_version);
+define('RB_JFAMILY', 		$xi_family);
 
 
-define('XI_ENABLE_STATE',  1);
-define('XI_DISABLE_STATE', 0);
+define('RB_ENABLE_STATE',  1);
+define('RB_DISABLE_STATE', 0);
 
-define('XI_IS_AJAX_REQUEST', JRequest::getBool('isAjax',	false));
+define('RB_IS_AJAX_REQUEST', JRequest::getBool('isAjax',	false));

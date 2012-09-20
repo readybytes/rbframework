@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -10,18 +10,18 @@ if(defined('_JEXEC')===false) die();
 
 jimport( 'joomla.application.component.view' );
 
-abstract class XiAbstractView extends JView
+abstract class Rb_AbstractView extends JView
 {
 	
 	protected $_model 			= null; // Will be set by controller
-	public    $_component		= XI_COMPONENT_NAME;
+	public    $_component		= RB_COMPONENT_NAME;
 	protected $_tpl 			= null;
 	public 	  $options 			= array('domObject'=>'xiWindowContent','domProperty'=>'innerHTML');
 
 	function __construct($config = array())
 	{		
 		// setup rendering system
-		$this->_renderer = XiRender::getRenderer();
+		$this->_renderer = Rb_Render::getRenderer();
 
 		parent::__construct($config);
 	}
@@ -33,13 +33,13 @@ abstract class XiAbstractView extends JView
 	 */
 	public function getError($i = null, $toString = true )
 	{
-		$errObj	=	XiFactory::getErrorObject();
+		$errObj	=	Rb_Factory::getErrorObject();
 		return $errObj->getError($i, $toString);
 	}
 
 	public function setError($errMsg)
 	{
-		$errObj	=	XiFactory::getErrorObject();
+		$errObj	=	Rb_Factory::getErrorObject();
 		return $errObj->setError($errMsg);
 	}
 
@@ -57,7 +57,7 @@ abstract class XiAbstractView extends JView
 		{
 			$r = null;
 			if (!preg_match('/View(.*)/i', get_class($this), $r)) {
-				JError::raiseError (500, "XiView::getName() : Can't get or parse class name.");
+				JError::raiseError (500, "Rb_View::getName() : Can't get or parse class name.");
 			}
 			$name = strtolower( $r[1] );
 		}
@@ -74,7 +74,7 @@ abstract class XiAbstractView extends JView
 			return $this->_prefix;
 
 		$r = null;
-		XiError::assert(preg_match('/(.*)View/i', get_class($this), $r), XiText::sprintf('COM_PAYPLANS_ERROR_XIVIEW_GETPREFIX_CANT_GET_OR_PARSE_CLASSNAME', get_class($this)), XiError::ERROR);
+		Rb_Error::assert(preg_match('/(.*)View/i', get_class($this), $r), Rb_Text::sprintf('COM_PAYPLANS_ERROR_XIVIEW_GETPREFIX_CANT_GET_OR_PARSE_CLASSNAME', get_class($this)), Rb_Error::ERROR);
 
 
 		$this->_prefix  =  JString::strtolower($r[1]);
@@ -129,14 +129,14 @@ abstract class XiAbstractView extends JView
 		}
 
 		//set are you in admin or site
-		$app = XiFactory::getApplication();
+		$app = Rb_Factory::getApplication();
 		$this->_isAdmin    = $app->isAdmin();
 		$this->setTask($task);
 		$this->setTpl($tpl);
 
 		// collect task specific data,
 		// if some error, do not display the page and simply return
-		// XITODO : controller will handle the error
+		// RBFW_TODO : controller will handle the error
 		if(false === $this->$task()){
 			return false;
 		}
@@ -157,7 +157,7 @@ abstract class XiAbstractView extends JView
 
 		//load the template file
 		$output = $this->loadTemplate($this->getTpl());
-		if (XiError::isError($output)) {
+		if (Rb_Error::isError($output)) {
 			return $output;
 		}
 
@@ -204,12 +204,12 @@ abstract class XiAbstractView extends JView
 			return true;
 		}
 		
-		if(XiFactory::getApplication()->isAdmin()){
+		if(Rb_Factory::getApplication()->isAdmin()){
 			return true;
 		}
-		$app		= XiFactory::getApplication();
+		$app		= Rb_Factory::getApplication();
 		$params 	= $app->getParams();
-		$document 	= XiFactory::getDocument();		
+		$document 	= Rb_Factory::getDocument();		
 		$menus		= $app->getMenu();
 		$title		= null;
 
@@ -225,10 +225,10 @@ abstract class XiAbstractView extends JView
 			$title = $app->getCfg('sitename');
 		}
 		elseif ($app->getCfg('sitename_pagetitles', 0) == 1) {
-			$title = XiText::sprintf('JPAGETITLE', $app->getCfg('sitename'), $title);
+			$title = Rb_Text::sprintf('JPAGETITLE', $app->getCfg('sitename'), $title);
 		}
 		elseif ($app->getCfg('sitename_pagetitles', 0) == 2) {
-			$title = XiText::sprintf('JPAGETITLE', $title, $app->getCfg('sitename'));
+			$title = Rb_Text::sprintf('JPAGETITLE', $title, $app->getCfg('sitename'));
 		}
 		
 		$document->setTitle($title);
@@ -315,7 +315,7 @@ abstract class XiAbstractView extends JView
 		}
 		
 		//always shown in admin
-		if(XiFactory::getApplication()->isAdmin()==true){
+		if(Rb_Factory::getApplication()->isAdmin()==true){
 			return $this->_showAdminFooter();
 		}
 		
@@ -324,7 +324,7 @@ abstract class XiAbstractView extends JView
 				return '';
 		}
 		
-		return '<p align="center">'.XiText::_('COM_PAYPLANS_POWERED_BY') .'<a id="payplansPowerdBy" href="http://www.jpayplans.com" target="_blank" >PayPlans</a></p>';
+		return '<p align="center">'.Rb_Text::_('COM_PAYPLANS_POWERED_BY') .'<a id="payplansPowerdBy" href="http://www.jpayplans.com" target="_blank" >PayPlans</a></p>';
 	}
 
 	protected function _showAdminFooter()
@@ -332,12 +332,12 @@ abstract class XiAbstractView extends JView
 		ob_start()?>
        
         <div class="powered-by">
-	       <?php echo XiText::_('COM_PAYPLANS_POWERED_BY') .'<a id="payplans-powered-by" href="http://www.jpayplans.com" target="_blank" >PayPlans</a><sup>TM</sup>';?>
-		   <?php echo ' | '.XiText::_('COM_PAYPLANS_FOOTER_VERSION').' <strong>'.PAYPLANS_VERSION .'</strong> | '. XiText::_('COM_PAYPLANS_FOOTER_BUILD').PAYPLANS_REVISION; ?>	  	
+	       <?php echo Rb_Text::_('COM_PAYPLANS_POWERED_BY') .'<a id="payplans-powered-by" href="http://www.jpayplans.com" target="_blank" >PayPlans</a><sup>TM</sup>';?>
+		   <?php echo ' | '.Rb_Text::_('COM_PAYPLANS_FOOTER_VERSION').' <strong>'.PAYPLANS_VERSION .'</strong> | '. Rb_Text::_('COM_PAYPLANS_FOOTER_BUILD').PAYPLANS_REVISION; ?>	  	
         	<?php echo '<br />'
-        		.XiText::_('COM_PAYPLANS_FOOTER_MESSAGE')
-        		.'<a href="http://bit.ly/lrECHY">'.XiText::_('COM_PAYPLANS_FOOTER_MESSAGE_LINK').'</a>'
-        		.XiText::_('COM_PAYPLANS_FOOTER_MESSAGE_JED'); 
+        		.Rb_Text::_('COM_PAYPLANS_FOOTER_MESSAGE')
+        		.'<a href="http://bit.ly/lrECHY">'.Rb_Text::_('COM_PAYPLANS_FOOTER_MESSAGE_LINK').'</a>'
+        		.Rb_Text::_('COM_PAYPLANS_FOOTER_MESSAGE_JED'); 
         	?>
 	    </div>
 		<?php 
@@ -359,35 +359,35 @@ abstract class XiAbstractView extends JView
 	protected function _adminToolbarTitle()
 	{
 		// Set the titlebar text
-		XiHelperToolbar::title(XiText::_('COM_PAYPLANS_SM_'.JString::strtoupper($this->getName())), "xi-".$this->getName().".png");
+		Rb_HelperToolbar::title(Rb_Text::_('COM_PAYPLANS_SM_'.JString::strtoupper($this->getName())), "xi-".$this->getName().".png");
 	}
 
 	protected function _adminGridToolbar()
 	{
-		XiHelperToolbar::addNewX('new');
-		XiHelperToolbar::editListX();
-		XiHelperToolbar::customX( 'copy', 'copy.png', 'copy_f2.png', 'COM_PAYPLANS_TOOLBAR_COPY', true );
-		XiHelperToolbar::divider();
-		XiHelperToolbar::publish();
-		XiHelperToolbar::unpublish();
-		XiHelperToolbar::divider();
-		XiHelperToolbar::delete();
-		XiHelperToolbar::divider();
-		XiHelperToolbar::searchpayplans();
+		Rb_HelperToolbar::addNewX('new');
+		Rb_HelperToolbar::editListX();
+		Rb_HelperToolbar::customX( 'copy', 'copy.png', 'copy_f2.png', 'COM_PAYPLANS_TOOLBAR_COPY', true );
+		Rb_HelperToolbar::divider();
+		Rb_HelperToolbar::publish();
+		Rb_HelperToolbar::unpublish();
+		Rb_HelperToolbar::divider();
+		Rb_HelperToolbar::delete();
+		Rb_HelperToolbar::divider();
+		Rb_HelperToolbar::searchpayplans();
 
 	}
 
 	protected function _adminEditToolbar()
 	{   
 	    $model = $this->getModel();
-		XiHelperToolbar::apply();
-		XiHelperToolbar::save();
-		XiHelperToolbar::savenew();
-		XiHelperToolbar::cancel();
-		XiHelperToolbar::divider();
+		Rb_HelperToolbar::apply();
+		Rb_HelperToolbar::save();
+		Rb_HelperToolbar::savenew();
+		Rb_HelperToolbar::cancel();
+		Rb_HelperToolbar::divider();
 	  	//don't display delete button when creating new instance of object 
 	    if($model->getId() != null){
-		   XiHelperToolbar::deleteRecord();
+		   Rb_HelperToolbar::deleteRecord();
 		 }
 		
 	}
@@ -410,13 +410,13 @@ abstract class XiAbstractView extends JView
 
 		// add menu for group if config option is enable
 		if(!in_array('group', self::$_submenus)
-			&& isset(XiFactory::getConfig()->useGroupsForPlan) 
-			&& XiFactory::getConfig()->useGroupsForPlan){
+			&& isset(Rb_Factory::getConfig()->useGroupsForPlan) 
+			&& Rb_Factory::getConfig()->useGroupsForPlan){
 			array_splice(self::$_submenus, 2, 0, "group");
 		}
 	
 		foreach(self::$_submenus as $menu){
-			XiHelperToolbar::addSubMenu($menu,$selMenu);
+			Rb_HelperToolbar::addSubMenu($menu,$selMenu);
 		}
 		return $this;
 	}
@@ -431,7 +431,7 @@ abstract class XiAbstractView extends JView
 			$url .= '&task='.$task;
 		}
 		
-		$this->assign('uri', XiRoute::_($url));
+		$this->assign('uri', Rb_Route::_($url));
 
 		//setup state
 		$this->assign( 'state', $this->getModel()->getState());
@@ -506,9 +506,9 @@ abstract class XiAbstractView extends JView
 	
 	protected function _getTemplatePath($layout = 'default')
     {
-    	$app 		= XiFactory::getApplication();
+    	$app 		= Rb_Factory::getApplication();
     	$view 		= JString::strtolower($this->getName());
-    	$pTemplate	= 'default'; 			// XITODO : the template being used
+    	$pTemplate	= 'default'; 			// RBFW_TODO : the template being used
     	$pDefaultTemplate = 'default'; 		// default template
 		$jTemplate 	= $app->getTemplate(); 	// joomla template
 
@@ -519,7 +519,7 @@ abstract class XiAbstractView extends JView
         {
         	$paths = array();
         
-        	$joomlaTemplatePath = JPATH_THEMES.DS.$jTemplate.DS.'html'.DS.constant(JString::strtoupper($this->_component).'_COMPONENT_NAME');
+        	$joomlaTemplatePath = JPATH_THEMES.'/'.$jTemplate.'/html'.'/'.constant(JString::strtoupper($this->_component).'_COMPONENT_NAME');
 			if($app->isAdmin()){
 				$payplanTemplatePath = PAYPLANS_PATH_TEMPLATE_ADMIN;
 			}
@@ -528,22 +528,22 @@ abstract class XiAbstractView extends JView
 			}
 
 			// joomla template override
-        	$paths[] = $joomlaTemplatePath.DS.$view;
+        	$paths[] = $joomlaTemplatePath.'/'.$view;
             $paths[] = $joomlaTemplatePath;
-        	$paths[] = $joomlaTemplatePath.DS.'_partials';
+        	$paths[] = $joomlaTemplatePath.'/_partials';
         	
 			// selected template path
-			$paths[] = $payplanTemplatePath.DS.$pTemplate.DS.$view;
-			$paths[] = $payplanTemplatePath.DS.$pTemplate;
-			$paths[] = $payplanTemplatePath.DS.$pTemplate.DS.'_partials';
+			$paths[] = $payplanTemplatePath.'/'.$pTemplate.'/'.$view;
+			$paths[] = $payplanTemplatePath.'/'.$pTemplate;
+			$paths[] = $payplanTemplatePath.'/'.$pTemplate.'/_partials';
 
 			// default template path			
-			$paths[] = $payplanTemplatePath.DS.$pDefaultTemplate.DS.$view;
-			$paths[] = $payplanTemplatePath.DS.$pDefaultTemplate;
-			$paths[] = $payplanTemplatePath.DS.$pDefaultTemplate.DS.'_partials';
+			$paths[] = $payplanTemplatePath.'/'.$pDefaultTemplate.'/'.$view;
+			$paths[] = $payplanTemplatePath.'/'.$pDefaultTemplate;
+			$paths[] = $payplanTemplatePath.'/'.$pDefaultTemplate.'/_partials';
 
 			// finally default partials
-			$paths[] = PAYPLANS_PATH_TEMPLATE.DS.$pDefaultTemplate.DS.'_partials';
+			$paths[] = PAYPLANS_PATH_TEMPLATE.'/'.$pDefaultTemplate.'/_partials';
         }
         
         return $paths;

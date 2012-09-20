@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license	GNU/GPL, see LICENSE.php
 * @package	PayPlans
 * @subpackage	Router
@@ -8,14 +8,14 @@
 */
 if(defined('_JEXEC')===false) die();
 
-abstract class XiRouter
+abstract class Rb_Router
 {
     protected $_component = '';
     protected $_menus = null;
     
-    public static function getInstance($name, $prefix='Xi')
+    public static function getInstance($name, $prefix='Rb_')
     {
-        return XiFactory::getInstance($name, '', $prefix);
+        return Rb_Factory::getInstance($name, '', $prefix);
     }
     
     // Load component menu records

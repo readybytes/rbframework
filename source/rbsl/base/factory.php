@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -8,7 +8,7 @@
 */
 if(defined('_JEXEC')===false) die();
 
-class XiFactory extends XiAbstractFactory
+class Rb_Factory extends Rb_AbstractFactory
 {
 	static protected $_dashboardMessage = array();
 	public static function getDashboardMessage()
@@ -33,7 +33,7 @@ class XiFactory extends XiAbstractFactory
 	{
 		// add chart javascript
 		if(self::$_chartInitilized  == false){
-			XiHtml::script(self::$_chartScript,'https://www.google.com/');
+			Rb_Html::script(self::$_chartScript,'https://www.google.com/');
 			self::$_chartInitilized =true;
 		}
 		 
@@ -43,8 +43,8 @@ class XiFactory extends XiAbstractFactory
 	// Create a new chart object specific
 	public static function getChart($type='annotatedtimeline' , $refresh=TRUE)
 	{
-		// classname will be Xi + Chart + $type 
-		return XiFactory::getInstance($type, 'Chart', 'Xi', $refresh);
+		// classname will be Rb_ + Chart + $type 
+		return Rb_Factory::getInstance($type, 'Chart', 'Rb_', $refresh);
 	}
 	
 	static $currency = null; 
@@ -52,7 +52,7 @@ class XiFactory extends XiAbstractFactory
 	{	
 		// if currency loaded loaded
 		if(self::$currency === null){
-			self::$currency = XiFactory::getInstance('currency', 'model')
+			self::$currency = Rb_Factory::getInstance('currency', 'model')
 										->loadRecords();
 		
 		}
@@ -74,7 +74,7 @@ class XiFactory extends XiAbstractFactory
 	{	
 		// if country loaded 
 		if(self::$country === null){
-			self::$country = XiFactory::getInstance('country', 'model')
+			self::$country = Rb_Factory::getInstance('country', 'model')
 										->loadRecords();
 		
 		}

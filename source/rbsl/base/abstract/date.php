@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -8,8 +8,8 @@
 */
 if(defined('_JEXEC')===false) die();
 
-//XITODO : Improve it for our purpose
-class XiAbstractDate
+//RBFW_TODO : Improve it for our purpose
+class Rb_AbstractDate
 {
 	/**
 	 * Unix timestamp
@@ -293,7 +293,7 @@ class XiAbstractDate
 	//
 	public function add($time)
 	{
-		XiError::assert(is_numeric($time));
+		Rb_Error::assert(is_numeric($time));
 		$this->_date += $time ;
 		return $this;
 	}
@@ -310,7 +310,7 @@ class XiAbstractDate
 
 	public function bind($timestamp)
 	{
-		//XITODO : check if strinf or timetamp, and work accordingly
+		//RBFW_TODO : check if strinf or timetamp, and work accordingly
 		// gives negative number on 64-bit machine so check here for timestamp
 		 if($timestamp === '0000-00-00 00:00:00'){
 	     	$this->_date = false;

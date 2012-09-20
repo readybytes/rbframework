@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -8,7 +8,7 @@
 */
 if(defined('_JEXEC')===false) die();
 
-abstract class XiAbstractRouteBase extends JRoute
+abstract class Rb_AbstractRouteBase extends JRoute
 {
 	static protected $_prefix = false;
 	/*
@@ -18,9 +18,9 @@ abstract class XiAbstractRouteBase extends JRoute
 	{		
 		$oldUrl = $url;
 		
-		if(XiFactory::getApplication()->isAdmin() == false
+		if(Rb_Factory::getApplication()->isAdmin() == false
 			&& JString::strpos($oldUrl, 'view=payment') !== false 
-			&& XiFactory::getConfig()->https ){
+			&& Rb_Factory::getConfig()->https ){
 				return parent::_($url, $xhtml, true);
 		}
 		
@@ -29,5 +29,5 @@ abstract class XiAbstractRouteBase extends JRoute
 }
 
 
-// Include the Joomla Version Specific class, which will ad XiAbstractRoute class automatically
-XiError::assert(class_exists('XiAbstractJ'.PAYPLANS_JVERSION_FAMILY.'Route',true), XiError::ERROR);
+// Include the Joomla Version Specific class, which will ad Rb_AbstractRoute class automatically
+Rb_Error::assert(class_exists('Rb_AbstractJ'.PAYPLANS_JVERSION_FAMILY.'Route',true), Rb_Error::ERROR);

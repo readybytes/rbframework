@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -8,7 +8,7 @@
 */
 if(defined('_JEXEC')===false) die();
 
-class XiFileTree
+class Rb_FileTree
 {
 	static $tree_class_not_loaded=true;
 	
@@ -27,7 +27,7 @@ class XiFileTree
 	    ?>
 	    	if(defined('_JEXEC')===false) die();
 	    	
-	    	class XiFileTreeProvider
+	    	class Rb_FileTreeProvider
 	    	{
 	    		static $_filetree =  <?php echo $data; ?> ;
 		    	static $_fileroot =  '<?php echo $root; ?>' ;
@@ -48,7 +48,7 @@ class XiFileTree
 	    ob_end_clean();
 	    
 	    $tmpPath = JFactory::getConfig()->getValue('config.tmp_path');
-	    $filename = $tmpPath.DS.'_filetree.php';
+	    $filename = $tmpPath.'/_filetree.php';
 	    JFile::write($filename, $filecontent);
 	}
 	
@@ -59,16 +59,16 @@ class XiFileTree
 		if(self::$tree_class_not_loaded)
 		{
 			$tmpPath = JFactory::getConfig()->get('config.tmp_path');
-			$file = $tmpPath.DS.'_filetree.php';
+			$file = $tmpPath.'/_filetree.php';
 		    if(JFile::exists($file) == false){
-		    	$file = dirname(__FILE__).DS.'_filetree.php'; 
+		    	$file = dirname(__FILE__).'/_filetree.php'; 
 		    }
 		    
 			include_once $file;
 			self::$tree_class_not_loaded = false;
 		}
 		
-		return XiFileTreeProvider::get($index);
+		return Rb_FileTreeProvider::get($index);
 	}
 	
 	static private function folder_tree($pattern = '*', $flags = 0, $path = false, $depth = 0, $level = 0, &$root, &$gtree)

@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -8,8 +8,8 @@
 */
 if(defined('_JEXEC')===false) die();
 
-//XITODO : remove this class
-class XiHelperPlugin
+//RBFW_TODO : remove this class
+class Rb_HelperPlugin
 {
 	/**
 	 *
@@ -19,8 +19,8 @@ class XiHelperPlugin
 	 */
 	static function trigger($eventName,array &$data =array(), $prefix='')
 	{
-		//XITODO : Filter event name, must not start from _
-		return XiHelperJoomla::triggerPlugin($eventName, $data, $prefix);
+		//RBFW_TODO : Filter event name, must not start from _
+		return Rb_HelperJoomla::triggerPlugin($eventName, $data, $prefix);
 	}
 
 	/**
@@ -29,21 +29,21 @@ class XiHelperPlugin
 	 */
 	static function loadPlugins($type='payplans')
 	{
-		return XiHelperJoomla::loadPlugins($type);
+		return Rb_HelperJoomla::loadPlugins($type);
 	}
 
 	public static function changeState($element, $folder = 'system', $state=1)
 	{
-		return XiHelperJoomla::changePluginState($element, $folder, $state);
+		return Rb_HelperJoomla::changePluginState($element, $folder, $state);
 	}
 
 	public static function getStatus($element, $folder = 'system')
 	{
-		return XiHelperJoomla::getPluginStatus($element,$folder);
+		return Rb_HelperJoomla::getPluginStatus($element,$folder);
 	}
 	
 	public static function getPluginInstance($type, $name)
 	{
-		return XiHelperJoomla::getPluginInstance($type, $name);
+		return Rb_HelperJoomla::getPluginInstance($type, $name);
 	}
 }

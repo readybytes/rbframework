@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -19,7 +19,7 @@ jimport('joomla.plugin.plugin');
  */
 
 
-class XiPlugin extends JPlugin
+class Rb_Plugin extends JPlugin
 {
 	protected $_tplVars = array();
 
@@ -31,7 +31,7 @@ class XiPlugin extends JPlugin
 		$this->_initalize();
 		
 		//load language file
-		$path = XiHelperJoomla::getPluginPath($this);
+		$path = Rb_HelperJoomla::getPluginPath($this);
 		$this->loadLanguage('', $path);
 	}
 
@@ -43,7 +43,7 @@ class XiPlugin extends JPlugin
 		$type = JString::ucfirst(JString::strtolower($type));
 
 		//simply check if I am instance of plugin type
-		return is_a($this, 'XiPlugin'.$type);
+		return is_a($this, 'Rb_Plugin'.$type);
 	}
 
 	protected function _initalize(Array $options= array())
@@ -91,7 +91,7 @@ class XiPlugin extends JPlugin
 		$paths = $this->_getTemplatePath($this->_name, $type);
 		$template = JPath::find($paths, $file.'.php');
 		if($template == false){
-			XiError::raiseError(500, "Template file : $tpl missing for app $type");
+			Rb_Error::raiseError(500, "Template file : $tpl missing for app $type");
 		}
 		
 		// Support tmpl vars
@@ -119,18 +119,18 @@ class XiPlugin extends JPlugin
     protected function _getTemplatePath($plugin=null, $type='payplans')
     {
 
-        $app = XiFactory::getApplication();
+        $app = Rb_Factory::getApplication();
 
         //Security Checks : clean paths
         $plugin = preg_replace('/[^A-Z0-9_\.-]/i', '', $plugin);
 
-        //XITODO : Move paths to addPath function, so that it can be extended.
+        //RBFW_TODO : Move paths to addPath function, so that it can be extended.
         // get the template and default paths for the layout
-        $paths[] = JPATH_THEMES.DS.$app->getTemplate().DS.'html'.DS.PAYPLANS_COMPONENT_NAME.DS
-        		 .'_plg'.DS.$type.DS.$plugin;
+        $paths[] = JPATH_THEMES.'/'.$app->getTemplate().'/html'.'/'.PAYPLANS_COMPONENT_NAME.DS
+        		 .'_plg'.'/'.$type.'/'.$plugin;
 
-        $paths[] = XiHelperJoomla::getPluginPath($this).DS.'tmpl';
-        $paths[] = PAYPLANS_PATH_TEMPLATE.DS.'default'.DS.'_partials';
+        $paths[] = Rb_HelperJoomla::getPluginPath($this).'/tmpl';
+        $paths[] = PAYPLANS_PATH_TEMPLATE.'/default'.'/_partials';
 
         //find the path and return
         return $paths;

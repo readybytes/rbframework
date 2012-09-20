@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -8,7 +8,7 @@
 */
 if(defined('_JEXEC')===false) die();
 
-class XiAjaxResponse
+class Rb_AjaxResponse
 {
 
 	protected $_response = array();
@@ -21,7 +21,7 @@ class XiAjaxResponse
 
 	static function &getInstance()
 	{
-		$res = new XiAjaxResponse();
+		$res = new Rb_AjaxResponse();
 		return $res;
 	}
 //	function object_to_array($obj)
@@ -167,7 +167,7 @@ class XiAjaxResponse
 	 */
 	function sendResponse()
 	{
-		//XITODO : Trigger Event.
+		//RBFW_TODO : Trigger Event.
 		$isIframe = (bool) JRequest::getVar('isIframe', false);
 
 		//  Send text/html if we're using iframe

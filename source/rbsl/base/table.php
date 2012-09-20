@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -8,12 +8,12 @@
 */
 if(defined('_JEXEC')===false) die();
 
-abstract class XiTable extends JTable
+abstract class Rb_Table extends JTable
 {
 	//Preety name to use it everywhere about identity
 	protected $_name = null;
 	protected $_needCheckinCheckout = false;
-    protected $_component	= XI_COMPONENT_NAME;
+    protected $_component	= RB_COMPONENT_NAME;
     protected $_prefix = null;
 
 	public function reset($resetId=false)
@@ -47,7 +47,7 @@ abstract class XiTable extends JTable
 
 		$r = null;
 		if (!preg_match('/Table(.*)/i', get_class($this), $r)) {
-			JError::raiseError (500, "XiTable : Can't get or parse class name.");
+			JError::raiseError (500, "Rb_Table : Can't get or parse class name.");
 		}
 		
 		$this->_name = strtolower( $r[1] );
@@ -61,13 +61,13 @@ abstract class XiTable extends JTable
 	 */
 	public function getError($i = null, $toString = true )
 	{
-		$errObj	=	XiFactory::getErrorObject();
+		$errObj	=	Rb_Factory::getErrorObject();
 		return $errObj->getError($i, $toString);
 	}
 
 	public function setError($errMsg)
 	{
-		$errObj	=	XiFactory::getErrorObject();
+		$errObj	=	Rb_Factory::getErrorObject();
 		return $errObj->setError($errMsg);
 	}
 
@@ -81,7 +81,7 @@ abstract class XiTable extends JTable
 
 		$r = null;
 		if (!preg_match('/(.*)Table/i', get_class($this), $r)) {
-			XiError::raiseError (500, "XiModel::getName() : Can't get or parse class name.");
+			Rb_Error::raiseError (500, "Rb_Model::getName() : Can't get or parse class name.");
 		}
 
 		$this->_prefix  =  JString::strtolower($r[1]);
@@ -102,13 +102,13 @@ abstract class XiTable extends JTable
 		}
 
 		if($db===null){
-			$db	=	XiFactory::getDBO();
+			$db	=	Rb_Factory::getDBO();
 		}
 
-		if(XiHelperTable::isTableExist($tblFullName)===false)
+		if(Rb_HelperTable::isTableExist($tblFullName)===false)
 		{	
-			//XITODO : raise exception
-			$this->setError(XiText::_("COM_PAYPLANS_NO_TABLE_EXISTS").' : '.$this->_tbl);
+			//RBFW_TODO : raise exception
+			$this->setError(Rb_Text::_("COM_PAYPLANS_NO_TABLE_EXISTS").' : '.$this->_tbl);
 			return false;
 		}
 		//call parent to build the table object
@@ -155,14 +155,14 @@ abstract class XiTable extends JTable
 		static $fields = null;
 
 		//clean cache if required
-		if(XiFactory::cleanStaticCache()){
+		if(Rb_Factory::cleanStaticCache()){
 			$fields = null;
 		}
 
 		$tableName 	= $this->getTableName();
 
 		if($fields === null || isset($fields[$tableName]) ===false){
-			if(XiHelperTable::isTableExist($tableName)===FALSE)
+			if(Rb_HelperTable::isTableExist($tableName)===FALSE)
 			{
 				$this->setError("Table $this->_tbl does not exist");
 				return null;
@@ -213,7 +213,7 @@ abstract class XiTable extends JTable
 		$this->reset();
 		$db =& $this->getDBO();
 
-		// XITODO : Add Testcase
+		// RBFW_TODO : Add Testcase
 		$conditions = array();
 		foreach($oid as $key=> $value){
 			$conditions[]  = ' '. $db->nameQuote($key) . ' = '. $db->Quote($value);
@@ -273,7 +273,7 @@ abstract class XiTable extends JTable
 			$this->ordering = $this->_db->loadResult() + 1;
 		}
 
-		$now = new XiDate();
+		$now = new Rb_Date();
 		
 		// It must be required when migration is running from any subscription system to payplans system 
 		// and we need to insert manually created and modified date. 

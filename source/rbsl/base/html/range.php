@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -8,7 +8,7 @@
 */
 if(defined('_JEXEC')===false) die();
 
-class XiHtmlRange
+class Rb_HtmlRange
 {	
 	function filter($name, $view, Array $filters = array(), $type="date", $prefix='filter_payplans')
 	{
@@ -16,8 +16,8 @@ class XiHtmlRange
 		$elementValue0 = @array_shift($filters[$name]);
 		$elementValue1 = @array_shift($filters[$name]);
 		
-		$from  = '<label class="pp-grid_3">'.XiText::_('COM_PAYPLANS_FILTERS_FROM').'</label>';
-		$to    = '<label class="pp-grid_3">'.XiText::_('COM_PAYPLANS_FILTERS_TO').'</label>';
+		$from  = '<label class="pp-grid_3">'.Rb_Text::_('COM_PAYPLANS_FILTERS_FROM').'</label>';
+		$to    = '<label class="pp-grid_3">'.Rb_Text::_('COM_PAYPLANS_FILTERS_TO').'</label>';
 			
 			
 		if(JString::strtolower($type)=="date"){

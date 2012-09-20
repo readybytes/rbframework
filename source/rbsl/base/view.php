@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -8,7 +8,7 @@
 */
 if(defined('_JEXEC')===false) die();
 
-abstract class XiView extends XiAbstractView
+abstract class Rb_View extends Rb_AbstractView
 {
 	public function getDynamicJavaScript()
 	{
@@ -79,9 +79,9 @@ abstract class XiView extends XiAbstractView
 		$heading = "COM_PAYPLANS_ADMIN_BLANK_".JString::strtoupper($this->getName());
 		$msg = "COM_PAYPLANS_ADMIN_BLANK_".JString::strtoupper($this->getName())."_MSG";
 		
-		$this->assign('heading', XiText::_($heading));
-		$this->assign('msg', XiText::_($msg));
-		$this->assign('filters', $model->getState(XiHelperContext::getObjectContext($model)));
+		$this->assign('heading', Rb_Text::_($heading));
+		$this->assign('msg', Rb_Text::_($msg));
+		$this->assign('filters', $model->getState(Rb_HelperContext::getObjectContext($model)));
 		
 		$this->setTpl('blank');
 		
@@ -101,7 +101,7 @@ abstract class XiView extends XiAbstractView
 		$this->assign('filter_order', $model->getState('filter_order'));
 		$this->assign('filter_order_Dir', $model->getState('filter_order_Dir'));
 		$this->assign('limitstart', $model->getState('limitstart'));
-		$this->assign('filters', $model->getState(XiHelperContext::getObjectContext($model)));
+		$this->assign('filters', $model->getState(Rb_HelperContext::getObjectContext($model)));
 		return true;
 	}
 
@@ -133,7 +133,7 @@ abstract class XiView extends XiAbstractView
 
 		foreach($modules as $module){
 				// disable title
-				//XITODO : only if required
+				//RBFW_TODO : only if required
 				//$module->showtitle = 0;
 				$modulehtml[$module->title]=JModuleHelper::renderModule($module, $attribs);
 		}
@@ -150,7 +150,7 @@ abstract class XiView extends XiAbstractView
 
     //this will set popup window title
     function _setAjaxWinTitle($title){
-    	XiFactory::getAjaxResponse()->addScriptCall('xi.ui.dialog.title',$title);
+    	Rb_Factory::getAjaxResponse()->addScriptCall('xi.ui.dialog.title',$title);
     }
 
     //this will set action/submit button on bottom of popup window
@@ -173,19 +173,19 @@ abstract class XiView extends XiAbstractView
     		return false;
     	}
 
-    	XiFactory::getAjaxResponse()->addScriptCall('xi.ui.dialog.button',$actions);
+    	Rb_Factory::getAjaxResponse()->addScriptCall('xi.ui.dialog.button',$actions);
     	return true;
     }
 
     function _setAjaxWinHeight($height){
-    	XiFactory::getAjaxResponse()->addScriptCall('xi.ui.dialog.height',$height);
+    	Rb_Factory::getAjaxResponse()->addScriptCall('xi.ui.dialog.height',$height);
     }
     
 	function _setAjaxWinWidth($width){
-    	XiFactory::getAjaxResponse()->addScriptCall('xi.ui.dialog.width',$width);
+    	Rb_Factory::getAjaxResponse()->addScriptCall('xi.ui.dialog.width',$width);
     }
     
     function _setAjaxWinAutoclose($time){
-    	XiFactory::getAjaxResponse()->addScriptCall('xi.ui.dialog.autoclose',$time);
+    	Rb_Factory::getAjaxResponse()->addScriptCall('xi.ui.dialog.autoclose',$time);
     }
 }

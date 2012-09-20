@@ -1,9 +1,9 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
-* @subpackage	XiFramework
+* @subpackage	Rb_Framework
 * @contact 		shyam@readybytes.in
 */
 if(defined('_JEXEC')===false) die();
@@ -13,7 +13,7 @@ if(defined('_JEXEC')===false) die();
  * @author Shyam
  *
  */
-class XiWidget
+class Rb_Widget
 {
 	protected $_id 		= null;
 	public function id($id=null)
@@ -21,7 +21,7 @@ class XiWidget
 		// get 
 		if($id === null){
 			// ensure js compatibility
-			return XiHelperUtils::jsCompatibleId($this->_id);
+			return Rb_HelperUtils::jsCompatibleId($this->_id);
 		}
 		
 		// set
@@ -118,7 +118,7 @@ class XiWidget
 	// output javascript, to set widget options
 	protected function _renderOption()
 	{
-		return 'var options = '.XiHelperUtils::fixJSONDates(json_encode($this->_options)).';';
+		return 'var options = '.Rb_HelperUtils::fixJSONDates(json_encode($this->_options)).';';
 	}
 
 	
@@ -188,7 +188,7 @@ class XiWidget
 	public function draw()
 	{
       //add script to document
-      XiFactory::getDocument()->addScriptDeclaration($this->_render());
+      Rb_Factory::getDocument()->addScriptDeclaration($this->_render());
       
       // render canvas which should be echo'ed
       return $this->_renderCanvas();
@@ -197,7 +197,7 @@ class XiWidget
 	static function _initWidget()
 	{      
       // add script to document
-      XiFactory::getDocument()->addScriptDeclaration(
+      Rb_Factory::getDocument()->addScriptDeclaration(
       	'
       	// global queue to hold widgets
       	var payplans_widget_queue = [];
@@ -216,4 +216,4 @@ class XiWidget
 }
 
 // load widget loader scripts
-XiWidget::_initWidget();
+Rb_Widget::_initWidget();

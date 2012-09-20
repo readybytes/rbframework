@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -8,7 +8,7 @@
 */
 if(defined('_JEXEC')===false) die();
 
-class XiAbstractJ15HelperJoomla extends XiAbstractHelperJoomlaBase
+class Rb_AbstractJ15HelperJoomla extends Rb_AbstractHelperJoomlaBase
 {
 	public static function changePluginState($element, $folder = 'system', $state=parent::ENABLE)
 	{
@@ -26,7 +26,7 @@ class XiAbstractJ15HelperJoomla extends XiAbstractHelperJoomlaBase
 	
 	public static function getPluginPath($plugin)
 	{
-		$path  = JPATH_PLUGINS.DS.$plugin->get('_type').DS.$plugin->get('_name');
+		$path  = JPATH_PLUGINS.'/'.$plugin->get('_type').'/'.$plugin->get('_name');
 		return $path;
 	}
 	
@@ -38,7 +38,7 @@ class XiAbstractJ15HelperJoomla extends XiAbstractHelperJoomlaBase
 					  . ( ($published !==null) ? " AND `published`= $published " : " ")
 					  . ( ($alias !==null) ? " AND `alias`= '$alias' " : " ") 
 					  ;
-		$db = XiFactory::getDBO();
+		$db = Rb_Factory::getDBO();
 		$db->setQuery($strQuery);
 		return $db->loadResult() ? true : false;
 	}
@@ -49,7 +49,7 @@ class XiAbstractJ15HelperJoomla extends XiAbstractHelperJoomlaBase
 			return true;
 		}
 		
-		$db = XiFactory::getDBO();	
+		$db = Rb_Factory::getDBO();	
 		$strQuery	= "INSERT IGNORE INTO `#__menu` (`menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) "
 					  ."VALUES ('$menu', '$title', '$alias', '$link', 'component', 1, 0, $cid, 0, 500, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, '', 0, 0, 0)"
 					  ;
@@ -71,7 +71,7 @@ class XiAbstractJ15HelperJoomla extends XiAbstractHelperJoomlaBase
 	
 	public static  function isAdmin($userId)
 	{
-		$userType = XiFactory::getUser($userId)->usertype;
+		$userType = Rb_Factory::getUser($userId)->usertype;
 		if($userType == 'Super Administrator'){
 			return true;
 		}
@@ -95,14 +95,14 @@ class XiAbstractJ15HelperJoomla extends XiAbstractHelperJoomlaBase
 	
 	public static function addUserToGroup($userId, $group)
 	{
-		$user = XiFactory::getUser($userId);
+		$user = Rb_Factory::getUser($userId);
 		
 		if(empty($group)){
 			return true;
 		}
 		// when subscriber is super administrator do not change its usertype and gid
-		if(XiHelperJoomla::isAdmin($userId) ==false){
-			$authorize	= XiFactory::getACL();
+		if(Rb_HelperJoomla::isAdmin($userId) ==false){
+			$authorize	= Rb_Factory::getACL();
 			$user->set('usertype', $group);
 			$user->set('gid', $authorize->get_group_id( '', $group, 'ARO' ));
 		}
@@ -152,8 +152,8 @@ class XiAbstractJ15HelperJoomla extends XiAbstractHelperJoomlaBase
 	public static function getUserTimeZone($config = null, $user = null)
 	{
 		//$user and $config is for testing purpose only
-		$config = ($config==null) ? XiFactory::getConfig() 	: $config;
-		$my		= ($user==null)   ? XiFactory::getUser() 	: $user;
+		$config = ($config==null) ? Rb_Factory::getConfig() 	: $config;
+		$my		= ($user==null)   ? Rb_Factory::getUser() 	: $user;
 		
 		//default offset
 		$offset = $config->offset;
@@ -167,7 +167,7 @@ class XiAbstractJ15HelperJoomla extends XiAbstractHelperJoomlaBase
 	}
 	public static function getJoomlaUserGroups($userid)
 	{
-		$db = XiFactory::getDBO();
+		$db = Rb_Factory::getDBO();
 		$db->setQuery( 'SELECT `usertype`'
 			. ' FROM #__users'
 			. ' WHERE `id` = \'' . $userid . '\'');
@@ -176,10 +176,10 @@ class XiAbstractJ15HelperJoomla extends XiAbstractHelperJoomlaBase
 
 	public static function getUserEditLink($user)
 	{
-		if(XiFactory::getApplication()->isAdmin()){
-			return XiRoute::_("index.php?option=com_users&view=user&task=edit&cid=".$user->getId(), false);
+		if(Rb_Factory::getApplication()->isAdmin()){
+			return Rb_Route::_("index.php?option=com_users&view=user&task=edit&cid=".$user->getId(), false);
 		}
-		return XiRoute::_("index.php?option=com_user&view=user&task=edit&cid=".$user->getId(), false);
+		return Rb_Route::_("index.php?option=com_user&view=user&task=edit&cid=".$user->getId(), false);
 	}
 	
 	// get Joomla section
@@ -196,7 +196,7 @@ class XiAbstractJ15HelperJoomla extends XiAbstractHelperJoomlaBase
 	
 	public static function getUsersToSendSystemEmail()
 	{
-		$db = XiFactory::getDBO();
+		$db = Rb_Factory::getDBO();
 		//get all super administrator
 		$query = "SELECT *
 				FROM #__users
@@ -209,4 +209,4 @@ class XiAbstractJ15HelperJoomla extends XiAbstractHelperJoomlaBase
 	}
 }
 
-class XiAbstractHelperJoomla extends XiAbstractJ15HelperJoomla{}
+class Rb_AbstractHelperJoomla extends Rb_AbstractJ15HelperJoomla{}

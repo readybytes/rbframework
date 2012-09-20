@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -11,10 +11,10 @@ if(defined('_JEXEC')===false) die();
 jimport('joomla.filesystem.folder');
 jimport('joomla.filesystem.file');
 
-class XiHelperLoader
+class Rb_HelperLoader
 {
 	//here we will try to register all MC and libs and helpers
-	static function addAutoLoadFolder($folder, $type, $prefix='Xi')
+	static function addAutoLoadFolder($folder, $type, $prefix='Rb_')
 	{
 		if(empty($folder))
 			return;
@@ -22,7 +22,7 @@ class XiHelperLoader
 		if (!is_dir($folder))
 			return;
 		
-		$filetree = XiFileTree::getFileTree($folder);
+		$filetree = Rb_FileTree::getFileTree($folder);
 		if(is_array($filetree)){
 			$files		=	isset($filetree['files'])?$filetree['files']:false;
 			$folders	=	isset($filetree['folders'])?$filetree['folders']:false;
@@ -34,20 +34,20 @@ class XiHelperLoader
 			
 		if(is_array($files)){
 			foreach($files as $file ){
-				//e.g. XiController + Product
-				// XiPerformance : As Class names are not case sensitive so no need to use JString::ucfirst 
+				//e.g. Rb_Controller + Product
+				// Rb_Performance : As Class names are not case sensitive so no need to use JString::ucfirst 
 				$className 	= $prefix
 							. $type
 							. JFile::stripExt($file);
-				//echo " <br /> Loading $className ".$folder.DS.$file;
-				JLoader::register($className, $folder.DS.$file);
+				//echo " <br /> Loading $className ".$folder.'/'.$file;
+				JLoader::register($className, $folder.'/'.$file);
 			}
 		}
 		
 		if(is_array($folders)){
 			foreach($folders as $subfolder ){
 				$subtype		= 	$type.$subfolder;
-				$subfolderpath	=	$folder.DS.$subfolder;
+				$subfolderpath	=	$folder.'/'.$subfolder;
 				self::addAutoLoadFolder($subfolderpath , $subtype , $prefix);
 			}
 		}
@@ -60,9 +60,9 @@ class XiHelperLoader
 	}
 
 	/* View are stored very differently */
-	static function addAutoLoadViews($baseFolders, $format, $prefix='Xi')
+	static function addAutoLoadViews($baseFolders, $format, $prefix='Rb_')
 	{
-		$filetree = XiFileTree::getFileTree($baseFolders);
+		$filetree = Rb_FileTree::getFileTree($baseFolders);
 		if(is_array($filetree)){
 			$folders	=	isset($filetree['folders'])?$filetree['folders']:false;
 		}else{
@@ -71,14 +71,14 @@ class XiHelperLoader
 
 		foreach($folders as $folder )
 		{
-			//e.g. XiController + Product
+			//e.g. Rb_Controller + Product
 			$className 	= $prefix
 						. 'View'
 						. $folder;
 
 			if($format==='ajax') $format = 'html';
 			$fileName	= "view.$format.php";
-			JLoader::register($className, $baseFolders.DS.$folder.DS.$fileName);
+			JLoader::register($className, $baseFolders.'/'.$folder.'/'.$fileName);
 		}
 	}
 
@@ -88,7 +88,7 @@ class XiHelperLoader
 		{
 			if($filter && in_array($file,$filter))
 				continue;
-			require_once  $folder.DS.$file;
+			require_once  $folder.'/'.$file;
 		}
 	}
 }

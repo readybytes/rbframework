@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -10,9 +10,9 @@ if(defined('_JEXEC')===false) die();
 
 jimport('joomla.html.pagination');
 
-class XiPagination extends JPagination
+class Rb_Pagination extends JPagination
 {
-	function __construct(XiModel &$model)
+	function __construct(Rb_Model &$model)
 	{
 		$limit = null;
 		$limitstart = null;
@@ -23,9 +23,9 @@ class XiPagination extends JPagination
 
 	public function initDefaultStates(&$model, &$limit, &$limitstart)
 	{
-		$statePrefix		= XiHelperContext::getObjectContext($model);
+		$statePrefix		= Rb_HelperContext::getObjectContext($model);
 
-		$app				= XiFactory::getApplication();
+		$app				= Rb_Factory::getApplication();
 		$globalListLimit	= $app->getCfg('list_limit');
 
 		// Get pagination request variables
@@ -34,7 +34,7 @@ class XiPagination extends JPagination
         $limit 		= $app->getUserStateFromRequest('global.list.limit', 'limit', $globalListLimit, 'int');
 
         //other states should be picked from model namespace
-        $context = XiHelperContext::getObjectContext($model);
+        $context = Rb_HelperContext::getObjectContext($model);
         $limitstart = $model->getState('limitstart');
 
         // In case limit has been changed, adjust it

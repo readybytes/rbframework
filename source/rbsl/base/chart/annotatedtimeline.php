@@ -1,14 +1,14 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
-* @subpackage	XiFramework
+* @subpackage	Rb_Framework
 * @contact 		shyam@readybytes.in
 */
 if(defined('_JEXEC')===false) die();
 
-class XiChartAnnotatedtimeline  extends XiChart
+class Rb_ChartAnnotatedtimeline  extends Rb_Chart
 {
 	protected $_name =  'AnnotatedTimeLine';
 	

@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -8,10 +8,10 @@
 */
 if(defined('_JEXEC')===false) die();
 
-class XiAbstractJ15Factory extends XiAbstractFactoryBase
+class Rb_AbstractJ15Factory extends Rb_AbstractFactoryBase
 {
 	/**
-	 * @return XiSession
+	 * @return Rb_Session
 	 */
 	public function getSession($reset=false)
 	{
@@ -27,5 +27,5 @@ class XiAbstractJ15Factory extends XiAbstractFactoryBase
 	}
 }
 
-class XiAbstractFactory extends XiAbstractJ15Factory
+class Rb_AbstractFactory extends Rb_AbstractJ15Factory
 {}

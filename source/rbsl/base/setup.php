@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -9,7 +9,7 @@
 if(defined('_JEXEC')===false) die();
 
 
-abstract class XiSetup
+abstract class Rb_Setup
 {
 
 	public $_location = __FILE__;
@@ -24,7 +24,7 @@ abstract class XiSetup
 	{
 		$r = null;
 		if (!preg_match('/Setup(.*)/i', get_class($this), $r)) {
-			JError::raiseError (500, "XiView::getName() : Can't get or parse class name.");
+			JError::raiseError (500, "Rb_View::getName() : Can't get or parse class name.");
 		}
 		$this->_name = JString::strtolower( $r[1] );
 
@@ -42,7 +42,7 @@ abstract class XiSetup
 		static $instance=array();
 
 		//clean cache if we need to
-		if(XiFactory::cleanStaticCache()){
+		if(Rb_Factory::cleanStaticCache()){
 			$instance = array();
 		}
 
@@ -54,7 +54,7 @@ abstract class XiSetup
 			return $instance[$name];
 
 		//create new object, class must be autoloaded
-		if(JDEBUG) XiError::assert(class_exists($className, true));
+		if(JDEBUG) Rb_Error::assert(class_exists($className, true));
 		return $instance[$name] = new $className();
 	}
 
@@ -82,12 +82,12 @@ abstract class XiSetup
 
 	public function getMessage()
 	{
-		return XiText::_($this->_message);
+		return Rb_Text::_($this->_message);
 	}
 
 	public function getTooltip()
 	{
-		return XiText::_('COM_PAYPLANS_SETUP_'.JString::strtoupper($this->_name).'_TOOLTIP');
+		return Rb_Text::_('COM_PAYPLANS_SETUP_'.JString::strtoupper($this->_name).'_TOOLTIP');
 		//return $this->_tooltip;
 	}
 

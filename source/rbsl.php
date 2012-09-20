@@ -1,7 +1,7 @@
 <?php
 
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @contact		shyam@joomlaxi.com
 */
@@ -35,7 +35,7 @@ if($option !== 'com_installer'){
 			if(defined('RB_DEFINE_ONSYSTEMSTART')==false){
 				//IMP : Do not load system plugins
 				//PayplansHelperEvent::trigger('onRBSystemStart');
-				//XITODO : Trigger Event 
+				//RBFW_TODO : Trigger Event 
 				define('RB_DEFINE_ONSYSTEMSTART', true);
 			}	
 		}

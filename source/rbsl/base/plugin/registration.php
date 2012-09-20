@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -16,7 +16,7 @@ if(defined('_JEXEC')===false) die();
  * function, always start them with underscore
  */
 
-abstract class XiPluginRegistration extends XiPlugin
+abstract class Rb_PluginRegistration extends Rb_Plugin
 {
 	protected $_session;
 	protected $_app;
@@ -25,8 +25,8 @@ abstract class XiPluginRegistration extends XiPlugin
 	{
 		parent::__construct($subject, $config);
 		
-		$this->_session = XiFactory::getSession();
-		$this->_app 	= XiFactory::getApplication();
+		$this->_session = Rb_Factory::getSession();
+		$this->_app 	= Rb_Factory::getApplication();
 	}
 	
 	/**
@@ -42,7 +42,7 @@ abstract class XiPluginRegistration extends XiPlugin
   			return true;
 		}
 		
-		$registrationType = XiFactory::getConfig()->registrationType;
+		$registrationType = Rb_Factory::getConfig()->registrationType;
 			
 		// this should be checked all time
 		if($this->_isRegistrationUrl()){
@@ -52,8 +52,8 @@ abstract class XiPluginRegistration extends XiPlugin
 			}	
 			// V IMP : this should not be checked if this is a auto registartion plugin instance
 			elseif($this->_name !== 'auto' && $registrationType != $this->_name){				
-				$plg = XiHelperPlugin::getPluginInstance('payplansregistration', $registrationType);
-				if(is_object($plg) &&  is_a($plg, 'XiPluginRegistration')){		
+				$plg = Rb_HelperPlugin::getPluginInstance('payplansregistration', $registrationType);
+				if(is_object($plg) &&  is_a($plg, 'Rb_PluginRegistration')){		
 					$plg->_doStartRegistration();
 				}
 			}
@@ -112,7 +112,7 @@ abstract class XiPluginRegistration extends XiPlugin
 	}
 	
 	// show the corresponding registartion
-	public function onPayplansViewBeforeRender(XiView $view, $task)
+	public function onPayplansViewBeforeRender(Rb_View $view, $task)
 	{
 		if(!($view instanceof PayplanssiteViewPlan)){
 			return true;
@@ -122,7 +122,7 @@ abstract class XiPluginRegistration extends XiPlugin
 			return true; 
 		}
 
-		if(XiFactory::getConfig()->registrationType == $this->_name){
+		if(Rb_Factory::getConfig()->registrationType == $this->_name){
 			return array('pp_plan_login_registration_position' => $this->_render('registration'));
 		}
 	}
@@ -176,7 +176,7 @@ abstract class XiPluginRegistration extends XiPlugin
 		$vars = $this->_getVars();
 		
 		// check if registration button is clicked
-		if(JRequest::getVar('payplansRegister'.JString::ucfirst(XiFactory::getConfig()->registrationType), false) === false){
+		if(JRequest::getVar('payplansRegister'.JString::ucfirst(Rb_Factory::getConfig()->registrationType), false) === false){
 			return false;
 		}
 		
@@ -197,7 +197,7 @@ abstract class XiPluginRegistration extends XiPlugin
 		$planId = $this->_getPlan();
 
 		$this->_setPlan($planId);
-		$this->_app->redirect(XiRoute::_($this->_registrationUrl));
+		$this->_app->redirect(Rb_Route::_($this->_registrationUrl));
 		return true;
 	}
 	
@@ -240,7 +240,7 @@ abstract class XiPluginRegistration extends XiPlugin
 		$this->_setPlan(0);
 		
 		// now redirect to confirm action
-		$this->_app->redirect(XiRoute::_("index.php?option=com_payplans&view=invoice&task=confirm&invoice_key=".$invoiceKey));
+		$this->_app->redirect(Rb_Route::_("index.php?option=com_payplans&view=invoice&task=confirm&invoice_key=".$invoiceKey));
 						
 	}
 	
@@ -249,7 +249,7 @@ abstract class XiPluginRegistration extends XiPlugin
 	 */
 	protected function _doSelectPlan()
 	{
-		$this->_app->redirect(XiRoute::_('index.php?option=com_payplans&view=plan&task=subscribe'));
+		$this->_app->redirect(Rb_Route::_('index.php?option=com_payplans&view=plan&task=subscribe'));
 	}
 	
 	function _sendActivationMail($user)
@@ -260,9 +260,9 @@ abstract class XiPluginRegistration extends XiPlugin
 		$email 		= $user['email'];
 		$username 	= $user['username'];
 
-		$sitename 		= XiFactory::getConfig()->sitename;
-		$mailfrom 		= XiFactory::getConfig()->mailfrom;
-		$fromname 		= XiFactory::getConfig()->fromname;
+		$sitename 		= Rb_Factory::getConfig()->sitename;
+		$mailfrom 		= Rb_Factory::getConfig()->mailfrom;
+		$fromname 		= Rb_Factory::getConfig()->fromname;
 		$siteURL		= JURI::base();
 
 		$subject 	= sprintf ( JText::_( 'Account details for' ), $name, $sitename);

@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -8,10 +8,10 @@
 */
 if(defined('_JEXEC')===false) die();
 
-class XiAbstractJ15Model extends XiAbstractModelBase
+class Rb_AbstractJ15Model extends Rb_AbstractModelBase
 {
 
 }
 
-class XiAbstractModel extends XiAbstractJ15Model
+class Rb_AbstractModel extends Rb_AbstractJ15Model
 {}

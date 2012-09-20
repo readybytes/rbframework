@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -8,7 +8,7 @@
 */
 if(defined('_JEXEC')===false) die();
 
-abstract class XiModel extends XiAbstractModel
+abstract class Rb_Model extends Rb_AbstractModel
 {
 
 	public $filterMatchOpeartor = array();
@@ -107,7 +107,7 @@ abstract class XiModel extends XiAbstractModel
 	{
 		if(isset($data)===false || count($data)<=0)
 		{
-			$this->setError(XiText::_('COM_PAYPLANS_NO_DATA_TO_SAVE'));
+			$this->setError(Rb_Text::_('COM_PAYPLANS_NO_DATA_TO_SAVE'));
 			return false;
 		}
 
@@ -118,8 +118,8 @@ abstract class XiModel extends XiAbstractModel
 		//also validate via model
 		if($this->validate($data, $pk)===false)
 		{
-			//$this->setError(XiText::_("FIELDS VALUE ARE NOT VALIDATE"));
-			//$this->setError(XiFactory::getErrorObject()->setError())
+			//$this->setError(Rb_Text::_("FIELDS VALUE ARE NOT VALIDATE"));
+			//$this->setError(Rb_Factory::getErrorObject()->setError())
 			return false;
 		}
 
@@ -129,7 +129,7 @@ abstract class XiModel extends XiAbstractModel
 		//load the table row
 		$table = $this->getTable();
 		if(!$table){
-			$this->setError(XiText::_('COM_PAYPLANS_TABLE_DOES_NOT_EXIST'));
+			$this->setError(Rb_Text::_('COM_PAYPLANS_TABLE_DOES_NOT_EXIST'));
 			return false;
 		}
 		// Bug #29
@@ -142,7 +142,7 @@ abstract class XiModel extends XiAbstractModel
 		//it is a NOT a new record then we MUST load the record
 		//else this record does not exist
 		if($pk && $new===false && $table->load($pk)===false){
-			$this->setError(XiText::_('COM_PAYPLANS_NOT_ABLE_TO_LOAD_ITEM'));
+			$this->setError(Rb_Text::_('COM_PAYPLANS_NOT_ABLE_TO_LOAD_ITEM'));
 			return false;
 		}
 
@@ -179,7 +179,7 @@ abstract class XiModel extends XiAbstractModel
 		// else this is a new record
 		if(!$pk)
 		{
-			$this->setError(XiText::_('COM_PAYPLANS_NO_ITEM_ID_AVAILABLE_TO_DELETE'));
+			$this->setError(Rb_Text::_('COM_PAYPLANS_NO_ITEM_ID_AVAILABLE_TO_DELETE'));
 			return false;
 		}
 
@@ -199,10 +199,10 @@ abstract class XiModel extends XiAbstractModel
 	public function deleteMany($condition, $glue='AND', $operator='=')
 	{
 		// assert if invalid condition
-		XiError::assert(is_array($condition), XiText::_('COM_PAYPLANS_ERROR_INVALID_CONDITION_TO_DELETE_DATA'));
-		XiError::assert(!empty($condition), XiText::_('COM_PAYPLANS_ERROR_INVALID_CONDITION_TO_DELETE_DATA'));
+		Rb_Error::assert(is_array($condition), Rb_Text::_('COM_PAYPLANS_ERROR_INVALID_CONDITION_TO_DELETE_DATA'));
+		Rb_Error::assert(!empty($condition), Rb_Text::_('COM_PAYPLANS_ERROR_INVALID_CONDITION_TO_DELETE_DATA'));
 
-		$query = new XiQuery();
+		$query = new Rb_Query();
 		$query->delete()
 				->from($this->getTable()->getTableName());
 
@@ -213,7 +213,7 @@ abstract class XiModel extends XiAbstractModel
 	}
 
 	/**
-	 * XITODO Method to order rows.
+	 * RBFW_TODO Method to order rows.
 	 */
 	public function order($pk, $change)
 	{
@@ -231,7 +231,7 @@ abstract class XiModel extends XiAbstractModel
 		// else this is a new record
 		if(!$pk)
 		{
-			$this->setError(XiText::_('COM_PAYPLANS_ERROR_NO_ITEM_ID_AVAILABLE_TO_CHANGE_ORDER'));
+			$this->setError(Rb_Text::_('COM_PAYPLANS_ERROR_NO_ITEM_ID_AVAILABLE_TO_CHANGE_ORDER'));
 			return false;
 		}
 
@@ -245,7 +245,7 @@ abstract class XiModel extends XiAbstractModel
 	}
 
 	/**
-	 * XITODO Method to switch boolean column values.
+	 * RBFW_TODO Method to switch boolean column values.
 	 */
 	public function boolean($pk, $column, $value, $switch)
 	{
@@ -262,7 +262,7 @@ abstract class XiModel extends XiAbstractModel
 		//if we have itemid then we MUST load the record
 		if(!$pk)
 		{
-			$this->setError(XiText::_('COM_PAYPLANS_NO_ITEM_ID_AVAILABLE_TO_CHANGE_ORDER'));
+			$this->setError(Rb_Text::_('COM_PAYPLANS_NO_ITEM_ID_AVAILABLE_TO_CHANGE_ORDER'));
 			return false;
 		}
 
@@ -276,7 +276,7 @@ abstract class XiModel extends XiAbstractModel
 	}
 
 	/* Child classes should not overload it */
-	final public function _buildQuery(XiQuery &$query=null)
+	final public function _buildQuery(Rb_Query &$query=null)
     {
     	static $functions = array('Fields','From','Joins','Where','Group','Order','Having');
 
@@ -303,7 +303,7 @@ abstract class XiModel extends XiAbstractModel
     }
 
 
-    protected function _buildQueryFields(XiQuery &$query)
+    protected function _buildQueryFields(Rb_Query &$query)
     {
 		$query->select('tbl.*');
     }
@@ -311,7 +311,7 @@ abstract class XiModel extends XiAbstractModel
 	/**
      * Builds FROM tables list for the query
      */
-    protected function _buildQueryFrom(XiQuery &$query)
+    protected function _buildQueryFrom(Rb_Query &$query)
     {
     	$name = $this->getTable()->getTableName();
     	$query->from($name.' AS tbl');
@@ -321,16 +321,16 @@ abstract class XiModel extends XiAbstractModel
      * Every entity should define this function, as they need to
      * join with fields table
      */
-    protected function _buildQueryJoins(XiQuery &$query)
+    protected function _buildQueryJoins(Rb_Query &$query)
     {
 
     }
 
-    // XITODO : Remove this final keword, and break up filter
-    final protected function _buildQueryWhere(XiQuery &$query)
+    // RBFW_TODO : Remove this final keword, and break up filter
+    final protected function _buildQueryWhere(Rb_Query &$query)
     {
     	//get generic filter and fix it
-    	$filters = $this->getState(XiHelperContext::getObjectContext($this));
+    	$filters = $this->getState(Rb_HelperContext::getObjectContext($this));
         
     	if(is_array($filters)===false)
     		return;
@@ -345,15 +345,15 @@ abstract class XiModel extends XiAbstractModel
 		return;
     }
 
-    protected function _buildQueryFilter(XiQuery &$query, $key, $value)
+    protected function _buildQueryFilter(Rb_Query &$query, $key, $value)
     {
     	// Only add filter if we are working on bulk reocrds
 		if($this->getId()){
 			return $this;
 		}
 		
-    	XiError::assert(isset($this->filterMatchOpeartor[$key]), "OPERATOR FOR $key IS NOT AVAILABLE FOR FILTER");
-    	XiError::assert(is_array($value), XiText::_('COM_PAYPLANS_VALUE_FOR_FILTERS_MUST_BE_AN_ARRAY'));
+    	Rb_Error::assert(isset($this->filterMatchOpeartor[$key]), "OPERATOR FOR $key IS NOT AVAILABLE FOR FILTER");
+    	Rb_Error::assert(is_array($value), Rb_Text::_('COM_PAYPLANS_VALUE_FOR_FILTERS_MUST_BE_AN_ARRAY'));
 
     	$cloneOP    = $this->filterMatchOpeartor[$key];
     	$cloneValue = $value;
@@ -376,13 +376,13 @@ abstract class XiModel extends XiAbstractModel
     	}
     }
     
-    protected function _buildQueryGroup(XiQuery &$query)
+    protected function _buildQueryGroup(Rb_Query &$query)
     {}
 
     /**
      * Builds a generic ORDER BY clasue based on the model's state
      */
-    protected function _buildQueryOrder(XiQuery &$query)
+    protected function _buildQueryOrder(Rb_Query &$query)
     {
 		$order      = $this->getState('filter_order');
        	$direction  = strtoupper($this->getState('filter_order_Dir'));
@@ -394,10 +394,10 @@ abstract class XiModel extends XiAbstractModel
 			$query->order('ordering ASC');
     }
 
-    protected function _buildQueryHaving(XiQuery &$query)
+    protected function _buildQueryHaving(Rb_Query &$query)
     {}
     
- 	protected function _buildQueryLimit(XiQuery &$query)
+ 	protected function _buildQueryLimit(Rb_Query &$query)
  	{
 		$limit       = $this->getState('limit');
        	$limitstart  = $this->getState('limitstart');

@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -8,7 +8,7 @@
 */
 if(defined('_JEXEC')===false) die();
 
-class XiAbstractJ16Controller extends XiAbstractControllerBase
+class Rb_AbstractJ16Controller extends Rb_AbstractControllerBase
 {
 	protected	$_name		= null;
 		
@@ -46,5 +46,5 @@ class XiAbstractJ16Controller extends XiAbstractControllerBase
 	}
 }
 
-class XiAbstractController extends XiAbstractJ16Controller
+class Rb_AbstractController extends Rb_AbstractJ16Controller
 {}

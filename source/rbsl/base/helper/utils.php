@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -8,7 +8,7 @@
 */
 if(defined('_JEXEC')===false) die();
 
-class XiHelperUtils
+class Rb_HelperUtils
 {
 	/**
 	 * Clonning function Due to bug in utf8_ireplace function
@@ -89,11 +89,11 @@ class XiHelperUtils
 	
 	public static function getKeyFromId($id)
 	{
-		return XiFactory::getEncryptor()->encrypt($id);
+		return Rb_Factory::getEncryptor()->encrypt($id);
 	}
 	
 	public static function getIdFromKey($key)
 	{
-		return XiFactory::getEncryptor()->decrypt($key);
+		return Rb_Factory::getEncryptor()->decrypt($key);
 	}
 }

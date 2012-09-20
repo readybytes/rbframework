@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -22,7 +22,7 @@ if(defined('_JEXEC')===false) die();
  * onMigration
  * @author shyam
  */
-abstract class XiPluginMigration extends XiPlugin
+abstract class Rb_PluginMigration extends Rb_Plugin
 {
 	const RECORD_PROCESSING_TIME = 0.1; // 20 records per second
 
@@ -34,7 +34,7 @@ abstract class XiPluginMigration extends XiPlugin
 	protected $_component	= '';
 	
 	/**
-	 * @var XiPluginMigrationHelper
+	 * @var Rb_PluginMigrationHelper
 	 */
 	protected $_helper	=null;
 	
@@ -42,7 +42,7 @@ abstract class XiPluginMigration extends XiPlugin
 	
 	protected function _initalize(Array $options= array())
 	{
-		$this->_helper = XiPluginMigrationHelper::getInstance();
+		$this->_helper = Rb_PluginMigrationHelper::getInstance();
 	}
 	
 	/**
@@ -52,7 +52,7 @@ abstract class XiPluginMigration extends XiPlugin
 	 */
 	public function _isAvailable(Array $options= array())
 	{
-		return JFolder::exists(JPATH_SITE.DS.'components'.DS.'com_'.$this->_component);
+		return JFolder::exists(JPATH_SITE.'/components'.'/com_'.$this->_component);
 	}
 	
 	// Display HTML button to start migration 
@@ -61,7 +61,7 @@ abstract class XiPluginMigration extends XiPlugin
 		$location = PAYPLANS_JVERSION_15 ? $this->_title : $this->_title .'/'. $this->_title ; 
 		return array(
 				'key'	=>$this->_component, 
-				'title'	=> XiText::_('PLG_PAYPLANS_'.JString::strtoupper($this->_title)),
+				'title'	=> Rb_Text::_('PLG_PAYPLANS_'.JString::strtoupper($this->_title)),
 				'icon'  => '../plugins/'.$this->_type.'/'.$location.'/icon.png'
 	  	); 
 	} 
@@ -148,7 +148,7 @@ abstract class XiPluginMigration extends XiPlugin
 	protected function _updateMigrationStatus($count)
 	{
 		//send ajaxed response
-		$ajax = XiFactory::getAjaxResponse();
+		$ajax = Rb_Factory::getAjaxResponse();
 		$message = $this->_helper->read('message', '');
 		$total 	 = $this->_helper->read('record_count');
 		$this->_helper->write('processing_counter', $count);
@@ -165,7 +165,7 @@ abstract class XiPluginMigration extends XiPlugin
 		$ajax->sendResponse();
 	}
 	
-	protected function _scheduleNextFunction($nextFunc, XiQuery $query=null, $offset=0, $count=0)
+	protected function _scheduleNextFunction($nextFunc, Rb_Query $query=null, $offset=0, $count=0)
 	{
 		if(!$query){
 			$this->_helper->write('next_function',$nextFunc);
@@ -191,7 +191,7 @@ abstract class XiPluginMigration extends XiPlugin
 	protected function _MigrationComplete()
 	{
 		//send ajaxed response
-		$ajax = XiFactory::getAjaxResponse();
+		$ajax = Rb_Factory::getAjaxResponse();
 		$ajax->addScriptCall('xi.dashboard.postMigration', $this->_component);		
 		$ajax->sendResponse();
 	}
@@ -201,12 +201,12 @@ abstract class XiPluginMigration extends XiPlugin
 		static $temp = array();
 		// Very IMP
 		// Ensure AdminPay App is there
-		XiSetup::getInstance('adminpay')->doApply();
+		Rb_Setup::getInstance('adminpay')->doApply();
 		
 		//load apps refreshed
-		XiFactory::cleanStaticCache(true);
+		Rb_Factory::cleanStaticCache(true);
 		$allAppsInstance = PayplansHelperApp::getAvailableApps('payment');
-		XiFactory::cleanStaticCache(false);
+		Rb_Factory::cleanStaticCache(false);
 		
 		$paymentAppMapper = array();
 		foreach($allAppsInstance as $id => $app){
@@ -242,11 +242,11 @@ abstract class XiPluginMigration extends XiPlugin
 }
 
 
-class XiPluginMigrationHelper
+class Rb_PluginMigrationHelper
 {
 	/**
 	 * store seesion data
-	 * @var XiSession
+	 * @var Rb_Session
 	 */
 	protected $_store		=null;
 	
@@ -262,13 +262,13 @@ class XiPluginMigrationHelper
 	 *  Akeeba Kickstart 3.1.2 - The server-side archive extraction wizard
 	 *  Copyright (C) 2008-2010  Nicholas K. Dionysopoulos / AkeebaBackup.com
 	 *  
-     *	Modified by Team JoomlaXi
+     *	Modified by Team JoomlaRb_
 	 * 	Enter description here ...
 	 */
 	protected function __construct()
 	{
 		//setup session storage
-		$this->_store = XiFactory::getSession();
+		$this->_store = Rb_Factory::getSession();
 		
 
 		// Get PHP's maximum execution time (our upper limit)
@@ -288,14 +288,14 @@ class XiPluginMigrationHelper
 	}
 	
 	/**
-	 * @return XiPluginMigrationHelper
+	 * @return Rb_PluginMigrationHelper
 	 */
 	public static function getInstance()
 	{
 		static $instance = null;
 		
 		if($instance === null){
-			$instance = new XiPluginMigrationHelper();	
+			$instance = new Rb_PluginMigrationHelper();	
 		}
 		
 		return $instance;

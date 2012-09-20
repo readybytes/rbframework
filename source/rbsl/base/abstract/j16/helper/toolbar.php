@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -8,7 +8,7 @@
 */
 if(defined('_JEXEC')===false) die();
 
-class XiAbstractJ16HelperToolbar extends XiAbstractHelperToolbarBase
+class Rb_AbstractJ16HelperToolbar extends Rb_AbstractHelperToolbarBase
 {
 	public static function save()
 	{
@@ -46,4 +46,4 @@ class XiAbstractJ16HelperToolbar extends XiAbstractHelperToolbarBase
 	}
 }
 
-class XiAbstractHelperToolbar extends XiAbstractJ16HelperToolbar{}
+class Rb_AbstractHelperToolbar extends Rb_AbstractJ16HelperToolbar{}

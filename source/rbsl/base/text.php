@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -9,11 +9,11 @@
 if(defined('_JEXEC')===false) die();
 
 
-class XiText extends JText
+class Rb_Text extends JText
 {
 	public static function autoLoadJS($regex='/_JS_/')
 	{
-		$allStrings = XiLanguage::getStrings(JFactory::getLanguage());
+		$allStrings = Rb_Language::getStrings(JFactory::getLanguage());
 
 		$strings = array();
 		foreach($allStrings as $key=>$value){

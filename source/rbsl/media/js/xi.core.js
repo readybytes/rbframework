@@ -162,7 +162,7 @@ xi.route = {
 
 xi.ajax = {	
 		
-	//XITODO : replace via jQuery code
+	//RBFW_TODO : replace via jQuery code
 	create : function(sParentId, sTag, sId){
 		var objParent = this.$(sParentId);
 		objElement = document.createElement(sTag);
@@ -182,13 +182,13 @@ xi.ajax = {
 	},
 	
 	default_error_callback : function (error){
-		//XITODO : log to console
+		//RBFW_TODO : log to console
 		alert("An error has occured\n"+error);
 	},
 	
 	default_success_callback : function (result){
 		
-		//XITODO : log to console
+		//RBFW_TODO : log to console
 		
 		// we now have an array, that contains an array.
 		for(var i=0; i<result.length;i++){
@@ -300,7 +300,7 @@ xi.ajax = {
 		
 		arg += "arg_count=" + arguments.length;
 		
-		//XITODO : remove it in 2.1, support deprecated calls
+		//RBFW_TODO : remove it in 2.1, support deprecated calls
 		url += arg;
 		
 		xi.ajax.go(url,data);
@@ -311,7 +311,7 @@ xi.ajax = {
 	 * data : array / json / string / object
 	 * */
 	go : function (url, data, successCallback, errorCallback, timeout){
-		// XITODO : If ajax not available, handle by Iframes 
+		// RBFW_TODO : If ajax not available, handle by Iframes 
 		
 		// timeout 60 seconds
 		if(timeout == null) timeout = 600000;

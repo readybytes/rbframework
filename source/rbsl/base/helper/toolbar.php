@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -8,8 +8,8 @@
 */
 if(defined('_JEXEC')===false) die();
 
-require_once JPATH_ADMINISTRATOR.DS."includes".DS."toolbar.php";
+require_once JPATH_ADMINISTRATOR.'/'."includes".'/'."toolbar.php";
 
-class XiHelperToolbar extends XiAbstractHelperToolbar
+class Rb_HelperToolbar extends Rb_AbstractHelperToolbar
 {
 }

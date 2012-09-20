@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -8,8 +8,8 @@
 */
 if(defined('_JEXEC')===false) die();
 
-//XITODO : Improve it for our purpose
-class XiDate extends XiAbstractDate
+//RBFW_TODO : Improve it for our purpose
+class Rb_Date extends Rb_AbstractDate
 {
 	const INVOICE_FORMAT = '%A %d %b, %Y';
 	const SUBSCRIPTION_PAYMENT_FORMAT = '%d %b %Y';
@@ -19,14 +19,14 @@ class XiDate extends XiAbstractDate
 	const YYYY_MM_DD_HH_MM = '%Y-%m-%d %H:%M';
 
 	/**
-	 * @param mixed $date optional the date this XiDate will represent.
+	 * @param mixed $date optional the date this Rb_Date will represent.
 	 * @param int $tzOffset optional the timezone $date is from
 	 * 
-	 * @return XiDate
+	 * @return Rb_Date
 	 */
 	public function getInstance($date = 'now', $tzOffset = 0)
 	{
-		return new XiDate($date,$tzOffset);	
+		return new Rb_Date($date,$tzOffset);	
 	}
 	
 	/**
@@ -35,7 +35,7 @@ class XiDate extends XiAbstractDate
 	 */
 	public function addExpiration($expirationTime)
 	{
-		XiError::assert(is_string($expirationTime), XiError::ERROR, "Expiration time is not as string");
+		Rb_Error::assert(is_string($expirationTime), Rb_Error::ERROR, "Expiration time is not as string");
 		
 		$timerElements = array('year', 'month', 'day', 'hour', 'minute', 'second');
 		$date = date_parse($this->toString());
@@ -60,28 +60,28 @@ class XiDate extends XiAbstractDate
 	
 	public function subtractExpiration($expirationTime)
 	{
-		XiError::assert(is_string($expirationTime), XiError::ERROR, "Expiration time is not as string");
+		Rb_Error::assert(is_string($expirationTime), Rb_Error::ERROR, "Expiration time is not as string");
 		
 		$timerElements = array('year', 'month', 'day', 'hour', 'minute', 'second');
 		$date = date_parse($this->toString());
 		
 		$count = count($timerElements);
 		for($i=0; $i<$count ; $i++){
-			//XITODO : convert to integer before adding
+			//RBFW_TODO : convert to integer before adding
 			$date[$timerElements[$i]] -=   JString::substr($expirationTime, $i*2, 2);
 		}
 		
 		$result= mktime($date['hour'], $date['minute'], $date['second'], $date['month'], $date['day'], $date['year']);
-		XiError::assert($result);
+		Rb_Error::assert($result);
 		$this->_date = $result; 
 						
 		return $this;
 	}
 	
 	
-	public function toFormat($format=XiDate::INVOICE_FORMAT, $user=null, $config=null, $javascript=false)
+	public function toFormat($format=Rb_Date::INVOICE_FORMAT, $user=null, $config=null, $javascript=false)
 	{
-		$offset = XiHelperJoomla::getUserTimeZone($config, $user);
+		$offset = Rb_HelperJoomla::getUserTimeZone($config, $user);
 
 		// set the offset
 		$this->setOffset($offset);
@@ -95,12 +95,12 @@ class XiDate extends XiAbstractDate
 	}
 	
 	static public function timeago($time)
-	{	//XITODO : setting up timestamp
-		//XITODO : check if user timzone was considered or not
-		$date = new XiDate($time);
+	{	//RBFW_TODO : setting up timestamp
+		//RBFW_TODO : check if user timzone was considered or not
+		$date = new Rb_Date($time);
 		$str  = $date->toISO8601();
 		if($time=='0000-00-00 00:00:00' || !isset($time)){
-			return XiText::_('COM_PAYPLANS_NEVER');
+			return Rb_Text::_('COM_PAYPLANS_NEVER');
 		}
 		return "<span class='timeago' title='{$str}'>$time</span>"; 
 	}

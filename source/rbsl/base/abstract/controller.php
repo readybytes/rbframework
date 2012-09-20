@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -17,11 +17,11 @@ jimport( 'joomla.application.component.controller' );
  * - we can enforce various restriction on child classes
  */
 
-abstract class XiAbstractControllerBase extends JController
+abstract class Rb_AbstractControllerBase extends JController
 {
 	protected	$_prefix	= '';
 	//Absolute prefix contain component name , irrespective of site or admin
-	protected	$_component	= XI_COMPONENT_NAME;
+	protected	$_component	= RB_COMPONENT_NAME;
 	protected	$_tpl		= null;
 
 	//it stores relation between task and table column
@@ -45,7 +45,7 @@ abstract class XiAbstractControllerBase extends JController
 	{
 		//create a map for boolean task
 		//this will help is automatic handling
-		//XITODO : Move boolmap into global boolmap , so it can be changed at any place
+		//RBFW_TODO : Move boolmap into global boolmap , so it can be changed at any place
 		//for adding extra task without code change here
 		//IMP : Never change publish like other bool concept
 		//b'coz it require for task bar also
@@ -78,13 +78,13 @@ abstract class XiAbstractControllerBase extends JController
 	 */
 	public function getError($i = null, $toString = true )
 	{
-		$errObj	=	XiFactory::getErrorObject();
+		$errObj	=	Rb_Factory::getErrorObject();
 		return $errObj->getError($i, $toString);
 	}
 
 	public function setError($errMsg)
 	{
-		$errObj	=	XiFactory::getErrorObject();
+		$errObj	=	Rb_Factory::getErrorObject();
 		return $errObj->setError($errMsg);
 	}
 
@@ -103,7 +103,7 @@ abstract class XiAbstractControllerBase extends JController
 		if (empty( $name ))
 		{
 			$r = null;
-			XiError::assert(preg_match('/Controller(.*)/i', get_class($this), $r) , XiText::sprintf('COM_PAYPLANS_ERROR_XICONTROLLER_CANT_GET_OR_PARSE_CLASS_NAME', get_class($this)), XiError::ERROR);
+			Rb_Error::assert(preg_match('/Controller(.*)/i', get_class($this), $r) , Rb_Text::sprintf('COM_PAYPLANS_ERROR_XICONTROLLER_CANT_GET_OR_PARSE_CLASS_NAME', get_class($this)), Rb_Error::ERROR);
 
 			$name = strtolower( $r[1] );
 		}
@@ -120,7 +120,7 @@ abstract class XiAbstractControllerBase extends JController
 			return $this->_prefix;
 
 		$r = null;
-		XiError::assert(preg_match('/(.*)Controller/i', get_class($this), $r), XiText::sprintf('COM_PAYPLANS_ERROR_CANT_GET_PARSE_CLASS_NAME',XiController::getName()), XiError::ERROR);
+		Rb_Error::assert(preg_match('/(.*)Controller/i', get_class($this), $r), Rb_Text::sprintf('COM_PAYPLANS_ERROR_CANT_GET_PARSE_CLASS_NAME',Rb_Controller::getName()), Rb_Error::ERROR);
 
 		$this->_prefix  =  JString::strtolower($r[1]);
 		return $this->_prefix;
@@ -136,7 +136,7 @@ abstract class XiAbstractControllerBase extends JController
 
 	/*
 	 * Get the model from Factory
-	 * @return XiModel
+	 * @return Rb_Model
 	 */
 	public function getModel($name='')
 	{
@@ -146,16 +146,16 @@ abstract class XiAbstractControllerBase extends JController
 		//prefix contain admin and site at end
 		//remove admin or site , b'coz
 		//IMP : Model and Tables are shared b/w Site and Admin So prefix is Payplans Only
-		$model	= XiFactory::getInstance($name,'Model', JString::ucfirst($this->_component));
+		$model	= Rb_Factory::getInstance($name,'Model', JString::ucfirst($this->_component));
 
 		if(!$model)
-			$this->setError(XiText::_('NOT_ABLE_TO_GET_INSTANCE_OF_MODEL'.' : '.$this->getName()));
+			$this->setError(Rb_Text::_('NOT_ABLE_TO_GET_INSTANCE_OF_MODEL'.' : '.$this->getName()));
 
 		return $model;
 	}
 
 	/**
-	 * @return XiView
+	 * @return Rb_View
 	 */
 	public function getView($name='')
 	{
@@ -164,10 +164,10 @@ abstract class XiAbstractControllerBase extends JController
 		}
 
 		//get Instance from Factory
-		$view	= 	XiFactory::getInstance($name,'View', $this->getPrefix());
+		$view	= 	Rb_Factory::getInstance($name,'View', $this->getPrefix());
 
 		if(!$view){
-			$this->setError(XiText::_('NOT_ABLE_TO_GET_INSTANCE_OF_VIEW'.' :'.$this->getName()));
+			$this->setError(Rb_Text::_('NOT_ABLE_TO_GET_INSTANCE_OF_VIEW'.' :'.$this->getName()));
 		}
 
 		return $view;
@@ -179,14 +179,14 @@ abstract class XiAbstractControllerBase extends JController
 	public function setRedirect($url=null, $msg = null, $type = 'message')
 	{
 		if($url===null){
-			$url = XiRoute::_("index.php?option=com_{$this->_component}&view={$this->getName()}");
+			$url = Rb_Route::_("index.php?option=com_{$this->_component}&view={$this->getName()}");
 		}
 		parent::setRedirect($url,$msg,$type);
 	}
 
 	function execute($task)
 	{
-		// XITODO : Check for token
+		// RBFW_TODO : Check for token
 //		if(!defined('PAYPLANS_UINT_TEST_MODE') && JString::strtolower(JRequest::getMethod()) == 'post'){
 //			JRequest::checkToken('POST') or jexit( 'Invalid Token' );
 //		}
@@ -244,7 +244,7 @@ abstract class XiAbstractControllerBase extends JController
 	{
 		// V. Imp. Security Measures, only allow to call function which are explicitly 
 		// defined for frontend controller
-		if(XiFactory::getApplication()->isAdmin()==false){
+		if(Rb_Factory::getApplication()->isAdmin()==false){
 			return in_array($task, PayplansHelperUtils::getMethodsDefinedByClass(get_class($this)));
 		}
 		
@@ -261,13 +261,13 @@ abstract class XiAbstractControllerBase extends JController
 		/*
 		 *   if $_requireKey is set then
 		 *   get key from GET method
-		 *   generate the id from XiEncryption
+		 *   generate the id from Rb_Encryption
 		 */
 		if(isset($this->_requireKey) && $this->_requireKey){
 			
 			$entKey = JRequest::getVar("{$this->getName()}_key", null, '');
 			if($entKey !== null)
-				return (int)XiHelperUtils::getIdFromKey($entKey);
+				return (int)Rb_HelperUtils::getIdFromKey($entKey);
 
 			return -1;
 		}
@@ -301,13 +301,13 @@ abstract class XiAbstractControllerBase extends JController
 
 	public function _populateModelState()
 	{
-		$app 	 = XiFactory::getApplication();
+		$app 	 = Rb_Factory::getApplication();
 		$model 	 = $this->getModel();
 
 		//model do not exist
 		if(!$model) return true;
 
-		$context = XiHelperContext::getObjectContext($model);
+		$context = Rb_HelperContext::getObjectContext($model);
 
 		// if ordering filed exist the sort with ordering, else with id
 		$tableKeys = $model->getTable()->getProperties();
@@ -345,5 +345,5 @@ abstract class XiAbstractControllerBase extends JController
 
 
 
-// Include the Joomla Version Specific class, which will ad XiAbstractController class automatically
-XiError::assert(class_exists('XiAbstractJ'.PAYPLANS_JVERSION_FAMILY.'Controller',true), XiError::ERROR);
+// Include the Joomla Version Specific class, which will ad Rb_AbstractController class automatically
+Rb_Error::assert(class_exists('Rb_AbstractJ'.PAYPLANS_JVERSION_FAMILY.'Controller',true), Rb_Error::ERROR);

@@ -1,14 +1,14 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
-* @subpackage	XiFramework
+* @subpackage	Rb_Framework
 * @contact 		shyam@readybytes.in
 */
 if(defined('_JEXEC')===false) die();
 
-abstract class XiChart 
+abstract class Rb_Chart 
 {
 	const HEIGHT = 300;
 	const WIDTH  = 700;
@@ -16,13 +16,13 @@ abstract class XiChart
 	// --------- Object Specific Part -------------
 	/**
 	 * store data to be displayed in chart
-	 * @var XiChartdata
+	 * @var Rb_Chartdata
 	 */
 	public $data	  =  null;
 	
 	public function __construct()
 	{
-		$this->data = new XiChartdata();
+		$this->data = new Rb_Chartdata();
 	}
 	
 	// title will uniquely identify it
@@ -47,7 +47,7 @@ abstract class XiChart
 	public function getId()
 	{
 		// ensure js compatibility
-		return XiHelperUtils::jsCompatibleId($this->_id);
+		return Rb_HelperUtils::jsCompatibleId($this->_id);
 	}
 	
 	// Store options for rendering of chart
@@ -100,7 +100,7 @@ abstract class XiChart
       	$output = ob_get_contents();
       	ob_get_clean();
       	
-      	return XiHelperUtils::fixJSONDates($output);
+      	return Rb_HelperUtils::fixJSONDates($output);
 	}
 	
 	// output javascript, to set chart options
@@ -109,7 +109,7 @@ abstract class XiChart
 		ob_start();
 		?>
 		// Set chart options
-      	var options = <?php echo XiHelperUtils::fixJSONDates(json_encode($this->options)); ?>;
+      	var options = <?php echo Rb_HelperUtils::fixJSONDates(json_encode($this->options)); ?>;
         <?php 
       	$output = ob_get_contents();
       	ob_get_clean();
@@ -147,7 +147,7 @@ abstract class XiChart
 	protected function _initChart()
 	{
 		//load basic google library
-		XiFactory::chartInit();
+		Rb_Factory::chartInit();
 	}
 	
 	// The function which should be called from module/component or any other part
@@ -178,14 +178,14 @@ abstract class XiChart
       ob_get_clean();
       	
       //add script to document
-      XiFactory::getDocument()->addScriptDeclaration($output);
+      Rb_Factory::getDocument()->addScriptDeclaration($output);
       
       // render canvas which should be echo'ed
       return $this->_renderCanvas();
 	}
 }
 
-class XiChartdata
+class Rb_Chartdata
 {
 	// every entry should be of this type
 	// id , label, pattern, type
@@ -210,7 +210,7 @@ class XiChartdata
 			
 			// check validity
 			if(!isset($col['id']) || !isset($col['label']) || !isset($col['type'])){
-				XiError::assert(false, "Incorrect column passed ".var_export($col, true));
+				Rb_Error::assert(false, "Incorrect column passed ".var_export($col, true));
 			}
 			
 			// $col have id/label/type
@@ -230,7 +230,7 @@ class XiChartdata
 				$validData[] = $row;
 				continue;
 			}
-			XiError::assert(false, 'NOT CORRECT DATA AS PER COLUMNS SPECIFICATION', XiError::MESSAGE);			
+			Rb_Error::assert(false, 'NOT CORRECT DATA AS PER COLUMNS SPECIFICATION', Rb_Error::MESSAGE);			
 		}
 
 		$this->_rows = array_merge($this->_rows, $validData);

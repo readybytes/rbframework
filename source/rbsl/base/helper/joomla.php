@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -8,7 +8,7 @@
 */
 if(defined('_JEXEC')===false) die();
 
-class XiHelperJoomla extends XiAbstractHelperJoomla  
+class Rb_HelperJoomla extends Rb_AbstractHelperJoomla  
 {
 	/**
 	 *
@@ -92,7 +92,7 @@ class XiHelperJoomla extends XiAbstractHelperJoomla
 		$link.='&return='.$returnurl;
 		
 		if($routed){
-			return XiRoute::_($link);
+			return Rb_Route::_($link);
 		}
 		
 		return $link;
@@ -117,7 +117,7 @@ class XiHelperJoomla extends XiAbstractHelperJoomla
 		$link.='&return='.$returnurl;
 		
 		if($routed){
-			return XiRoute::_($link);
+			return Rb_Route::_($link);
 		}
 		
 		return $link;
@@ -130,14 +130,14 @@ class XiHelperJoomla extends XiAbstractHelperJoomla
         */
        public static function getLanguageCode()
        {
-               //XITODO : fixit for Joomfish
+               //RBFW_TODO : fixit for Joomfish
 
-               $lang = XiFactory::getLanguage();
+               $lang = Rb_Factory::getLanguage();
                if(PAYPLANS_JVERSION_FAMILY == '15'){
                        $code = $lang->_lang;
                }else{
                        // as if now no way to collect language code
-                       //XITODO : fixit for 1.7
+                       //RBFW_TODO : fixit for 1.7
                        $code = $lang->get('tag');
                }
                
@@ -158,12 +158,12 @@ class XiHelperJoomla extends XiAbstractHelperJoomla
 	static function getRootPath()
 	{
 		// in case of multi-site, we need to refer correct files
-		return dirname(dirname(dirname(XI_PATH_FRAMEWORK)));
+		return dirname(dirname(dirname(RB_PATH_FRAMEWORK)));
 	}
 
 	public static function getJoomlaUsers($id = false)
 	{
-		$query = new XiQuery();
+		$query = new Rb_Query();
 		if(!$id){
 		return $query->select(' `id`, `name`, `username` ')
 					 ->from('`#__users`')
@@ -196,7 +196,7 @@ class XiHelperJoomla extends XiAbstractHelperJoomla
 	// get joomla articles
 	public static function getJoomlaArticles()
 	{
-		$query = new XiQuery();
+		$query = new Rb_Query();
 		return $query->select(' `id`, `title` ')
 					 ->from('`#__content`')
 					 ->dbLoadQuery()

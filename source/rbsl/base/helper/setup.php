@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -8,20 +8,20 @@
 */
 if(defined('_JEXEC')===false) die();
 
-class XiHelperSetup
+class Rb_HelperSetup
 {
 	public static function getOrderedRules()
 	{
 		static $attr = null;
 		
 		//clean cache if required
-		if(XiFactory::cleanStaticCache()){
+		if(Rb_Factory::cleanStaticCache()){
 			$attr = null;
 		}
 		
 		if($attr === null){
-			$parser		= XiFactory::getXMLParser('Simple');
-			$xml		= PAYPLANS_PATH_SETUP.DS.'order.xml';
+			$parser		= Rb_Factory::getXMLParser('Simple');
+			$xml		= PAYPLANS_PATH_SETUP.'/order.xml';
 	
 			$parser->loadFile($xml);
 	

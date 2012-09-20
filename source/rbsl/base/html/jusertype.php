@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -8,20 +8,20 @@
 */
 if(defined('_JEXEC')===false) die();
 
-class XiHtmlJusertype extends XiHtml
+class Rb_HtmlJusertype extends Rb_Html
 {
 	function edit($name, $value, $attr=null, $ignore=array())
 	{
 		$options = array();
 		
-		$groups 	= XiHelperJoomla::getUsertype();
+		$groups 	= Rb_HelperJoomla::getUsertype();
 		
 		$textField = 'value';
 		$valueField = 'name';
 		
 		if(isset($attr) && isset($attr['userAutocomplete']) && $attr['userAutocomplete'] == false){
 			if(isset($attr['none']))
-                       $options[] = JHTML::_('select.option', '', XiText::_('COM_PAYPLANS_SELECT_USERTYPE'));
+                       $options[] = JHTML::_('select.option', '', Rb_Text::_('COM_PAYPLANS_SELECT_USERTYPE'));
                        
             foreach($groups as $group=>$val){
             	$options[] = JHTML::_('select.option', $val, $val);        
@@ -42,6 +42,6 @@ class XiHtmlJusertype extends XiHtml
 		$attr['none'] = true;
 		$attr['userAutocomplete'] = false;
 		$attr['style']= 'onchange="document.adminForm.submit();"';
-		return XiHtml::_('jusertype.edit', $elementName.'[]', $elementValue, $attr);
+		return Rb_Html::_('jusertype.edit', $elementName.'[]', $elementValue, $attr);
 	}
 }

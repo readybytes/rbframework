@@ -1,7 +1,7 @@
 <?php
 if(defined('_JEXEC')===false) die();
 	    	
-class XiFileTreeProvider
+class Rb_FileTreeProvider
 {   
     static public function get($index)
     {

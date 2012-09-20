@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -18,7 +18,7 @@ if(defined('_JEXEC')===false) die();
 /**
  * Query Element Class.
  */
-class XiQueryElement
+class Rb_QueryElement
 {
 	protected $_name = null;
 	protected $_elements = null;
@@ -62,7 +62,7 @@ class XiQueryElement
 /**
  * Query Building Class
  */
-class XiQuery
+class Rb_Query
 {
 	protected $_type = '';
 	protected $_select = null;
@@ -86,7 +86,7 @@ class XiQuery
 	/**
 	 * getters and setters
 	 * @param $prop
-	 * @return XiQueryElement
+	 * @return Rb_QueryElement
 	 */
 	public function getProp($prop)
 	{
@@ -97,7 +97,7 @@ class XiQuery
 	 *
 	 * @param $prop
 	 * @param $value
-	 * @return XiQuery
+	 * @return Rb_Query
 	 */
 	public function setProp($prop, $value)
 	{
@@ -110,8 +110,8 @@ class XiQuery
 	 */
 	function dbLoadQuery($queryPrefix="", $querySuffix="")
 	{
-		//XITODO : Add limit and limitstart support in query class
-		$db = XiFactory::getDBO();
+		//RBFW_TODO : Add limit and limitstart support in query class
+		$db = Rb_Factory::getDBO();
 		$db->setQuery($queryPrefix.(string)$this.$querySuffix, $this->_offset,$this->_limit);
 		return $db;
 	}
@@ -120,7 +120,7 @@ class XiQuery
 	 * Clear data from the query or a specific clause of the query.
 	 * @param	string	Optionally, the name of the clause to clear,
 	 * 				    or nothing to clear the whole query.
-	 * @return XiQuery
+	 * @return Rb_Query
 	 */
 	public function clear($clause = null)
 	{
@@ -193,13 +193,13 @@ class XiQuery
 
 	/**
 	 * @param	mixed	A string or an array of field names
-	 * @return XiQuery
+	 * @return Rb_Query
 	 */
 	public function select($columns)
 	{
 		$this->_type = 'select';
 		if (is_null($this->_select)) {
-			$this->_select = new XiQueryElement('SELECT', $columns);
+			$this->_select = new Rb_QueryElement('SELECT', $columns);
 		} else {
 			$this->_select->append($columns);
 		}
@@ -208,59 +208,59 @@ class XiQuery
 	}
 
 	/**
-	 * @return XiQuery
+	 * @return Rb_Query
 	 */
 	public function delete()
 	{
 		$this->_type = 'delete';
-		$this->_delete = new XiQueryElement('DELETE', array(), '');
+		$this->_delete = new Rb_QueryElement('DELETE', array(), '');
 		return $this;
 	}
 	
 	public function truncate($table)
 	{
 		$this->_type 	 = 'truncate';
-		$this->_truncate = new XiQueryElement('TRUNCATE TABLE ', array($table), '');
+		$this->_truncate = new Rb_QueryElement('TRUNCATE TABLE ', array($table), '');
 		return $this;
 	}
 	
 	public function drop($table)
 	{
 		$this->_type 	 = 'drop';
-		$this->_drop = new XiQueryElement('DROP TABLE IF EXISTS ', $table, '');
+		$this->_drop = new Rb_QueryElement('DROP TABLE IF EXISTS ', $table, '');
 		return $this;
 	}
 
 	/**
 	 * @param	mixed	A string or array of table names
-	 * @return XiQuery
+	 * @return Rb_Query
 	 */
 	public function insert($tables)
 	{
 		$this->_type = 'insert';
-		$this->_insert = new XiQueryElement('INSERT INTO', $tables);
+		$this->_insert = new Rb_QueryElement('INSERT INTO', $tables);
 		return $this;
 	}
 
 	/**
 	 * @param	mixed	A string or array of table names
-	 * @return XiQuery
+	 * @return Rb_Query
 	 */
 	public function update($tables)
 	{
 		$this->_type = 'update';
-		$this->_update = new XiQueryElement('UPDATE', $tables);
+		$this->_update = new Rb_QueryElement('UPDATE', $tables);
 		return $this;
 	}
 
 	/**
 	 * @param	mixed	A string or array of table names
-	 * @return XiQuery
+	 * @return Rb_Query
 	 */
 	public function from($tables)
 	{
 		if (is_null($this->_from)) {
-			$this->_from = new XiQueryElement('FROM', $tables);
+			$this->_from = new Rb_QueryElement('FROM', $tables);
 		} else {
 			$this->_from->append($tables);
 		}
@@ -271,21 +271,21 @@ class XiQuery
 	/**
 	 * @param	string
 	 * @param	string
-	 * @return XiQuery
+	 * @return Rb_Query
 	 */
 	public function join($type, $conditions)
 	{
 		if (is_null($this->_join)) {
 			$this->_join = array();
 		}
-		$this->_join[] = new XiQueryElement(strtoupper($type) . ' JOIN', $conditions);
+		$this->_join[] = new Rb_QueryElement(strtoupper($type) . ' JOIN', $conditions);
 
 		return $this;
 	}
 
 	/**
 	 * @param	string
-	 * @return XiQuery
+	 * @return Rb_Query
 	 */
 	public function innerJoin($conditions)
 	{
@@ -296,7 +296,7 @@ class XiQuery
 
 	/**
 	 * @param	string
-	 * @return XiQuery
+	 * @return Rb_Query
 	 */
 	public function outerJoin($conditions)
 	{
@@ -307,7 +307,7 @@ class XiQuery
 
 	/**
 	 * @param	string
-	 * @return XiQuery
+	 * @return Rb_Query
 	 */
 	public function leftJoin($conditions)
 	{
@@ -318,7 +318,7 @@ class XiQuery
 
 	/**
 	 * @param	string
-	 * @return XiQuery
+	 * @return Rb_Query
 	 */
 	public function rightJoin($conditions)
 	{
@@ -330,13 +330,13 @@ class XiQuery
 	/**
 	 * @param	mixed	A string or array of conditions
 	 * @param	string
-	 * @return XiQuery
+	 * @return Rb_Query
 	 */
 	public function set($conditions, $glue=',')
 	{
 		if (is_null($this->_set)) {
 			$glue = strtoupper($glue);
-			$this->_set = new XiQueryElement('SET', $conditions, "\n\t$glue ");
+			$this->_set = new Rb_QueryElement('SET', $conditions, "\n\t$glue ");
 		} else {
 			$this->_set->append($conditions);
 		}
@@ -347,13 +347,13 @@ class XiQuery
 	/**
 	 * @param	mixed	A string or array of where conditions
 	 * @param	string
-	 * @return XiQuery
+	 * @return Rb_Query
 	 */
 	public function where($conditions, $glue='AND')
 	{
 		if (is_null($this->_where)) {
 			$glue = strtoupper($glue);
-			$this->_where = new XiQueryElement('WHERE', $conditions, " $glue ");
+			$this->_where = new Rb_QueryElement('WHERE', $conditions, " $glue ");
 		} else {
 			$this->_where->append($conditions);
 		}
@@ -363,12 +363,12 @@ class XiQuery
 
 	/**
 	 * @param	mixed	A string or array of ordering columns
-	 * @return XiQuery
+	 * @return Rb_Query
 	 */
 	public function group($columns)
 	{
 		if (is_null($this->_group)) {
-			$this->_group = new XiQueryElement('GROUP BY', $columns);
+			$this->_group = new Rb_QueryElement('GROUP BY', $columns);
 		} else {
 			$this->_group->append($columns);
 		}
@@ -379,13 +379,13 @@ class XiQuery
 	/**
 	 * @param	mixed	A string or array of columns
 	 * @param	string
-	 * @return XiQuery
+	 * @return Rb_Query
 	 */
 	public function having($conditions, $glue='AND')
 	{
 		if (is_null($this->_having)) {
 			$glue = strtoupper($glue);
-			$this->_having = new XiQueryElement('HAVING', $conditions, " $glue ");
+			$this->_having = new Rb_QueryElement('HAVING', $conditions, " $glue ");
 		} else {
 			$this->_having->append($conditions);
 		}
@@ -395,12 +395,12 @@ class XiQuery
 
 	/**
 	 * @param	mixed	A string or array of ordering columns
-	 * @return XiQuery
+	 * @return Rb_Query
 	 */
 	public function order($columns)
 	{
 		if (is_null($this->_order)) {
-			$this->_order = new XiQueryElement('ORDER BY', $columns);
+			$this->_order = new Rb_QueryElement('ORDER BY', $columns);
 		} else {
 			$this->_order->append($columns);
 		}
@@ -411,7 +411,7 @@ class XiQuery
 	/**
 	 * @param	mixed	limit
 	 * @param	mixed	limitstarts
-	 * @return XiQuery
+	 * @return Rb_Query
 	 */
     public function limit($limit=0, $offset=0)
 	{

@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package		PayPlans
 * @subpackage	Frontend
@@ -9,13 +9,13 @@
 if(defined('_JEXEC')===false) die();
 
 
-class XiError extends JError
+class Rb_Error extends JError
 {
 	const ERROR   = 1;
 	const WARNING = 2;
 	const MESSAGE = 3;
 
-	//XITODO : add assertError. assertWarn, assertMessage function
+	//RBFW_TODO : add assertError. assertWarn, assertMessage function
 	static function assert($condition, $msg = '', $type = self::ERROR)
 	{
 		// assert only if in debug mode
@@ -34,7 +34,7 @@ class XiError extends JError
 		}
 		
 		// enqueue message
-		XiFactory::getApplication()->enqueueMessage('XI-WARNING : '.$msg);
+		Rb_Factory::getApplication()->enqueueMessage('XI-WARNING : '.$msg);
 	}
 
 	static public function assertValue($value)
