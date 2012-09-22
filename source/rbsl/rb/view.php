@@ -2,7 +2,7 @@
 /**
 * @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
-* @package		PayPlans
+* @package		RB Framework
 * @subpackage	Frontend
 * @contact 		shyam@readybytes.in
 */
@@ -76,8 +76,8 @@ abstract class Rb_View extends Rb_AbstractView
 	function _displayBlank()
 	{
 		$model = $this->getModel();
-		$heading = "COM_PAYPLANS_ADMIN_BLANK_".JString::strtoupper($this->getName());
-		$msg = "COM_PAYPLANS_ADMIN_BLANK_".JString::strtoupper($this->getName())."_MSG";
+		$heading = "PLG_SYSTEM_RBSL_ADMIN_BLANK_".JString::strtoupper($this->getName());
+		$msg = "PLG_SYSTEM_RBSL_ADMIN_BLANK_".JString::strtoupper($this->getName())."_MSG";
 		
 		$this->assign('heading', Rb_Text::_($heading));
 		$this->assign('msg', Rb_Text::_($msg));

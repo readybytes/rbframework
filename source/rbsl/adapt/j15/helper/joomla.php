@@ -2,7 +2,7 @@
 /**
 * @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
-* @package		PayPlans
+* @package		RB Framework
 * @subpackage	Frontend
 * @contact 		shyam@readybytes.in
 */
@@ -127,7 +127,7 @@ class Rb_AbstractJ15HelperJoomla extends Rb_AbstractHelperJoomlaBase
 		if ($value) {
 			$article->load($value);
 		} else {
-			$article->title = JText::_('COM_PAYPLANS_APP_CONTENT_JOOMLA_SELECT_ARTICLE');
+			$article->title = JText::_('PLG_SYSTEM_RBSL_APP_CONTENT_JOOMLA_SELECT_ARTICLE');
 		}
 
 		$js = "
@@ -142,8 +142,8 @@ class Rb_AbstractJ15HelperJoomla extends Rb_AbstractHelperJoomlaBase
 
 		JHTML::_('behavior.modal', 'a.modal');
 		$html = "\n".'<div style="float: left;"><input style="background: #ffffff;" type="text" id="'.$name.'_name" value="'.htmlspecialchars($article->title, ENT_QUOTES, 'UTF-8').'" disabled="disabled" /></div>';
-//		$html .= "\n &nbsp; <input class=\"inputbox modal-button\" type=\"button\" value=\"".JText::_('COM_PAYPLANS_APP_CONTENT_JOOMLA_SELECT_ARTICLE_BUTTON')."\" />";
-		$html .= '<div class="button2-left"><div class="blank"><a class="modal" title="'.JText::_('COM_PAYPLANS_APP_CONTENT_JOOMLA_SELECT_ARTICLE').'"  href="'.$link.'" rel="{handler: \'iframe\', size: {x: 650, y: 375}}">'.JText::_('COM_PAYPLANS_APP_CONTENT_JOOMLA_SELECT_ARTICLE_BUTTON').'</a></div></div>'."\n";
+//		$html .= "\n &nbsp; <input class=\"inputbox modal-button\" type=\"button\" value=\"".JText::_('PLG_SYSTEM_RBSL_APP_CONTENT_JOOMLA_SELECT_ARTICLE_BUTTON')."\" />";
+		$html .= '<div class="button2-left"><div class="blank"><a class="modal" title="'.JText::_('PLG_SYSTEM_RBSL_APP_CONTENT_JOOMLA_SELECT_ARTICLE').'"  href="'.$link.'" rel="{handler: \'iframe\', size: {x: 650, y: 375}}">'.JText::_('PLG_SYSTEM_RBSL_APP_CONTENT_JOOMLA_SELECT_ARTICLE_BUTTON').'</a></div></div>'."\n";
 		$html .= "\n".'<input type="hidden" id="'.$name.'_id" name="'.$fieldName.'" value="'.(int)$value.'" />';
 
 		return $html;

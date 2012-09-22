@@ -2,7 +2,7 @@
 /**
 * @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
-* @package		PayPlans
+* @package		RB Framework
 * @subpackage	Frontend
 * @contact 		shyam@readybytes.in
 */
@@ -16,7 +16,7 @@ abstract class Rb_Setup
 	public $_name;
 	public $_required =true;
 
-	public $_message = 'COM_PAYPLANS_SETUP_NO_MESSAGE';
+	public $_message = 'PLG_SYSTEM_RBSL_SETUP_NO_MESSAGE';
 	public $_type = 'ERROR'; // WARNING , INFORMATION
 	public $_returl = null;
 
@@ -87,7 +87,7 @@ abstract class Rb_Setup
 
 	public function getTooltip()
 	{
-		return Rb_Text::_('COM_PAYPLANS_SETUP_'.JString::strtoupper($this->_name).'_TOOLTIP');
+		return Rb_Text::_('PLG_SYSTEM_RBSL_SETUP_'.JString::strtoupper($this->_name).'_TOOLTIP');
 		//return $this->_tooltip;
 	}
 

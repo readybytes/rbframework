@@ -2,7 +2,7 @@
 /**
 * @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
-* @package		PayPlans
+* @package		RB Framework
 * @subpackage	Frontend
 * @contact 		shyam@readybytes.in
 */
@@ -16,8 +16,8 @@ class Rb_HtmlRange
 		$elementValue0 = @array_shift($filters[$name]);
 		$elementValue1 = @array_shift($filters[$name]);
 		
-		$from  = '<label class="pp-grid_3">'.Rb_Text::_('COM_PAYPLANS_FILTERS_FROM').'</label>';
-		$to    = '<label class="pp-grid_3">'.Rb_Text::_('COM_PAYPLANS_FILTERS_TO').'</label>';
+		$from  = '<label class="pp-grid_3">'.Rb_Text::_('PLG_SYSTEM_RBSL_FILTERS_FROM').'</label>';
+		$to    = '<label class="pp-grid_3">'.Rb_Text::_('PLG_SYSTEM_RBSL_FILTERS_TO').'</label>';
 			
 			
 		if(JString::strtolower($type)=="date"){

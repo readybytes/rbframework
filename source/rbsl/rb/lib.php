@@ -2,7 +2,7 @@
 /**
 * @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
-* @package		PayPlans
+* @package		RB Framework
 * @subpackage	Frontend
 * @contact 		shyam@readybytes.in
 */
@@ -114,7 +114,7 @@ class Rb_Lib extends JObject
 				$type = $item->type;
 			}
 
-			Rb_Error::assert($type!==null, Rb_Text::_('COM_PAYPLANS_ERROR_INVALID_TYPE_OF_APPLICATION'));
+			Rb_Error::assert($type!==null, Rb_Text::_('PLG_SYSTEM_RBSL_ERROR_INVALID_TYPE_OF_APPLICATION'));
 
 			//IMP autoload apps
 			PayplansHelperApp::getApps();
@@ -184,8 +184,8 @@ class Rb_Lib extends JObject
 	{
 		$name = JString::strtolower($name);
 
-		Rb_Error::assert(is_object($this->$name), Rb_Text::_('COM_PAYPLANS_ERROR_PARAMETER_MUST_BE_AN_OBJECT'));
-		Rb_Error::assert(method_exists($this->$name,'render'), Rb_Text::_('COM_PAYPLANS_ERROR_INVALID_PARAMETER_NAME_TO_RENDER'));
+		Rb_Error::assert(is_object($this->$name), Rb_Text::_('PLG_SYSTEM_RBSL_ERROR_PARAMETER_MUST_BE_AN_OBJECT'));
+		Rb_Error::assert(method_exists($this->$name,'render'), Rb_Text::_('PLG_SYSTEM_RBSL_ERROR_INVALID_PARAMETER_NAME_TO_RENDER'));
 
 		$key = ($key === null) ? $name : $key;
 		return $this->$name->render($key);

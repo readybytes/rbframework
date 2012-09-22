@@ -2,7 +2,7 @@
 /**
 * @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
-* @package		PayPlans
+* @package		RB Framework
 * @subpackage	Frontend
 * @contact 		shyam@readybytes.in
 */
@@ -107,7 +107,7 @@ abstract class Rb_Model extends Rb_AbstractModel
 	{
 		if(isset($data)===false || count($data)<=0)
 		{
-			$this->setError(Rb_Text::_('COM_PAYPLANS_NO_DATA_TO_SAVE'));
+			$this->setError(Rb_Text::_('PLG_SYSTEM_RBSL_NO_DATA_TO_SAVE'));
 			return false;
 		}
 
@@ -129,7 +129,7 @@ abstract class Rb_Model extends Rb_AbstractModel
 		//load the table row
 		$table = $this->getTable();
 		if(!$table){
-			$this->setError(Rb_Text::_('COM_PAYPLANS_TABLE_DOES_NOT_EXIST'));
+			$this->setError(Rb_Text::_('PLG_SYSTEM_RBSL_TABLE_DOES_NOT_EXIST'));
 			return false;
 		}
 		// Bug #29
@@ -142,7 +142,7 @@ abstract class Rb_Model extends Rb_AbstractModel
 		//it is a NOT a new record then we MUST load the record
 		//else this record does not exist
 		if($pk && $new===false && $table->load($pk)===false){
-			$this->setError(Rb_Text::_('COM_PAYPLANS_NOT_ABLE_TO_LOAD_ITEM'));
+			$this->setError(Rb_Text::_('PLG_SYSTEM_RBSL_NOT_ABLE_TO_LOAD_ITEM'));
 			return false;
 		}
 
@@ -179,7 +179,7 @@ abstract class Rb_Model extends Rb_AbstractModel
 		// else this is a new record
 		if(!$pk)
 		{
-			$this->setError(Rb_Text::_('COM_PAYPLANS_NO_ITEM_ID_AVAILABLE_TO_DELETE'));
+			$this->setError(Rb_Text::_('PLG_SYSTEM_RBSL_NO_ITEM_ID_AVAILABLE_TO_DELETE'));
 			return false;
 		}
 
@@ -199,8 +199,8 @@ abstract class Rb_Model extends Rb_AbstractModel
 	public function deleteMany($condition, $glue='AND', $operator='=')
 	{
 		// assert if invalid condition
-		Rb_Error::assert(is_array($condition), Rb_Text::_('COM_PAYPLANS_ERROR_INVALID_CONDITION_TO_DELETE_DATA'));
-		Rb_Error::assert(!empty($condition), Rb_Text::_('COM_PAYPLANS_ERROR_INVALID_CONDITION_TO_DELETE_DATA'));
+		Rb_Error::assert(is_array($condition), Rb_Text::_('PLG_SYSTEM_RBSL_ERROR_INVALID_CONDITION_TO_DELETE_DATA'));
+		Rb_Error::assert(!empty($condition), Rb_Text::_('PLG_SYSTEM_RBSL_ERROR_INVALID_CONDITION_TO_DELETE_DATA'));
 
 		$query = new Rb_Query();
 		$query->delete()
@@ -231,7 +231,7 @@ abstract class Rb_Model extends Rb_AbstractModel
 		// else this is a new record
 		if(!$pk)
 		{
-			$this->setError(Rb_Text::_('COM_PAYPLANS_ERROR_NO_ITEM_ID_AVAILABLE_TO_CHANGE_ORDER'));
+			$this->setError(Rb_Text::_('PLG_SYSTEM_RBSL_ERROR_NO_ITEM_ID_AVAILABLE_TO_CHANGE_ORDER'));
 			return false;
 		}
 
@@ -262,7 +262,7 @@ abstract class Rb_Model extends Rb_AbstractModel
 		//if we have itemid then we MUST load the record
 		if(!$pk)
 		{
-			$this->setError(Rb_Text::_('COM_PAYPLANS_NO_ITEM_ID_AVAILABLE_TO_CHANGE_ORDER'));
+			$this->setError(Rb_Text::_('PLG_SYSTEM_RBSL_NO_ITEM_ID_AVAILABLE_TO_CHANGE_ORDER'));
 			return false;
 		}
 
@@ -353,7 +353,7 @@ abstract class Rb_Model extends Rb_AbstractModel
 		}
 		
     	Rb_Error::assert(isset($this->filterMatchOpeartor[$key]), "OPERATOR FOR $key IS NOT AVAILABLE FOR FILTER");
-    	Rb_Error::assert(is_array($value), Rb_Text::_('COM_PAYPLANS_VALUE_FOR_FILTERS_MUST_BE_AN_ARRAY'));
+    	Rb_Error::assert(is_array($value), Rb_Text::_('PLG_SYSTEM_RBSL_VALUE_FOR_FILTERS_MUST_BE_AN_ARRAY'));
 
     	$cloneOP    = $this->filterMatchOpeartor[$key];
     	$cloneValue = $value;

@@ -2,7 +2,7 @@
 /**
 * @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
-* @package		PayPlans
+* @package		RB Framework
 * @subpackage	Frontend
 * @contact 		shyam@readybytes.in
 */
@@ -74,7 +74,7 @@ abstract class Rb_AbstractView extends JView
 			return $this->_prefix;
 
 		$r = null;
-		Rb_Error::assert(preg_match('/(.*)View/i', get_class($this), $r), Rb_Text::sprintf('COM_PAYPLANS_ERROR_XIVIEW_GETPREFIX_CANT_GET_OR_PARSE_CLASSNAME', get_class($this)), Rb_Error::ERROR);
+		Rb_Error::assert(preg_match('/(.*)View/i', get_class($this), $r), Rb_Text::sprintf('PLG_SYSTEM_RBSL_ERROR_XIVIEW_GETPREFIX_CANT_GET_OR_PARSE_CLASSNAME', get_class($this)), Rb_Error::ERROR);
 
 
 		$this->_prefix  =  JString::strtolower($r[1]);
@@ -200,7 +200,7 @@ abstract class Rb_AbstractView extends JView
 
 	protected function _prepareDocument()
 	{
-		if(PAYPLANS_JVERSION_FAMILY === '15'){
+		if(RB_CMS_VERSION_FAMILY === '15'){
 			return true;
 		}
 		
@@ -318,32 +318,14 @@ abstract class Rb_AbstractView extends JView
 		if(Rb_Factory::getApplication()->isAdmin()==true){
 			return $this->_showAdminFooter();
 		}
-		
-		//do not show in premium kits
-		if((defined('PAYPLANS_PREMIUM_BUILD') && PAYPLANS_PREMIUM_BUILD)){
-				return '';
-		}
-		
-		return '<p align="center">'.Rb_Text::_('COM_PAYPLANS_POWERED_BY') .'<a id="payplansPowerdBy" href="http://www.jpayplans.com" target="_blank" >PayPlans</a></p>';
+
+		return '';
+
 	}
 
 	protected function _showAdminFooter()
 	{
-		ob_start()?>
-       
-        <div class="powered-by">
-	       <?php echo Rb_Text::_('COM_PAYPLANS_POWERED_BY') .'<a id="payplans-powered-by" href="http://www.jpayplans.com" target="_blank" >PayPlans</a><sup>TM</sup>';?>
-		   <?php echo ' | '.Rb_Text::_('COM_PAYPLANS_FOOTER_VERSION').' <strong>'.PAYPLANS_VERSION .'</strong> | '. Rb_Text::_('COM_PAYPLANS_FOOTER_BUILD').PAYPLANS_REVISION; ?>	  	
-        	<?php echo '<br />'
-        		.Rb_Text::_('COM_PAYPLANS_FOOTER_MESSAGE')
-        		.'<a href="http://bit.ly/lrECHY">'.Rb_Text::_('COM_PAYPLANS_FOOTER_MESSAGE_LINK').'</a>'
-        		.Rb_Text::_('COM_PAYPLANS_FOOTER_MESSAGE_JED'); 
-        	?>
-	    </div>
-		<?php 
-		$content = ob_get_contents();
-		ob_end_clean();
-		return $content;
+		return '';
 	}
 	
 	protected function _adminToolbar()
@@ -359,14 +341,14 @@ abstract class Rb_AbstractView extends JView
 	protected function _adminToolbarTitle()
 	{
 		// Set the titlebar text
-		Rb_HelperToolbar::title(Rb_Text::_('COM_PAYPLANS_SM_'.JString::strtoupper($this->getName())), "xi-".$this->getName().".png");
+		Rb_HelperToolbar::title(Rb_Text::_('PLG_SYSTEM_RBSL_SM_'.JString::strtoupper($this->getName())), "xi-".$this->getName().".png");
 	}
 
 	protected function _adminGridToolbar()
 	{
 		Rb_HelperToolbar::addNewX('new');
 		Rb_HelperToolbar::editListX();
-		Rb_HelperToolbar::customX( 'copy', 'copy.png', 'copy_f2.png', 'COM_PAYPLANS_TOOLBAR_COPY', true );
+		Rb_HelperToolbar::customX( 'copy', 'copy.png', 'copy_f2.png', 'PLG_SYSTEM_RBSL_TOOLBAR_COPY', true );
 		Rb_HelperToolbar::divider();
 		Rb_HelperToolbar::publish();
 		Rb_HelperToolbar::unpublish();

@@ -2,7 +2,7 @@
 /**
 * @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
-* @package		PayPlans
+* @package		RB Framework
 * @subpackage	Frontend
 * @contact 		shyam@readybytes.in
 */
@@ -13,7 +13,7 @@ class Rb_Language extends JLanguage
 {
 	public static function getStrings(JLanguage $instance)
 	{
-		if(PAYPLANS_JVERSION_FAMILY == '15'){
+		if(RB_CMS_VERSION_FAMILY == '15'){
 			return $instance->_strings;
 		}
 		

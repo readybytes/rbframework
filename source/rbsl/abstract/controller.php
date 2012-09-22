@@ -2,7 +2,7 @@
 /**
 * @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
-* @package		PayPlans
+* @package		RB Framework
 * @subpackage	Frontend
 * @contact 		shyam@readybytes.in
 */
@@ -103,7 +103,7 @@ abstract class Rb_AbstractControllerBase extends JController
 		if (empty( $name ))
 		{
 			$r = null;
-			Rb_Error::assert(preg_match('/Controller(.*)/i', get_class($this), $r) , Rb_Text::sprintf('COM_PAYPLANS_ERROR_XICONTROLLER_CANT_GET_OR_PARSE_CLASS_NAME', get_class($this)), Rb_Error::ERROR);
+			Rb_Error::assert(preg_match('/Controller(.*)/i', get_class($this), $r) , Rb_Text::sprintf('PLG_SYSTEM_RBSL_ERROR_XICONTROLLER_CANT_GET_OR_PARSE_CLASS_NAME', get_class($this)), Rb_Error::ERROR);
 
 			$name = strtolower( $r[1] );
 		}
@@ -120,7 +120,7 @@ abstract class Rb_AbstractControllerBase extends JController
 			return $this->_prefix;
 
 		$r = null;
-		Rb_Error::assert(preg_match('/(.*)Controller/i', get_class($this), $r), Rb_Text::sprintf('COM_PAYPLANS_ERROR_CANT_GET_PARSE_CLASS_NAME',Rb_Controller::getName()), Rb_Error::ERROR);
+		Rb_Error::assert(preg_match('/(.*)Controller/i', get_class($this), $r), Rb_Text::sprintf('PLG_SYSTEM_RBSL_ERROR_CANT_GET_PARSE_CLASS_NAME',Rb_Controller::getName()), Rb_Error::ERROR);
 
 		$this->_prefix  =  JString::strtolower($r[1]);
 		return $this->_prefix;
@@ -346,4 +346,4 @@ abstract class Rb_AbstractControllerBase extends JController
 
 
 // Include the Joomla Version Specific class, which will ad Rb_AbstractController class automatically
-Rb_Error::assert(class_exists('Rb_AbstractJ'.PAYPLANS_JVERSION_FAMILY.'Controller',true), Rb_Error::ERROR);
+Rb_Error::assert(class_exists('Rb_AbstractJ'.RB_CMS_VERSION_FAMILY.'Controller',true), Rb_Error::ERROR);

@@ -2,7 +2,7 @@
 /**
 * @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
-* @package		PayPlans
+* @package		RB Framework
 * @subpackage	Frontend
 * @contact 		shyam@readybytes.in
 */
@@ -27,7 +27,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 	 */
 	function notask()
 	{
-		echo Rb_Text::_('COM_PAYPLANS_NO_TASK_PROVIDED');
+		echo Rb_Text::_('PLG_SYSTEM_RBSL_NO_TASK_PROVIDED');
 		return false;
 	}
 
@@ -150,7 +150,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 			$msgType	=	'error';
 		}
 		else
-			$this->setMessage(Rb_Text::_('COM_PAYPLANS_ITEM_SAVED_SUCCESSFULLY'));
+			$this->setMessage(Rb_Text::_('PLG_SYSTEM_RBSL_ITEM_SAVED_SUCCESSFULLY'));
 
 		//perform redirection
 		$redirect  = "index.php?option=com_{$this->_component}&view={$this->getName()}";
@@ -210,7 +210,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 	{
 		$errMsg				= '';
 		$messagetype 	= 'message';
-		$message 		= Rb_Text::_('COM_PAYPLANS_ITEMS_DELETED');
+		$message 		= Rb_Text::_('PLG_SYSTEM_RBSL_ITEMS_DELETED');
 
 
 		//ensure model state is blank, so no mishappening :-)
@@ -262,7 +262,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 	{
 		$errMsg				= '';
 		$messagetype 	= 'message';
-		$message 		= Rb_Text::_('COM_PAYPLANS_ITEMS_COPIED');
+		$message 		= Rb_Text::_('PLG_SYSTEM_RBSL_ITEMS_COPIED');
 		
 		$cids = JRequest::getVar('cid', $cids, 'request', 'array');
 		foreach ($cids as $cid)
@@ -303,7 +303,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 		if($this->_order($change, $cids[0])===false)
 			$this->setMessage($this->getError());
 		else
-			$this->setMessage(Rb_Text::_('COM_PAYPLANS_ITEM_ORDERED_SUCCESSFULLY'));
+			$this->setMessage(Rb_Text::_('PLG_SYSTEM_RBSL_ITEM_ORDERED_SUCCESSFULLY'));
 
 		//perform redirection
 		$this->setRedirect();
@@ -319,7 +319,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 	{
 		$errMsg				= '';
 		$this->messagetype 	= 'notice';
-		$this->message 		= Rb_Text::_('COM_PAYPLANS_ITEMS_REORDERED');
+		$this->message 		= Rb_Text::_('PLG_SYSTEM_RBSL_ITEMS_REORDERED');
 
 		//RBFW_TODO : User proper variable names
 		$ordering 	= JRequest::getVar('ordering', array(0), 'post', 'array');
@@ -373,7 +373,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 		//setup error message, if no mapping exists
 		if(array_key_exists($task, $this->_boolMap)===false)
 		{
-			$this->setRedirect(null, Rb_Text::_('COM_PAYPLANS_NO_MAPPING_FOUND_FOR_CURRENT_ACTION'), 'error');
+			$this->setRedirect(null, Rb_Text::_('PLG_SYSTEM_RBSL_NO_MAPPING_FOUND_FOR_CURRENT_ACTION'), 'error');
 			return false;
 		}
 
@@ -416,7 +416,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 	{
 		$errMsg				= '';
 		$this->messagetype 	= 'notice';
-		$this->message 		= Rb_Text::_('COM_PAYPLANS_ITEMS_REORDERED');
+		$this->message 		= Rb_Text::_('PLG_SYSTEM_RBSL_ITEMS_REORDERED');
 
 		$task	= JRequest::getVar('task',	'enable');
 
@@ -426,7 +426,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 			$offpattern = '/^switchOff/';
 			$onpattern = '/^switchOn/';
 			if(!preg_match($onpattern, $task) && !preg_match($offpattern, $task)){
-				$this->setRedirect(null, Rb_Text::_('COM_PAYPLANS_NO_MAPPING_FOUND_FOR_CURRENT_ACTION'), 'error');
+				$this->setRedirect(null, Rb_Text::_('PLG_SYSTEM_RBSL_NO_MAPPING_FOUND_FOR_CURRENT_ACTION'), 'error');
 				return false;
 			}
 			else{
@@ -538,7 +538,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 	{
 		//RBFW_TODO:High : Event should be filtered
 		$event 		= JRequest::getVar('event', $event);
-		Rb_Error::assert($event,Rb_Text::_('COM_PAYPLANS_ERROR_PAYPLANS_UNKNOWN_EVENT_TRIGGER_REQUESTED'));
+		Rb_Error::assert($event,Rb_Text::_('PLG_SYSTEM_RBSL_ERROR_PAYPLANS_UNKNOWN_EVENT_TRIGGER_REQUESTED'));
 
 		$args = $this->_getArgs();
 
@@ -554,7 +554,7 @@ abstract class Rb_Controller extends Rb_AbstractController
          // if user is newly registered
 	     $reg_id = Rb_Factory::getSession()->get('REGISTRATION_NEW_USER_ID', 0);
 	     if(!$reg_id && !$id){
-	           $this->setRedirect(Rb_Route::_("index.php?option=".PAYPLANS_COM_USER."&view=login"),Rb_Text::_('COM_PAYPLANS_SESSION_EXPIRED_LOGIN_AGAIN'));
+	           $this->setRedirect(Rb_Route::_("index.php?option=".PAYPLANS_COM_USER."&view=login"),Rb_Text::_('PLG_SYSTEM_RBSL_SESSION_EXPIRED_LOGIN_AGAIN'));
 	           return false;
 	      }
 	     return true;

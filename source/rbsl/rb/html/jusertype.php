@@ -2,7 +2,7 @@
 /**
 * @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
-* @package		PayPlans
+* @package		RB Framework
 * @subpackage	Frontend
 * @contact 		payplans@readybytes.in
 */
@@ -21,7 +21,7 @@ class Rb_HtmlJusertype extends Rb_Html
 		
 		if(isset($attr) && isset($attr['userAutocomplete']) && $attr['userAutocomplete'] == false){
 			if(isset($attr['none']))
-                       $options[] = JHTML::_('select.option', '', Rb_Text::_('COM_PAYPLANS_SELECT_USERTYPE'));
+                       $options[] = JHTML::_('select.option', '', Rb_Text::_('PLG_SYSTEM_RBSL_SELECT_USERTYPE'));
                        
             foreach($groups as $group=>$val){
             	$options[] = JHTML::_('select.option', $val, $val);        

@@ -2,7 +2,7 @@
 /**
 * @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
-* @package		PayPlans
+* @package		RB Framework
 * @subpackage	Frontend
 * @contact 		shyam@readybytes.in
 */
@@ -77,7 +77,7 @@ class Rb_HelperJoomla extends Rb_AbstractHelperJoomla
 	{
 		$link = 'index.php?option='.PAYPLANS_COM_USER;
 	
-		if(PAYPLANS_JVERSION_FAMILY==15){
+		if(RB_CMS_VERSION_FAMILY==15){
 			$link .= '&view=user&task=logout';
 		}else{
 			
@@ -102,7 +102,7 @@ class Rb_HelperJoomla extends Rb_AbstractHelperJoomla
 	{
 		$link = 'index.php?option='.PAYPLANS_COM_USER;
 	
-		if(PAYPLANS_JVERSION_FAMILY==15){
+		if(RB_CMS_VERSION_FAMILY==15){
 			$link .= '&view=user&task=login';
 		}else{
 			
@@ -133,7 +133,7 @@ class Rb_HelperJoomla extends Rb_AbstractHelperJoomla
                //RBFW_TODO : fixit for Joomfish
 
                $lang = Rb_Factory::getLanguage();
-               if(PAYPLANS_JVERSION_FAMILY == '15'){
+               if(RB_CMS_VERSION_FAMILY == '15'){
                        $code = $lang->_lang;
                }else{
                        // as if now no way to collect language code

@@ -2,7 +2,7 @@
 /**
 * @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
-* @package		PayPlans
+* @package		RB Framework
 * @subpackage	Frontend
 * @contact 		shyam@readybytes.in
 */
@@ -201,7 +201,7 @@ class Rb_AbstractJ16HelperJoomla extends Rb_AbstractHelperJoomlaBase
 		}
 
 		if (empty($title)) {
-			$title = Rb_Text::_('COM_PAYPLANS_APP_CONTENT_JOOMLA_SELECT_ARTICLE');
+			$title = Rb_Text::_('PLG_SYSTEM_RBSL_APP_CONTENT_JOOMLA_SELECT_ARTICLE');
 		}
 		$title = htmlspecialchars($title, ENT_QUOTES, 'UTF-8');
 
@@ -213,7 +213,7 @@ class Rb_AbstractJ16HelperJoomla extends Rb_AbstractHelperJoomlaBase
 		// The user select button.
 		$html[] = '<div class="button2-left">';
 		$html[] = '  <div class="blank">';
-		$html[] = '	<a class="modal" title="'.Rb_Text::_('COM_PAYPLANS_APP_CONTENT_JOOMLA_SELECT_ARTICLE').'"  href="'.$link.'" rel="{handler: \'iframe\', size: {x: 800, y: 450}}">'.JText::_('COM_PAYPLANS_APP_CONTENT_JOOMLA_SELECT_ARTICLE_BUTTON').'</a>';
+		$html[] = '	<a class="modal" title="'.Rb_Text::_('PLG_SYSTEM_RBSL_APP_CONTENT_JOOMLA_SELECT_ARTICLE').'"  href="'.$link.'" rel="{handler: \'iframe\', size: {x: 800, y: 450}}">'.JText::_('PLG_SYSTEM_RBSL_APP_CONTENT_JOOMLA_SELECT_ARTICLE_BUTTON').'</a>';
 		$html[] = '  </div>';
 		$html[] = '</div>';
 

@@ -2,7 +2,7 @@
 /**
 * @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
-* @package		PayPlans
+* @package		RB Framework
 * @subpackage	Frontend
 * @contact 		shyam@readybytes.in
 */
@@ -108,7 +108,7 @@ abstract class Rb_Table extends JTable
 		if(Rb_HelperTable::isTableExist($tblFullName)===false)
 		{	
 			//RBFW_TODO : raise exception
-			$this->setError(Rb_Text::_("COM_PAYPLANS_NO_TABLE_EXISTS").' : '.$this->_tbl);
+			$this->setError(Rb_Text::_("PLG_SYSTEM_RBSL_NO_TABLE_EXISTS").' : '.$this->_tbl);
 			return false;
 		}
 		//call parent to build the table object

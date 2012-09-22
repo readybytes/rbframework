@@ -2,7 +2,7 @@
 /**
 * @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
-* @package		PayPlans
+* @package		RB Framework
 * @subpackage	Frontend
 * @contact 		shyam@readybytes.in
 */
@@ -34,7 +34,7 @@ class Rb_Logger
 			if($level == self::LEVEL_ERROR )
 			{
 				$mailer  = Rb_Factory::getMailer();
-				$subject = Rb_Text::_('COM_PAYPLANS_ERROR_LOG_SUBJECT');
+				$subject = Rb_Text::_('PLG_SYSTEM_RBSL_ERROR_LOG_SUBJECT');
 				$mailer->setSubject($subject);
 				// if base64 decoded
 				$decoded_content = base64_decode($content,true);
@@ -83,24 +83,24 @@ class Rb_Logger
 	static public function getLevels() {
 		
 		if(self::$_levels === null){
-			self::$_levels[self::LEVEL_INFO] 		= Rb_Text::_('COM_PAYPLANS_LOGGER_LEVEL_INFO');
-			self::$_levels[self::LEVEL_NOTICE] 	= Rb_Text::_('COM_PAYPLANS_LOGGER_LEVEL_NOTICE');
-			self::$_levels[self::LEVEL_WARNING] 	= Rb_Text::_('COM_PAYPLANS_LOGGER_LEVEL_WARNING');
-			self::$_levels[self::LEVEL_ERROR] 		= Rb_Text::_('COM_PAYPLANS_LOGGER_LEVEL_ERROR');
-			self::$_levels[self::LEVEL_DEBUG] 		= Rb_Text::_('COM_PAYPLANS_LOGGER_LEVEL_DEBUG');
+			self::$_levels[self::LEVEL_INFO] 		= Rb_Text::_('PLG_SYSTEM_RBSL_LOGGER_LEVEL_INFO');
+			self::$_levels[self::LEVEL_NOTICE] 	= Rb_Text::_('PLG_SYSTEM_RBSL_LOGGER_LEVEL_NOTICE');
+			self::$_levels[self::LEVEL_WARNING] 	= Rb_Text::_('PLG_SYSTEM_RBSL_LOGGER_LEVEL_WARNING');
+			self::$_levels[self::LEVEL_ERROR] 		= Rb_Text::_('PLG_SYSTEM_RBSL_LOGGER_LEVEL_ERROR');
+			self::$_levels[self::LEVEL_DEBUG] 		= Rb_Text::_('PLG_SYSTEM_RBSL_LOGGER_LEVEL_DEBUG');
 		}
 		
 		return self::$_levels;
 	}
 	
 	public function getLevelText($level) {
-		$levels[self::LEVEL_INFO] 		= Rb_Text::_('COM_PAYPLANS_LOGGER_LEVEL_INFO');
-		$levels[self::LEVEL_NOTICE] 	= Rb_Text::_('COM_PAYPLANS_LOGGER_LEVEL_NOTICE');
-		$levels[self::LEVEL_WARNING] 	= Rb_Text::_('COM_PAYPLANS_LOGGER_LEVEL_WARNING');
-		$levels[self::LEVEL_ERROR] 		= Rb_Text::_('COM_PAYPLANS_LOGGER_LEVEL_ERROR');
-		$levels[self::LEVEL_DEBUG] 		= Rb_Text::_('COM_PAYPLANS_LOGGER_LEVEL_DEBUG');
+		$levels[self::LEVEL_INFO] 		= Rb_Text::_('PLG_SYSTEM_RBSL_LOGGER_LEVEL_INFO');
+		$levels[self::LEVEL_NOTICE] 	= Rb_Text::_('PLG_SYSTEM_RBSL_LOGGER_LEVEL_NOTICE');
+		$levels[self::LEVEL_WARNING] 	= Rb_Text::_('PLG_SYSTEM_RBSL_LOGGER_LEVEL_WARNING');
+		$levels[self::LEVEL_ERROR] 		= Rb_Text::_('PLG_SYSTEM_RBSL_LOGGER_LEVEL_ERROR');
+		$levels[self::LEVEL_DEBUG] 		= Rb_Text::_('PLG_SYSTEM_RBSL_LOGGER_LEVEL_DEBUG');
 
-		return isset($levels[$level]) ? $levels[$level] : XIText::_('COM_PAYPLANS_LOGGER_UNKNOWN_LEVEL');
+		return isset($levels[$level]) ? $levels[$level] : XIText::_('PLG_SYSTEM_RBSL_LOGGER_UNKNOWN_LEVEL');
 	}
 
 
@@ -113,7 +113,7 @@ class Rb_Logger
 		$data['object_id'] 	= $object_id; 
 		$data['class'] 		= $class ;
 		$data['user_ip'] 	= isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] 
-								: ( isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : Rb_Text::_('COM_PAYPLANS_LOGGER_REMOTE_IP_NOT_DEFINED')) ;
+								: ( isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : Rb_Text::_('PLG_SYSTEM_RBSL_LOGGER_REMOTE_IP_NOT_DEFINED')) ;
 		$data['message']    = $message ;
 		$data['content'] 	= $content ;
 		$data['level'] 		= $level ;

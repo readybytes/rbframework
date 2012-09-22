@@ -38,7 +38,7 @@ class Rb_Encryptor{
 		$this->sourcelen = 12;
 		
         if (strlen($this->scramble1) <> strlen($this->scramble2)) {
-            Rb_Error::assert(false, Rb_Text::_('COM_PAYPLANS_ERROR_ENCRYPTOR_SCRAMBLE'), Rb_Error::ERROR);
+            Rb_Error::assert(false, Rb_Text::_('PLG_SYSTEM_RBSL_ERROR_ENCRYPTOR_SCRAMBLE'), Rb_Error::ERROR);
         } // if
 
         $this->adj = 1.75;  // this value is added to the rolling fudgefactors

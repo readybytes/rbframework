@@ -2,7 +2,7 @@
 /**
 * @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
-* @package		PayPlans
+* @package		RB Framework
 * @subpackage	Frontend
 * @contact 		shyam@readybytes.in
 */
@@ -100,7 +100,7 @@ class Rb_Date extends Rb_AbstractDate
 		$date = new Rb_Date($time);
 		$str  = $date->toISO8601();
 		if($time=='0000-00-00 00:00:00' || !isset($time)){
-			return Rb_Text::_('COM_PAYPLANS_NEVER');
+			return Rb_Text::_('PLG_SYSTEM_RBSL_NEVER');
 		}
 		return "<span class='timeago' title='{$str}'>$time</span>"; 
 	}
