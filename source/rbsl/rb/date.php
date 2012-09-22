@@ -8,6 +8,9 @@
 */
 if(defined('_JEXEC')===false) die();
 
+class Rb_AbstractDate extends JDate
+{}
+
 //RBFW_TODO : Improve it for our purpose
 class Rb_Date extends Rb_AbstractDate
 {

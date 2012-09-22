@@ -8,6 +8,9 @@
 */
 if(defined('_JEXEC')===false) die();
 
+class Rb_AbstractHelperJoomla extends Rb_AdaptHelperJoomla
+{}
+
 class Rb_HelperJoomla extends Rb_AbstractHelperJoomla  
 {
 	/**
