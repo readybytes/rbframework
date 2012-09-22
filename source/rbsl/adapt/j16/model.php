@@ -8,10 +8,12 @@
 */
 if(defined('_JEXEC')===false) die();
 
-class Rb_AbstractJ16Model extends Rb_AbstractModelBase
+jimport( 'joomla.application.component.model' );
+
+class Rb_AdaptJ16Model extends JModel
 {
 	protected	$_name		= null;
 }
 
-class Rb_AbstractModel extends Rb_AbstractJ16Model
+class Rb_AdaptModel extends Rb_AdaptJ16Model
 {}

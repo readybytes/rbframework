@@ -8,9 +8,7 @@
 */
 if(defined('_JEXEC')===false) die();
 
-jimport( 'joomla.application.component.model' );
-
-abstract class Rb_AbstractModelBase extends JModel
+abstract class Rb_AbstractModel extends Rb_AdaptModel
 {
 	protected 	$_pagination		= '';
 	protected	$_query				= null;
@@ -215,6 +213,3 @@ abstract class Rb_AbstractModelBase extends JModel
 		return $this->getState($property) ;
 	}
 }
-
-// Include the Joomla Version Specific class, which will ad Rb_AbstractController class automatically
-Rb_Error::assert(class_exists('Rb_AbstractJ'.RB_CMS_VERSION_FAMILY.'Model',true), Rb_Error::ERROR);

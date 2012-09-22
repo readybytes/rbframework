@@ -8,7 +8,7 @@
 */
 if(defined('_JEXEC')===false) die();
 
-class Rb_AbstractHelperPatchBase
+class Rb_AbstractHelperPatch extends Rb_AdaptHelperPatch
 {
 	static function changeModuleState($name,$position,$newState = 1)
 	{
@@ -64,4 +64,4 @@ class Rb_AbstractHelperPatchBase
 }
 
 // Include the Joomla Version Specific class, which will ad Rb_AbstractHelperToolbar class automatically
-Rb_Error::assert(class_exists('Rb_AbstractJ'.RB_CMS_VERSION_FAMILY.'HelperPatch',true), Rb_Error::ERROR);
+Rb_Error::assert(class_exists('Rb_Abstract'. RB_CMS_ADAPTER.'HelperPatch',true), Rb_Error::ERROR);

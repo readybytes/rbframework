@@ -8,7 +8,7 @@
 */
 if(defined('_JEXEC')===false) die();
 
-class Rb_AbstractJ16Route extends Rb_AbstractRouteBase
+class Rb_AdaptJ16Route extends JRoute
 {
 	static public function _($url, $xhtml = false, $ssl = null)
 	{
@@ -16,5 +16,5 @@ class Rb_AbstractJ16Route extends Rb_AbstractRouteBase
 	}
 }
 
-class Rb_AbstractRoute extends Rb_AbstractJ16Route
+class Rb_AdaptRoute extends Rb_AdaptJ16Route
 {}

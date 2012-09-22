@@ -8,7 +8,9 @@
 */
 if(defined('_JEXEC')===false) die();
 
-class Rb_AbstractJ16Controller extends Rb_AbstractControllerBase
+jimport( 'joomla.application.component.controller' );
+
+class Rb_AdaptJ16Controller extends JController
 {
 	protected	$_name		= null;
 		
@@ -46,5 +48,5 @@ class Rb_AbstractJ16Controller extends Rb_AbstractControllerBase
 	}
 }
 
-class Rb_AbstractController extends Rb_AbstractJ16Controller
+class Rb_AdaptController extends Rb_AdaptJ16Controller
 {}

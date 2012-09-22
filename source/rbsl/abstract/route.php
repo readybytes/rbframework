@@ -8,7 +8,7 @@
 */
 if(defined('_JEXEC')===false) die();
 
-abstract class Rb_AbstractRouteBase extends JRoute
+abstract class Rb_AbstractRoute extends Rb_AdaptRoute
 {
 	static protected $_prefix = false;
 	/*
@@ -27,7 +27,3 @@ abstract class Rb_AbstractRouteBase extends JRoute
 		return parent::_($url, $xhtml);
 	}
 }
-
-
-// Include the Joomla Version Specific class, which will ad Rb_AbstractRoute class automatically
-Rb_Error::assert(class_exists('Rb_AbstractJ'.RB_CMS_VERSION_FAMILY.'Route',true), Rb_Error::ERROR);

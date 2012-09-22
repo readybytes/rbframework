@@ -8,9 +8,8 @@
 */
 if(defined('_JEXEC')===false) die();
 
-require_once JPATH_ADMINISTRATOR.'/includes/toolbar.php';
 
-class Rb_AbstractHelperToolbarBase extends JToolBarHelper
+class Rb_AbstractHelperToolbar extends Rb_AdaptHelperToolbar
 {
 	public static function openPopup($task, $icon = '', $iconOver = '', $alt = 'PLG_SYSTEM_RBSL_TOOLBAR_NEW')
 	{
@@ -64,10 +63,4 @@ class Rb_AbstractHelperToolbarBase extends JToolBarHelper
 		class_exists('JButtonSearchpayplans', true);
 		JToolBar::getInstance('toolbar')->appendButton( 'Searchpayplans', $alt);
 	}
-
-
 }
-
-
-// Include the Joomla Version Specific class, which will ad Rb_AbstractHelperToolbar class automatically
-Rb_Error::assert(class_exists('Rb_AbstractJ'.RB_CMS_VERSION_FAMILY.'HelperToolbar',true), Rb_Error::ERROR);

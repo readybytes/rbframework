@@ -8,7 +8,7 @@
 */
 if(defined('_JEXEC')===false) die();
 
-class Rb_AbstractFactoryBase extends JFactory
+class Rb_AbstractFactory extends Rb_AdaptFactory
 {
 	//Returns a MVCT object
 	static function getInstance($name, $type='', $prefix='Payplans', $refresh=false)
@@ -177,8 +177,3 @@ class Rb_AbstractFactoryBase extends JFactory
 		return self::$_logger[$className];
 	}
 }
-
-
-
-// Include the Joomla Version Specific class, which will ad Rb_AbstractFactory class automatically
-Rb_Error::assert(class_exists('Rb_AbstractJ'.RB_CMS_VERSION_FAMILY.'Factory',true), Rb_Error::ERROR);

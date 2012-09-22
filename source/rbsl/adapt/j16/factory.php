@@ -8,7 +8,7 @@
 */
 if(defined('_JEXEC')===false) die();
 
-class Rb_AbstractJ16Factory extends Rb_AbstractFactoryBase
+class Rb_AdaptJ16Factory extends JFactory
 {
 	/**
 	 * @return Rb_Session
@@ -27,5 +27,5 @@ class Rb_AbstractJ16Factory extends Rb_AbstractFactoryBase
 	}
 }
 
-class Rb_AbstractFactory extends Rb_AbstractJ16Factory
+class Rb_AdaptFactory extends Rb_AdaptJ16Factory
 {}

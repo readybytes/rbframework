@@ -8,7 +8,10 @@
 */
 if(defined('_JEXEC')===false) die();
 
-class Rb_AbstractJ16HelperToolbar extends Rb_AbstractHelperToolbarBase
+require_once JPATH_ADMINISTRATOR.'/includes/toolbar.php';
+
+
+class Rb_AdaptJ16HelperToolbar extends JToolBarHelper
 {
 	public static function save()
 	{
@@ -46,4 +49,4 @@ class Rb_AbstractJ16HelperToolbar extends Rb_AbstractHelperToolbarBase
 	}
 }
 
-class Rb_AbstractHelperToolbar extends Rb_AbstractJ16HelperToolbar{}
+class Rb_AdaptHelperToolbar extends Rb_AdaptJ16HelperToolbar{}

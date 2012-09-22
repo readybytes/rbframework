@@ -8,8 +8,5 @@
 */
 if(defined('_JEXEC')===false) die();
 
-class Rb_AbstractHelperJoomlaBase
+class Rb_AbstractHelperJoomla extends Rb_AdaptHelperJoomla
 {}
-
-// Include the Joomla Version Specific class, which will ad Rb_AbstractHelperToolbar class automatically
-Rb_Error::assert(class_exists('Rb_AbstractJ'.RB_CMS_VERSION_FAMILY.'HelperJoomla',true), Rb_Error::ERROR);

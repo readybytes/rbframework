@@ -8,13 +8,5 @@
 */
 if(defined('_JEXEC')===false) die();
 
-class Rb_AbstractJ15Route extends Rb_AbstractRouteBase
-{
-	public function _($url, $xhtml = false, $ssl = null)
-	{
-		return parent::_route($url, $xhtml, $ssl);
-	}
-}
-
-class Rb_AbstractRoute extends Rb_AbstractJ15Route
+abstract class Rb_AbstractInput extends JInput
 {}

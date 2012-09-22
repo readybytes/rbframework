@@ -10,7 +10,7 @@ if(defined('_JEXEC')===false) die();
 
 jimport( 'joomla.access.rules' );
 
-class Rb_AbstractJ16HelperJoomla extends Rb_AbstractHelperJoomlaBase
+class Rb_AdaptJ16HelperJoomla
 {
 	public static function changePluginState($element, $folder = 'system', $state=parent::ENABLE)
 	{
@@ -301,4 +301,4 @@ class Rb_AbstractJ16HelperJoomla extends Rb_AbstractHelperJoomlaBase
 	}
 }
 
-class Rb_AbstractHelperJoomla extends Rb_AbstractJ16HelperJoomla{}
+class Rb_AdaptHelperJoomla extends Rb_AdaptJ16HelperJoomla{}

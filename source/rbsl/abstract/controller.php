@@ -9,15 +9,8 @@
 if(defined('_JEXEC')===false) die();
 
 
-jimport( 'joomla.application.component.controller' );
 
-/**
- * By extending JController,
- * - we can put some common logic here
- * - we can enforce various restriction on child classes
- */
-
-abstract class Rb_AbstractControllerBase extends JController
+abstract class Rb_AbstractController extends Rb_AdaptController
 {
 	protected	$_prefix	= '';
 	//Absolute prefix contain component name , irrespective of site or admin
@@ -187,9 +180,6 @@ abstract class Rb_AbstractControllerBase extends JController
 	function execute($task)
 	{
 		// RBFW_TODO : Check for token
-//		if(!defined('PAYPLANS_UINT_TEST_MODE') && JString::strtolower(JRequest::getMethod()) == 'post'){
-//			JRequest::checkToken('POST') or jexit( 'Invalid Token' );
-//		}
 		
 		//populate user state first
 		$this->_populateModelState();
@@ -342,8 +332,3 @@ abstract class Rb_AbstractControllerBase extends JController
 		return $this->_tpl;
 	}
 }
-
-
-
-// Include the Joomla Version Specific class, which will ad Rb_AbstractController class automatically
-Rb_Error::assert(class_exists('Rb_AbstractJ'.RB_CMS_VERSION_FAMILY.'Controller',true), Rb_Error::ERROR);
