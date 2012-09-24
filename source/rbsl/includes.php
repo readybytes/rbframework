@@ -37,7 +37,6 @@ require_once RB_PATH_FRAMEWORK.'/loader.php'	;
 
 //autoload core library
 Rb_HelperLoader::addAutoLoadFolder(RB_PATH_CMS,			'Cms',			'Rb_');
-Rb_HelperLoader::addAutoLoadFolder(RB_PATH_ABSTRACT,	'Abstract',		'Rb_');
 Rb_HelperLoader::addAutoLoadFolder(RB_PATH_CORE,		'',				'Rb_');
 
 // mark to profiler

@@ -19,9 +19,8 @@ define('RB_FRAMEWORK_LOADED', true);
 //paths 
 define('RB_PATH_FRAMEWORK', dirname(__FILE__));
 
-define('RB_PATH_CMS',			RB_PATH_FRAMEWORK.'/cms');
-define('RB_PATH_ABSTRACT',		RB_PATH_FRAMEWORK.'/abstract');
-define('RB_PATH_CORE',			RB_PATH_FRAMEWORK.'/rb');
+define('RB_PATH_CMS',		RB_PATH_FRAMEWORK.'/cms');
+define('RB_PATH_CORE',		RB_PATH_FRAMEWORK.'/rb');
 
 define('RB_PATH_MEDIA',		RB_PATH_FRAMEWORK.'/media');
 define('RB_PATH_FILEDS',	RB_PATH_FRAMEWORK.'/fields');
