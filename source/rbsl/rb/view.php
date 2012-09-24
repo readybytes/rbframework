@@ -8,9 +8,9 @@
 */
 if(defined('_JEXEC')===false) die();
 
-jimport( 'joomla.application.component.view' );
 
-abstract class Rb_AbstractView extends JView
+
+abstract class Rb_AbstractView extends Rb_AdaptModel
 {
 	
 	protected $_model 			= null; // Will be set by controller

@@ -22,8 +22,7 @@ class Rb_Text extends JText
 			}
 		}
 		
-		 
 		$document = JFactory::getDocument();
-		$document->addScriptDeclaration(' var xi_strings = '.json_encode($strings).';');	
+		$document->addScriptDeclaration(' var rb_strings = '.json_encode($strings).';');	
 	}
 }

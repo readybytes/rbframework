@@ -241,23 +241,6 @@ abstract class Rb_Table extends JTable
 	}
 
 
-//	function bind( $from, $ignore=array() )
-//	{
-//		$result = $this->_triggerEvent('onBeforeBind',$from);
-//
-//		// if any plugin denied please stop
-//		if($result === FALSE)
-//			return $result;
-//
-//		// now bind the records
-//		$result = parent::bind($from, $ignore);
-//		if($result === FALSE)
-//			return $result;
-//
-//		//post event
-//		return $this->_triggerEvent('onAfterBind',$from);
-//	}
-
 	/** Everytime we are storing a record, try to use correct ordering */
 	public function store($updateNulls=false, $new=false)
 	{

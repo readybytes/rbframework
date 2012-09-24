@@ -10,25 +10,37 @@ if(defined('_JEXEC')===false) die();
 
 class Rb_Session
 {
-	public $session = null;
+	public $session 		= null;
+	protected $namespace 	= 'rb';
 	
-	public function __construct()
+	public function __construct($ns)
 	{
-		$this->session = JFactory::getSession();
+		$this->session		= JFactory::getSession();
+		$this->namespace	= $ns;
 	}
 	
-	public function set($name, $value, $namespace = 'payplans')
+	public function set($name, $value, $namespace = null)
 	{
+		if(!$namespace){
+			$namespace = $this->namespace;
+		}
 		$this->session->set($name, $value, $namespace);
 	}
 	
-	public function get($name, $default=null, $namespace = 'payplans')
+	public function get($name, $default=null, $namespace = null)
 	{
+		if(!$namespace){
+			$namespace = $this->namespace;
+		}
+		
 		return $this->session->get($name, $default, $namespace);
 	}
 	
-	public function clear($name, $namespace = 'payplans')
+	public function clear($name, $namespace = null)
 	{
+		if(!$namespace){
+			$namespace = $this->namespace;
+		}
 		return $this->session->clear($name, $namespace);
 	}
 
