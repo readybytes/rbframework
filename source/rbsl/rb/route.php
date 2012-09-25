@@ -8,7 +8,7 @@
 */
 if(defined('_JEXEC')===false) die();
 
-abstract class Rb_AbstractRoute extends Rb_AdaptRoute
+abstract class Rb_Route extends JRoute
 {
 	static protected $_prefix = false;
 	/*
@@ -27,6 +27,3 @@ abstract class Rb_AbstractRoute extends Rb_AdaptRoute
 		return parent::_($url, $xhtml);
 	}
 }
-
-class Rb_Route extends Rb_AbstractRoute
-{}

@@ -1,0 +1,7 @@
+
+	Removed - $mainframe
+
+	JParameter -> JForm
+
+	In Joomla! 1.6+, the router BuildRoute logic for each Component has changed to require a Menu Item in order to build the link.
+

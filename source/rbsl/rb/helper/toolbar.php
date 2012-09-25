@@ -10,6 +10,41 @@ if(defined('_JEXEC')===false) die();
 
 class Rb_AbstractHelperToolbar extends Rb_AdaptHelperToolbar
 {
+	public static function save()
+	{
+		parent::_save();
+	}
+	
+	public static function apply()
+	{
+		parent::_apply();
+	}
+	
+	public static function savenew()
+	{
+		parent::_savenew();
+	}
+	
+	public static function cancel($task = 'cancel', $alt = 'Close')
+	{
+		parent::_cancel();
+	}
+    
+	public static function delete($list='true', $alt='')
+	{
+		parent::_delete($list);
+	}
+	
+	public function deleteRecord($list='false', $alt='')
+	{
+		parent::_deleteRecord($list);
+	}
+	
+	public function searchpayplans()
+	{
+		parent::searchpayplans();
+	}
+	
 	public static function openPopup($task, $icon = '', $iconOver = '', $alt = 'PLG_SYSTEM_RBSL_TOOLBAR_NEW')
 	{
 		$bar = JToolBar::getInstance('toolbar');
@@ -62,8 +97,4 @@ class Rb_AbstractHelperToolbar extends Rb_AdaptHelperToolbar
 		class_exists('JButtonSearchpayplans', true);
 		JToolBar::getInstance('toolbar')->appendButton( 'Searchpayplans', $alt);
 	}
-}
-
-class Rb_HelperToolbar extends Rb_AbstractHelperToolbar
-{
 }

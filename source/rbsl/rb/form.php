@@ -8,7 +8,6 @@
 */
 if(defined('_JEXEC')===false) die();
 
-jimport('joomla.html.parameter');
 class Rb_Parameter extends JParameter
 {
 	// overrride it to addElementPath
@@ -102,3 +101,9 @@ class Rb_Parameter extends JParameter
 		parent::setXML($xml);
 	}
 }
+
+
+class Rb_Form extends JForm
+{
+
+} 

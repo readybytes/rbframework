@@ -8,5 +8,5 @@
 */
 if(defined('_JEXEC')===false) die();
 
-abstract class Rb_AbstractInput extends JInput
+abstract class Rb_Input extends JInput
 {}

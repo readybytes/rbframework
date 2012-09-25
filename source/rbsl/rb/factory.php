@@ -8,6 +8,26 @@
 */
 if(defined('_JEXEC')===false) die();
 
+class Rb_AdaptFactory extends JFactory
+{
+	/**
+	 * @return Rb_Session
+	 */
+	static function getSession($reset=false)
+	{
+		return parent::_getSession();
+	}
+
+	/**
+	 * @return stdClass
+	 */
+	static function getConfig()
+	{
+		return parent::_getConfig();
+	}
+}
+
+
 class Rb_AbstractFactory extends Rb_AdaptFactory
 {
 	//Returns a MVCT object
