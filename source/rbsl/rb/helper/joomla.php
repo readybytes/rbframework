@@ -10,7 +10,7 @@ if(defined('_JEXEC')===false) die();
 
 class Rb_AbstractHelperJoomla extends Rb_AdaptHelperJoomla
 {
-public static function changePluginState($element, $folder = 'system', $state=parent::ENABLE)
+	public static function changePluginState($element, $folder = 'system', $state=parent::ENABLE)
 	{
 		$db		= Rb_Factory::getDBO();
 		$query	= 'UPDATE '. $db->nameQuote( '#__extensions' )

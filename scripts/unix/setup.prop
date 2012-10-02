@@ -1,5 +1,5 @@
 #===============================================
-pkg.version=J3.0
+pkg.version=J2.5.6
 pkg.location=${user.home}/Dropbox/TEAM/dev/joomla
 dropbox.package.folder=${pkg.location}
 

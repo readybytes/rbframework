@@ -42,3 +42,10 @@ function _rb_cms_profiler_mark($mark)
 		
 	return;
 }
+
+
+function _rb_cms_doc_req_format()
+{
+	$format	= JRequest::getCmd('format','html');
+	return $format;
+}

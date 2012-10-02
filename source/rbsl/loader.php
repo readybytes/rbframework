@@ -60,7 +60,7 @@ class Rb_HelperLoader
 	}
 
 	/* View are stored very differently */
-	static function addAutoLoadViews($baseFolders, $format, $prefix='Rb_')
+	static function addAutoLoadViews($baseFolders, $format=RB_REQUEST_DOCUMENT_FORMAT, $prefix='Rb_')
 	{
 		$filetree = Rb_FileTree::getFileTree($baseFolders);
 		if(is_array($filetree)){

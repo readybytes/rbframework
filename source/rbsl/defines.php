@@ -37,4 +37,5 @@ define('RB_CMS_ADAPTER', 			$prefix.$family);	// j25
 define('RB_STATE_ENABLE',  1);
 define('RB_STATE_DISABLE', 0);
 
-// define('RB_IS_AJAX_REQUEST', JRequest::getBool('isAjax',	false));
+// Define Document format, needed for views autoloading
+define('RB_REQUEST_DOCUMENT_FORMAT', _rb_cms_doc_req_format());
