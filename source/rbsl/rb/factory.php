@@ -135,7 +135,7 @@ class Rb_AbstractFactory extends Rb_AdaptFactory
 
 		// Let plugin modify config
 		$args = array(&$arr);
-		PayplansHelperEvent::trigger('onPayplansConfigLoad', $args);
+		Rb_HelperEvent::trigger('onRbConfigLoad', $args);
 
 		// convert array of config to object
 		return self::$config = (object)$arr;

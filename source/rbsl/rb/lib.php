@@ -22,7 +22,7 @@ class Rb_Lib extends JObject
 
 	// trigger tells if we need to trigger onBeforeSave/onAfterSave events
 	public 		$_trigger   		= true;
-	protected	$_component			= RB_COMPONENT_NAME;
+	protected	$_component			= '';
 
 	/*
 	 * We want to make error handling to common objects
@@ -328,12 +328,12 @@ class Rb_Lib extends JObject
 			// trigger on before save
 			$args  = array($previousObject, $this);
 			
-			$event = 'onPayplans'.JString::ucfirst($this->getName()).'BeforeSave';
+			$event = 'onRb'.JString::ucfirst($this->getName()).'BeforeSave';
 			if($this instanceof PayplansApp){
-				$event = 'onPayplansAppBeforeSave';
+				$event = 'onRbAppBeforeSave';
 			}	
 
-			$result = PayplansHelperEvent::trigger($event, $args, '', $this);
+			$result = Rb_HelperEvent::trigger($event, $args, '', $this);
 		}
 
 
@@ -354,12 +354,12 @@ class Rb_Lib extends JObject
 			// 	trigger on before save
 			$args  = array($previousObject, $this);
 			
-			$event = 'onPayplans'.JString::ucfirst($this->getName()).'AfterSave';
+			$event = 'onRb'.JString::ucfirst($this->getName()).'AfterSave';
 			if($this instanceof PayplansApp){
-				$event = 'onPayplansAppAfterSave';
+				$event = 'onRbAppAfterSave';
 			}	
 
-			PayplansHelperEvent::trigger($event, $args, '', $this);
+			Rb_HelperEvent::trigger($event, $args, '', $this);
 		}
 
 		return $this;
@@ -373,16 +373,16 @@ class Rb_Lib extends JObject
 			// trigger on before delete
 			$args  = array($this);
 			
-			$event = 'onPayplans'.JString::ucfirst($this->getName()).'BeforeDelete';
+			$event = 'onRb'.JString::ucfirst($this->getName()).'BeforeDelete';
 			if($this instanceof PayplansApp){
-				$event = 'onPayplansAppBeforeDelete';
+				$event = 'onRbAppBeforeDelete';
 				//RBFW_TODO : add __clone function to lib, for better readibility
 				Rb_Factory::getSession()->set('OBJECT_TO_BE_DELETED_'.$this->getId().'_APP', $this->getClone());
 			}else{
 				Rb_Factory::getSession()->set('OBJECT_TO_BE_DELETED_'.$this->getId().'_'.JString::strtoupper($this->getName()), $this->getClone());
 			}
 
-			$result = PayplansHelperEvent::trigger($event, $args, '', $this);
+			$result = Rb_HelperEvent::trigger($event, $args, '', $this);
 		}
 
 		// delete data from table
@@ -400,12 +400,12 @@ class Rb_Lib extends JObject
 			// 	trigger on after delete
 			$args  = array($id);
 			
-			$event = 'onPayplans'.JString::ucfirst($this->getName()).'AfterDelete';
+			$event = 'onRb'.JString::ucfirst($this->getName()).'AfterDelete';
 			if($this instanceof PayplansApp){
-				$event = 'onPayplansAppAfterDelete';
+				$event = 'onRbAppAfterDelete';
 			}
 			
-			PayplansHelperEvent::trigger($event, $args, '', $this);
+			Rb_HelperEvent::trigger($event, $args, '', $this);
 		}
 			
 		return $this;

@@ -76,13 +76,13 @@ class Rb_AbstractHelperToolbar extends Rb_AdaptHelperToolbar
 	
 	public static function _delete($alt = 'Delete')
 	{
-		class_exists('JButtonRb_Delete', true);
+		class_exists('JButtonRbDelete', true);
 		JToolBar::getInstance('toolbar')->appendButton('Rb_Delete', 'delete', 'Delete', 'remove', true, false );
 	}
 	
 	public static function _deleteRecord($alt = 'Delete')
 	{
-		class_exists('JButtonRb_Delete', true);
+		class_exists('JButtonRbDelete', true);
 		JToolBar::getInstance('toolbar')->appendButton('Rb_Delete', 'delete', 'Delete', 'remove', false, false );
 	}
 	

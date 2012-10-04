@@ -30,6 +30,7 @@ require_once RB_PATH_FRAMEWORK.'/filetree.php';
 
 // load the loader
 require_once RB_PATH_FRAMEWORK.'/loader.php'	;
+require_once dirname(__FILE__).'/helper.php'	;
 
 // adding JRegistryFormatRb_INI formatter
 // require_once RB_PATH_INCLUDES.'/ini.php'	;

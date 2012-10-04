@@ -12,7 +12,7 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 {
 	protected	$_prefix	= '';
 	//Absolute prefix contain component name , irrespective of site or admin
-	protected	$_component	= RB_COMPONENT_NAME;
+	protected	$_component	= '';
 	protected	$_tpl		= null;
 
 	//it stores relation between task and table column
@@ -194,7 +194,7 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 
 		//trigger before
 		$args	= array(&$this, &$task);
-		$result = PayplansHelperEvent::trigger('onPayplansControllerBeforeExecute',$args);
+		$result = Rb_HelperEvent::trigger('onRbControllerBeforeExecute',$args);
 
 		//let the task execute in controller
 		//if task have failed, simply return and do not go to view
@@ -202,7 +202,7 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 
 		//trigger after
 		$args	= array(&$this, &$task, &$executeResult);
-		$result = PayplansHelperEvent::trigger('onPayplansControllerAfterExecute', $args, '', $this);
+		$result = Rb_HelperEvent::trigger('onRbControllerAfterExecute', $args, '', $this);
 		
 		if($executeResult===false){
 			return false;
@@ -865,20 +865,6 @@ abstract class Rb_Controller extends Rb_AbstractController
 		$args = $this->_getArgs();
 
 		//args must be an array
-		return PayplansHelperEvent::trigger($event, $args);
-	}
-	
-    //check if user's session is expired then redirect him to login page
-	public function _checkSessionExpiry()
-	{
-		 // if session of the user is expired 
-	     $id = Rb_Factory::getUser()->get('id');
-         // if user is newly registered
-	     $reg_id = Rb_Factory::getSession()->get('REGISTRATION_NEW_USER_ID', 0);
-	     if(!$reg_id && !$id){
-	           $this->setRedirect(Rb_Route::_("index.php?option=".PAYPLANS_COM_USER."&view=login"),Rb_Text::_('PLG_SYSTEM_RBSL_SESSION_EXPIRED_LOGIN_AGAIN'));
-	           return false;
-	      }
-	     return true;
+		return Rb_HelperEvent::trigger($event, $args);
 	}
 }

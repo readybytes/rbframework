@@ -14,7 +14,7 @@ abstract class Rb_AbstractView extends Rb_AdaptModel
 {
 	
 	protected $_model 			= null; // Will be set by controller
-	public    $_component		= RB_COMPONENT_NAME;
+	public    $_component		= '';
 	protected $_tpl 			= null;
 	public 	  $options 			= array('domObject'=>'xiWindowContent','domProperty'=>'innerHTML');
 
@@ -146,7 +146,7 @@ abstract class Rb_AbstractView extends Rb_AdaptModel
 		// Trigger event before we load templates
 		$args	= array(&$this, &$task);
 		// get data from diffreent apps on respective positions
-		$pluginResult = PayplansHelperEvent::trigger('onPayplansViewBeforeRender',$args, '', $this);
+		$pluginResult = Rb_HelperEvent::trigger('onRbViewBeforeRender',$args, '', $this);
 		$pluginResult = $this->_filterPluginResult($pluginResult);
 		
 		// now get html from different plugins and views
@@ -163,7 +163,7 @@ abstract class Rb_AbstractView extends Rb_AdaptModel
 
 		//post template rendering load trigger
 		$args	= array(&$this, &$task, &$output);
-		$result =  PayplansHelperEvent::trigger('onPayplansViewAfterRender', $args, '', $this);
+		$result =  Rb_HelperEvent::trigger('onRbViewAfterRender', $args, '', $this);
 
 		$this->_prepareDocument();
 		

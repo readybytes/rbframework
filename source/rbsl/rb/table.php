@@ -13,7 +13,7 @@ abstract class Rb_Table extends JTable
 	//Preety name to use it everywhere about identity
 	protected $_name = null;
 	protected $_needCheckinCheckout = false;
-    protected $_component	= RB_COMPONENT_NAME;
+    protected $_component	= '';
     protected $_prefix = null;
 
 	public function reset($resetId=false)

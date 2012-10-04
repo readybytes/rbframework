@@ -14,7 +14,7 @@ abstract class Rb_AbstractModel extends Rb_AdaptModel
 	protected	$_query				= null;
 	protected 	$_total 			= array();
 	protected 	$_records 			= array();
-	protected	$_component			= RB_COMPONENT_NAME;
+	protected	$_component			= '';
 	protected	$_form				= null;
 
 	public function __construct($options = array())

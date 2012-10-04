@@ -16,6 +16,8 @@ class Rb_HelperLoader
 	//here we will try to register all MC and libs and helpers
 	static function addAutoLoadFolder($folder, $type, $prefix='Rb_')
 	{
+		//echo "\n Loading folder $folder \n";
+		
 		if(empty($folder))
 			return;
 			
@@ -46,6 +48,10 @@ class Rb_HelperLoader
 		
 		if(is_array($folders)){
 			foreach($folders as $subfolder ){
+				// folder name starts with underscore, false means no underscore 
+				if(JString::strpos($folder, '_') !== 0 ){
+					continue;
+				}
 				$subtype		= 	$type.$subfolder;
 				$subfolderpath	=	$folder.'/'.$subfolder;
 				self::addAutoLoadFolder($subfolderpath , $subtype , $prefix);
