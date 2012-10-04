@@ -15,5 +15,5 @@ class Rb_AdaptJ16View extends JViewLegacy
 	protected	$_name		= null;
 }
 
-class Rb_AdaptModel extends Rb_AdaptJ16View
+class Rb_AdaptView extends Rb_AdaptJ16View
 {}

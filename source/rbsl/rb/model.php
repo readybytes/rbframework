@@ -14,7 +14,7 @@ abstract class Rb_AbstractModel extends Rb_AdaptModel
 	protected	$_query				= null;
 	protected 	$_total 			= array();
 	protected 	$_records 			= array();
-	protected	$_component			= '';
+	public	$_component			= '';
 	protected	$_form				= null;
 
 	public function __construct($options = array())
@@ -50,6 +50,14 @@ abstract class Rb_AbstractModel extends Rb_AdaptModel
 		return $errObj->setError($errMsg);
 	}
 
+	/*
+	 * Returns a string telling where are you.
+	 */
+	public function getContext()
+	{
+		return strtolower($this->_component.'.'.$this->getName());
+	}
+	
 	/*
 	 * We need to override joomla behaviour as they differ in
 	 * Model and Controller Naming
@@ -96,20 +104,21 @@ abstract class Rb_AbstractModel extends Rb_AdaptModel
 	public function getQuery()
 	{
 		//query already exist
-		if($this->_query)
+		if($this->_query){
 			return $this->_query;
+		}
 
 		//create a new query
 		$this->_query = new Rb_Query();
 
 		// Query builder will ensure the query building process
 		// can be overridden by child class
-		if($this->_buildQuery($this->_query))
+		if($this->_buildQuery($this->_query)){
 			return $this->_query;
+		}
 
 		//in case of errors return null
-		//RBFW_TODO : Generate a 500 Error Here
-		return null;
+		throw new Exception('Not Able to build query');
 	}
 	
 	public function clearQuery()
@@ -123,13 +132,14 @@ abstract class Rb_AbstractModel extends Rb_AdaptModel
 	 */
 	public function getTotal($queryClean = array('select','limit','order'))
 	{
-		if($this->_total)
+		if($this->_total){
 			return $this->_total;
+		}
 
-		$query 			= $this->getQuery();
+		$query 	= $this->getQuery();
 
 		//Support query cleanup
-		$tmpQuery = clone ($query);
+		$tmpQuery = clone($query);
 
 		foreach($queryClean as $clean){
 			$tmpQuery->clear(JString::strtolower($clean));
@@ -197,7 +207,7 @@ abstract class Rb_AbstractModel extends Rb_AdaptModel
 		if($tableName===null)
 			$tableName = $this->getName();
 
-		$table	= Rb_Factory::getInstance($tableName,'Table',JString::ucfirst($this->_option));
+		$table	= Rb_Factory::getInstance($tableName,'Table',$this->_component);
 		if(!$table)
 			$this->setError(Rb_Text::_('NOT_ABLE_TO_GET_INSTANCE_OF_TABLE'.':'.$this->getName()));
 
@@ -487,12 +497,12 @@ abstract class Rb_Model extends Rb_AbstractModel
 
     	$table	= $this->getTable();
     	if(!$table)	{
-    		$this->_query = null;
-    		return false;
+    		throw new Exception('Table does not exist for model'.$this->getName());
     	}
 
-    	if($query === null)
+    	if($query === null){
     		$query = $this->getQuery();
+    	}
 
     	foreach($functions as $func)
     	{
@@ -501,8 +511,9 @@ abstract class Rb_Model extends Rb_AbstractModel
     	}
 
     	// if working for individual record then no need to add limit
-    	if(!$this->getId())
-    	 $this->_buildQueryLimit($query);
+    	if(!$this->getId()){
+    	 	$this->_buildQueryLimit($query);
+    	}
     	 
 	    return true;
     }

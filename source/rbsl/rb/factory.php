@@ -48,10 +48,8 @@ class Rb_AbstractFactory extends Rb_AdaptFactory
 
 		//class_exists function checks if class exist,
 		// and also try auto-load class if it can
-		if(class_exists($className, true)===false)
-		{
-			self::getErrorObject()->setError("Class $className not found");
-			return false;
+		if(class_exists($className, true)===false){
+			throw new Exception("Factory::getInstance = Class $className not found");
 		}
 
 		//create new object, class must be autoloaded

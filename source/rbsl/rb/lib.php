@@ -22,7 +22,7 @@ class Rb_Lib extends JObject
 
 	// trigger tells if we need to trigger onBeforeSave/onAfterSave events
 	public 		$_trigger   		= true;
-	protected	$_component			= '';
+	public	$_component			= '';
 
 	/*
 	 * We want to make error handling to common objects
@@ -77,7 +77,7 @@ class Rb_Lib extends JObject
 	public function getPrefix()
 	{
 		Rb_Error::assert($this);
-		return $this->_option;
+		return $this->_component;
 	}
 
 	public function __construct($config = array())
@@ -96,7 +96,7 @@ class Rb_Lib extends JObject
 		}
 
 		//generate class name
-		$className	= $this->_option.$name;
+		$className	= $this->_component.$name;
 
 		// special case handling for App
 		if('app' === JString::strtolower($name)){

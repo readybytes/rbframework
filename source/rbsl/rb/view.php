@@ -10,7 +10,7 @@ if(defined('_JEXEC')===false) die();
 
 
 
-abstract class Rb_AbstractView extends Rb_AdaptModel
+abstract class Rb_AbstractView extends Rb_AdaptView
 {
 	
 	protected $_model 			= null; // Will be set by controller
@@ -501,7 +501,7 @@ abstract class Rb_AbstractView extends Rb_AdaptModel
         {
         	$paths = array();
         
-        	$joomlaTemplatePath = JPATH_THEMES.'/'.$jTemplate.'/html'.'/'.constant(JString::strtoupper($this->_option).'_COMPONENT_NAME');
+        	$joomlaTemplatePath = JPATH_THEMES.'/'.$jTemplate.'/html'.'/'.constant(JString::strtoupper($this->_component).'_COMPONENT_NAME');
 			if($app->isAdmin()){
 				$payplanTemplatePath = PAYPLANS_PATH_TEMPLATE_ADMIN;
 			}

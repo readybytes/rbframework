@@ -44,4 +44,16 @@ abstract class Rb_Helper
 		//perform the task now
 		return $args['controller'];
 	}
+	
+	public function handleException(Exception $e, $scope='Rb_')
+	{
+		$args['e']		= & $e;
+		$args['scope']	= & $scope;
+		
+		// give the option to handle the exception
+		$results  =	Rb_HelperPlugin::trigger('onRbException', $args);
+		echo str_replace("):",")<br />: = = = = = > ", str_replace("#","<br />#",$e->getTraceAsString()));
+		Rb_Factory::getApplication()->close(500);
+	}
+	
 }

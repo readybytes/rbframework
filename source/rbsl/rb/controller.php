@@ -12,7 +12,7 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 {
 	protected	$_prefix	= '';
 	//Absolute prefix contain component name , irrespective of site or admin
-	protected	$_component	= '';
+	public	$_component	= '';
 	protected	$_tpl		= null;
 
 	//it stores relation between task and table column
@@ -118,7 +118,7 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 	}
 
 	/*
-	 * Context for filters
+	 * Returns a string telling where are you.
 	 */
 	public function getContext()
 	{
@@ -155,11 +155,7 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 		}
 
 		//get Instance from Factory
-		$view	= 	Rb_Factory::getInstance($name,'View', $this->getPrefix());
-
-		if(!$view){
-			$this->setError(Rb_Text::_('NOT_ABLE_TO_GET_INSTANCE_OF_VIEW'.' :'.$this->getName()));
-		}
+		$view = Rb_Factory::getInstance($name,'View', $this->getPrefix());	
 
 		return $view;
 	}

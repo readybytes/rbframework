@@ -13,4 +13,9 @@ if(defined('_JEXEC')===false) die();
  * Query Building Class
  */
 class Rb_Query extends JDatabaseQuery
-{}
+{
+	public function dbLoadQuery()
+	{
+		return JFactory::getDbo()->setQuery((string)$this);
+	}
+}
