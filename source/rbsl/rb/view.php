@@ -146,7 +146,7 @@ abstract class Rb_AbstractView extends Rb_AdaptModel
 		// Trigger event before we load templates
 		$args	= array(&$this, &$task);
 		// get data from diffreent apps on respective positions
-		$pluginResult = Rb_HelperEvent::trigger('onRbViewBeforeRender',$args, '', $this);
+		$pluginResult = Rb_HelperPlugin::trigger('onRbViewBeforeRender',$args, '', $this);
 		$pluginResult = $this->_filterPluginResult($pluginResult);
 		
 		// now get html from different plugins and views
@@ -163,7 +163,7 @@ abstract class Rb_AbstractView extends Rb_AdaptModel
 
 		//post template rendering load trigger
 		$args	= array(&$this, &$task, &$output);
-		$result =  Rb_HelperEvent::trigger('onRbViewAfterRender', $args, '', $this);
+		$result =  Rb_HelperPlugin::trigger('onRbViewAfterRender', $args, '', $this);
 
 		$this->_prepareDocument();
 		
@@ -501,7 +501,7 @@ abstract class Rb_AbstractView extends Rb_AdaptModel
         {
         	$paths = array();
         
-        	$joomlaTemplatePath = JPATH_THEMES.'/'.$jTemplate.'/html'.'/'.constant(JString::strtoupper($this->_component).'_COMPONENT_NAME');
+        	$joomlaTemplatePath = JPATH_THEMES.'/'.$jTemplate.'/html'.'/'.constant(JString::strtoupper($this->_option).'_COMPONENT_NAME');
 			if($app->isAdmin()){
 				$payplanTemplatePath = PAYPLANS_PATH_TEMPLATE_ADMIN;
 			}
@@ -613,7 +613,7 @@ abstract class Rb_View extends Rb_AbstractView
 		
 		$this->assign('heading', Rb_Text::_($heading));
 		$this->assign('msg', Rb_Text::_($msg));
-		$this->assign('filters', $model->getState(Rb_HelperContext::getObjectContext($model)));
+		$this->assign('filters', $model->getState($model->getContext()));
 		
 		$this->setTpl('blank');
 		
@@ -633,7 +633,7 @@ abstract class Rb_View extends Rb_AbstractView
 		$this->assign('filter_order', $model->getState('filter_order'));
 		$this->assign('filter_order_Dir', $model->getState('filter_order_Dir'));
 		$this->assign('limitstart', $model->getState('limitstart'));
-		$this->assign('filters', $model->getState(Rb_HelperContext::getObjectContext($model)));
+		$this->assign('filters', $model->getState($model->getContext()));
 		return true;
 	}
 

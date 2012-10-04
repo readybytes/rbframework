@@ -38,7 +38,7 @@ abstract class Rb_Helper
 		// trigger apps, so that they can override the behaviour
 		// if somebody overrided it, then they must overwrite $args['controller']
 		// in this case they must include the file, where class is defined
-		$results  =	Rb_HelperEvent::trigger('onRbControllerCreation', $args);
+		$results  =	Rb_HelperPlugin::trigger('onRbControllerCreation', $args);
 
 		//we have setup autoloading for controller classes
 		//perform the task now

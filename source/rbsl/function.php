@@ -19,7 +19,8 @@ function _rb_cms_version()
 		case '16':
 		case '17':
 		case '25':
-			$family='25';
+			//RBFW_TODO move it to 25
+			$family='16';
 			break;
 
 		case '30':
@@ -29,7 +30,7 @@ function _rb_cms_version()
 			break;			
 	}
 	
-	return array($prefix='J', $family, $major, $minor);
+	return array($prefix='j', $family, $major, $minor);
 }
 
 

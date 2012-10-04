@@ -77,7 +77,7 @@ class Rb_Lib extends JObject
 	public function getPrefix()
 	{
 		Rb_Error::assert($this);
-		return $this->_component;
+		return $this->_option;
 	}
 
 	public function __construct($config = array())
@@ -96,7 +96,7 @@ class Rb_Lib extends JObject
 		}
 
 		//generate class name
-		$className	= 'Payplans'.$name;
+		$className	= $this->_option.$name;
 
 		// special case handling for App
 		if('app' === JString::strtolower($name)){
@@ -333,7 +333,7 @@ class Rb_Lib extends JObject
 				$event = 'onRbAppBeforeSave';
 			}	
 
-			$result = Rb_HelperEvent::trigger($event, $args, '', $this);
+			$result = Rb_HelperPlugin::trigger($event, $args, '', $this);
 		}
 
 
@@ -359,7 +359,7 @@ class Rb_Lib extends JObject
 				$event = 'onRbAppAfterSave';
 			}	
 
-			Rb_HelperEvent::trigger($event, $args, '', $this);
+			Rb_HelperPlugin::trigger($event, $args, '', $this);
 		}
 
 		return $this;
@@ -382,7 +382,7 @@ class Rb_Lib extends JObject
 				Rb_Factory::getSession()->set('OBJECT_TO_BE_DELETED_'.$this->getId().'_'.JString::strtoupper($this->getName()), $this->getClone());
 			}
 
-			$result = Rb_HelperEvent::trigger($event, $args, '', $this);
+			$result = Rb_HelperPlugin::trigger($event, $args, '', $this);
 		}
 
 		// delete data from table
@@ -405,7 +405,7 @@ class Rb_Lib extends JObject
 				$event = 'onRbAppAfterDelete';
 			}
 			
-			Rb_HelperEvent::trigger($event, $args, '', $this);
+			Rb_HelperPlugin::trigger($event, $args, '', $this);
 		}
 			
 		return $this;

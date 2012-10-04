@@ -118,11 +118,11 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 	}
 
 	/*
-	 * Returns a string telling where are you.
+	 * Context for filters
 	 */
-	public function getContext($classType='controller')
+	public function getContext()
 	{
-		return JString::strtolower($this->getPrefix().'.'.$classType.'.'.$this->getName());
+		return strtolower($this->_component.'.'.$this->getName());
 	}
 
 	/*
@@ -179,22 +179,20 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 	{
 		// RBFW_TODO : Check for token
 		
-		//populate user state first
+		//populate model state first
 		$this->_populateModelState();
 		
+		// set th original task
 		$this->setTask($task);
 
-		$pattern = '/^switchOff/i';
-		if(preg_match($pattern, $task))
+		// find if its a bollean task
+		if(preg_match('/^switchOff/i', $task) || preg_match('/^switchOn/i', $task)){
 			$this->registerTask( $task, 	'multidobool');
-
-		$pattern = '/^switchOn/i';
-		if(preg_match($pattern, $task))
-			$this->registerTask( $task, 	'multidobool');
+		}
 
 		//trigger before
 		$args	= array(&$this, &$task);
-		$result = Rb_HelperEvent::trigger('onRbControllerBeforeExecute',$args);
+		$result = Rb_HelperPlugin::trigger('onRbControllerBeforeExecute',$args);
 
 		//let the task execute in controller
 		//if task have failed, simply return and do not go to view
@@ -202,27 +200,27 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 
 		//trigger after
 		$args	= array(&$this, &$task, &$executeResult);
-		$result = Rb_HelperEvent::trigger('onRbControllerAfterExecute', $args, '', $this);
+		$result = Rb_HelperPlugin::trigger('onRbControllerAfterExecute', $args);
 		
 		if($executeResult===false){
 			return false;
 		}
 		
-		//for testing purpose
-		if(defined('PAYPLANS_UNIT_TEST_MODE')) return true;
+		//for testing purpose, do not call view
+		if(defined('RB_UNIT_TEST_MODE')){ return true; }
 
 		// now handle output part centrally
 		// instansiate view and let them process
 		$viewLayout	= JRequest::getCmd( 'layout', 'default' );
 
 		//create view
-		$view = & $this->getView();
+		$view = $this->getView();
 		$view->setModel($this->getModel());
 
 		// Set the layout
 		$view->setLayout($viewLayout);
 
-		// Display the view
+		// Call the view, It will call function equal to the resolved-task-name
 		$view->showTask($this->getdoTask(), $this->_tpl);
 		return true;
 	}
@@ -230,13 +228,18 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 	//Implement common authorization system over here
 	public function authorize( $task )
 	{
-		// V. Imp. Security Measures, only allow to call function which are explicitly 
-		// defined for frontend controller
+		// default allowed
+		$access = true;
+		
+		// V. Imp. Security Measures, 
+		// From frontend, function explicitly defined in frontend-controller are allowed
 		if(Rb_Factory::getApplication()->isAdmin()==false){
-			return in_array($task, PayplansHelperUtils::getMethodsDefinedByClass(get_class($this)));
+			$access = in_array($task, Rb_HelperUtils::getMethodsDefinedByClass(get_class($this)));
 		}
 		
-		return true;
+		//RBFW_TODO : Check 2.5 ACL Rules
+		
+		return $access;
 	}
 
 	/**
@@ -245,21 +248,7 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 	 * @return int
 	 */
 	public function _getId()
-	{
-		/*
-		 *   if $_requireKey is set then
-		 *   get key from GET method
-		 *   generate the id from Rb_Encryption
-		 */
-		if(isset($this->_requireKey) && $this->_requireKey){
-			
-			$entKey = JRequest::getVar("{$this->getName()}_key", null, '');
-			if($entKey !== null)
-				return (int)Rb_HelperUtils::getIdFromKey($entKey);
-
-			return -1;
-		}
-		
+	{	
 		//Id's can come in three ways
 		//1: id in url
 		//2: enitityname_id in post
@@ -295,7 +284,7 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 		//model do not exist
 		if(!$model) return true;
 
-		$context = Rb_HelperContext::getObjectContext($model);
+		$context = $model->getContext();
 
 		// if ordering filed exist the sort with ordering, else with id
 		$tableKeys = $model->getTable()->getProperties();

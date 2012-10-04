@@ -22,14 +22,10 @@ abstract class Rb_Router
     public function _getMenus()
     {
         if($this->_menus ===null){
-		if(PAYPLANS_JVERSION_15){
-			$this->_menus 	= JSite::getMenu()->getItems('componentid',JComponentHelper::getComponent($this->_component)->id);
-		}else {
-			$this->_menus 	= JSite::getMenu()->getItems('component_id',JComponentHelper::getComponent($this->_component)->id);
+			$this->_menus 	= JSite::getMenu()->getItems('component_id',JComponentHelper::getComponent($this->_option)->id);
 		}
-	}
 
-	return $this->_menus;
+		return $this->_menus;
     }
 
     

@@ -23,7 +23,7 @@ class Rb_Pagination extends JPagination
 
 	public function initDefaultStates(&$model, &$limit, &$limitstart)
 	{
-		$statePrefix		= Rb_HelperContext::getObjectContext($model);
+		$statePrefix		= $model->getContext();
 
 		$app				= Rb_Factory::getApplication();
 		$globalListLimit	= $app->getCfg('list_limit');
@@ -34,7 +34,7 @@ class Rb_Pagination extends JPagination
         $limit 		= $app->getUserStateFromRequest('global.list.limit', 'limit', $globalListLimit, 'int');
 
         //other states should be picked from model namespace
-        $context = Rb_HelperContext::getObjectContext($model);
+        $context = $model->getContext();
         $limitstart = $model->getState('limitstart');
 
         // In case limit has been changed, adjust it

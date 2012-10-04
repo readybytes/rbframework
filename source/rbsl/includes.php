@@ -37,8 +37,8 @@ require_once dirname(__FILE__).'/helper.php'	;
 
 
 //autoload core library
-Rb_HelperLoader::addAutoLoadFolder(RB_PATH_CMS,			'Cms',			'Rb_');
-Rb_HelperLoader::addAutoLoadFolder(RB_PATH_CORE,		'',				'Rb_');
+Rb_HelperLoader::addAutoLoadFolder(RB_PATH_FRAMEWORK.'/rb',		'');
+Rb_HelperLoader::addAutoLoadFolder(RB_PATH_FRAMEWORK.'/adapt/'.RB_CMS_ADAPTER,	'Adapt');
 
 // mark to profiler
 _rb_cms_profiler_mark('RB-Framework-After-Load');

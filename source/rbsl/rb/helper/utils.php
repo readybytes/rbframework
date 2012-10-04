@@ -96,4 +96,26 @@ class Rb_HelperUtils
 	{
 		return Rb_Factory::getEncryptor()->decrypt($key);
 	}
+	
+	static public function getMethodsDefinedByClass($class)
+	{
+	    $rClass = new ReflectionClass($class);
+	    $array = array();
+	    foreach ($rClass->getMethods() as $rMethod)
+	    {
+	        try
+	        {
+	            // check whether method is explicitly defined in this class
+	            if ($rMethod->getDeclaringClass()->getName()
+	                == $rClass->getName())
+	            {
+	                $array[] =  $rMethod->getName();
+	            }
+	        }
+	        catch (exception $e)
+	        {    /* was not in parent class! */    }
+	    }
+	   
+	    return $array;
+	}
 }

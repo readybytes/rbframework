@@ -16,7 +16,7 @@ class Rb_HelperLoader
 	//here we will try to register all MC and libs and helpers
 	static function addAutoLoadFolder($folder, $type, $prefix='Rb_')
 	{
-		//echo "\n Loading folder $folder \n";
+		//echo "<br /> Loading folder $folder <br />";
 		
 		if(empty($folder))
 			return;
@@ -34,8 +34,13 @@ class Rb_HelperLoader
 		}
 		
 			
-		if(is_array($files)){
+		if(is_array($files) && count($files)>0){
 			foreach($files as $file ){
+				// 	folder name starts with underscore, false means no underscore 
+				if('_' == substr($file, 0, 1)){
+					continue;
+				}
+				
 				//e.g. Rb_Controller + Product
 				// Rb_Performance : As Class names are not case sensitive so no need to use JString::ucfirst 
 				$className 	= $prefix
@@ -46,10 +51,10 @@ class Rb_HelperLoader
 			}
 		}
 		
-		if(is_array($folders)){
+		if(is_array($folders) && count($folders)> 0){
 			foreach($folders as $subfolder ){
 				// folder name starts with underscore, false means no underscore 
-				if(JString::strpos($folder, '_') !== 0 ){
+				if('_' == substr($subfolder, 0, 1)){
 					continue;
 				}
 				$subtype		= 	$type.$subfolder;

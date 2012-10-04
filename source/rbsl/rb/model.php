@@ -164,7 +164,7 @@ abstract class Rb_AbstractModel extends Rb_AdaptModel
 		$app  = Rb_Factory::getApplication();
 
 		$data = array();
-		$context = Rb_HelperContext::getObjectContext($this);
+		$context = $this->getContext();
 
 		foreach($vars as $k => $v)
 		{
@@ -197,7 +197,7 @@ abstract class Rb_AbstractModel extends Rb_AdaptModel
 		if($tableName===null)
 			$tableName = $this->getName();
 
-		$table	= Rb_Factory::getInstance($tableName,'Table',JString::ucfirst($this->_component));
+		$table	= Rb_Factory::getInstance($tableName,'Table',JString::ucfirst($this->_option));
 		if(!$table)
 			$this->setError(Rb_Text::_('NOT_ABLE_TO_GET_INSTANCE_OF_TABLE'.':'.$this->getName()));
 
@@ -209,8 +209,7 @@ abstract class Rb_AbstractModel extends Rb_AdaptModel
 	 */
 	public function getId()
 	{
-		$property	= 'id';//Rb_HelperContext::getObjectContext($this).'.id';
-		return $this->getState($property) ;
+		return $this->getState('id') ;
 	}
 }
 
@@ -536,7 +535,7 @@ abstract class Rb_Model extends Rb_AbstractModel
     final protected function _buildQueryWhere(Rb_Query &$query)
     {
     	//get generic filter and fix it
-    	$filters = $this->getState(Rb_HelperContext::getObjectContext($this));
+    	$filters = $this->getState($this->getContext());
         
     	if(is_array($filters)===false)
     		return;
