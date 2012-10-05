@@ -497,7 +497,7 @@ abstract class Rb_Model extends Rb_AbstractModel
 
     	$table	= $this->getTable();
     	if(!$table)	{
-    		throw new Exception('Table does not exist for model'.$this->getName());
+    		throw new Exception('Table does not exist.');
     	}
 
     	if($query === null){

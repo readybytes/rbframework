@@ -168,7 +168,7 @@ class Rb_AbstractHelperJoomla extends Rb_AdaptHelperJoomla
 	public static function getArticleElementHtml($control_name, $name, $value)
 	{
 		// Load the modal behavior script.
-		PayplansHtml::_('behavior.modal', 'a.modal');
+		Rb_Html::_('behavior.modal', 'a.modal');
 
 		// Build the script.
 		$script = array();
@@ -318,6 +318,7 @@ class Rb_HelperJoomla extends Rb_AbstractHelperJoomla
 
 		//load payplans plugins
 		self::loadPlugins();
+		//$eventName = $prefix.JString::ucfirst($eventName);
 		return $dispatcher->trigger($eventName, $data);
 	}
 

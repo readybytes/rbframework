@@ -75,7 +75,7 @@ class Rb_Render
 	{
 		// Form security via token injection
 		if(JString::stristr($output, "</form>")){
-			$output = preg_replace('#</form>#', PayplansHtml::_('form.token').'</form>', $output);
+			$output = preg_replace('#</form>#', Rb_Html::_('form.token').'</form>', $output);
 		}
 		
 		return $output;

@@ -21,25 +21,8 @@ class Rb_Lib extends JObject
 	// they cannot be updated via bind
 
 	// trigger tells if we need to trigger onBeforeSave/onAfterSave events
-	public 		$_trigger   		= true;
+	public 	$_trigger   		= true;
 	public	$_component			= '';
-
-	/*
-	 * We want to make error handling to common objects
-	 * So we override the functions and direct them to work
-	 * on a global error object
-	 */
-	public function getError($i = null, $toString = true )
-	{
-		$errObj	=	Rb_Factory::getErrorObject();
-		return $errObj->getError($i, $toString);
-	}
-
-	public function setError($errMsg)
-	{
-		$errObj	=	Rb_Factory::getErrorObject();
-		return $errObj->setError($errMsg);
-	}
 
 	// Over-ride so we can send $this as return
 	public function set($property, $value = null, $prev=false)
@@ -50,8 +33,6 @@ class Rb_Lib extends JObject
 
 	public function getName()
 	{
-		Rb_Error::assert($this);
-
 		if(empty($this->_name))
 		{
 			$r = null;
@@ -64,21 +45,20 @@ class Rb_Lib extends JObject
 		return $this->_name;
 	}
 
+	public function getPrefix()
+	{
+		return $this->_component;
+	}
+	
 	/**
 	 * @return : Rb_Model
 	 */
 	public function getModel()
 	{
-		Rb_Error::assert($this);
 		return Rb_Factory::getInstance($this->getName(), 'Model');
 	}
 
 
-	public function getPrefix()
-	{
-		Rb_Error::assert($this);
-		return $this->_component;
-	}
 
 	public function __construct($config = array())
 	{
@@ -249,23 +229,11 @@ class Rb_Lib extends JObject
 		return $this;
 	}
 
-
-//	public function getEntityId()
-//	{
-//		Rb_Error::assert($this);
-//		return PayplansHelperEntity::getIdFromName($this->getName());
-//	}
-
 	public function getId()
 	{
 		Rb_Error::assert($this);
 		$varName = $this->getName().'_id';
 		return $this->$varName;
-	}
-
-	function getKey()
-	{
-		return Rb_HelperUtils::getKeyFromId($this->getId());
 	}
 	
 	public function setId($id)

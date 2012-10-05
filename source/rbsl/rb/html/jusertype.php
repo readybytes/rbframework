@@ -31,7 +31,7 @@ class Rb_HtmlJusertype extends Rb_Html
             return JHTML::_('select.genericlist', $options, $name, $style, 'value', 'text', $value);
 		}
 		
-	    return PayplansHtml::_('autocomplete.edit', $groups, $name, $attr, $textField, $valueField, $value);		
+	    return Rb_Html::_('autocomplete.edit', $groups, $name, $attr, $textField, $valueField, $value);		
 	}
 	
 	function filter($name, $view, Array $filters = array(), $prefix='filter_payplans')
