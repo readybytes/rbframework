@@ -19,7 +19,6 @@ define('RB_FRAMEWORK_LOADED', true);
 //paths 
 define('RB_PATH_FRAMEWORK', dirname(__FILE__));
 
-
 define('RB_PATH_MEDIA',		RB_PATH_FRAMEWORK.'/media');
 define('RB_PATH_FILEDS',	RB_PATH_FRAMEWORK.'/fields');
 

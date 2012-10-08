@@ -258,12 +258,6 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 		return $result;
 	}
 
-	//Calls actual rendered object, to render output
-	protected function _render($output)
-	{
-
-	}
-	
 	protected function _showHeader()
 	{
 		// add admin toolbar

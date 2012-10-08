@@ -19,6 +19,7 @@ function _rb_cms_version()
 		case '16':
 		case '17':
 		case '25':
+			//RBFW_TODO move it to 25
 			$family='16';
 			break;
 

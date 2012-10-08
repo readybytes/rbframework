@@ -83,13 +83,12 @@ class Rb_HelperLoader
 
 		foreach($folders as $folder )
 		{
-			$className 	= $prefix.'View'.$folder;
-			JLoader::register($className, $baseFolder.'/'.$folder.'/view.php');
+			//$className 	= $prefix.'View'.$folder;
+			//JLoader::register($className, $baseFolder.'/'.$folder.'/view.php');
 			
-			$className 	= $prefix.$format.'View'.$folder;
+			$className 	= $prefix.'View'.$folder;
 			$fileName	= "view.$format.php";
 			JLoader::register($className, $baseFolder.'/'.$folder.'/'.$fileName);
-			
 		}
 	}
 

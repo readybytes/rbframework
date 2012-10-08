@@ -76,7 +76,7 @@ class Rb_Lib extends JObject
 		}
 
 		//generate class name
-		$className	= 'Payplans'.$name;
+		$className	= $this->_component.$name;
 
 		// special case handling for App
 		if('app' === JString::strtolower($name)){

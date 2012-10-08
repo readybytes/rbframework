@@ -577,11 +577,6 @@ abstract class Rb_Model extends Rb_AbstractModel
 		return $this;
     }
 
-    protected function _buildFilter($key, $value)
-    {
-    
-    }
-    
     protected function _buildQueryFilter(Rb_Query &$query, $key, $value, $tblAlias='`tbl`.')
     {
     	// Only add filter if we are working on bulk reocrds
