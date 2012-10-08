@@ -491,7 +491,7 @@ abstract class Rb_Model extends Rb_AbstractModel
 	}
 
 	/* Child classes should not overload it */
-	final public function _buildQuery(Rb_Query &$query=null)
+	public function _buildQuery(Rb_Query &$query=null)
     {
     	static $functions = array('Fields','From','Joins','Where','Group','Order','Having');
 
@@ -503,7 +503,7 @@ abstract class Rb_Model extends Rb_AbstractModel
     	if($query === null){
     		$query = $this->getQuery();
     	}
-
+   	
     	foreach($functions as $func)
     	{
     		$functionName = "_buildQuery$func";
@@ -518,7 +518,30 @@ abstract class Rb_Model extends Rb_AbstractModel
 	    return true;
     }
 
-
+	protected function getFilters()
+    {
+    	if(isset($this->_filters)){
+    		return $this->_filters;
+    	}
+    	
+    	$this->_filters = array();
+		//get generic filter and set it
+    	$filters = $this->getState($this->getContext());
+        
+    	if(is_array($filters)===false){
+    		return $this->_filters;
+    	}
+    	
+    	
+		foreach($filters as $key=>$value){
+			if($value !== null && trim($value) !== ''){
+				$this->_filters[$key] = $value;
+			}
+		}
+		
+		return $this->_filters;
+    }
+    
     protected function _buildQueryFields(Rb_Query &$query)
     {
 		$query->select('tbl.*');
@@ -542,26 +565,24 @@ abstract class Rb_Model extends Rb_AbstractModel
 
     }
 
-    // RBFW_TODO : Remove this final keword, and break up filter
     final protected function _buildQueryWhere(Rb_Query &$query)
     {
-    	//get generic filter and fix it
-    	$filters = $this->getState($this->getContext());
-        
-    	if(is_array($filters)===false)
-    		return;
-
-		foreach($filters as $key=>$value){
-			if($value === null)
-				continue;
-			
-
-			$this->_buildQueryFilter($query, $key, $value);
-		}
-		return;
+    	$filters = $this->getFilters();
+    	if($filters && count($filters)){
+			foreach($filters as $key=>$value){
+				$this->_buildQueryFilter($query, $key, $value);
+			}
+    	}
+		
+		return $this;
     }
 
-    protected function _buildQueryFilter(Rb_Query &$query, $key, $value)
+    protected function _buildFilter($key, $value)
+    {
+    
+    }
+    
+    protected function _buildQueryFilter(Rb_Query &$query, $key, $value, $tblAlias='`tbl`.')
     {
     	// Only add filter if we are working on bulk reocrds
 		if($this->getId()){
@@ -579,15 +600,15 @@ abstract class Rb_Model extends Rb_AbstractModel
     		$val = array_shift($cloneValue);
 
 			// discard empty values
-    		if(!isset($val) || '' == JString::trim($val))
+    		if(!isset($val) || '' == trim($val))
     			continue;
 
-    		if(JString::strtoupper($op) == 'LIKE'){
-	    	  	$query->where("`tbl`.`$key` $op '%{$val}%'");
+    		if(strtoupper($op) == 'LIKE'){
+	    	  	$query->where("$tblAlias`$key` $op '%{$val}%'");
 				continue;
 	    	}
 
-    		$query->where("`tbl`.`$key` $op '$val'");
+    		$query->where("$tblAlias`$key` $op '$val'");
 	    		
     	}
     }

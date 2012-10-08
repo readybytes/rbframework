@@ -71,25 +71,25 @@ class Rb_HelperLoader
 	}
 
 	/* View are stored very differently */
-	static function addAutoLoadViews($baseFolders, $format=RB_REQUEST_DOCUMENT_FORMAT, $prefix='Rb_')
+	static function addAutoLoadViews($baseFolder, $format=RB_REQUEST_DOCUMENT_FORMAT, $prefix='Rb_')
 	{
-		$filetree = Rb_FileTree::getFileTree($baseFolders);
+		$filetree = Rb_FileTree::getFileTree($baseFolder);
 		if(is_array($filetree)){
+			$files		=	isset($filetree['files'])?$filetree['files']:false;
 			$folders	=	isset($filetree['folders'])?$filetree['folders']:false;
 		}else{
-			$folders	=	JFolder::folders($baseFolders);
+			$folders	=	JFolder::folders($baseFolder);
 		}
 
 		foreach($folders as $folder )
 		{
-			//e.g. Rb_Controller + Product
-			$className 	= $prefix
-						. 'View'
-						. $folder;
-
-			if($format==='ajax') $format = 'html';
+			$className 	= $prefix.'View'.$folder;
+			JLoader::register($className, $baseFolder.'/'.$folder.'/view.php');
+			
+			$className 	= $prefix.$format.'View'.$folder;
 			$fileName	= "view.$format.php";
-			JLoader::register($className, $baseFolders.'/'.$folder.'/'.$fileName);
+			JLoader::register($className, $baseFolder.'/'.$folder.'/'.$fileName);
+			
 		}
 	}
 

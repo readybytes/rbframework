@@ -97,6 +97,7 @@ class Rb_HelperUtils
 		return Rb_Factory::getEncryptor()->decrypt($key);
 	}
 	
+	
 	static public function getMethodsDefinedByClass($class)
 	{
 	    $rClass = new ReflectionClass($class);

@@ -9,12 +9,12 @@
 if(defined('_JEXEC')===false) die();
 
 
-class Rb_RenderAjax extends Rb_Render
+class Rb_ViewAjax extends Rb_View
 {
 	public $headerFooters = true;
-	protected function _render(Rb_View $view, $html, $options = array('domObject'=>'xiWindowContent','domProperty'=>'innerHTML'))
+	protected function render(Rb_View $view, $html, $options = array('domObject'=>'xiWindowContent','domProperty'=>'innerHTML'))
 	{
-		$domObject	=	JRequest::getVar('domObject',$options['domObject']);
+		$domObject	 = JRequest::getVar('domObject',$options['domObject']);
 		$domProperty = JRequest::getVar('domProperty',$options['domProperty']);
 
 		$response	= Rb_Factory::getAjaxResponse();

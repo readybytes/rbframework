@@ -9,10 +9,9 @@
 if(defined('_JEXEC')===false) die();
 
 
-class Rb_RenderJson extends Rb_Render
+class Rb_ViewJson extends Rb_View
 {
-	public $headerFooters = false;
-	protected function _render(Rb_View $view, $html, $options = array('domObject'=>'xiWindowContent','domProperty'=>'innerHTML'))
+	protected function render(Rb_View $view, $html)
 	{
 		echo json_encode($view->get('json'));
 		exit;

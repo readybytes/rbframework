@@ -17,52 +17,27 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 	public    $_component		= '';
 	protected $_tpl 			= null;
 	public 	  $options 			= array('domObject'=>'xiWindowContent','domProperty'=>'innerHTML');
-
-	function __construct($config = array())
-	{		
-		// setup rendering system
-		$this->_renderer = Rb_Render::getRenderer();
-
-		parent::__construct($config);
-	}
-
-	/*
-	 * We want to make error handling to common objects
-	 * So we override the functions and direct them to work
-	 * on a global error object
-	 */
-	public function getError($i = null, $toString = true )
-	{
-		$errObj	=	Rb_Factory::getErrorObject();
-		return $errObj->getError($i, $toString);
-	}
-
-	public function setError($errMsg)
-	{
-		$errObj	=	Rb_Factory::getErrorObject();
-		return $errObj->setError($errMsg);
-	}
+	protected $_templatePaths	= null;
 
 	/*
 	 * We need to override joomla behaviour as they differ in
 	 * Model and Controller Naming
-	 * In Joomla -> JModelProducts, JProductsController
+	 * In Joomla 	-> JModelProducts, JProductsController
 	 * In PayPlans	 -> PayplansModelProducts, PayplansControllerProducts
 	 */
 	function getName()
 	{
-		$name = $this->_name;
-
-		if (empty( $name ))
+		if (empty( $this->_name ))
 		{
 			$r = null;
 			if (!preg_match('/View(.*)/i', get_class($this), $r)) {
 				JError::raiseError (500, "Rb_View::getName() : Can't get or parse class name.");
 			}
-			$name = strtolower( $r[1] );
+			
+			$this->_name= strtolower( $r[1] );
 		}
 
-		return $name;
+		return $this->_name;
 	}
 
 	/*
@@ -168,7 +143,7 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 		$this->_prepareDocument();
 		
 		//render output
-		return $this->_render($output);
+		return $this->render($output);
 	}
 	
 	public function _mergePluginsData($pluginResult, $olddata)
@@ -199,14 +174,11 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 	}
 
 	protected function _prepareDocument()
-	{
-		if(RB_CMS_VERSION_FAMILY === '15'){
-			return true;
-		}
-		
+	{	
 		if(Rb_Factory::getApplication()->isAdmin()){
 			return true;
 		}
+		
 		$app		= Rb_Factory::getApplication();
 		$params 	= $app->getParams();
 		$document 	= Rb_Factory::getDocument();		
@@ -289,12 +261,7 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 	//Calls actual rendered object, to render output
 	protected function _render($output)
 	{
-		// club data and send to renderer
-		$data ['header'] = $this->_showHeader();
-		$data ['output'] = $output;
-		$data ['footer'] = $this->_showFooter();
 
-		return $this->_renderer->render($this, $data, $this->options);
 	}
 	
 	protected function _showHeader()
@@ -302,15 +269,19 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 		// add admin toolbar
 		if($this->_isAdmin){
 			$this->_adminToolbar();
-			//$this->_adminSubmenu();
+			$this->_adminSubmenu();
 		}
 		return '';
 	}
 
 	protected function _showFooter()
 	{
-		// avoid ajax request
-		if(PAYPLANS_AJAX_REQUEST == true || JRequest::getVar('tmpl')=='component'){
+		// Do no apply on ajax request
+		if(RB_REQUEST_DOCUMENT_FORMAT != 'html'){
+			return '';
+		}
+		
+		if(JRequest::getVar('tmpl')=='component'){
 			return '';
 		}
 		
@@ -341,7 +312,7 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 	protected function _adminToolbarTitle()
 	{
 		// Set the titlebar text
-		Rb_HelperToolbar::title(Rb_Text::_('PLG_SYSTEM_RBSL_SM_'.JString::strtoupper($this->getName())), "xi-".$this->getName().".png");
+		//Rb_HelperToolbar::title(Rb_Text::_('PLG_SYSTEM_RBSL_SM_'.JString::strtoupper($this->getName())), "xi-".$this->getName().".png");
 	}
 
 	protected function _adminGridToolbar()
@@ -355,7 +326,6 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 		Rb_HelperToolbar::divider();
 		Rb_HelperToolbar::delete();
 		Rb_HelperToolbar::divider();
-		Rb_HelperToolbar::searchpayplans();
 
 	}
 
@@ -488,25 +458,24 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 	
 	protected function _getTemplatePath($layout = 'default')
     {
+    	
     	$app 		= Rb_Factory::getApplication();
-    	$view 		= JString::strtolower($this->getName());
-    	$pTemplate	= 'default'; 			// RBFW_TODO : the template being used
-    	$pDefaultTemplate = 'default'; 		// default template
+    	$view 		= strtolower($this->getName());
+    	
+    	$extTemplate		= 'default'; 	// RBFW_TODO : the template being used
+    	$extDefaultTemplate = 'default'; 	// default template
 		$jTemplate 	= $app->getTemplate(); 	// joomla template
 
         // get the template and default paths for the layout
-        static $paths = null;
-
-        if($paths === null)
+        if($this->_templatePaths === null)
         {
         	$paths = array();
         
-        	$joomlaTemplatePath = JPATH_THEMES.'/'.$jTemplate.'/html'.'/'.constant(JString::strtoupper($this->_component).'_COMPONENT_NAME');
+        	$joomlaTemplatePath 	= JPATH_THEMES.'/'.$jTemplate.'/html/com_'.$this->_component;
+        	$extTemplatePath 		= constant(strtoupper($this->_component).'_PATH_SITE_TEMPLATE');
+        	$extSiteTemplatePath 	= $extTemplatePath;
 			if($app->isAdmin()){
-				$payplanTemplatePath = PAYPLANS_PATH_TEMPLATE_ADMIN;
-			}
-			else{
-				$payplanTemplatePath =  PAYPLANS_PATH_TEMPLATE;
+				$extTemplatePath = constant(strtoupper($this->_component).'_PATH_ADMIN_TEMPLATE');
 			}
 
 			// joomla template override
@@ -515,20 +484,21 @@ abstract class Rb_AbstractView extends Rb_AdaptView
         	$paths[] = $joomlaTemplatePath.'/_partials';
         	
 			// selected template path
-			$paths[] = $payplanTemplatePath.'/'.$pTemplate.'/'.$view;
-			$paths[] = $payplanTemplatePath.'/'.$pTemplate;
-			$paths[] = $payplanTemplatePath.'/'.$pTemplate.'/_partials';
+			$paths[] = $extTemplatePath.'/'.$extTemplate.'/'.$view;
+			$paths[] = $extTemplatePath.'/'.$extTemplate;
+			$paths[] = $extTemplatePath.'/'.$extTemplate.'/_partials';
 
 			// default template path			
-			$paths[] = $payplanTemplatePath.'/'.$pDefaultTemplate.'/'.$view;
-			$paths[] = $payplanTemplatePath.'/'.$pDefaultTemplate;
-			$paths[] = $payplanTemplatePath.'/'.$pDefaultTemplate.'/_partials';
+			$paths[] = $extTemplatePath.'/'.$extDefaultTemplate.'/'.$view;
+			$paths[] = $extTemplatePath.'/'.$extDefaultTemplate;
+			$paths[] = $extTemplatePath.'/'.$extDefaultTemplate.'/_partials';
 
 			// finally default partials
-			$paths[] = PAYPLANS_PATH_TEMPLATE.'/'.$pDefaultTemplate.'/_partials';
+			$paths[] = $extSiteTemplatePath.'/'.$extDefaultTemplate.'/_partials';
+			$this->_templatePaths = $paths;
         }
-        
-        return $paths;
+        //JError::raiseError( 500, var_export($this->_templatePaths, true)); 
+        return $this->_templatePaths;
     }
 
     function addPathToView($templatePaths)

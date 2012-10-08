@@ -148,14 +148,18 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 	/**
 	 * @return Rb_View
 	 */
-	public function getView($name='')
+	public function getView($name='', $format='')
 	{
 		if(empty($name)){
 			$name 	= $this->getName();
 		}
+		
+		if(empty($format)){
+			$format	= RB_REQUEST_DOCUMENT_FORMAT;
+		}
 
 		//get Instance from Factory
-		$view = Rb_Factory::getInstance($name,'View', $this->getPrefix());	
+		$view = Rb_Factory::getInstance($name, 'View', $this->getPrefix());	
 
 		return $view;
 	}
