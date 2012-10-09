@@ -333,18 +333,6 @@ abstract class Rb_Controller extends Rb_AbstractController
 	}
 
 	/**
-	 * 
-	 * @return Rb_Controller
-	 */
-	static function getInstance($name=null, $refresh=false)
-	{
-		if($name === null){
-			$name = $this->getName();
-		}
-		return Rb_Factory::getInstance($name, 'controller', $prefix, $refresh);
-	}
-	
-	/**
 	 * Just a placeholder, rather then error of function not found
 	 * it will display notask provided
 	 */

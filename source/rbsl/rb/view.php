@@ -485,11 +485,6 @@ abstract class Rb_View extends Rb_AbstractView
 		return $this->_getDynamicJavaScript().$js;
 	}
 
-    public function getJSValidActions()
-    {
-    	return $this->_validateActions;
-    }
-
 	public function _getDynamicJavaScript()
 	{
 		return '';

@@ -30,7 +30,7 @@ abstract class Rb_AbstractModel extends Rb_AdaptModel
 		parent::__construct($options);
 
 		//at least know where we are, any time
-		$this->_context	=strtolower($options['prefix'].'.Model.'.$options['name']);
+		$this->_context	=strtolower($options['prefix'].'.model.'.$options['name']);
 	}
 
 	
@@ -228,16 +228,6 @@ abstract class Rb_Model extends Rb_AbstractModel
 {
 
 	public $filterMatchOpeartor = array();
-	
-	/**
-	 * 
-	 * @return Rb_Model
-	 */
-	static function getInstance($name, $prefix, $refresh=false)
-	{	
-		return Rb_Factory::getInstance($name, 'model', $prefix, $refresh);
-	}
-	
 	
 	public function getEmptyRecord()
 	{

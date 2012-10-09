@@ -22,6 +22,8 @@ class Rb_Lib extends JObject
 
 	// trigger tells if we need to trigger onBeforeSave/onAfterSave events
 	protected	$_trigger   	= true;
+
+	// name of component with com_
 	protected	$_component		= '';
    	protected	$_name			= '';
    	
@@ -50,6 +52,7 @@ class Rb_Lib extends JObject
 		//generate class name
 		$className	= $this->_component.$name;
 
+		//RBFW_TODO : Needs cleanup
 		// special case handling for App
 		if('app' === strtolower($name)){
 

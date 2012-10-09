@@ -47,7 +47,7 @@ abstract class Rb_Setup
 		}
 
 		//generate class name
-		$className	= 'PayplansSetup'.JString::ucfirst(strtolower($name));
+		$className	= ucfirst($this->_component).'Setup'.ucfirst($name);
 
 		//if already there is an object and check for static cache clean up
 		if(isset($instance[$name]))

@@ -118,21 +118,6 @@ abstract class Rb_Table extends JTable
 		//this way we do not need to do things statically
 		$this->_loadTableProps();
 	}
-	
-	/**
-	 * 
-	 * @return Rb_Table
-	 */
-	static function getInstance($name=null, $refresh=false)
-	{
-		if($name === null){
-			$name = $this->getName();
-		}
-		
-		return Rb_Factory::getInstance($name, 'table', $this->getPrefix(), $refresh);
-	}
-	
-	
 
 	/**
      * Load properties of object based on table fields
