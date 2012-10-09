@@ -84,7 +84,7 @@ abstract class Rb_Table extends JTable
 			Rb_Error::raiseError (500, "Rb_Model::getName() : Can't get or parse class name.");
 		}
 
-		$this->_prefix  =  JString::strtolower($r[1]);
+		$this->_prefix  =  strtolower($r[1]);
 		return $this->_prefix;
 	}
 
@@ -118,6 +118,21 @@ abstract class Rb_Table extends JTable
 		//this way we do not need to do things statically
 		$this->_loadTableProps();
 	}
+	
+	/**
+	 * 
+	 * @return Rb_Table
+	 */
+	static function getInstance($name=null, $refresh=false)
+	{
+		if($name === null){
+			$name = $this->getName();
+		}
+		
+		return Rb_Factory::getInstance($name, 'table', $this->getPrefix(), $refresh);
+	}
+	
+	
 
 	/**
      * Load properties of object based on table fields
@@ -310,7 +325,7 @@ abstract class Rb_Table extends JTable
 	public function boolean($columnName, $value, $switch)
 	{
 		//check if column exist
-		$columnName		= JString::strtolower($columnName);
+		$columnName		= strtolower($columnName);
 		if(($oldValue=$this->get($columnName, null)) === null)
 		{
 			$this->setError(sprintf("COLUMN %S DOES NOT EXIST IN TABLE %S",$columnName, $this->getName()));

@@ -113,7 +113,7 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 		$r = null;
 		Rb_Error::assert(preg_match('/(.*)Controller/i', get_class($this), $r), Rb_Text::sprintf('PLG_SYSTEM_RBSL_ERROR_CANT_GET_PARSE_CLASS_NAME',Rb_Controller::getName()), Rb_Error::ERROR);
 
-		$this->_prefix  =  JString::strtolower($r[1]);
+		$this->_prefix  =  strtolower($r[1]);
 		return $this->_prefix;
 	}
 
@@ -332,6 +332,18 @@ abstract class Rb_Controller extends Rb_AbstractController
 		$this->registerDefaultTask($this->_defaultTask);
 	}
 
+	/**
+	 * 
+	 * @return Rb_Controller
+	 */
+	static function getInstance($name=null, $refresh=false)
+	{
+		if($name === null){
+			$name = $this->getName();
+		}
+		return Rb_Factory::getInstance($name, 'controller', $prefix, $refresh);
+	}
+	
 	/**
 	 * Just a placeholder, rather then error of function not found
 	 * it will display notask provided

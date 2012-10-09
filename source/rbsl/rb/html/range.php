@@ -20,11 +20,11 @@ class Rb_HtmlRange
 		$to    = '<label class="pp-grid_3">'.Rb_Text::_('PLG_SYSTEM_RBSL_FILTERS_TO').'</label>';
 			
 			
-		if(JString::strtolower($type)=="date"){
+		if(strtolower($type)=="date"){
 			$from .= '<div class="pp-datepicker pp-from  pp-grid_9 pp-omega">'. JHtml::_('calendar', $elementValue0, $elementName.'[0]', $elementName.'_0', '%Y-%m-%d').'</div>';
 			$to   .= '<div class="pp-datepicker pp-to pp-grid_9 pp-omega">'.JHtml::_('calendar', $elementValue1, $elementName.'[1]', $elementName.'_1', '%Y-%m-%d').'</div>';
 		}
-		elseif(JString::strtolower($type)=="text"){
+		elseif(strtolower($type)=="text"){
 			
 			$from .= '<div class="pp-rangepicker pp-from pp-grid_9 pp-omega">'
 						.'<input id="'.$elementName.'_0" ' 

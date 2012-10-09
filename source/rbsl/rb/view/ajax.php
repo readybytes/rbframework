@@ -24,4 +24,50 @@ class Rb_ViewAjax extends Rb_View
 		return $response->sendResponse();
 	}
 
+	//this will set popup window title
+    function _setAjaxWinTitle($title)
+    {
+    	Rb_Factory::getAjaxResponse()->addScriptCall('xi.ui.dialog.title',$title);
+    }
+
+    //this will set action/submit button on bottom of popup window
+	function _addAjaxWinAction($text, $onButtonClick=null)
+	{
+		static $actions = array();
+
+		if($onButtonClick !== null){
+			$obejct 		= new stdClass();
+			$object->click 	= $onButtonClick;
+			$object->text 	= $text;
+			$actions[]=$object;
+		}
+    	return $actions;
+    }
+
+	function _setAjaxWinAction()
+	{
+    	$actions = $this->_addAjaxWinAction('',null);
+
+    	if(count($actions)===0){
+    		return false;
+    	}
+
+    	Rb_Factory::getAjaxResponse()->addScriptCall('xi.ui.dialog.button',$actions);
+    	return true;
+    }
+
+    function _setAjaxWinHeight($height)
+    {
+    	Rb_Factory::getAjaxResponse()->addScriptCall('xi.ui.dialog.height',$height);
+    }
+    
+	function _setAjaxWinWidth($width)
+	{
+    	Rb_Factory::getAjaxResponse()->addScriptCall('xi.ui.dialog.width',$width);
+    }
+    
+    function _setAjaxWinAutoclose($time)
+    {
+    	Rb_Factory::getAjaxResponse()->addScriptCall('xi.ui.dialog.autoclose',$time);
+    }
 }

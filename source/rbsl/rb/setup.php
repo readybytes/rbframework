@@ -26,7 +26,7 @@ abstract class Rb_Setup
 		if (!preg_match('/Setup(.*)/i', get_class($this), $r)) {
 			JError::raiseError (500, "Rb_View::getName() : Can't get or parse class name.");
 		}
-		$this->_name = JString::strtolower( $r[1] );
+		$this->_name = strtolower( $r[1] );
 
 		//setup the action URL
 		$parts 	= array('scheme', 'user', 'pass', 'host', 'port', 'path', 'query');
@@ -47,7 +47,7 @@ abstract class Rb_Setup
 		}
 
 		//generate class name
-		$className	= 'PayplansSetup'.JString::ucfirst(JString::strtolower($name));
+		$className	= 'PayplansSetup'.JString::ucfirst(strtolower($name));
 
 		//if already there is an object and check for static cache clean up
 		if(isset($instance[$name]))
@@ -93,6 +93,6 @@ abstract class Rb_Setup
 
 	public function getType()
 	{
-		return JString::strtolower($this->_type);
+		return strtolower($this->_type);
 	}
 }

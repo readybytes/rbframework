@@ -40,7 +40,7 @@ class Rb_Plugin extends JPlugin
 	 */
 	public function _hasType($type="Unknown")
 	{
-		$type = JString::ucfirst(JString::strtolower($type));
+		$type = JString::ucfirst(strtolower($type));
 
 		//simply check if I am instance of plugin type
 		return is_a($this, 'Rb_Plugin'.$type);

@@ -21,11 +21,11 @@ class Rb_HelperToolbar extends Rb_AbstractHelperToolbar
 		$bar->appendButton('Standard', 'new', $alt, $task, false, false );
 	}
 	
-	static function addSubMenu($menu, $selMenu,$comName='com_payplans')
+	static function addSubMenu($menu, $selMenu,$comName)
 	{
 		$selected 	= ($menu==$selMenu);
 		$link 		= "index.php?option=".$comName."&view=$menu";
-		$title 		= Rb_Text::_('PLG_SYSTEM_RBSL_SM_'.JString::strtoupper($menu));
+		$title 		= Rb_Text::_(strtoupper($comName).'_SUBMENU_'.strtoupper($menu));
 		JSubMenuHelper::addEntry($title,$link, $selected);
 	}
 }

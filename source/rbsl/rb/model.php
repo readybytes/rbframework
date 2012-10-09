@@ -30,9 +30,10 @@ abstract class Rb_AbstractModel extends Rb_AdaptModel
 		parent::__construct($options);
 
 		//at least know where we are, any time
-		$this->_context	=JString::strtolower($options['prefix'].'.Model.'.$options['name']);
+		$this->_context	=strtolower($options['prefix'].'.Model.'.$options['name']);
 	}
 
+	
 	/*
 	 * We want to make error handling to common objects
 	 * So we override the functions and direct them to work
@@ -91,7 +92,7 @@ abstract class Rb_AbstractModel extends Rb_AdaptModel
 		$r = null;
 		Rb_Error::assert(preg_match('/(.*)Model/i', get_class($this), $r), Rb_Text::sprintf('PLG_SYSTEM_RBSL_ERROR_XIMODEL_GETPREFIX_CANT_GET_OR_PARSE_CLASSNAME', get_class($this)), Rb_Error::ERROR);
 
-		$this->_prefix  =  JString::strtolower($r[1]);
+		$this->_prefix  =  strtolower($r[1]);
 		return $this->_prefix;
 	}
 
@@ -142,7 +143,7 @@ abstract class Rb_AbstractModel extends Rb_AdaptModel
 		$tmpQuery = clone($query);
 
 		foreach($queryClean as $clean){
-			$tmpQuery->clear(JString::strtolower($clean));
+			$tmpQuery->clear(strtolower($clean));
 		}
 
 		$tmpQuery->select('COUNT(*)');
@@ -228,6 +229,16 @@ abstract class Rb_Model extends Rb_AbstractModel
 
 	public $filterMatchOpeartor = array();
 	
+	/**
+	 * 
+	 * @return Rb_Model
+	 */
+	static function getInstance($name, $prefix, $refresh=false)
+	{	
+		return Rb_Factory::getInstance($name, 'model', $prefix, $refresh);
+	}
+	
+	
 	public function getEmptyRecord()
 	{
 		$vars = $this->getTable()->getProperties();
@@ -254,7 +265,7 @@ abstract class Rb_Model extends Rb_AbstractModel
 		$tmpQuery = clone ($query);
 
 		foreach($queryClean as $clean){
-			$tmpQuery->clear(JString::strtolower($clean));
+			$tmpQuery->clear(strtolower($clean));
 		}
 
 		foreach($queryFilters as $key=>$value){

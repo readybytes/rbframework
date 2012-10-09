@@ -34,8 +34,59 @@ class Rb_ViewHtml extends Rb_View
 		}
 	}
 	
+	protected function _prepareDocument()
+	{	
+		if(Rb_Factory::getApplication()->isAdmin()){
+			return true;
+		}
+		
+		$app		= Rb_Factory::getApplication();
+		$params 	= $app->getParams();
+		$document 	= Rb_Factory::getDocument();		
+		$menus		= $app->getMenu();
+		$title		= null;
+
+		// Because the application sets a default page title,
+		// we need to get it from the menu item itself
+		$menu = $menus->getActive();
+		if($menu){
+			$params->def('page_heading', $params->def('page_title', $menu->title));
+		}
+		
+		$title = $params->get('page_title', '');
+		if (empty($title)) {
+			$title = $app->getCfg('sitename');
+		}
+		elseif ($app->getCfg('sitename_pagetitles', 0) == 1) {
+			$title = Rb_Text::sprintf('JPAGETITLE', $app->getCfg('sitename'), $title);
+		}
+		elseif ($app->getCfg('sitename_pagetitles', 0) == 2) {
+			$title = Rb_Text::sprintf('JPAGETITLE', $title, $app->getCfg('sitename'));
+		}
+		
+		$document->setTitle($title);
+
+		if ($params->get('menu-meta_description'))
+		{
+			$document->setDescription($params->get('menu-meta_description'));
+		}
+
+		if ($params->get('menu-meta_keywords'))
+		{
+			$document->setMetadata('keywords', $params->get('menu-meta_keywords'));
+		}
+
+		if ($params->get('robots'))
+		{
+			$document->setMetadata('robots', $params->get('robots'));
+		}
+	}
+	
 	public function render($output, $options)
 	{	
+		// for html pages, genertae meta data.
+		$this->_prepareDocument();
+				
 		ob_start();
 		echo '<div id="{$this->_component}" class="{$this->_component}-warp">
 				<div class="{$this->_component}">

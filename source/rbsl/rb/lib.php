@@ -21,52 +21,20 @@ class Rb_Lib extends JObject
 	// they cannot be updated via bind
 
 	// trigger tells if we need to trigger onBeforeSave/onAfterSave events
-	public 	$_trigger   		= true;
-	public	$_component			= '';
-
-	// Over-ride so we can send $this as return
-	public function set($property, $value = null, $prev=false)
-	{
-		$previous = parent::set($property, $value);
-		return $prev ? $previous : $this;
-	}
-
-	public function getName()
-	{
-		if(empty($this->_name))
-		{
-			$r = null;
-			if (!preg_match('/'.$this->getPrefix().'(.*)/i', get_class($this), $r)) {
-				JError::raiseError (500, get_class($this)."::getName() : Can't get or parse class name.");
-			}
-			$this->_name = strtolower( $r[1] );
-		}
-
-		return $this->_name;
-	}
-
-	public function getPrefix()
-	{
-		return $this->_component;
-	}
-	
-	/**
-	 * @return : Rb_Model
-	 */
-	public function getModel()
-	{
-		return Rb_Factory::getInstance($this->getName(), 'Model');
-	}
-
-
-
+	protected	$_trigger   	= true;
+	protected	$_component		= '';
+   	protected	$_name			= '';
+   	
 	public function __construct($config = array())
 	{
 		//return $this to chain the functions
 		return $this->reset($config);
 	}
 
-	static public function getInstance($name, $id=0, $type=null, $bindData=null)
+	/**
+	 * @return : Rb_Lib
+	 */
+	static public function getInstance($name=null, $id=0, $type=null, $bindData=null)
 	{
 		static $instance=array();
 
@@ -75,11 +43,15 @@ class Rb_Lib extends JObject
 			$instance=array();
 		}
 
+		if($name === null){
+			$name = $this->getName();
+		}
+
 		//generate class name
 		$className	= $this->_component.$name;
 
 		// special case handling for App
-		if('app' === JString::strtolower($name)){
+		if('app' === strtolower($name)){
 
 			//try to calculate type of app from ID if given
 			if($id){
@@ -123,7 +95,76 @@ class Rb_Lib extends JObject
 					: $instance[$name][$id]->load($id);
 
 	}
+	
 
+	public function getName()
+	{
+		if(empty($this->_name))
+		{
+			$r = null;
+			if (!preg_match('/'.$this->getPrefix().'(.*)/i', get_class($this), $r)) {
+				JError::raiseError (500, get_class($this)."::getName() : Can't get or parse class name.");
+			}
+			$this->_name = strtolower( $r[1] );
+		}
+
+		return $this->_name;
+	}
+
+	public function getPrefix()
+	{
+		return $this->_component;
+	}
+	
+	// Over-ride so we can send $this as return
+	public function set($property, $value = null, $prev=false)
+	{
+		$previous = parent::set($property, $value);
+		return $prev ? $previous : $this;
+	}
+	
+	/**
+	 * @return : Rb_Model
+	 */
+	public function getModel()
+	{
+		return Rb_Factory::getInstance($this->getName(), 'Model');
+	}
+
+
+	public function getClassname()
+	{
+		Rb_Error::assert($this);
+		return get_class($this);
+	}
+	
+	public function getId()
+	{
+		Rb_Error::assert($this);
+		$varName = $this->getName().'_id';
+		return $this->$varName;
+	}
+	
+	public function setId($id)
+	{
+		Rb_Error::assert($this);
+		$varName = $this->getName().'_id';
+		$this->$varName = $id;
+		return $this;
+	}
+	
+	public function getClone()
+	{
+		return unserialize(serialize($this));
+	}
+	
+	public function setParam($key, $value)
+	{
+		Rb_Error::assert($this);
+		$this->params->set($key,$value);
+		return $this;
+	}
+	
 	public function toArray($strict=false, $forReadOnly=false)
 	{
 		Rb_Error::assert($this);
@@ -154,15 +195,10 @@ class Rb_Lib extends JObject
 		return $ret;
 	}
 
-	public function getClassname()
-	{
-		Rb_Error::assert($this);
-		return get_class($this);
-	}
 
 	public function getParamsHtml($name = 'params', $key= null)
 	{
-		$name = JString::strtolower($name);
+		$name = strtolower($name);
 
 		Rb_Error::assert(is_object($this->$name), Rb_Text::_('PLG_SYSTEM_RBSL_ERROR_PARAMETER_MUST_BE_AN_OBJECT'));
 		Rb_Error::assert(method_exists($this->$name,'render'), Rb_Text::_('PLG_SYSTEM_RBSL_ERROR_INVALID_PARAMETER_NAME_TO_RENDER'));
@@ -180,6 +216,7 @@ class Rb_Lib extends JObject
 	public function bind($data, $ignore=array())
 	{
 		Rb_Error::assert($this);
+		
 		if(empty($data) || $data == null){
 			return $this;
 		}
@@ -229,54 +266,22 @@ class Rb_Lib extends JObject
 		return $this;
 	}
 
-	public function getId()
-	{
-		Rb_Error::assert($this);
-		$varName = $this->getName().'_id';
-		return $this->$varName;
-	}
-	
-	public function setId($id)
-	{
-		Rb_Error::assert($this);
-		$varName = $this->getName().'_id';
-		$this->$varName = $id;
-		return $this;
-	}
-
 	public function load($id)
 	{
 		Rb_Error::assert($this);
 		Rb_Error::assert($id);
 
 		//if we are working on a single element then we need to clear the limit from query
-		$item = Rb_Factory::getInstance($this->getName(), 'model')->loadRecords(array('id' => $id), array('limit'));
+		$item = Rb_Model::getInstance($this->getName(), $this->getPrefix())
+						->loadRecords(array('id' => $id), array('limit'));
 
 		// if no items found
 		if(count($item) === 0){
 			return false;
+			// raise exception
 		}
 
 		return $this->reset()->bind(array_shift($item));
-	}
-
-
-	/**
-	 * Load Previously existing record if match with given condition
-	 * @param Array $filters
-	 * @param Array $clean
-	 */
-	public function loadIf($filters=array(), $clean=array())
-	{
-		Rb_Error::assert($this);
-		$records = $this->getModel()->loadRecords($filters, $clean);
-		//if records exist then load the first one.
-		if(empty($records)===false){
-			$this->bind(array_shift($records));
-		}
-
-		// return this.
-		return $this;
 	}
 
 	/**
@@ -284,8 +289,8 @@ class Rb_Lib extends JObject
 	 */
 	public function save()
 	{
-		// all class must have _trigger variable set to true, if need to trigger them
-		// getName must be there
+		$class = $this->getClass();
+
 		if($this->_trigger === true){
 			$previousObject = null;
 			if($this->getId()){
@@ -294,13 +299,8 @@ class Rb_Lib extends JObject
 			}
 
 			// trigger on before save
-			$args  = array($previousObject, $this);
-			
-			$event = 'onRb'.JString::ucfirst($this->getName()).'BeforeSave';
-			if($this instanceof PayplansApp){
-				$event = 'onRbAppBeforeSave';
-			}	
-
+			$args  = array($previousObject, $this, $class);
+			$event = 'onRbItemBeforeSave';
 			$result = Rb_HelperPlugin::trigger($event, $args, '', $this);
 		}
 
@@ -308,8 +308,7 @@ class Rb_Lib extends JObject
 		// save to data to table
 		$id = $this->getModel()->save($this->toArray(), $this->getId());
 
-		//if above save was not complete, then id will be null
-		// then return false and do not trigger after save
+		//if save was not complete, then id will be null, do not trigger after save
 		if(!$id){
 			return false;
 		}
@@ -318,15 +317,9 @@ class Rb_Lib extends JObject
 		$this->setId($id);
 
 		// trigger on after save
-		if($this->_trigger === true){
-			// 	trigger on before save
-			$args  = array($previousObject, $this);
-			
-			$event = 'onRb'.JString::ucfirst($this->getName()).'AfterSave';
-			if($this instanceof PayplansApp){
-				$event = 'onRbAppAfterSave';
-			}	
-
+		if($this->_trigger === true){		
+			$event = 'onRbItemAfterSave';
+			$args  = array($previousObject, $this, $class);
 			Rb_HelperPlugin::trigger($event, $args, '', $this);
 		}
 
@@ -335,21 +328,12 @@ class Rb_Lib extends JObject
 	
 	public function delete()
 	{
-		// all class must have _trigger variable set to true, if need to trigger them
+		$class = $this->getClass();
 		// getName must be there
 		if($this->_trigger === true){
 			// trigger on before delete
-			$args  = array($this);
-			
-			$event = 'onRb'.JString::ucfirst($this->getName()).'BeforeDelete';
-			if($this instanceof PayplansApp){
-				$event = 'onRbAppBeforeDelete';
-				//RBFW_TODO : add __clone function to lib, for better readibility
-				Rb_Factory::getSession()->set('OBJECT_TO_BE_DELETED_'.$this->getId().'_APP', $this->getClone());
-			}else{
-				Rb_Factory::getSession()->set('OBJECT_TO_BE_DELETED_'.$this->getId().'_'.JString::strtoupper($this->getName()), $this->getClone());
-			}
-
+			$event = 'onRbItemBeforeDelete';
+			$args  = array($this, $class);
 			$result = Rb_HelperPlugin::trigger($event, $args, '', $this);
 		}
 
@@ -357,7 +341,8 @@ class Rb_Lib extends JObject
 		$id  = $this->getId();
 		$result = $this->getModel()->delete($id);
 		$this->reset();
-		//if above delete was not complete, then result will be null
+		
+		// if above delete was not complete, then result will be null
 		// then return false and do not trigger after delete
 		if(!$result){
 			return false;
@@ -365,29 +350,11 @@ class Rb_Lib extends JObject
 
 		// trigger on after delete
 		if($this->_trigger === true){
-			// 	trigger on after delete
-			$args  = array($id);
-			
-			$event = 'onRb'.JString::ucfirst($this->getName()).'AfterDelete';
-			if($this instanceof PayplansApp){
-				$event = 'onRbAppAfterDelete';
-			}
-			
+			$event = 'onRbItemAfterDelete';
+			$args  = array($id, $class);
 			Rb_HelperPlugin::trigger($event, $args, '', $this);
 		}
 			
-		return $this;
-	}
-	
-	public function getClone()
-	{
-		return unserialize(serialize($this));
-	}
-	
-	public function setParam($key, $value)
-	{
-		Rb_Error::assert($this);
-		$this->params->set($key,$value);
 		return $this;
 	}
 }

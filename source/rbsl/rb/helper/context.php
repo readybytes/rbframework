@@ -13,6 +13,6 @@ class Rb_HelperContext
 	static function getObjectContext($object)
 	{
 		Rb_Error::assertValue($object);
-		return JString::strtolower($object->getPrefix().'_'.$object->getName());
+		return strtolower($object->getPrefix().'_'.$object->getName());
 	}
 }

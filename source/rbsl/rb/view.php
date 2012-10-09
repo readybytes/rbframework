@@ -16,7 +16,8 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 	protected $_model 			= null; // Will be set by controller
 	public    $_component		= '';
 	protected $_tpl 			= null;
-	public 	  $options 			= array('domObject'=>'xiWindowContent','domProperty'=>'innerHTML');
+	
+	public 	  $_renderOptions 	= array('domObject'=>'xiWindowContent','domProperty'=>'innerHTML');
 	protected $_templatePaths	= null;
 
 	/*
@@ -52,7 +53,7 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 		Rb_Error::assert(preg_match('/(.*)View/i', get_class($this), $r), Rb_Text::sprintf('PLG_SYSTEM_RBSL_ERROR_XIVIEW_GETPREFIX_CANT_GET_OR_PARSE_CLASSNAME', get_class($this)), Rb_Error::ERROR);
 
 
-		$this->_prefix  =  JString::strtolower($r[1]);
+		$this->_prefix  =  strtolower($r[1]);
 		return $this->_prefix;
 	}
 
@@ -88,6 +89,7 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 	{
 		 return $this->_task;
 	}
+	
 	/*
 	 * This function will be called from Controller
 	 * after doTask, so it will be called after
@@ -104,23 +106,21 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 		}
 
 		//set are you in admin or site
-		$app = Rb_Factory::getApplication();
-		$this->_isAdmin    = $app->isAdmin();
+		$this->_isAdmin    = Rb_Factory::getApplication()->isAdmin();
 		$this->setTask($task);
 		$this->setTpl($tpl);
 
-		// collect task specific data,
-		// if some error, do not display the page and simply return
-		// RBFW_TODO : controller will handle the error
+		// Execute the task 
 		if(false === $this->$task()){
-			return false;
+			throw new Exception("Error in function $task of ".get_class($this));
 		}
-		//set the model state in view variable
-		$this->_basicFormSetup();
+		
+		//Task executed successfully
+		$this->_basicFormSetup($task);
 
 		// Trigger event before we load templates
+		// Different apps will send on respective positions
 		$args	= array(&$this, &$task);
-		// get data from diffreent apps on respective positions
 		$pluginResult = Rb_HelperPlugin::trigger('onRbViewBeforeRender',$args, '', $this);
 		$pluginResult = $this->_filterPluginResult($pluginResult);
 		
@@ -132,19 +132,15 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 
 		//load the template file
 		$output = $this->loadTemplate($this->getTpl());
-		if (Rb_Error::isError($output)) {
-			return $output;
-		}
 
 		//post template rendering load trigger
 		$args	= array(&$this, &$task, &$output);
 		$result =  Rb_HelperPlugin::trigger('onRbViewAfterRender', $args, '', $this);
-
-		$this->_prepareDocument();
-		
+	
 		//render output
-		return $this->render($output);
+		return $this->render($output, $this->_renderOptions);
 	}
+	
 	
 	public function _mergePluginsData($pluginResult, $olddata)
 	{
@@ -171,54 +167,6 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 		}
 		
 		return $pluginResult;
-	}
-
-	protected function _prepareDocument()
-	{	
-		if(Rb_Factory::getApplication()->isAdmin()){
-			return true;
-		}
-		
-		$app		= Rb_Factory::getApplication();
-		$params 	= $app->getParams();
-		$document 	= Rb_Factory::getDocument();		
-		$menus		= $app->getMenu();
-		$title		= null;
-
-		// Because the application sets a default page title,
-		// we need to get it from the menu item itself
-		$menu = $menus->getActive();
-		if($menu){
-			$params->def('page_heading', $params->def('page_title', $menu->title));
-		}
-		
-		$title = $params->get('page_title', '');
-		if (empty($title)) {
-			$title = $app->getCfg('sitename');
-		}
-		elseif ($app->getCfg('sitename_pagetitles', 0) == 1) {
-			$title = Rb_Text::sprintf('JPAGETITLE', $app->getCfg('sitename'), $title);
-		}
-		elseif ($app->getCfg('sitename_pagetitles', 0) == 2) {
-			$title = Rb_Text::sprintf('JPAGETITLE', $title, $app->getCfg('sitename'));
-		}
-		
-		$document->setTitle($title);
-
-		if ($params->get('menu-meta_description'))
-		{
-			$document->setDescription($params->get('menu-meta_description'));
-		}
-
-		if ($params->get('menu-meta_keywords'))
-		{
-			$document->setMetadata('keywords', $params->get('menu-meta_keywords'));
-		}
-
-		if ($params->get('robots'))
-		{
-			$document->setMetadata('robots', $params->get('robots'));
-		}
 	}
 	
 	protected function _filterPluginResult($pluginResult)
@@ -297,10 +245,12 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 	{
 		$this->_adminToolbarTitle();
 
-		if($this->getTask() == 'edit' || $this->getTask() == 'new')
+		if($this->getTask() == 'edit' || $this->getTask() == 'new'){
 			$this->_adminEditToolbar();
-		else
+		}
+		else{
 			$this->_adminGridToolbar();
+		}
 	}
 
 	protected function _adminToolbarTitle()
@@ -311,48 +261,51 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 
 	protected function _adminGridToolbar()
 	{
-		Rb_HelperToolbar::addNewX('new');
-		Rb_HelperToolbar::editListX();
-		Rb_HelperToolbar::customX( 'copy', 'copy.png', 'copy_f2.png', 'PLG_SYSTEM_RBSL_TOOLBAR_COPY', true );
-		Rb_HelperToolbar::divider();
-		Rb_HelperToolbar::publish();
-		Rb_HelperToolbar::unpublish();
-		Rb_HelperToolbar::divider();
-		Rb_HelperToolbar::delete();
-		Rb_HelperToolbar::divider();
-
+		// Sample Toolbar icons
+		//Rb_HelperToolbar::addNewX('new');
+		//Rb_HelperToolbar::editListX();
+		//Rb_HelperToolbar::customX( 'copy', 'copy.png', 'copy_f2.png', 'PLG_SYSTEM_RBSL_TOOLBAR_COPY', true );
+		//Rb_HelperToolbar::divider();
+		//Rb_HelperToolbar::publish();
+		//Rb_HelperToolbar::unpublish();
+		//Rb_HelperToolbar::divider();
 	}
 
 	protected function _adminEditToolbar()
 	{   
-	    $model = $this->getModel();
-		Rb_HelperToolbar::apply();
-		Rb_HelperToolbar::save();
-		Rb_HelperToolbar::savenew();
-		Rb_HelperToolbar::cancel();
-		Rb_HelperToolbar::divider();
+	    //$model = $this->getModel();
+		//Rb_HelperToolbar::apply();
+		//Rb_HelperToolbar::save();
+		//Rb_HelperToolbar::savenew();
+		//Rb_HelperToolbar::cancel();
+		//Rb_HelperToolbar::divider();
 	  	//don't display delete button when creating new instance of object 
-	    if($model->getId() != null){
-		   Rb_HelperToolbar::deleteRecord();
-		 }
-		
+	    //if($model->getId() != null){
+		//  Rb_HelperToolbar::deleteRecord();
+		//}
 	}
 
 	
-	static $_submenus = array('dashboard', 'config', 'plan','app', 'subscription',
-							  'invoice', 'transaction','user', 'log');
+	static $_submenus = array();
 	static function addSubmenus($menu=null)
 	{
 		if($menu !== null){
-			self::$_submenus[] = $menu;
+			if(is_array($menu)){
+				foreach($menu as $m){
+					self::$_submenus[] = $m;		
+				}
+			}else{
+				self::$_submenus[] = $menu;
+			}
 		}	
+		
 		return self::$_submenus;
 	}
 
 	protected static $_subMenuRenderingDone = false;
 	public function _adminSubmenu($selMenu = 'dashboard')
 	{
-		$selMenu	= JString::strtolower(JRequest::getVar('view',$selMenu));
+		$selMenu	= strtolower(JRequest::getVar('view',$selMenu));
 
 		// add menu for group if config option is enable
 		if(!in_array('group', self::$_submenus)
@@ -362,17 +315,18 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 		}
 	
 		foreach(self::$_submenus as $menu){
-			Rb_HelperToolbar::addSubMenu($menu,$selMenu);
+			$com 	= 'com_'.$this->_component;
+			Rb_HelperToolbar::addSubMenu($menu, $selMenu, $com);
 		}
 		return $this;
 	}
 
 
-	protected function _basicFormSetup()
+	protected function _basicFormSetup($task)
 	{
 		//setup the action URL
-		$url 	= 'index.php?option=com_payplans&view='.$this->getName();
-		$task	= JRequest::getVar('task');
+		$url 	= 'index.php?option=com_'.$this->_component.'&view='.$this->getName();
+		$task	= JRequest::getVar('task', $task);
 		if($task){
 			$url .= '&task='.$task;
 		}
@@ -420,22 +374,21 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 
 		// load the template script
 		$paths = $this->_getTemplatePath($file);
+
 		//find the path
     	jimport('joomla.filesystem.path');
     	$template = JPath::find($paths, $file.'.php');
 
 		if ($template == false) {
-			return JError::raiseError( 500, "Layout $file [$template] not found");
+			throw new Exception(" Layout $file [$template] not found for class:".get_class($this));
 		}
 		
 		// unset so as not to introduce into template scope
+		unset($tpl);
+		unset($file);
 		if (isset($args['this'])) {
 			unset($args['this']);
 		}
-		
-		unset($tpl);
-		unset($file);
-		
 
 		// Support tmpl vars
         unset($args['this']);
@@ -506,27 +459,23 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 
 abstract class Rb_View extends Rb_AbstractView
 {
+	protected $_validateActions = array('apply', 'save', 'edit', 'delete', 'savenew');
 	public function getDynamicJavaScript()
 	{
 		// get valid actions for validation submission
-		$validActions = $this->getJSValidActions();
-		if(!is_array($validActions)){
-			$validActions = (array)$validActions;
-		}
+		$validActions = $this->_validateActions;
+		Rb_Error::assert(is_array($validActions));
 		
 		//common js code to trigger
 		ob_start(); ?>
 
 		// current view
-		var view = '<?php echo $this->getName();?>' ;
-        var validActions = '<?php echo json_encode($validActions);?>' ;
+		var view 			= '<?php echo $this->getName();?>' ;
+        var validActions 	= '<?php echo json_encode($validActions);?>' ;
 
-		<?php if(PAYPLANS_JVERSION_15): ?>
-		function submitbutton(action) {
-		<?php else : ?> 
+
 		Joomla.submitbutton = function(action) {
-		<?php endif; ?>
-			payplansAdmin.submit(view, action, validActions);
+			<?php echo $this->_component;?>.admin.submit(view, action, validActions);
 		}
 
 		<?php
@@ -538,7 +487,7 @@ abstract class Rb_View extends Rb_AbstractView
 
     public function getJSValidActions()
     {
-    	return array('apply', 'save', 'edit', 'delete', 'savenew');
+    	return $this->_validateActions;
     }
 
 	public function _getDynamicJavaScript()
@@ -571,14 +520,15 @@ abstract class Rb_View extends Rb_AbstractView
 
 	function _displayBlank()
 	{
-		$model = $this->getModel();
-		$heading = "PLG_SYSTEM_RBSL_ADMIN_BLANK_".JString::strtoupper($this->getName());
-		$msg = "PLG_SYSTEM_RBSL_ADMIN_BLANK_".JString::strtoupper($this->getName())."_MSG";
+		$model 		= $this->getModel();
+		$textPrefix = 'COM_'.strtoupper($this->_component);
+		
+		$heading = $textPrefix.'_ADMIN_BLANK_'.strtoupper($this->getName());
+		$message = $heading.'_MSG';
 		
 		$this->assign('heading', Rb_Text::_($heading));
-		$this->assign('msg', Rb_Text::_($msg));
+		$this->assign('msg', Rb_Text::_($message));
 		$this->assign('filters', $model->getState($model->getContext()));
-		
 		$this->setTpl('blank');
 		
 		return true;
@@ -642,46 +592,5 @@ abstract class Rb_View extends Rb_AbstractView
 		 }
 
 		return $modulehtml;
-    }
-
-    //this will set popup window title
-    function _setAjaxWinTitle($title){
-    	Rb_Factory::getAjaxResponse()->addScriptCall('xi.ui.dialog.title',$title);
-    }
-
-    //this will set action/submit button on bottom of popup window
-	function _addAjaxWinAction($text, $onButtonClick=null){
-		static $actions = array();
-
-		if($onButtonClick !== null){
-			$obejct 		= new stdClass();
-			$object->click 	= $onButtonClick;
-			$object->text 	= $text;
-			$actions[]=$object;
-		}
-    	return $actions;
-    }
-
-	function _setAjaxWinAction(){
-    	$actions = $this->_addAjaxWinAction('',null);
-
-    	if(count($actions)===0){
-    		return false;
-    	}
-
-    	Rb_Factory::getAjaxResponse()->addScriptCall('xi.ui.dialog.button',$actions);
-    	return true;
-    }
-
-    function _setAjaxWinHeight($height){
-    	Rb_Factory::getAjaxResponse()->addScriptCall('xi.ui.dialog.height',$height);
-    }
-    
-	function _setAjaxWinWidth($width){
-    	Rb_Factory::getAjaxResponse()->addScriptCall('xi.ui.dialog.width',$width);
-    }
-    
-    function _setAjaxWinAutoclose($time){
-    	Rb_Factory::getAjaxResponse()->addScriptCall('xi.ui.dialog.autoclose',$time);
     }
 }

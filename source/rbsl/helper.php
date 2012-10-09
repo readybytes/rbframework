@@ -16,18 +16,18 @@ abstract class Rb_Helper
 	static public function findController(&$option, &$view='dashboard', &$task = null, &$format='html')
 	{
 		// extract data from request
-		$option	= JString::strtolower(JRequest::getCmd('option', 	$option));
-		$view	= JString::strtolower(JRequest::getCmd('view', 	$view));
-		$task 	= JString::strtolower(JRequest::getCmd('task'));
-		$format	= JString::strtolower(JRequest::getCmd('format', $format));
+		$option	= strtolower(JRequest::getCmd('option', 	$option));
+		$view	= strtolower(JRequest::getCmd('view', 	$view));
+		$task 	= strtolower(JRequest::getCmd('task'));
+		$format	= strtolower(JRequest::getCmd('format', $format));
 
 		// now we need to create a object of proper controller
 		$args	= array();
-		$argsOption 		= JString::strtolower($option);
-		$argsView 			= JString::strtolower($view);
-		$argController		= JString::strtolower($view);
-		$argTask 			= JString::strtolower($task);
-		$argFormat 			= JString::strtolower($format);
+		$argsOption 		= strtolower($option);
+		$argsView 			= strtolower($view);
+		$argController		= strtolower($view);
+		$argTask 			= strtolower($task);
+		$argFormat 			= strtolower($format);
 
 		$args['option']			= & $argsOption;
 		$args['view'] 			= & $argsView;
@@ -54,6 +54,5 @@ abstract class Rb_Helper
 		$results  =	Rb_HelperPlugin::trigger('onRbException', $args);
 		echo str_replace("):",")<br />: = = = = = > ", str_replace("#","<br />#",$e->getTraceAsString()));
 		Rb_Factory::getApplication()->close(500);
-	}
-	
+	}	
 }
