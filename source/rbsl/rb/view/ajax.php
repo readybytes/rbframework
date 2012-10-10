@@ -11,7 +11,9 @@ if(defined('_JEXEC')===false) die();
 
 class Rb_ViewAjax extends Rb_View
 {
-	public $headerFooters = true;
+	public 	$_renderOptions = array('domObject'=>'xiWindowContent','domProperty'=>'innerHTML');
+	public 	$headerFooters 	= true;
+	
 	protected function render(Rb_View $view, $html, $options = array('domObject'=>'xiWindowContent','domProperty'=>'innerHTML'))
 	{
 		$domObject	 = JRequest::getVar('domObject',$options['domObject']);

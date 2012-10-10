@@ -17,7 +17,7 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 	public    $_component		= '';
 	protected $_tpl 			= null;
 	
-	public 	  $_renderOptions 	= array('domObject'=>'xiWindowContent','domProperty'=>'innerHTML');
+	public 	  $_renderOptions 	= array();
 	protected $_templatePaths	= null;
 
 	/*
@@ -253,10 +253,22 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 		}
 	}
 
-	protected function _adminToolbarTitle()
+	/** Set the titlebar text and icon
+	 * @param unknown_type $title
+	 * @param unknown_type $image
+	 */
+	protected function _adminToolbarTitle($title=null, $image=null)
 	{
-		// Set the titlebar text
-		//Rb_HelperToolbar::title(Rb_Text::_('PLG_SYSTEM_RBSL_SM_'.JString::strtoupper($this->getName())), "xi-".$this->getName().".png");
+		$com 	= 'com_'.$this->_component;
+		if($title === null){
+			$title = Rb_Text::_(strtoupper($com).'_SUBMENU_'.strtoupper($this->getName()));
+		}
+		
+		if($image === null){
+			$image = $this->_component.'-'.$this->getName().'.png';
+		}
+		
+		Rb_HelperToolbar::title($title,	$image);
 	}
 
 	protected function _adminGridToolbar()

@@ -23,7 +23,7 @@ class Rb_Lib extends JObject
 	// trigger tells if we need to trigger onBeforeSave/onAfterSave events
 	protected	$_trigger   	= true;
 
-	// name of component with com_
+	// name of component without com_
 	protected	$_component		= '';
    	protected	$_name			= '';
    	
@@ -36,7 +36,7 @@ class Rb_Lib extends JObject
 	/**
 	 * @return : Rb_Lib
 	 */
-	static public function getInstance($name=null, $id=0, $type=null, $bindData=null)
+	static public function getInstance($comName, $name, $id=0, $type=null, $bindData=null)
 	{
 		static $instance=array();
 
@@ -45,14 +45,9 @@ class Rb_Lib extends JObject
 			$instance=array();
 		}
 
-		if($name === null){
-			$name = $this->getName();
-		}
-
 		//generate class name
-		$className	= $this->_component.$name;
+		$className	= $comName.$name;
 
-		//RBFW_TODO : Needs cleanup
 		// special case handling for App
 		if('app' === strtolower($name)){
 
@@ -98,8 +93,7 @@ class Rb_Lib extends JObject
 					: $instance[$name][$id]->load($id);
 
 	}
-	
-
+		
 	public function getName()
 	{
 		if(empty($this->_name))

@@ -8,7 +8,7 @@
 */
 if(defined('_JEXEC')===false) die();
 
-class Rb_AbstractHelperToolbar extends JToolbar
+class Rb_AbstractHelperToolbar extends JToolBarHelper
 {
 }
 
