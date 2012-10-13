@@ -14,8 +14,8 @@ abstract class Rb_AbstractModel extends Rb_AdaptModel
 	protected	$_query				= null;
 	protected 	$_total 			= array();
 	protected 	$_records 			= array();
-	public	$_component			= '';
-	protected	$_form				= null;
+	public		$_component			= '';
+	protected	$_modelform			= null;
 
 	public function __construct($options = array())
 	{
@@ -31,24 +31,6 @@ abstract class Rb_AbstractModel extends Rb_AdaptModel
 
 		//at least know where we are, any time
 		$this->_context	=strtolower($options['prefix'].'.model.'.$options['name']);
-	}
-
-	
-	/*
-	 * We want to make error handling to common objects
-	 * So we override the functions and direct them to work
-	 * on a global error object
-	 */
-	public function getError($i = null, $toString = true )
-	{
-		$errObj	=	Rb_Factory::getErrorObject();
-		return $errObj->getError($i, $toString);
-	}
-
-	public function setError($errMsg)
-	{
-		$errObj	=	Rb_Factory::getErrorObject();
-		return $errObj->setError($errMsg);
 	}
 
 	/*
@@ -96,7 +78,18 @@ abstract class Rb_AbstractModel extends Rb_AdaptModel
 		return $this->_prefix;
 	}
 
-
+	/**
+	 * 
+	 * @return : Rb_Modelform
+	 */
+	public function getModelform()
+	{
+		if(isset($this->_modelform)){
+			return $this->_modelform;
+		}
+		
+		return $this->_modelform = Rb_Factory::getInstance($this->getName(), 'Modelform' , $this->getPrefix());
+	}
 	/**
 	 * Returns the Query Object if exist
 	 * else It builds the object

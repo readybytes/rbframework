@@ -13,7 +13,8 @@ if(defined('_JEXEC')===false) die();
 abstract class Rb_AbstractView extends Rb_AdaptView
 {
 	
-	protected $_model 			= null; // Will be set by controller
+	protected $_model 			= null;  // Will be set by controller
+	protected $_modelform		= null;  // A model to get all forms required
 	public    $_component		= '';
 	protected $_tpl 			= null;
 	
@@ -23,7 +24,6 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 	/*
 	 * We need to override joomla behaviour as they differ in
 	 * Model and Controller Naming
-	 * In Joomla 	-> JModelProducts, JProductsController
 	 * In PayPlans	 -> PayplansModelProducts, PayplansControllerProducts
 	 */
 	function getName()
@@ -62,6 +62,11 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 		return $this->_model;
 	}
 
+	function getModelform($name)
+	{
+		return $this->_modelform;
+	}
+	
 	function setModel($model)
 	{
 		 $this->_model = $model;

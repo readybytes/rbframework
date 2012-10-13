@@ -63,25 +63,6 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 	}
 
 	/*
-	 * We want to make error handling to common objects
-	 * So we override the functions and direct them to work
-	 * on a global error object
-	 */
-	public function getError($i = null, $toString = true )
-	{
-		$errObj	=	Rb_Factory::getErrorObject();
-		return $errObj->getError($i, $toString);
-	}
-
-	public function setError($errMsg)
-	{
-		$errObj	=	Rb_Factory::getErrorObject();
-		return $errObj->setError($errMsg);
-	}
-
-
-
-	/*
 	 * We need to override joomla behaviour as they differ in
 	 * Model and Controller Naming
 	 * In Joomla -> JModelProducts, JProductsController

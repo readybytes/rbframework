@@ -8,21 +8,18 @@
 */
 if(defined('_JEXEC')===false) die();
 
-class Rb_Html
-{
+class Rb_Html extends JHtml
+{	
 	public static function _($key)
 	{
-		$parts = explode('.', $key);
-		$prefix 	= 'Rb_Html';
-		$className	= $prefix.ucfirst($parts[0]);
-		$extraArgs 	= func_get_args();
-		
-		if (class_exists( $className , true ))
-		{
-			$extraArgs[0] = isset($parts[1]) ? $prefix.'.'.$parts[0].'.'.$parts[1] : $prefix.'.'.$parts[0];
+		list($key, $prefix, $file, $func) = self::extract($key);
+		if(strtolower($prefix) == 'wehrmhtml'){
+			$className = $prefix . ucfirst($file);
+			class_exists($className, true);
 		}
 		
-		return call_user_func_array( array( 'JHTML', '_' ), $extraArgs );	
+		$args = func_get_args();
+		return call_user_func_array(array('JHtml', '_'), $args);
 	}
 	
 	public static function stylesheet($filename, $path = null, $attribs = array())
@@ -87,4 +84,39 @@ class Rb_Html
 	{
 		return JHtml::image($file, $alt, $attribs, $relative, $path_only);
 	}
+	
+	
+
+	static function buildOptions($data, $attributes = null)
+	{
+		// Initialize variables.
+		$options = array();
+
+		foreach ($data as $value => $label)
+		{
+			$option = isset($attributes[$value]) ? $attributes[$value] : null;
+			
+			// Create a new option object based on the <option /> element.
+			// option($value, $text = '', $optKey = 'value', $optText = 'text', $disable = false)
+			$tmp = JHtml::_(
+						'select.option', (string) $value,
+						Rb_Text::alt($label, preg_replace('/[^a-zA-Z0-9_\-]/', '_', $label)), 
+						'value', 'text',((string) @$option->disabled == 'true')
+					);
+
+			// Set some option attributes.
+			$tmp->class = (string) @$option->class;
+
+			// Set some JavaScript option attributes.
+			$tmp->onclick = (string) @$option->onclick;
+
+			// Add the option object to the result set.
+			$options[] = $tmp;
+		}
+		reset($options);
+	
+		return $options;
+	}
+
+
 }

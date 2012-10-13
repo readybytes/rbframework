@@ -269,7 +269,7 @@ class Rb_Lib extends JObject
 		Rb_Error::assert($id);
 
 		//if we are working on a single element then we need to clear the limit from query
-		$item = Rb_Model::getInstance($this->getName(), $this->getPrefix())
+		$item = Rb_Factory::getInstance($this->getName(), 'Model', $this->getPrefix())
 						->loadRecords(array('id' => $id), array('limit'));
 
 		// if no items found
