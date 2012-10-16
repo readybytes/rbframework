@@ -1,0 +1,200 @@
+.appriseOverlay {
+    background-color: #000000;
+    border: medium none;
+    cursor: wait;
+    height: 100%;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    opacity: .70;
+    filter:alpha(opacity='70');
+}
+.appriseOuter
+	{
+	background:#eee;
+	border:1px solid #fff;
+	box-shadow:0px 3px 7px #333;
+	-moz-box-shadow:0px 3px 7px #333;
+	-webkit-box-shadow:0px 3px 7px #333;
+	-moz-border-radius:4px;
+	-webkit-border-radius:4px;
+	border-radius:4px;
+	-khtml-border-radius:4px;
+	position:absolute;
+	z-index:99999999;
+	min-width:200px;
+	min-height:50px;
+	max-width:75%;
+	position:fixed;
+	display:none;
+	}
+.appriseInner
+	{
+	padding:20px;
+	color:#333;
+	text-shadow:0px 1px 0px #fff;
+	}
+.appriseInner button
+	{
+	border:1px solid #bbb;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	border-radius:3px;
+	-khtml-border-radius:3px;
+	background: -moz-linear-gradient(100% 100% 90deg, #eee, #d5d5d5);
+  	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#eee), to(#d5d5d5));
+  	background: -webkit-linear-gradient(#eee, #d5d5d5);
+    background: -o-linear-gradient(#eee, #d5d5d5);
+	color:#232d3d;
+	font-size:12px;
+	font-weight:bold;
+	padding:4px 10px;
+	margin:0 3px;
+	text-shadow:0px 1px 0px #fff;
+	cursor:pointer;
+	box-shadow:0px 1px 2px #ccc;
+	-moz-box-shadow:0px 1px 2px #ccc;
+	-webkit-box-shadow:0px 1px 2px #ccc;
+	}
+.appriseInner button:hover
+	{
+	color:#d85054;
+	}
+.aButtons, .aInput
+	{
+	margin:20px 10px 0px 10px;
+	text-align:center;
+	}
+.aTextbox
+	{
+	border:1px solid #aaa;
+	-moz-border-radius:4px;
+	-webkit-border-radius:4px;
+	border-radius:4px;
+	-khtml-border-radius:4px;
+	box-shadow:0px 1px 0px #fff;
+	-moz-box-shadow:0px 1px 0px #fff;
+	-webkit-box-shadow:0px 1px 0px #fff;
+	width:180px;
+	font-size:12px;
+	font-weight:bold;
+	padding:5px 10px;
+	}
+	
+	
+	
+/* recommended base settings */
+.humane {
+  filter                : progid:DXImageTransform.Microsoft.alpha(opacity=100);
+  -ms-filter            : "progid:DXImageTransform.Microsoft.alpha(opacity=100)";
+  position              : fixed;
+  _position             : absolute; /* ie6 */
+  -moz-transition       : all .5s;  /* .5s transition */
+  -webkit-transition    : all .5s;
+  -o-transition         : all .5s;
+  -ms-transition        : all .5s;
+  transition            : all .5s;
+  visibility            : hidden;
+  z-index               : 100000;
+}
+.humane.humane-show { visibility : visible; }
+/* ie hover state, recommended */
+.humane:hover {
+  filter                : progid:DXImageTransform.Microsoft.alpha(opacity=20);
+  -ms-filter            : "progid:DXImageTransform.Microsoft.alpha(opacity=20)";
+}
+/* standards hover state, recommended */
+div.humane.humane-show:hover { opacity: 0.2; }
+
+/* custom settings */
+.humane {
+  font-family           : Verdana, sans-serif;
+  font-size             : 25px;
+  letter-spacing        : -1px;
+  top                   : 25%;
+  left                  : 25%;
+  opacity               : 0;
+  width                 : 50%;
+  color                 : #fff;
+  padding               : 10px;
+  text-align            : center;
+  background-color      : #000;
+  background-color      : rgba(0,0,0,0.8);
+  background-image      : -moz-linear-gradient(top, rgba(0,0,0,.8), rgba(50,50,50,.8));
+  background-image      : -ms-linear-gradient(top, rgba(0,0,0,.8), rgba(50,50,50,.8));
+  background-image      : -o-linear-gradient(top, rgba(0,0,0,.8), rgba(50,50,50,.8));
+  background-image      : -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,.8)), to(rgba(50,50,50,.8)));
+  background-image      : -webkit-linear-gradient(top, rgba(0,0,0,.8), rgba(50,50,50,.8));
+  background-image      : linear-gradient(top, rgba(0,0,0,.8), rgba(50,50,50,.8));;
+  -moz-border-radius    : 15px;
+  -webkit-border-radius : 15px;
+  -o-border-radius      : 15px;
+  border-radius         : 15px;
+  text-shadow           : 0 -1px 1px #ddd;
+  -moz-box-shadow       : 0 4px 4px -4px #000;
+  -webkit-box-shadow    : 0 4px 4px -4px #000;
+  box-shadow            : 0 4px 4px -4px #000;
+}
+
+/* custom animation for css transition supported browsers */
+.humane.humane-show { opacity: 1; }
+
+/* other customizations */
+.humane p {
+  margin                : 1em;
+  display               : inline;
+}
+.humane ul {
+  list-style            : none;
+  margin                : 0;
+  padding               : 0;
+}
+.humane .error {
+  color                 : red;
+  text-shadow           : 0 -1px 1px #f33;
+}
+
+
+/*---------------------------------------------------
+	Editable Combo box
+---------------------------------------------------- */
+input.xi-editable-select {
+  background: #FFF url(./images/arrow-down.gif) right center no-repeat;
+}
+
+.xi-editable-select-options {
+  position: absolute;
+  display: none;
+  overflow: auto;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #CCC;
+  z-index: 10;
+  background: #fff;
+}
+
+.xi-editable-select-iframe {
+  position: absolute;
+  background: #fff;
+  z-index: 9;
+  display: none;
+}
+
+.xi-editable-select-options ul {
+  margin: 0;
+  padding: 0;
+  z-index: 10;
+  list-style: none;
+  list-style-image: none;
+}
+
+.xi-editable-select-options li {
+  cursor: default;
+}
+.xi-editable-select-options li.selected {
+  background: #EAEAEA;
+}

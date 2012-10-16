@@ -64,7 +64,8 @@ abstract class Rb_AbstractModel extends Rb_AdaptModel
 	}
 
 	/*
-	 * Collect prefix auto-magically
+	 * Collect prefix
+	 * @return String : lowercase name
 	 */
 	public function getPrefix()
 	{
@@ -72,7 +73,7 @@ abstract class Rb_AbstractModel extends Rb_AdaptModel
 			return $this->_prefix;
 
 		$r = null;
-		Rb_Error::assert(preg_match('/(.*)Model/i', get_class($this), $r), Rb_Text::sprintf('PLG_SYSTEM_RBSL_ERROR_XIMODEL_GETPREFIX_CANT_GET_OR_PARSE_CLASSNAME', get_class($this)), Rb_Error::ERROR);
+		Rb_Error::assert(preg_match('/(.*)Model/i', get_class($this), $r), "Cannot able to parse classname for prefix : ".get_class($this), Rb_Error::ERROR);
 
 		$this->_prefix  =  strtolower($r[1]);
 		return $this->_prefix;
