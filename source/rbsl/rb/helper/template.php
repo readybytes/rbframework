@@ -35,17 +35,12 @@ class Rb_HelperTemplate
 		
 		ob_start();
 		?>
-		var xi_vars = <?php echo json_encode($vars); ?>;
+		var rb_vars = <?php echo json_encode($vars); ?>;
 		
 		if(typeof(Joomla) === "undefined") {
 	      var Joomla = {};
 		}
 
-		//RBFW_TODO : deprecated variables will be removed in 2.1	
-		var xi_url_base = xi_vars['url']['base'];
-		var xi_url_base_without_scheme = xi_vars['url']['base_without_scheme'];
-		var xi_view = xi_vars['request']['view'];
-		var xi_time_offset_minutes = xi_vars['time']['offset'];
 		<?php
 		$script = ob_get_contents();
 		ob_end_clean();
@@ -60,34 +55,20 @@ class Rb_HelperTemplate
 			return true;
 		}
 		
-		$isAdmin = Rb_Factory::getApplication()->isAdmin();
-		// Load Mootools first : It is done automatically by script function
-		// NoConflict already added in jQuery file,
-		if($jquery || $isAdmin){
-			Rb_Html::script('jquery.js');
-		}
-
-		//load jQuery if required
-		if($jquery_ui || $isAdmin){
-			Rb_Html::stylesheet('jquery-ui.css');
-			Rb_Html::script('jquery-ui.js');
-			//RBFW_TODO : if IE then load jquery-ui-ie.css also
-		}
-		//load payplans customized jquery-ui.css
-		Rb_Html::stylesheet('xi-ui.css');
+		Rb_Html::_('jquery.framework');
+		Rb_Html::_('jquery.ui');
 		
-		Rb_Html::stylesheet('xi.css');
-		// Load XI Script (Maintain Order) then other scripts
-		Rb_Html::script('xi.core.js');
-		Rb_Html::script('xi.lib.js');
+		// Load RB Script (Maintain Order) then other scripts
+		Rb_Html::script('rb.core.js');
+		Rb_Html::script('rb.lib.js');
 
 		return self::$_setupScriptsLoaded = true;
 	}
 	
 	
-	public static function mediaURI($path, $append=true)
+	public static function mediaURI($path, $append=true, $root=true)
 	{
-		$path	= Rb_HelperUtils::str_ireplace(Rb_HelperJoomla::getRootPath().DS, '', $path);
+		$path	= str_ireplace(Rb_HelperJoomla::getRootPath().DS, '', $path);
 		
 		// replace all DS to URL-slash
 		$path	= JPath::clean($path, '/');
@@ -98,15 +79,15 @@ class Rb_HelperTemplate
 		}
 		
 		// prepend URL-root, and append slash
-		return JURI::root().$path.($append ? '/' : '');
+		return ($root ? JURI::root() : '').$path.($append ? '/' : '');
 	}
 	
 	public static function partial($layout='default', $args=array())
 	{
-		$app 		= Rb_Factory::getApplication();
-    	$pTemplate	= 'default'; 			// RBFW_TODO : the template being used
-    	$pDefaultTemplate = 'default'; 		// default template
-		$jTemplate 	= $app->getTemplate(); 	// joomla template
+		$app 				= Rb_Factory::getApplication();
+    	$pTemplate			= 'default'; 			// RBFW_TODO : the template being used
+    	$pDefaultTemplate 	= 'default'; 			// default template
+		$jTemplate 			= $app->getTemplate(); 	// joomla template
 
         // get the template and default paths for the layout
         static $paths = null;

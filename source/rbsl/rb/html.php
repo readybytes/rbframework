@@ -22,70 +22,27 @@ class Rb_Html extends JHtml
 		return call_user_func_array(array('JHtml', '_'), $args);
 	}
 	
-	public static function stylesheet($filename, $path = null, $attribs = array())
+	public static function stylesheet($file, $attribs = array(), $relative = false, $path_only = false, $detect_browser = true, $detect_debug = true)
 	{
-		$path = ($path === null)?  RB_PATH_MEDIA.'/css' : $path;
-		
-		//load minimized css if required
-		if(isset($config->expert_useminjs) && $config->expert_useminjs){
-			$filename = Rb_Html::minFile($filename, $path, 'css');
+		if(JFile::exists($file)){
+			$file = Rb_HelperTemplate::mediaURI($file,false, false);
+		}elseif(JFile::exists(RB_PATH_MEDIA.'/'.$file)){
+			$file = Rb_HelperTemplate::mediaURI(RB_PATH_MEDIA,true, false).$file;
 		}
 		
-		$path = Rb_HelperTemplate::mediaURI($path);
-		return JHTML::stylesheet($filename, $path, $attribs);
+		return parent::script($file, $attribs, $relative, $path_only, $detect_browser, $detect_debug);
 	}
 
-	public static function script($filename, $path =null)
+	public static function script($file, $framework = false, $relative = false, $path_only = false, $detect_browser = true, $detect_debug = true)
 	{
-		$path = ($path === null) ? RB_PATH_MEDIA.'/js' : $path;
-		
-		$config =  Rb_Factory::getConfig();
-		if(isset($config->expert_useminjs) && $config->expert_useminjs){
-			$filename = Rb_Html::minFile($filename, $path);
+		if(JFile::exists($file)){
+			$file = Rb_HelperTemplate::mediaURI($file,false, false);
+		}elseif(JFile::exists(RB_PATH_MEDIA.'/'.$file)){
+			$file = Rb_HelperTemplate::mediaURI(RB_PATH_MEDIA,true, true).$file;
 		}
 		
-		$path = Rb_HelperTemplate::mediaURI($path);
-		if(PAYPLANS_JVERSION_15){
-			return JHTML::script($filename, $path, true);
-		}
-		
-		return JHTML::script($filename, $path, false);
+		return parent::script($file, $framework, $relative, $path_only, $detect_browser, $detect_debug);
 	}
-	
-	public static function link($url, $text, $attribs = null)
-	{
-		return JHTML::link($url, $text, $attribs);
-	}
-	
-	static function minFile($filename, $path, $ext='js')
-	{
-		//use minified scripts
-		$newFilename = JFile::stripExt($filename) . '-min.'.$ext;
-
-		// no need to add path
-		if(strpos($path, 'http') === 0) {
-			return $filename;
-		}
-		
-		// add absolute root path
-		if(strpos($path, JPATH_ROOT) !== 0) {
-			$path =  JPATH_ROOT.'/'.$path;
-		}
-		
-		// use minified only if it exists
-		if(JFile::exists("$path/$newFilename")){
-			return $newFilename;
-		}
-		
-		return $filename;
-	}
-	
-	public static function image($file, $alt, $attribs = null, $relative = false, $path_only = false)
-	{
-		return JHtml::image($file, $alt, $attribs, $relative, $path_only);
-	}
-	
-	
 
 	static function buildOptions($data, $attributes = null)
 	{

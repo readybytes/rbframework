@@ -449,7 +449,7 @@ class Rb_HelperJoomla extends Rb_AbstractHelperJoomla
 	static function getRootPath()
 	{
 		// in case of multi-site, we need to refer correct files
-		return dirname(dirname(dirname(RB_PATH_FRAMEWORK)));
+		return dirname(dirname(dirname(dirname(RB_PATH_FRAMEWORK))));
 	}
 
 	public static function getJoomlaUsers($id = false)

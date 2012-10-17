@@ -8,11 +8,11 @@
 
 /*-----------------------------------------------------------
   Javascript writing standards - 
-  - Pack you code in (function($){})(xi.jQuery); and use $ as usually.
+  - Pack you code in (function($){})(rb.jQuery); and use $ as usually.
 -----------------------------------------------------------*/
-if (typeof(xi)=='undefined')
+if (typeof(rb)=='undefined')
 {
-	var xi = {
+	var rb = {
 		jQuery: window.jQuery,
 		extend: function(obj){
 			this.jQuery.extend(this, obj);
@@ -655,7 +655,7 @@ if (typeof JSON.parse !== 'function') {
   // fix for IE6 suckage
   document.createElement("abbr");
   document.createElement("time");
-}(xi.jQuery));
+}(rb.jQuery));
 
 /* 
  * Humane
@@ -1210,7 +1210,7 @@ if (typeof JSON.parse !== 'function') {
 
 				case 'en':
 				default:
-					msg = xi.cms.text._('COM_PAYPLANS_JS_VALIDVAL_ALERT_MESSAGE_ON_INVALID', 'Attention, not all the fields have been filled out correctly.');
+					msg = rb.cms.text._('COM_PAYPLANS_JS_VALIDVAL_ALERT_MESSAGE_ON_INVALID', 'Attention, not all the fields have been filled out correctly.');
 					break;
 			}
 			humane(msg);
@@ -1428,7 +1428,7 @@ if (typeof JSON.parse !== 'function') {
 		return str;
 	}
 
-})(xi.jQuery);
+})(rb.jQuery);
 
 
 /**
@@ -1492,7 +1492,7 @@ if (typeof JSON.parse !== 'function') {
     init: function(select, settings) {
       this.settings = settings;
       this.wrapper = $(document.createElement('div'));
-      this.wrapper.addClass('xi-editable-select-options');
+      this.wrapper.addClass('rb-editable-select-options');
       this.select = $(select);
       this.text = $('<input type="text">');
       this.text.attr('name', this.select.attr('name'));
@@ -1507,7 +1507,7 @@ if (typeof JSON.parse !== 'function') {
       };
       this.text.attr('id', id);
       this.text.attr('autocomplete', 'off');
-      this.text.addClass('xi-editable-select');
+      this.text.addClass('rb-editable-select');
       this.select.attr('id', id +'_hidden_select');
       this.select.after(this.text);
       if(this.select.css('display') == 'none') {
@@ -1831,7 +1831,7 @@ if (typeof JSON.parse !== 'function') {
       };
     },
     createBackgroundIframe: function() {
-      var bg_iframe = $('<iframe frameborder="0" class="xi-editable-select-iframe" src="about:blank;"></iframe>');
+      var bg_iframe = $('<iframe frameborder="0" class="rb-editable-select-iframe" src="about:blank;"></iframe>');
       $(document.body).append(bg_iframe);
       bg_iframe.width(this.select.width() + 2);
       bg_iframe.height(this.wrapper.height());
@@ -1839,7 +1839,7 @@ if (typeof JSON.parse !== 'function') {
       this.bg_iframe = bg_iframe;
     }
   };
-})(xi.jQuery);
+})(rb.jQuery);
 
 
 
@@ -1968,5 +1968,5 @@ if (typeof JSON.parse !== 'function') {
 			}
 		});
 	}
-})(xi.jQuery);
+})(rb.jQuery);
 
