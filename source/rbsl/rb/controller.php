@@ -118,7 +118,7 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 		//prefix contain admin and site at end
 		//remove admin or site , b'coz
 		//IMP : Model and Tables are shared b/w Site and Admin So prefix is Payplans Only
-		$model	= Rb_Factory::getInstance($name,'Model', JString::ucfirst($this->_component));
+		$model	= Rb_Factory::getInstance($name,'Model', $this->_component);
 
 		if(!$model)
 			$this->setError(Rb_Text::_('NOT_ABLE_TO_GET_INSTANCE_OF_MODEL'.' : '.$this->getName()));
@@ -490,7 +490,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 	public function _save(array $data, $itemId=null, $type=null)
 	{
 		//create new lib instance
-		return Rb_Lib::getInstance($this->getName(), $itemId, $type)
+		return Rb_Lib::getInstance($this->_component, $this->getName(), $itemId, $type)
 						->bind($data)
 						->save();
 	}
@@ -536,7 +536,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 		if($userId	== null)
 			$userId 	= Rb_Factory::getUser()->id;
 
-		$item = Rb_Lib::getInstance($this->getName(), $itemId, null)
+		$item = Rb_Lib::getInstance($this->_component, $this->getName(), $itemId, null)
 				->delete();
 
 		if(!$item){

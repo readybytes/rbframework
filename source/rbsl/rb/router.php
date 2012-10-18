@@ -15,7 +15,7 @@ abstract class Rb_Router
     
     public static function getInstance($name, $prefix='Rb_')
     {
-        return Rb_Factory::getInstance($name, '', $prefix);
+        return Rb_Factory::getInstance($name, '', $this->_component);
     }
     
     // Load component menu records

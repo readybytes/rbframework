@@ -14,16 +14,9 @@ abstract class Rb_Route extends JRoute
 	/*
 	 * just make default value of xhtml=false
 	 */
-	static function _route($url, $xhtml = false, $ssl = null)
+	
+	public static function _($url, $xhtml = false, $ssl = null)
 	{		
-		$oldUrl = $url;
-		
-		if(Rb_Factory::getApplication()->isAdmin() == false
-			&& JString::strpos($oldUrl, 'view=payment') !== false 
-			&& Rb_Factory::getConfig()->https ){
-				return parent::_($url, $xhtml, true);
-		}
-		
-		return parent::_($url, $xhtml);
+		return parent::_($url, $xhtml, $ssl);
 	}
 }

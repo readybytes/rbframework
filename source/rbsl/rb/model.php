@@ -89,7 +89,7 @@ abstract class Rb_AbstractModel extends Rb_AdaptModel
 			return $this->_modelform;
 		}
 		
-		return $this->_modelform = Rb_Factory::getInstance($this->getName(), 'Modelform' , $this->getPrefix());
+		return $this->_modelform = Rb_Factory::getInstance($this->getName(), 'Modelform' , $this->_component);
 	}
 	/**
 	 * Returns the Query Object if exist

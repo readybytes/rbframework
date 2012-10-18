@@ -53,24 +53,6 @@ abstract class Rb_Table extends JTable
 		$this->_name = strtolower( $r[1] );
 		return $this->_name;
 	}
-
-	/*
-	 * We want to make error handling to common objects
-	 * So we override the functions and direct them to work
-	 * on a global error object
-	 */
-	public function getError($i = null, $toString = true )
-	{
-		$errObj	=	Rb_Factory::getErrorObject();
-		return $errObj->getError($i, $toString);
-	}
-
-	public function setError($errMsg)
-	{
-		$errObj	=	Rb_Factory::getErrorObject();
-		return $errObj->setError($errMsg);
-	}
-
 	/*
 	 * Collect prefix auto-magically
 	 */

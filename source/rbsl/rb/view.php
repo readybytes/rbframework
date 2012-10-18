@@ -492,7 +492,7 @@ abstract class Rb_View extends Rb_AbstractView
 
 
 		Joomla.submitbutton = function(action) {
-			<?php echo $this->_component;?>.admin.submit(view, action, validActions);
+			<?php echo $this->_component;?>.admin.grid.submit(view, action, validActions);
 		}
 
 		<?php

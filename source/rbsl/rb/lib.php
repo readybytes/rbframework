@@ -56,7 +56,7 @@ class Rb_Lib extends JObject
 				if($bindData !== null){
 					$item = $bindData;
 				}else{
-					$item = Rb_Factory::getInstance('app','model')
+					$item = Rb_Factory::getInstance('app','model', $this->_component)
 								->loadRecords(array('id' => $id));
 					$item = array_shift($item);
 				}
@@ -125,14 +125,7 @@ class Rb_Lib extends JObject
 	 */
 	public function getModel()
 	{
-		return Rb_Factory::getInstance($this->getName(), 'Model');
-	}
-
-
-	public function getClassname()
-	{
-		Rb_Error::assert($this);
-		return get_class($this);
+		return Rb_Factory::getInstance($this->getName(), 'Model', $this->_component);
 	}
 	
 	public function getId()
@@ -269,7 +262,7 @@ class Rb_Lib extends JObject
 		Rb_Error::assert($id);
 
 		//if we are working on a single element then we need to clear the limit from query
-		$item = Rb_Factory::getInstance($this->getName(), 'Model', $this->getPrefix())
+		$item = Rb_Factory::getInstance($this->getName(), 'Model', $this->_component)
 						->loadRecords(array('id' => $id), array('limit'));
 
 		// if no items found
@@ -286,7 +279,7 @@ class Rb_Lib extends JObject
 	 */
 	public function save()
 	{
-		$class = $this->getClass();
+		$class = get_class($this);
 
 		if($this->_trigger === true){
 			$previousObject = null;
@@ -325,7 +318,7 @@ class Rb_Lib extends JObject
 	
 	public function delete()
 	{
-		$class = $this->getClass();
+		$class = get_class($this);
 		// getName must be there
 		if($this->_trigger === true){
 			// trigger on before delete
