@@ -15,9 +15,17 @@ abstract class Rb_Modelform extends JModelForm
 	protected $_forms_path 		= null;
 	protected $_fields_path 	= null;
 	
+	/** 
+	 * @var Rb_Extension
+	 */
+	public 	$_component = null;
+	
 	public function __construct($config = array())
 	{
 		parent::__construct($config);
+		
+		// setup extension naming convention
+		$this->_component = Rb_Extension::getInstance($this->_component);
 		
 		// Setup path for forms	
 		Rb_Error::assert(isset($this->_forms_path));
@@ -30,13 +38,33 @@ abstract class Rb_Modelform extends JModelForm
 	public function getForm($data = array(), $loadData = true)
 	{
 		// Get the form.
-		$name = 'com_'.$this->_component.'.'.$this->getName();
-		$form = $this->loadForm($name, 'article', array('control' => 'jform', 'load_data' => $loadData));
+		$name = $this->_component->getNameCom().'.'.$this->getName();
+		$form = $this->loadForm($name, $this->getName(), array('control' => $this->_component->getNameSmall().'_form', 'load_data' => $loadData));
 		if (empty($form)) {
 			return false;
 		}
 
 		return $form;
+	}
+	
+	protected function loadFormData()
+	{
+		return array();
+	}
+	
+	public function getName()
+	{
+		if (empty($this->name))
+		{
+			$r = null;
+			if (!preg_match('/Modelform(.*)/i', get_class($this), $r))
+			{
+				JError::raiseError(500, JText::_('JLIB_APPLICATION_ERROR_MODEL_GET_NAME'));
+			}
+			$this->name = strtolower($r[1]);
+		}
+
+		return $this->name;
 	}
 	
 }

@@ -47,7 +47,7 @@ abstract class Rb_Setup
 		}
 
 		//generate class name
-		$className	= ucfirst($this->_component).'Setup'.ucfirst($name);
+		$className	= $this->_component->getPrefixClass().'Setup'.ucfirst($name);
 
 		//if already there is an object and check for static cache clean up
 		if(isset($instance[$name]))

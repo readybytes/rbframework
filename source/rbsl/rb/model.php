@@ -14,23 +14,28 @@ abstract class Rb_AbstractModel extends Rb_AdaptModel
 	protected	$_query				= null;
 	protected 	$_total 			= array();
 	protected 	$_records 			= array();
+	/** 
+	 * @var Rb_Extension
+	 */
 	public		$_component			= '';
-	protected	$_modelform			= null;
+	
 
 	public function __construct($options = array())
 	{
 		//name can be collected by parent class
-		if(array_key_exists('name',$options)==false)
+		if(array_key_exists('name',$options)==false){
 			$options['name']	= $this->getName();
+		}
 
-		if(array_key_exists('prefix',$options)==false)
+		if(array_key_exists('prefix',$options)==false){
 			$options['prefix']	= $this->getPrefix();
+		}
 
+		// setup extension naming convention
+		$this->_component = Rb_Extension::getInstance($this->_component);
+		
 		//now construct the parent
 		parent::__construct($options);
-
-		//at least know where we are, any time
-		$this->_context	=strtolower($options['prefix'].'.model.'.$options['name']);
 	}
 
 	/*
@@ -38,7 +43,11 @@ abstract class Rb_AbstractModel extends Rb_AdaptModel
 	 */
 	public function getContext()
 	{
-		return strtolower($this->_component.'.'.$this->getName());
+		if(!isset($this->_context)){
+			$this->_context = strtolower($this->_component->getNameSmall().'.'.$this->getName());
+		}
+		
+		return $this->_context; 
 	}
 	
 	/*
@@ -79,18 +88,6 @@ abstract class Rb_AbstractModel extends Rb_AdaptModel
 		return $this->_prefix;
 	}
 
-	/**
-	 * 
-	 * @return : Rb_Modelform
-	 */
-	public function getModelform()
-	{
-		if(isset($this->_modelform)){
-			return $this->_modelform;
-		}
-		
-		return $this->_modelform = Rb_Factory::getInstance($this->getName(), 'Modelform' , $this->_component);
-	}
 	/**
 	 * Returns the Query Object if exist
 	 * else It builds the object
@@ -202,7 +199,7 @@ abstract class Rb_AbstractModel extends Rb_AdaptModel
 		if($tableName===null)
 			$tableName = $this->getName();
 
-		$table	= Rb_Factory::getInstance($tableName,'Table',$this->_component);
+		$table	= Rb_Factory::getInstance($tableName,'Table',$this->_component->getPrefixClass());
 		if(!$table)
 			$this->setError(Rb_Text::_('NOT_ABLE_TO_GET_INSTANCE_OF_TABLE'.':'.$this->getName()));
 

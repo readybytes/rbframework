@@ -13,6 +13,9 @@ abstract class Rb_Table extends JTable
 	//Preety name to use it everywhere about identity
 	protected $_name = null;
 	protected $_needCheckinCheckout = false;
+	/** 
+	 * @var Rb_Extension
+	 */
     protected $_component	= '';
     protected $_prefix = null;
 
@@ -72,6 +75,9 @@ abstract class Rb_Table extends JTable
 
 	function __construct($tblFullName=null, $tblPrimaryKey=null, $db=null)
 	{
+		// setup extension naming convention
+		$this->_component = Rb_Extension::getInstance($this->_component);
+		
 		//Create full name e.g. #__ + payplans + products
 		//Always pick prefix, as it will be component from admin or site
 		if($tblFullName===null){
@@ -84,15 +90,15 @@ abstract class Rb_Table extends JTable
 		}
 
 		if($db===null){
-			$db	=	Rb_Factory::getDBO();
+			$db	= Rb_Factory::getDBO();
 		}
 
-		if(Rb_HelperTable::isTableExist($tblFullName)===false)
-		{	
+		if(Rb_HelperTable::isTableExist($tblFullName)===false){	
 			//RBFW_TODO : raise exception
 			$this->setError(Rb_Text::_("PLG_SYSTEM_RBSL_NO_TABLE_EXISTS").' : '.$this->_tbl);
 			return false;
 		}
+		
 		//call parent to build the table object
 		parent::__construct( $tblFullName, $tblPrimaryKey, $db);
 

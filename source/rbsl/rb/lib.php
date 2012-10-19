@@ -15,7 +15,7 @@ if(defined('_JEXEC')===false) die();
  * @author shyam
  *
  */
-class Rb_Lib extends JObject
+abstract class Rb_Lib extends JObject
 {
 	// class variable startinf from _ are not part of DB columns
 	// they cannot be updated via bind
@@ -23,14 +23,26 @@ class Rb_Lib extends JObject
 	// trigger tells if we need to trigger onBeforeSave/onAfterSave events
 	protected	$_trigger   	= true;
 
-	// name of component without com_
+	/** 
+	 * @var Rb_Extension
+	 */
 	protected	$_component		= '';
    	protected	$_name			= '';
    	
+   	/**
+   	 * 
+   	 * @var Rb_ModelForm
+   	 */
+   	protected	$_modelform			= null;
+   	
 	public function __construct($config = array())
 	{
+		$this->_component = Rb_Extension::getInstance($this->_component);
+
+		parent::__construct();
+		
 		//return $this to chain the functions
-		return $this->reset($config);
+		$this->reset($config);
 	}
 
 	/**
@@ -49,14 +61,14 @@ class Rb_Lib extends JObject
 		$className	= $comName.$name;
 
 		// special case handling for App
-		if('app' === strtolower($name)){
+/**		if('app' === strtolower($name)){
 
 			//try to calculate type of app from ID if given
 			if($id){
 				if($bindData !== null){
 					$item = $bindData;
 				}else{
-					$item = Rb_Factory::getInstance('app','model', $this->_component)
+					$item = Rb_Factory::getInstance('app','model', $this->_component->getPrefixClass())
 								->loadRecords(array('id' => $id));
 					$item = array_shift($item);
 				}
@@ -70,7 +82,7 @@ class Rb_Lib extends JObject
 			PayplansHelperApp::getApps();
 			$className	= 'PayplansApp'.$type;
 		}
-
+/**/
 		// in classname does not exists then return false
 		if(class_exists($className, true) === FALSE){
 			return false;
@@ -108,9 +120,13 @@ class Rb_Lib extends JObject
 		return $this->_name;
 	}
 
+	/*
+	 * Collect prefix
+	 * @return String : lowercase name
+	 */
 	public function getPrefix()
-	{
-		return $this->_component;
+	{		
+		return $this->_component->getPrefixClass();
 	}
 	
 	// Over-ride so we can send $this as return
@@ -125,7 +141,20 @@ class Rb_Lib extends JObject
 	 */
 	public function getModel()
 	{
-		return Rb_Factory::getInstance($this->getName(), 'Model', $this->_component);
+		return Rb_Factory::getInstance($this->getName(), 'Model', $this->_component->getPrefixClass());
+	}
+	
+	/**
+	 * 
+	 * @return : Rb_Modelform
+	 */
+	public function getModelform()
+	{
+		if(isset($this->_modelform)){
+			return $this->_modelform;
+		}
+		
+		return $this->_modelform = Rb_Factory::getInstance($this->getName(), 'Modelform' , $this->_component->getPrefixClass());
 	}
 	
 	public function getId()
@@ -260,9 +289,9 @@ class Rb_Lib extends JObject
 	{
 		Rb_Error::assert($this);
 		Rb_Error::assert($id);
-
+		
 		//if we are working on a single element then we need to clear the limit from query
-		$item = Rb_Factory::getInstance($this->getName(), 'Model', $this->_component)
+		$item = Rb_Factory::getInstance($this->getName(), 'Model', $this->_component->getPrefixClass())
 						->loadRecords(array('id' => $id), array('limit'));
 
 		// if no items found

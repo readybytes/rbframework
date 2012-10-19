@@ -10,12 +10,34 @@ if(defined('_JEXEC')===false) die();
 
 abstract class Rb_Router
 {
+	/** 
+	 * @var Rb_Extension
+	 */
     protected $_component = '';
     protected $_menus = null;
     
-    public static function getInstance($name, $prefix='Rb_')
+    public function __construct()
     {
-        return Rb_Factory::getInstance($name, '', $this->_component);
+    	// setup extension naming convention
+		$this->_component = Rb_Extension::getInstance($this->_component);
+    }
+    
+	function getName()
+	{
+		$name = $this->_name;
+		if (empty( $name ))
+		{
+			$r = null;
+			Rb_Error::assert(preg_match('/Router(.*)/i', get_class($this), $r) , 'RB_ROUTER : Not able to parse class name :', get_class($this), Rb_Error::ERROR);
+
+			$name = strtolower( $r[1] );
+		}
+		return $name;
+	}
+    
+    public static function getInstance($name)
+    {
+        return Rb_Factory::getInstance($name, '', $this->_component->getPrefixClass());
     }
     
     // Load component menu records

@@ -11,8 +11,11 @@ if(defined('_JEXEC')===false) die();
 abstract class Rb_AbstractController extends Rb_AdaptController
 {
 	protected	$_prefix	= '';
-	//Absolute prefix contain component name , irrespective of site or admin
-	public	$_component	= '';
+
+	/** 
+	 * @var Rb_Extension
+	 */
+	public		$_component	= '';
 	protected	$_tpl		= null;
 
 	//it stores relation between task and table column
@@ -27,6 +30,9 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 	function __construct($options = array())
 	{
 		parent::__construct();
+		
+		// setup extension naming convention
+		$this->_component =	Rb_Extension::getInstance($this->_component);
 
 		//init the controller
 		$this->_addTaskMapping();
@@ -103,7 +109,7 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 	 */
 	public function getContext()
 	{
-		return strtolower($this->_component.'.'.$this->getName());
+		return strtolower($this->_component->getNameSmall().'.'.$this->getName());
 	}
 
 	/*
@@ -118,7 +124,7 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 		//prefix contain admin and site at end
 		//remove admin or site , b'coz
 		//IMP : Model and Tables are shared b/w Site and Admin So prefix is Payplans Only
-		$model	= Rb_Factory::getInstance($name,'Model', $this->_component);
+		$model	= Rb_Factory::getInstance($name,'Model', $this->_component->getPrefixClass());
 
 		if(!$model)
 			$this->setError(Rb_Text::_('NOT_ABLE_TO_GET_INSTANCE_OF_MODEL'.' : '.$this->getName()));
@@ -151,7 +157,7 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 	public function setRedirect($url=null, $msg = null, $type = 'message')
 	{
 		if($url===null){
-			$url = Rb_Route::_("index.php?option=com_{$this->_component}&view={$this->getName()}");
+			$url = Rb_Route::_("index.php?option={$this->_component->getNameCom()}&view={$this->getName()}");
 		}
 		parent::setRedirect($url,$msg,$type);
 	}
@@ -445,7 +451,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 			$this->setMessage(Rb_Text::_('PLG_SYSTEM_RBSL_ITEM_SAVED_SUCCESSFULLY'));
 
 		//perform redirection
-		$redirect  = "index.php?option=com_{$this->_component}&view={$this->getName()}";
+		$redirect  = "index.php?option={$this->_component->getNameCom()}&view={$this->getName()}";
 
 		if(JRequest::getVar('task')==='apply'){
 			$table		=	$this->getModel()->getTable();
@@ -490,7 +496,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 	public function _save(array $data, $itemId=null, $type=null)
 	{
 		//create new lib instance
-		return Rb_Lib::getInstance($this->_component, $this->getName(), $itemId, $type)
+		return Rb_Lib::getInstance($this->_component->getPrefixClass(), $this->getName(), $itemId, $type)
 						->bind($data)
 						->save();
 	}
@@ -536,7 +542,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 		if($userId	== null)
 			$userId 	= Rb_Factory::getUser()->id;
 
-		$item = Rb_Lib::getInstance($this->_component, $this->getName(), $itemId, null)
+		$item = Rb_Lib::getInstance($this->_component->getPrefixClass(), $this->getName(), $itemId, null)
 				->delete();
 
 		if(!$item){

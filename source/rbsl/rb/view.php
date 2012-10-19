@@ -15,12 +15,22 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 	
 	protected $_model 			= null;  // Will be set by controller
 	protected $_modelform		= null;  // A model to get all forms required
+	/** 
+	 * @var Rb_Extension
+	 */
 	public    $_component		= '';
 	protected $_tpl 			= null;
 	
 	public 	  $_renderOptions 	= array();
 	protected $_templatePaths	= null;
 
+	public function __construct($config = array())
+	{
+		parent::__construct($config);
+		
+		// setup extension naming convention
+		$this->_component = Rb_Extension::getInstance($this->_component);
+	}
 	/*
 	 * We need to override joomla behaviour as they differ in
 	 * Model and Controller Naming
@@ -57,14 +67,12 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 		return $this->_prefix;
 	}
 
+	/**
+	 * @return Rb_Model
+	 */
 	function getModel()
 	{
 		return $this->_model;
-	}
-
-	function getModelform($name)
-	{
-		return $this->_modelform;
 	}
 	
 	function setModel($model)
@@ -264,13 +272,12 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 	 */
 	protected function _adminToolbarTitle($title=null, $image=null)
 	{
-		$com 	= 'com_'.$this->_component;
 		if($title === null){
-			$title = Rb_Text::_(strtoupper($com).'_SUBMENU_'.strtoupper($this->getName()));
+			$title = Rb_Text::_($this->_component->getPrefixText().'_SUBMENU_'.strtoupper($this->getName()));
 		}
 		
 		if($image === null){
-			$image = $this->_component.'-'.$this->getName().'.png';
+			$image = $this->_component->getNameSmall().'-'.$this->getName().'.png';
 		}
 		
 		Rb_HelperToolbar::title($title,	$image);
@@ -332,8 +339,7 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 		}
 	
 		foreach(self::$_submenus as $menu){
-			$com 	= 'com_'.$this->_component;
-			Rb_HelperToolbar::addSubMenu($menu, $selMenu, $com);
+			Rb_HelperToolbar::addSubMenu($menu, $selMenu, $this->_component->getNameCom());
 		}
 		return $this;
 	}
@@ -342,7 +348,7 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 	protected function _basicFormSetup($task)
 	{
 		//setup the action URL
-		$url 	= 'index.php?option=com_'.$this->_component.'&view='.$this->getName();
+		$url 	= 'index.php?option='.$this->_component->getNameCom().'&view='.$this->getName();
 		$task	= JRequest::getVar('task', $task);
 		if($task){
 			$url .= '&task='.$task;
@@ -435,11 +441,11 @@ abstract class Rb_AbstractView extends Rb_AdaptView
         {
         	$paths = array();
         
-        	$joomlaTemplatePath 	= JPATH_THEMES.'/'.$jTemplate.'/html/com_'.$this->_component;
-        	$extTemplatePath 		= constant(strtoupper($this->_component).'_PATH_SITE_TEMPLATE');
+        	$joomlaTemplatePath 	= JPATH_THEMES.'/'.$jTemplate.'/html/'.$this->_component->getNameCom();
+        	$extTemplatePath 		= constant($this->_component->getNameCaps().'_PATH_SITE_TEMPLATE');
         	$extSiteTemplatePath 	= $extTemplatePath;
 			if($app->isAdmin()){
-				$extTemplatePath = constant(strtoupper($this->_component).'_PATH_ADMIN_TEMPLATE');
+				$extTemplatePath = constant($this->_component->getNameCaps().'_PATH_ADMIN_TEMPLATE');
 			}
 
 			// joomla template override
@@ -492,7 +498,7 @@ abstract class Rb_View extends Rb_AbstractView
 
 
 		Joomla.submitbutton = function(action) {
-			<?php echo $this->_component;?>.admin.grid.submit(view, action, validActions);
+			<?php echo $this->_component->getNameSmall();?>.admin.grid.submit(view, action, validActions);
 		}
 
 		<?php
@@ -533,7 +539,7 @@ abstract class Rb_View extends Rb_AbstractView
 	function _displayBlank()
 	{
 		$model 		= $this->getModel();
-		$textPrefix = 'COM_'.strtoupper($this->_component);
+		$textPrefix = $this->_component->getPrefixText();
 		
 		$heading = $textPrefix.'_ADMIN_BLANK_'.strtoupper($this->getName());
 		$message = $heading.'_MSG';
