@@ -154,7 +154,13 @@ abstract class Rb_Lib extends JObject
 			return $this->_modelform;
 		}
 		
-		return $this->_modelform = Rb_Factory::getInstance($this->getName(), 'Modelform' , $this->_component->getPrefixClass());
+		// setup modelform
+		$this->_modelform = Rb_Factory::getInstance($this->getName(), 'Modelform' , $this->_component->getPrefixClass());
+		
+		// set model form to pick data from this object
+		$this->_modelform->setLibData($this);
+		
+		return $this->_modelform ;
 	}
 	
 	public function getId()
@@ -184,7 +190,7 @@ abstract class Rb_Lib extends JObject
 		return $this;
 	}
 	
-	public function toArray($strict=false, $forReadOnly=false)
+	public function toArray($strict=false)
 	{
 		Rb_Error::assert($this);
 
@@ -192,22 +198,35 @@ abstract class Rb_Lib extends JObject
 		$ret = array();
 		foreach($arr as $key => $value)
 		{
-			if($strict === false && is_object($this->$key) && method_exists($this->$key, 'toString') && is_a($this->$key, 'Rb_Parameter')){
-				$ret[$key] = $this->$key->toString('Rb_INI');
+			// ignore extra variables
+			if(preg_match('/^_/',$key)){
 				continue;
 			}
+			
+			// if object, then bind it properly
+			if(is_object($this->$key)){
+				if(is_a($this->$key, 'Rb_Registry')){
+					$ret[$key] = $this->$key->toString();
+					continue;
+				}
+				
+				if(is_a($this->$key, 'Rb_Date')){
+					$ret[$key] = $this->$key->toString();
+					continue;
+				}
+			
+				if(method_exists($this->$key, 'toString')){
+					$ret[$key] = $this->$key->toString();
+					continue;
+				}
+				
+				if(method_exists($this->$key, 'toArray')){
+					$ret[$key] = $this->$key->toArray();
+					continue;
+				}
+			}			
 
-			if($value instanceof Rb_Date && $forReadOnly == true){
-				$ret[$key] = PayplansHelperFormat::date($value);
-				continue;
-			}
-
-
-			if(is_object($this->$key) && method_exists($this->$key, 'toArray')){
-				$ret[$key] = $this->$key->toArray();
-				continue;
-			}
-
+			// normal scalar, just assign
 			$ret[$key] = $arr[$key];
 		}
 
@@ -260,7 +279,7 @@ abstract class Rb_Lib extends JObject
 				continue;
 
 			// if value not set in datas
-			if(isset($data[$k])==false)
+			if(isset($data[$k]) === false)
 				continue;
 
 			// its an object and supports bind function data, bind it

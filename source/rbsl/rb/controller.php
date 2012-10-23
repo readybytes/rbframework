@@ -237,10 +237,23 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 	public function _getId()
 	{	
 		//Id's can come in three ways
+		//0. comname_form[id] or comname_form[entity_id]  
 		//1: id in url
 		//2: enitityname_id in post
 		//3: cids in post(always)
 		// we will only support ONE id here, to get multiple IDs, respective function will collect cids
+		$post = JRequest::getVar("{$this->_component->getNameSmall()}_form", null);
+		if(isset($post["{$this->getName()}_id"])){
+			$entId = $post["{$this->getName()}_id"];
+			if($entId !== null){ 
+				return $entId;
+			}
+			
+			$entId = $post['id'];
+			if($entId !== null){ 
+				return $entId;
+			}
+		}
 
 		$entId = JRequest::getVar("{$this->getName()}_id", null, '', 'int');
 		if($entId !== null)
@@ -436,7 +449,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 	{
 		//RBFW_TODO : verify form token
 		//try to save
-		$post	=	JRequest::get('post');
+		$post	=	JRequest::getvar($this->_component->getNameSmall().'_form');
 		//Currently not required
 		//$post   = $this->_filterPost($post);
 
