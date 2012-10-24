@@ -183,14 +183,8 @@ abstract class Rb_Lib extends JObject
 		return unserialize(serialize($this));
 	}
 	
-	public function setParam($key, $value)
-	{
-		Rb_Error::assert($this);
-		$this->params->set($key,$value);
-		return $this;
-	}
 	
-	public function toArray($strict=false)
+	public function toDatabase()
 	{
 		Rb_Error::assert($this);
 
@@ -232,18 +226,41 @@ abstract class Rb_Lib extends JObject
 
 		return $ret;
 	}
-
-
-	public function getParamsHtml($name = 'params', $key= null)
+	
+	public function toArray()
 	{
-		$name = strtolower($name);
+		Rb_Error::assert($this);
 
-		Rb_Error::assert(is_object($this->$name), Rb_Text::_('PLG_SYSTEM_RBSL_ERROR_PARAMETER_MUST_BE_AN_OBJECT'));
-		Rb_Error::assert(method_exists($this->$name,'render'), Rb_Text::_('PLG_SYSTEM_RBSL_ERROR_INVALID_PARAMETER_NAME_TO_RENDER'));
+		$arr = get_object_vars($this);
+		$ret = array();
+		foreach($arr as $key => $value)
+		{
+			// ignore extra variables
+			if(preg_match('/^_/',$key)){
+				continue;
+			}
+			
+			// if object, then bind it properly
+			if(is_object($this->$key)){			
+				if(method_exists($this->$key, 'toArray')){
+					$ret[$key] = $this->$key->toArray();
+					continue;
+				}
+				
+				if(method_exists($this->$key, 'toString')){
+					$ret[$key] = $this->$key->toString();
+					continue;
+				}
+			}			
 
-		$key = ($key === null) ? $name : $key;
-		return $this->$name->render($key);
+			// normal scalar, just assign
+			$ret[$key] = $arr[$key];
+		}
+
+		return $ret;
 	}
+
+
 
 	/**
 	 * @param Object/Array $data
@@ -272,7 +289,8 @@ abstract class Rb_Lib extends JObject
 		}
 
 		// bind information to object
-		foreach ($this->toArray() as $k => $v)
+		$arr = get_object_vars($this);
+		foreach ($arr as $k => $v)
 		{
 			//need to ignore, also variable starting from underscore
 			if(in_array($k, $ignore) || preg_match('/^_/',$k))
@@ -344,7 +362,7 @@ abstract class Rb_Lib extends JObject
 
 
 		// save to data to table
-		$id = $this->getModel()->save($this->toArray(), $this->getId());
+		$id = $this->getModel()->save($this->toDatabase(), $this->getId());
 
 		//if save was not complete, then id will be null, do not trigger after save
 		if(!$id){
