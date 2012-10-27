@@ -59,8 +59,8 @@ class Rb_HelperTemplate
 		Rb_Html::_('jquery.ui');
 		
 		// Load RB Script (Maintain Order) then other scripts
-		Rb_Html::script('rb.core.js');
-		Rb_Html::script('rb.lib.js');
+		Rb_Html::script('rb/rb.core.js');
+		Rb_Html::script('rb/rb.lib.js');
 
 		return self::$_setupScriptsLoaded = true;
 	}

@@ -13,10 +13,9 @@ class Rb_Html extends JHtml
 	public static function _($key)
 	{
 		list($key, $prefix, $file, $func) = self::extract($key);
-		if(strtolower($prefix) == 'wehrmhtml'){
-			$className = $prefix . ucfirst($file);
-			class_exists($className, true);
-		}
+		// try to load class
+		$className = $prefix . ucfirst($file);
+		class_exists($className, true);
 		
 		$args = func_get_args();
 		return call_user_func_array(array('JHtml', '_'), $args);
@@ -24,26 +23,47 @@ class Rb_Html extends JHtml
 	
 	public static function stylesheet($file, $attribs = array(), $relative = false, $path_only = false, $detect_browser = true, $detect_debug = true)
 	{
+		//RBFW_TODO
 		if(JFile::exists($file)){
 			$file = Rb_HelperTemplate::mediaURI($file,false, false);
 		}elseif(JFile::exists(RB_PATH_MEDIA.'/'.$file)){
 			$file = Rb_HelperTemplate::mediaURI(RB_PATH_MEDIA,true, false).$file;
 		}
 		
-		return parent::script($file, $attribs, $relative, $path_only, $detect_browser, $detect_debug);
+		return parent::stylesheet($file, $attribs, $relative, $path_only, $detect_browser, $detect_debug);
 	}
 
-	public static function script($file, $framework = false, $relative = false, $path_only = false, $detect_browser = true, $detect_debug = true)
+	public function _refinePath($file)
 	{
 		if(JFile::exists($file)){
 			$file = Rb_HelperTemplate::mediaURI($file,false, false);
 		}elseif(JFile::exists(RB_PATH_MEDIA.'/'.$file)){
-			$file = Rb_HelperTemplate::mediaURI(RB_PATH_MEDIA,true, true).$file;
+			$file = Rb_HelperTemplate::mediaURI(RB_PATH_MEDIA,true, false).$file;
+		}
+		return false;
+	}
+		
+	public static function script($file, $framework = false, $relative = true, $path_only = false, $detect_browser = true, $detect_debug = true)
+	{
+		$paths = parent::script($file, $framework, $relative, true, $detect_browser, $detect_debug);
+		if(!$paths){
+			$paths = self::_refinePath($file);  
 		}
 		
-		return parent::script($file, $framework, $relative, $path_only, $detect_browser, $detect_debug);
+		if($paths){
+			$paths =  is_array($paths) ? $paths : array($path);
+			$document = JFactory::getDocument();
+			foreach ($paths as $include){
+				$document->addScript($include);
+			}
+		}
 	}
 
+	/**
+	 * 
+	 * @param unknown_type $data
+	 * @param unknown_type $attributes array('disabled', 'class', 'onclick')
+	 */
 	static function buildOptions($data, $attributes = null)
 	{
 		// Initialize variables.
@@ -51,6 +71,12 @@ class Rb_Html extends JHtml
 
 		foreach ($data as $value => $label)
 		{
+			if(is_object($label)){
+				if(isset($label->title)){
+					$label= $label->title;
+				}
+			}
+			
 			$option = isset($attributes[$value]) ? $attributes[$value] : null;
 			
 			// Create a new option object based on the <option /> element.

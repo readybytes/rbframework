@@ -104,6 +104,4 @@ class Rb_Parameter extends JParameter
 
 
 class Rb_Form extends JForm
-{
-
-} 
+{} 

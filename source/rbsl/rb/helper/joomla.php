@@ -237,7 +237,7 @@ class Rb_AbstractHelperJoomla extends Rb_AdaptHelperJoomla
 		$my		= ($user==null)   ? Rb_Factory::getUser() 	: $user;
 		
 		//default offset
-		$timezone = $config->offset;
+		$timezone = $config->get('offset');
 		
 		//if user is logged in, then do it as per him
 		if($my->id){

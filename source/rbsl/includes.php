@@ -41,7 +41,7 @@ Rb_HelperLoader::addAutoLoadFolder(RB_PATH_FRAMEWORK.'/rb',		'');
 // adapt common code as per CMS
 Rb_HelperLoader::addAutoLoadFolder(RB_PATH_FRAMEWORK.'/adapt/'.RB_CMS_ADAPTER,	'Adapt');
 // use legacy code for legacy CMS
-Rb_HelperLoader::addAutoLoadFolder(RB_PATH_FRAMEWORK.'/legacy/'.RB_CMS_ADAPTER,	'J');
+Rb_HelperLoader::addAutoLoadFolder(RB_PATH_FRAMEWORK.'/legacy/'.RB_CMS_ADAPTER, ''	, 'J');
 
 // mark to profiler
 _rb_cms_profiler_mark('RB-Framework-After-Load');
