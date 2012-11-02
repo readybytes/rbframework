@@ -13,12 +13,20 @@
 		<filename>index.html</filename>
 		<folder>rbsl</folder>
 	</files>
-<!-- Enable it when required - - - - - - - - -
+
+	<!-- RB Framework Langauge -->
 	<languages>
 		<language tag="en-GB">en-GB.plg_system_rbsl.ini</language>
 		<language tag="en-GB">en-GB.plg_system_rbsl.sys.ini</language>
 	</languages>
--->
+
+	<!-- Media files -->
+	<media destination="rb" folder="media">
+		<folder>jui</folder>
+		<folder>nvd3</folder>
+		<folder>rb</folder>
+	</media>
+
 	<config>
 	</config>
 </extension>
