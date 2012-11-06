@@ -151,7 +151,7 @@ abstract class JHtmlBootstrap
 		}
 
 		// Load jQuery
-		JHtml::_('jquery.framework');
+		Rb_Html::_('jquery.framework');
 
 		// If no debugging value is set, use the configuration setting
 		if ($debug === null)
@@ -160,7 +160,7 @@ abstract class JHtmlBootstrap
 			$debug  = (boolean) $config->get('debug');
 		}
 
-		JHtml::_('script', 'jui/bootstrap.min.js', false, true, false, false, $debug);
+		Rb_Html::script('jui/js/bootstrap.min.js', false, true, false, false, $debug);
 		self::$loaded[__METHOD__] = true;
 
 		return;
@@ -592,16 +592,16 @@ abstract class JHtmlBootstrap
 		// Load Bootstrap main CSS
 		if ($includeMainCss)
 		{
-			JHtml::_('stylesheet', 'media/jui/css/bootstrap.css', $attribs, false);
+			JHtml::_('stylesheet', 'rb/jui/css/bootstrap.css', $attribs, false);
 		}
 
 		// Load Bootstrap RTL CSS
 		if ($direction === 'rtl')
 		{
-			JHtml::_('stylesheet', 'media/jui/css/bootstrap-rtl.css', $attribs, false);
+			JHtml::_('stylesheet', 'rb/jui/css/bootstrap-rtl.css', $attribs, false);
 		}
 
 		// Load Bootstrap CSS fixes
-		JHtml::_('stylesheet', 'media/cms/css/bootstrap.css', $attribs, false);
+		JHtml::_('stylesheet', 'cms/css/bootstrap.css', $attribs, false);
 	}
 }

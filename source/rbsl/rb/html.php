@@ -10,48 +10,47 @@ if(defined('_JEXEC')===false) die();
 
 class Rb_Html extends JHtml
 {	
-	public static function _($key)
+	public static function stylesheet($file, $attribs = array(), $relative = false, $path_only = true, $detect_browser = true, $detect_debug = true)
 	{
-		list($key, $prefix, $file, $func) = self::extract($key);
-		// try to load class
-		$className = $prefix . ucfirst($file);
-		class_exists($className, true);
+		// We don't know file is loaded or not by joomla so we passed 3rd parameter as true 
+		// and we get only file paths & load manually by us.
+		$paths = parent::stylesheet($file, $attribs, $relative, $path_only, $detect_browser, $detect_debug);
 		
-		$args = func_get_args();
-		return call_user_func_array(array('JHtml', '_'), $args);
-	}
-	
-	public static function stylesheet($file, $attribs = array(), $relative = false, $path_only = false, $detect_browser = true, $detect_debug = true)
-	{
-		//RBFW_TODO
-		if(JFile::exists($file)){
-			$file = Rb_HelperTemplate::mediaURI($file,false, false);
-		}elseif(JFile::exists(RB_PATH_MEDIA.'/'.$file)){
-			$file = Rb_HelperTemplate::mediaURI(RB_PATH_MEDIA,true, false).$file;
-		}
-		
-		return parent::stylesheet($file, $attribs, $relative, $path_only, $detect_browser, $detect_debug);
-	}
-
-	public function _refinePath($file)
-	{
-		if(JFile::exists($file)){
-			$file = Rb_HelperTemplate::mediaURI($file,false, false);
-		}elseif(JFile::exists(RB_PATH_MEDIA.'/'.$file)){
-			$file = Rb_HelperTemplate::mediaURI(RB_PATH_MEDIA,true, false).$file;
-		}
-		return false;
-	}
-		
-	public static function script($file, $framework = false, $relative = true, $path_only = false, $detect_browser = true, $detect_debug = true)
-	{
-		$paths = parent::script($file, $framework, $relative, true, $detect_browser, $detect_debug);
 		if(!$paths){
 			$paths = self::_refinePath($file);  
 		}
 		
 		if($paths){
-			$paths =  is_array($paths) ? $paths : array($path);
+			$paths =  is_array($paths) ? $paths : array($paths);
+			$document = JFactory::getDocument();
+			foreach ($paths as $include){
+				$document->addStylesheet($include, 'text/css', null, $attribs);
+			}
+		}
+		
+}
+
+	public function _refinePath($file)
+	{
+		if(JFile::exists($file)){
+			return  Rb_HelperTemplate::mediaURI($file,false);
+		}elseif(JFile::exists(RB_PATH_MEDIA.DS.$file)){
+			return Rb_HelperTemplate::mediaURI(RB_PATH_MEDIA.'/'.$file,false);
+		}
+		return false;
+	}
+		
+	public static function script($file, $framework = false, $relative = true, $path_only = true, $detect_browser = true, $detect_debug = true)
+	{
+		// We don't know file is loaded or not by joomla so we passed 3rd parameter as true 
+		// and we get only file paths & load manually by us.
+		$paths = parent::script($file, $framework, $relative, $path_only, $detect_browser, $detect_debug);
+		if(!$paths){
+			$paths = self::_refinePath($file);  
+		}
+		
+		if($paths){
+			$paths =  is_array($paths) ? $paths : array($paths);
 			$document = JFactory::getDocument();
 			foreach ($paths as $include){
 				$document->addScript($include);

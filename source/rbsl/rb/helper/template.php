@@ -57,6 +57,7 @@ class Rb_HelperTemplate
 		
 		Rb_Html::_('jquery.framework');
 		Rb_Html::_('jquery.ui');
+		Rb_html::_('bootstrap.framework');	// Load bootstrap.min.js
 		
 		// Load RB Script (Maintain Order) then other scripts
 		Rb_Html::script('rb/rb.core.js');
