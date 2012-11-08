@@ -592,16 +592,15 @@ abstract class JHtmlBootstrap
 		// Load Bootstrap main CSS
 		if ($includeMainCss)
 		{
-			JHtml::_('stylesheet', 'rb/jui/css/bootstrap.css', $attribs, false);
+			Rb_Html::stylesheet('jui/css/bootstrap.css', $attribs, false);
+			Rb_Html::stylesheet('jui/css/bootstrap-responsive.css', $attribs, false);
+			Rb_Html::stylesheet('jui/css/bootstrap-extended.css', $attribs, false);
 		}
 
 		// Load Bootstrap RTL CSS
 		if ($direction === 'rtl')
 		{
-			JHtml::_('stylesheet', 'rb/jui/css/bootstrap-rtl.css', $attribs, false);
+			JHtml::_('stylesheet', 'rb/jui/bootstrap-rtl.css', $attribs, false);
 		}
-
-		// Load Bootstrap CSS fixes
-		JHtml::_('stylesheet', 'cms/css/bootstrap.css', $attribs, false);
 	}
 }
