@@ -8,10 +8,10 @@
 /* Instructions :
 ==================================================
 1. Every output from payplans must be packed via two div 
-	a) one with class payplans-warp 
+	a) one with class payplans-wrap 
 	b) second with class payplans and rb-PURPOSE (replace purpose with purpose) + rb-view + rb-task
 
-	<div class="payplans-warp">  				<-- always wrap with this div and ONLY class
+	<div class="payplans-wrap">  				<-- always wrap with this div and ONLY class
 		<div class="payplans {rb-site rb-plan}">  <-- always wrap with this div, with additional classes
 			<div class="rb-component">			<-- always wrap with this div
 				------------------------
@@ -38,7 +38,7 @@
 	 item  class =>  rb-{purpose}
 	 
 	 write rules as -
-	 page  => .rb-warp .rb-component .rb-{view}-{task} 
+	 page  => .rb-wrap .rb-component .rb-{view}-{task} 
 	 block => .rb-component .rb-{view}-{task} .rb-{block}-{purpose}
 	 item  => .rb-component .rb-{block}-{purpose} .rb-{purpose}
 	 

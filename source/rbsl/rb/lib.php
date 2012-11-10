@@ -200,12 +200,12 @@ abstract class Rb_Lib extends JObject
 			// if object, then bind it properly
 			if(is_object($this->$key)){
 				if(is_a($this->$key, 'Rb_Registry')){
-					$ret[$key] = $this->$key->toString();
+					$ret[$key] = (string) $this->$key;
 					continue;
 				}
 				
 				if(is_a($this->$key, 'Rb_Date')){
-					$ret[$key] = $this->$key->toString();
+					$ret[$key] = (string) $this->$key;
 					continue;
 				}
 			

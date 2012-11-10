@@ -88,7 +88,7 @@ class Rb_ViewHtml extends Rb_View
 		$this->_prepareDocument();
 				
 		ob_start();
-		echo '<div id="'.$this->_component->getNameSmall().'" class="'.$this->_component->getNameSmall().'-warp">
+		echo '<div id="'.$this->_component->getNameSmall().'" class="rb-wrap '.$this->_component->getNameSmall().'-wrap">
 				<div class="'.$this->_component->getNameSmall().'">
 					<div class="'.$this->_component->getPrefixCss().'-component clearfix">
 			 ';

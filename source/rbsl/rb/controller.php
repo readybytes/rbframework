@@ -116,18 +116,23 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 	 * Get the model from Factory
 	 * @return Rb_Model
 	 */
-	public function getModel($name='')
+	public function getModel($name = '', $prefix = '', $config = array())
 	{
-		if(empty($name))
+		if (empty($name)) {
 			$name 	= $this->getName();
+		}
 
 		//prefix contain admin and site at end
 		//remove admin or site , b'coz
-		//IMP : Model and Tables are shared b/w Site and Admin So prefix is Payplans Only
-		$model	= Rb_Factory::getInstance($name,'Model', $this->_component->getPrefixClass());
+		//IMP : Model and Tables are shared b/w Site and Admin.
+		if (empty($prefix)){
+			$prefix = $this->_component->getPrefixClass();
+		}
+		$model	= Rb_Factory::getInstance($name,'Model', $prefix);
 
-		if(!$model)
+		if (!$model) {
 			$this->setError(Rb_Text::_('NOT_ABLE_TO_GET_INSTANCE_OF_MODEL'.' : '.$this->getName()));
+		}
 
 		return $model;
 	}
