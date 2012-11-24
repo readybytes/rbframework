@@ -34,7 +34,7 @@ class Rb_Html extends JHtml
 	{
 		if(JFile::exists($file)){
 			return  Rb_HelperTemplate::mediaURI($file,false);
-		}elseif(JFile::exists(RB_PATH_MEDIA.DS.$file)){
+		}elseif(JFile::exists(RB_PATH_MEDIA.'/'.$file)){
 			return Rb_HelperTemplate::mediaURI(RB_PATH_MEDIA.'/'.$file,false);
 		}
 		return false;

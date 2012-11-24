@@ -156,8 +156,7 @@ abstract class Rb_Table extends JTable
 				return null;
 			}
 
-			$data	= $this->_db->getTableFields($tableName, $typeOnly);
-			$fields[$tableName] = $data[$tableName];
+			$fields[$tableName]	= $this->_db->getTableColumns($tableName, $typeOnly);			 
 		}
 
 		return $fields[$tableName];

@@ -69,7 +69,7 @@ class Rb_HelperTemplate
 	
 	public static function mediaURI($path, $append=true, $root=true)
 	{
-		$path	= str_ireplace(Rb_HelperJoomla::getRootPath().DS, '', $path);
+		$path	= str_ireplace(Rb_HelperJoomla::getRootPath().'/', '', $path);
 		
 		// replace all DS to URL-slash
 		$path	= JPath::clean($path, '/');

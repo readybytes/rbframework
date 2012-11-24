@@ -10,10 +10,10 @@ if(defined('_JEXEC')===false) die();
 
 jimport( 'joomla.application.component.model' );
 
-class Rb_AdaptJ16Model extends JModelLegacy
+class Rb_AdaptJ35Model extends JModelLegacy
 {
 	protected	$_name		= null;
 }
 
-class Rb_AdaptModel extends Rb_AdaptJ16Model
+class Rb_AdaptModel extends Rb_AdaptJ35Model
 {}

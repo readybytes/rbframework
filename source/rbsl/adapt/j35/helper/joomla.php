@@ -10,7 +10,7 @@ if(defined('_JEXEC')===false) die();
 
 jimport( 'joomla.access.rules' );
 
-class Rb_AdaptJ16HelperJoomla
+class Rb_AdaptJ35HelperJoomla
 {}
 
-class Rb_AdaptHelperJoomla extends Rb_AdaptJ16HelperJoomla{}
+class Rb_AdaptHelperJoomla extends Rb_AdaptJ35HelperJoomla{}

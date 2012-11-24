@@ -13,5 +13,5 @@ class Rb_AdaptJ35View extends JViewLegacy
 	protected	$_name		= null;
 }
 
-class Rb_AdaptModel extends Rb_AdaptJ35View
+class Rb_AdaptView extends Rb_AdaptJ35View
 {}
