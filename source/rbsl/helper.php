@@ -15,11 +15,21 @@ abstract class Rb_Helper
 	 */
 	static public function findController(&$option, &$view='dashboard', &$task = null, &$format='html')
 	{
+		// RB_FWXXX:: Clean var
 		// extract data from request
 		$option	= strtolower(JRequest::getCmd('option', 	$option));
 		$view	= strtolower(JRequest::getCmd('view', 	$view));
 		$task 	= strtolower(JRequest::getCmd('task'));
 		$format	= strtolower(JRequest::getCmd('format', $format));
+		
+		// Check for a controller.task command.
+		if (strpos($task, '.') !== false) {
+			// Explode the controller.task command. We find controller by view
+			list ($view, $task) = explode('.', $task);
+			// Reset the task without the controller context.
+			JRequest::setVar('task', $task);
+			JRequest::setVar('view', $view);
+		}
 
 		// now we need to create a object of proper controller
 		$args	= array();
