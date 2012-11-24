@@ -314,7 +314,7 @@ abstract class Rb_Lib extends JObject
 		if(array_key_exists('id', $data))
 			$this->setId($data['id']);
 
-		return $this->afterBind($this->getId());
+		return $this->afterBind($this->getId(), $data);
 	}
 
 	public function afterBind($id)
