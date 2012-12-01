@@ -257,7 +257,8 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 	protected function _adminToolbar()
 	{
 		$this->_adminToolbarTitle();
-
+		//RBFW_TODO : Don't use hard entity. { task => edit and new } 
+		//Give flexibility So we can be changed it from anywhere for adding extra task without adding here.
 		if($this->getTask() == 'edit' || $this->getTask() == 'new'){
 			$this->_adminEditToolbar();
 		}
@@ -331,13 +332,6 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 	{
 		$selMenu	= strtolower(JRequest::getVar('view',$selMenu));
 
-		// add menu for group if config option is enable
-		if(!in_array('group', self::$_submenus)
-			&& isset(Rb_Factory::getConfig()->useGroupsForPlan) 
-			&& Rb_Factory::getConfig()->useGroupsForPlan){
-			array_splice(self::$_submenus, 2, 0, "group");
-		}
-	
 		foreach(self::$_submenus as $menu){
 			Rb_HelperToolbar::addSubMenu($menu, $selMenu, $this->_component->getNameCom());
 		}

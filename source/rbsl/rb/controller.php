@@ -482,29 +482,38 @@ abstract class Rb_Controller extends Rb_AbstractController
 		$msgType	=	'message';
 		$itemId 	= $this->_getId();
 
-		if($this->_save($post, $itemId)===false){
+		$entity = $this->_save($post, $itemId) ;
+		
+		if (!$entity) {
 			$this->setMessage($this->getError());
 			$msgType	=	'error';
 		}
-		else
+		else {
 			$this->setMessage(Rb_Text::_('PLG_SYSTEM_RBSL_ITEM_SAVED_SUCCESSFULLY'));
+		}
 
 		//perform redirection
 		$redirect  = "index.php?option={$this->_component->getNameCom()}&view={$this->getName()}";
 
-		if(JRequest::getVar('task')==='apply'){
+		if(JRequest::getVar('task')==='apply' && $msgType != 'error') {
+			//ToDO:: get Id from lib obj
 			$table		=	$this->getModel()->getTable();
 			$keyName	=	$table->getKeyName();
 			$redirect  .= "&task=edit&id={$table->$keyName}";
 		}
 
-	   if(JRequest::getVar('task')==='savenew'){
+	   if(JRequest::getVar('task')==='savenew' && $msgType != 'error') {
 			$redirect  .= "&task=new";
 		}
 		
 		$redirect = Rb_Route::_($redirect);
 		$this->setRedirect( $redirect , $this->getMessage(), $msgType);
-		return false;
+		
+		if($msgType	==	'error') {
+			return false;
+		}
+		
+		return $entity;
 	}
 
 //	/**
@@ -535,8 +544,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 	public function _save(array $data, $itemId=null, $type=null)
 	{
 		//create new lib instance
-		return Rb_Lib::getInstance($this->_component->getPrefixClass(), $this->getName(), $itemId, $type)
-						->bind($data)
+		return Rb_Lib::getInstance($this->_component->getPrefixClass(), $this->getName(), $itemId, $type, $data)
 						->save();
 	}
 

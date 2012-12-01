@@ -17,10 +17,8 @@ class Rb_HtmlBoolean extends Rb_Html
 		$alt 	= $row->$what ? Rb_Text::_( 'PLG_SYSTEM_RBSL_SWITCH_ON_'.$what ) : Rb_Text::_( 'PLG_SYSTEM_RBSL_SWITCH_OFF_'.$what);
 		$action = $row->$what ? Rb_Text::_( 'PLG_SYSTEM_RBSL_SWITCH_OFF_'.$what.'_ITEM' ) : Rb_Text::_( 'PLG_SYSTEM_RBSL_SWITCh_ON_'.$what.'_ITEM' );
 
-		$href = '
-		<a href="javascript:void(0);" onclick="return listItemTask(\'cb'. $i .'\',\''. $prefix.$task .'\')" title="'. $action .'">'.
-		((PAYPLANS_JVERSION_15) ? '<img src="images/'. $img .'" border="0" alt="'. $alt .'" /></a>' : JHtml::_('image','admin/'.$img, $alt, NULL, true))
-		;
+		$href = ' <a href="javascript:void(0);" onclick="return listItemTask(\'cb'. $i .'\',\''. $prefix.$task .'\')" title="'. $action .'">'.
+		 		  JHtml::_('image','admin/'.$img, $alt, NULL, true);
 
 		return $href;
 	}

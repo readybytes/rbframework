@@ -90,7 +90,9 @@ abstract class Rb_Lib extends JObject
 		
 		// can not cache object of it 0
 		if(!$id){
-			return new $className();
+			$class_instance = new $className();
+			return $bindData ? $class_instance->bind($bindData)
+							 : $class_instance;
 		}
 
 		//if already there is an object and check for static cache clean up
@@ -102,7 +104,7 @@ abstract class Rb_Lib extends JObject
 
 		//if bind data exist then bind with it, else load new data
 		return  $bindData 	? $instance[$name][$id]->bind($bindData)
-					: $instance[$name][$id]->load($id);
+							: $instance[$name][$id]->load($id);
 
 	}
 		
