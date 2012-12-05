@@ -53,11 +53,11 @@ abstract class JHtmlFormbehavior
 			$debug  = (boolean) $config->get('debug');
 		}
 
-		JHtml::_('script', 'jui/chosen.jquery.min.js', false, true, false, false, $debug);
-		JHtml::_('stylesheet', 'jui/chosen.css', false, true);
+		JHtml::_('script', JURI::root().'media/rb/jui/js/chosen.jquery.min.js', false, true, false, false, $debug);
+		JHtml::_('stylesheet', JURI::root().'media/rb/jui/css/chosen.css', false, true);
 		JFactory::getDocument()->addScriptDeclaration("
-				jQuery(document).ready(function (){
-					jQuery('" . $selector . "').chosen({
+				rb.jQuery(document).ready(function (){
+					rb.jQuery('.rb-wrap').find('" . $selector . "').chosen({
 						disable_search_threshold : 10,
 						allow_single_deselect : true
 					});

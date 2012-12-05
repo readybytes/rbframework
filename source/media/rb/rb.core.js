@@ -382,7 +382,7 @@ rb.cms = rb.joomla;
 $(document).ready(function(){
 
 	// load translation
-	rb.cms.text.load(rb_strings);
+	rb.cms.text.load(rb.joomla.text.strings);
 });
 
 //ENDING :

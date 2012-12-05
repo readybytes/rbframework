@@ -307,7 +307,7 @@ class Rb_HelperJoomla extends Rb_AbstractHelperJoomla
 	 * @param array $data
 	 * @return array
 	 */
-	static function triggerPlugin($eventName,array &$data =array())
+	static function triggerPlugin($eventName,array &$data =array(), $type ='')
 	{
 		static $dispatcher = null;
 
@@ -317,7 +317,7 @@ class Rb_HelperJoomla extends Rb_AbstractHelperJoomla
 		}
 
 		//load payplans plugins
-		self::loadPlugins();
+		self::loadPlugins($type);
 		//$eventName = $prefix.JString::ucfirst($eventName);
 		return $dispatcher->trigger($eventName, $data);
 	}
