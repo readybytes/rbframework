@@ -59,30 +59,7 @@ abstract class Rb_Lib extends JObject
 
 		//generate class name
 		$className	= $comName.$name;
-
-		// special case handling for App
-/**		if('app' === strtolower($name)){
-
-			//try to calculate type of app from ID if given
-			if($id){
-				if($bindData !== null){
-					$item = $bindData;
-				}else{
-					$item = Rb_Factory::getInstance('app','model', $this->_component->getPrefixClass())
-								->loadRecords(array('id' => $id));
-					$item = array_shift($item);
-				}
-				
-				$type = $item->type;
-			}
-
-			Rb_Error::assert($type!==null, Rb_Text::_('PLG_SYSTEM_RBSL_ERROR_INVALID_TYPE_OF_APPLICATION'));
-
-			//IMP autoload apps
-			PayplansHelperApp::getApps();
-			$className	= 'PayplansApp'.$type;
-		}
-/**/
+		
 		// in classname does not exists then return false
 		if(class_exists($className, true) === FALSE){
 			return false;
