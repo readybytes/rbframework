@@ -48,7 +48,7 @@ abstract class Rb_Lib extends JObject
 	/**
 	 * @return : Rb_Lib
 	 */
-	static public function getInstance($comName, $name, $id=0, $type=null, $bindData=null)
+	static public function getInstance($comName, $name, $id=0, $bindData=null)
 	{
 		static $instance=array();
 

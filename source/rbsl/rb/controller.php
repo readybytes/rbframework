@@ -475,7 +475,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 	{
 		//RBFW_TODO : verify form token
 		//try to save
-		$post	=	JRequest::getvar($this->_component->getNameSmall().'_form');
+		$post = Rb_Factory::getApplication()->input->post->get($this->_component->getNameSmall().'_form', array(), 'array');
 		//Currently not required
 		//$post   = $this->_filterPost($post);
 
@@ -544,7 +544,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 	public function _save(array $data, $itemId=null, $type=null)
 	{
 		//create new lib instance
-		return Rb_Lib::getInstance($this->_component->getPrefixClass(), $this->getName(), $itemId, $type, $data)
+		return Rb_Lib::getInstance($this->_component->getPrefixClass(), $this->getName(), $itemId, $data)
 						->save();
 	}
 
