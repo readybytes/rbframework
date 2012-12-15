@@ -62,6 +62,7 @@ abstract class Rb_Helper
 		
 		// give the option to handle the exception
 		$results  =	Rb_HelperPlugin::trigger('onRbException', $args);
+		echo $e->getMessage();
 		echo str_replace("):",")<br />: = = = = = > ", str_replace("#","<br />#",$e->getTraceAsString()));
 		Rb_Factory::getApplication()->close(500);
 	}	

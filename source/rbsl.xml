@@ -8,6 +8,9 @@
 	<authorEmail>team@readybytes.in</authorEmail>
 	<authorUrl>www.readybytes.in</authorUrl>
     <description>RBSL Framework: Should be Enabled for JoomlaXi extensions</description>
+
+	<scriptfile>script.php</scriptfile>
+
 	<files>
 		<filename plugin="rbsl">rbsl.php</filename>
 		<filename>index.html</filename>

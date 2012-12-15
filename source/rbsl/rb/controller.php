@@ -191,12 +191,12 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 		// find if its a boolean task
 		if(preg_match('/^switchOff/i', $task) || preg_match('/^switchOn/i', $task)) {
 			$task = strtolower($task);
-			if(preg_match('/^switchOff/i', $task)) {
-				$column = JString::str_ireplace('switchOff', '', $task, 1);
+			if(preg_match('/^switchoff/i', $task)) {
+				$column = JString::str_ireplace('switchoff', '', $task, 1);
 				$value  = 0;
 			}
 			else {
-				$column = JString::str_ireplace('switchOn', '', $task, 1);
+				$column = JString::str_ireplace('switchon', '', $task, 1);
 				$value  = 1 ;
 			}
 			$this->setBoolMap($task, $column, $value);
@@ -763,7 +763,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 		$this->messagetype 	= 'notice';
 		$this->message 		= Rb_Text::_('PLG_SYSTEM_RBSL_ITEMS_REORDERED');
 
-		$task	= JRequest::getVar('task',	'enable');
+		$task	= strtolower(JRequest::getVar('task',	'enable'));
 
 		//setup error message, if no mapping exists
 		//RB_FWFIXME:: Need to be remove.
