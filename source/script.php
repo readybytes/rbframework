@@ -11,19 +11,16 @@ class plgsystemrbslInstallerScript
 {
 	
 	/**
-	 * Runs on installation
-	 * 
-	 * @param JInstaller $parent 
-	 */
-	public function install($parent)
+         * method to run after an install/update/uninstall method
+         *
+         * @return void
+         */
+	function postflight($type, $parent)
 	{
-		$this->updateOrdering();
-		return true;
-	}
-	
-	function update($parent)
-	{
-		return self::install($parent);
+		$executeOn = array('install', 'update');
+		if(in_array($type, $executeOn)){
+			$this->updateOrdering();
+		}
 	}
 
 	/**

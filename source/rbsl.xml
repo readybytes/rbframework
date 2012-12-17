@@ -19,8 +19,8 @@
 
 	<!-- RB Framework Langauge -->
 	<languages>
-		<language tag="en-GB">en-GB.plg_system_rbsl.ini</language>
-		<language tag="en-GB">en-GB.plg_system_rbsl.sys.ini</language>
+		<language tag="en-GB">languages/en-GB.plg_system_rbsl.ini</language>
+		<language tag="en-GB">languages/en-GB.plg_system_rbsl.sys.ini</language>
 	</languages>
 
 	<!-- Media files -->

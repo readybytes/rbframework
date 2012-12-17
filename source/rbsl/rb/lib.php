@@ -296,7 +296,7 @@ abstract class Rb_Lib extends JObject
 		return $this->afterBind($this->getId(), $data);
 	}
 
-	public function afterBind($id)
+	public function afterBind($id, $data)
 	{
 		return $this;
 	}

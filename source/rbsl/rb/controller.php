@@ -765,41 +765,10 @@ abstract class Rb_Controller extends Rb_AbstractController
 
 		$task	= strtolower(JRequest::getVar('task',	'enable'));
 
-		//setup error message, if no mapping exists
-		//RB_FWFIXME:: Need to be remove.
-//		if(array_key_exists($task, $this->_boolMap)===false)
-//		{
-//			$offpattern = '/^switchOff/i';
-//			$onpattern = '/^switchOn/i';
-//			if(!preg_match($onpattern, $task) && !preg_match($offpattern, $task)){
-//				$this->setRedirect(null, Rb_Text::_('PLG_SYSTEM_RBSL_NO_MAPPING_FOUND_FOR_CURRENT_ACTION'), 'error');
-//				return false;
-//			}
-//			else{
-//				if(preg_match($onpattern, $task)){
-//					$switch		= false;
-//					//$columninfo = str_split($task,strlen('switchOn'));
-//					$columninfo = explode('switchOn',$task);
-//					$column		= array_key_exists(1,$columninfo) ? $columninfo[1] : '';
-//					$value		= 1;
-//				}
-//				else if(preg_match($offpattern, $task)){
-//					$switch		= false;
-//					//RBFW_TODO : Convert it to str_replace, so that code can be somewaht clean from magic numbers
-//					//$columninfo = str_split($task,strlen('switchOff'));
-//					$columninfo = explode('switchOff',$task);
-//					$column		= array_key_exists(1,$columninfo) ? $columninfo[1] : '';
-//					$value		= 0;
-//				}
-//			}
-//
-//		}
-//		else{
-			$mapping	= $this->_boolMap[$task];
-			$switch		= $mapping['switch'];
-			$column		= $mapping['column'];
-			$value		= $mapping['value'];
-//		}
+		$mapping	= $this->_boolMap[$task];
+		$switch		= $mapping['switch'];
+		$column		= $mapping['column'];
+		$value		= $mapping['value'];
 
 		$cids 	= JRequest::getVar('cid', array (0), 'post', 'array');
 
