@@ -489,7 +489,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 			$msgType	=	'error';
 		}
 		else {
-			$this->setMessage(Rb_Text::_('PLG_SYSTEM_RBSL_ITEM_SAVED_SUCCESSFULLY'));
+			$this->setMessage(Rb_Text::_($this->_component->getPrefixText().'PLG_SYSTEM_RBSL_ITEM_SAVED_SUCCESSFULLY'));
 		}
 
 		//perform redirection
@@ -555,7 +555,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 	{
 		$errMsg				= '';
 		$messagetype 	= 'message';
-		$message 		= Rb_Text::_('PLG_SYSTEM_RBSL_ITEMS_DELETED');
+		$message 		= Rb_Text::_($this->_component->getPrefixText().'PLG_SYSTEM_RBSL_ITEMS_DELETED');
 
 
 		//ensure model state is blank, so no mishappening :-)
@@ -607,7 +607,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 	{
 		$errMsg				= '';
 		$messagetype 	= 'message';
-		$message 		= Rb_Text::_('PLG_SYSTEM_RBSL_ITEMS_COPIED');
+		$message 		= Rb_Text::_($this->_component->getPrefixText().'PLG_SYSTEM_RBSL_ITEMS_COPIED');
 		
 		$cids = JRequest::getVar('cid', $cids, 'request', 'array');
 		foreach ($cids as $cid)
@@ -648,7 +648,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 		if($this->_order($change, $cids[0])===false)
 			$this->setMessage($this->getError());
 		else
-			$this->setMessage(Rb_Text::_('PLG_SYSTEM_RBSL_ITEM_ORDERED_SUCCESSFULLY'));
+			$this->setMessage(Rb_Text::_($this->_component->getPrefixText().'PLG_SYSTEM_RBSL_ITEM_ORDERED_SUCCESSFULLY'));
 
 		//perform redirection
 		$this->setRedirect();
@@ -664,7 +664,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 	{
 		$errMsg				= '';
 		$this->messagetype 	= 'notice';
-		$this->message 		= Rb_Text::_('PLG_SYSTEM_RBSL_ITEMS_REORDERED');
+		$this->message 		= Rb_Text::_($this->_component->getPrefixText().'PLG_SYSTEM_RBSL_ITEMS_REORDERED');
 
 		//RBFW_TODO : User proper variable names
 		$ordering 	= JRequest::getVar('ordering', array(0), 'post', 'array');
@@ -761,7 +761,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 	{
 		$errMsg				= '';
 		$this->messagetype 	= 'notice';
-		$this->message 		= Rb_Text::_('PLG_SYSTEM_RBSL_ITEMS_REORDERED');
+		$this->message 		= Rb_Text::_($this->_component->getPrefixText().'PLG_SYSTEM_RBSL_ITEMS_REORDERED');
 
 		$task	= strtolower(JRequest::getVar('task',	'enable'));
 
