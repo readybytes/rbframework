@@ -31,7 +31,7 @@
 		<phing phingfile="${project.shortform.small}.xml" inheritAll="true" target="build" />
 
 
-		<zip destfile="${dir.packages}/${file.package}.${build.number}.${file.extension}" 
+		<zip destfile="${dir.packages}/${file.package}.${build.version}.${file.extension}" 
 			basedir="${dir.tmp}" />
 	</target>
 
