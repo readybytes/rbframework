@@ -130,7 +130,7 @@
   position: absolute;
   /* Changed for RTL */
   /* left: -9000px; */
-  display:none;
+  display:none !important;
 }
 
 /* @group Multi Chosen */

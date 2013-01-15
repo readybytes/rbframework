@@ -251,12 +251,12 @@ abstract class Rb_Table extends JTable
 			{
 			// if a new record, handle created date
 			if(($new || !($this->$k)) && in_array('created_date', $columns)){
-				$this->created_date = $now->toMySQL();
+				$this->created_date = $now->toSql();
 			}
 	
 			//handle modified date
 			if(in_array('modified_date', $columns)){
-				$this->modified_date = $now->toMySQL();
+				$this->modified_date = $now->toSql();
 			}
 		}
 
