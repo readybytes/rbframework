@@ -244,9 +244,7 @@ class Rb_AbstractHelperJoomla extends Rb_AdaptHelperJoomla
 			$timezone = $my->getParam('timezone', $timezone);
 		}
 		
-		$zoneObject = new DateTimeZone($timezone);
-		$offset = $zoneObject->getOffset(new DateTime("now")); // Offset in seconds
-		return round($offset/3600, 2); // prints "+1100"
+		return new DateTimeZone($timezone);
 	}
 	
 	public static function getJoomlaUserGroups($userid)

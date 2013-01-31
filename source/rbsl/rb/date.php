@@ -84,17 +84,17 @@ class Rb_Date extends Rb_AbstractDate
 	
 	public function toFormat($format=Rb_Date::INVOICE_FORMAT, $user=null, $config=null, $javascript=false)
 	{
-		$offset = Rb_HelperJoomla::getUserTimeZone($config, $user);
+		$tz = Rb_HelperJoomla::getUserTimeZone($config, $user);
 
 		// set the offset
-		$this->setOffset($offset);
+		$this->setTimezone($tz);
 		
 		// now format it
 		if($javascript && strpos($format, '%n') !== false && $this->_date !== false){
 			$format = str_replace('%n',intval(date('n', $this->_date + $this->_offset) -1),$format );
 		}
 		
-		return parent::toFormat($format) ;
+		return parent::format($format) ;
 	}
 	
 	static public function timeago($time)
