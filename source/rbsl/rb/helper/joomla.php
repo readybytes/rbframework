@@ -92,10 +92,10 @@ class Rb_AbstractHelperJoomla extends Rb_AdaptHelperJoomla
 	public static function getUsertype()
 	{
 		$db= & JFactory::getDBO();
-		$sql = ' SELECT `title` FROM '.$db->nameQuote('#__usergroups')
-				.' WHERE '.$db->nameQuote('title').' NOT LIKE "%Public%"';
+		$sql = ' SELECT `title`, `id` FROM '.$db->quoteName('#__usergroups')
+				.' WHERE '.$db->quoteName('title').' NOT LIKE "%Public%"';
 		$db->setQuery($sql);
-		return $db->loadResultArray();
+		return $db->loadColumn();
 	}
 	
 	public static function isAdmin($userId)
@@ -119,15 +119,6 @@ class Rb_AbstractHelperJoomla extends Rb_AdaptHelperJoomla
 		$db->setQuery($sql);
 		$groups =  $db->loadObjectList('value');
 		
-		// filter groups
-		// unset groups which are core.admin
-		$cloneGroups = $groups;
-		foreach($cloneGroups as $group){
-			// if its admin group
-			if(JAccess::getAssetRules(1)->allow('core.admin', $group->value)){
-				unset($groups[$group->value]);
-			}
-		}
 		
 		return $groups;
 	}
