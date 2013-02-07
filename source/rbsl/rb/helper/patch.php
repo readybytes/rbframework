@@ -74,20 +74,6 @@ class Rb_AbstractHelperPatch
 		return self::uninstallExtension('plugin', $identifier, $cid=0);
 	}
 	
-	static function changeModuleState($name,$position,$newState = 1)
-	{
-		$db		=& JFactory::getDBO();
-		$query	= ' UPDATE ' . $db->nameQuote( '#__modules' )
-				. ' SET '    . $db->nameQuote('published').'='.$db->Quote($newState)
-				. ',  '    . $db->nameQuote('position').'='.$db->Quote($position)
-		        . ' WHERE '  . $db->nameQuote('module').'='.$db->Quote($name);
-		$db->setQuery($query);
-		if(!$db->query())
-			return false;
-
-		return true;
-	}
-	
 	static function uninstallExtension($type, $identifier, $cid=0)
 	{
 		//type = component / plugin / module
