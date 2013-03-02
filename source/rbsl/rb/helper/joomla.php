@@ -42,6 +42,21 @@ class Rb_AbstractHelperJoomla extends Rb_AdaptHelperJoomla
 		return $db->loadResult() ? true : false;
 	}
 	
+	public static function getExistingMenu($link, $cid, $published=null, $alias=null)
+	{
+		$strQuery	= "SELECT * FROM `#__menu` "
+					  ." WHERE `link` LIKE '$link' AND "
+					  ." `component_id`={$cid}"
+					  . ( ($published !==null) ? " AND `published`= $published " : " ")
+					  . ( ($alias !==null) ? " AND `alias`= '$alias' " : " ") 
+					  ;
+
+		$db = Rb_Factory::getDBO();
+		$db->setQuery($strQuery);
+		
+		return $db->loadObjectList('id');
+	}
+	
 	public static function addMenu($title, $alias, $link, $menu, $cid)
 	{
 		if(self::isMenuExist($link, $cid, null, $alias)){
@@ -51,13 +66,7 @@ class Rb_AbstractHelperJoomla extends Rb_AdaptHelperJoomla
 		jimport('joomla.application.application');
 		$defaultMenuType	= JApplication::getInstance('site')->getMenu()->getDefault('workaround_joomla_bug')->menutype;
 	
-		//find order
 		$db = Rb_Factory::getDBO();
-		$query 	= 'SELECT ' . $db->nameQuote( 'ordering' ) . ' '
-				. 'FROM ' . $db->nameQuote( '#__menu' ) . ' '
-				. 'ORDER BY ' . $db->nameQuote( 'ordering' ) . ' DESC LIMIT 1';
-		$db->setQuery( $query );
-		$order 	= $db->loadResult() + 1;
 	
 		// Update the existing menu items.
 		$row		= JTable::getInstance ( 'menu', 'JTable' );
@@ -71,7 +80,7 @@ class Rb_AbstractHelperJoomla extends Rb_AdaptHelperJoomla
         $row->language   	= '*';
 		$row->published 	= '1';
 		$row->component_id 	= $cid;
-		$row->ordering 		= $order;
+//		$row->ordering 		= $order;
 //		$row->parent_id		= 1; // gives segmentation fault
 		
 				
@@ -80,13 +89,11 @@ class Rb_AbstractHelperJoomla extends Rb_AdaptHelperJoomla
 		}
 
 		//update parent id
-		$query =   ' UPDATE '. $db->nameQuote( '#__menu' ) 
+		$query =   ' UPDATE '. $db->quoteName( '#__menu' ) 
 				 . ' SET `parent_id` = '.$db->quote(1).', `level` = ' . $db->quote(1) 
 				 . ' WHERE `id` = '.$db->quote($row->id) ;
 		$db->setQuery( $query );
 		return $db->query();
-
-		return true;
 	} 
 	
 	public static function getUsertype()
