@@ -13,10 +13,10 @@ class Rb_AbstractHelperJoomla extends Rb_AdaptHelperJoomla
 	public static function changePluginState($element, $folder = 'system', $state=parent::ENABLE)
 	{
 		$db		= Rb_Factory::getDBO();
-		$query	= 'UPDATE '. $db->nameQuote( '#__extensions' )
-				. ' SET   '. $db->nameQuote('enabled').'='.$db->Quote($newState)
-				. ' WHERE '. $db->nameQuote('element').'='.$db->Quote($name)
-				. ' AND ' . $db->nameQuote('folder').'='.$db->Quote($folder) 
+		$query	= 'UPDATE '. $db->quoteName( '#__extensions' )
+				. ' SET   '. $db->quoteName('enabled').'='.$db->Quote($state)
+				. ' WHERE '. $db->quoteName('element').'='.$db->Quote($element)
+				. ' AND ' . $db->quoteName('folder').'='.$db->Quote($folder) 
 				. " AND `type`='plugin' ";
 		
 		$db->setQuery($query);
