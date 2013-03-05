@@ -63,6 +63,16 @@ class Rb_AbstractHelperJoomla extends Rb_AdaptHelperJoomla
 			return true;
 		}
 		
+		//if alias is empty then set title
+		if(empty($alias)){
+			$alias = $title;
+		}
+		
+		$alias = JApplication::stringURLSafe($alias);
+		if (trim(str_replace('-', '', $alias)) == ''){
+			$alias = Rb_Factory::getDate()->format('Y-m-d-H-i-s');
+		}
+			
 		jimport('joomla.application.application');
 		$defaultMenuType	= JApplication::getInstance('site')->getMenu()->getDefault('workaround_joomla_bug')->menutype;
 	
