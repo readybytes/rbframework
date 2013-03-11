@@ -595,6 +595,7 @@ abstract class JHtmlBootstrap
 			Rb_Html::stylesheet('jui/css/bootstrap.css', $attribs, false);
 			Rb_Html::stylesheet('jui/css/bootstrap-responsive.css', $attribs, false);
 			Rb_Html::stylesheet('jui/css/bootstrap-extended.css', $attribs, false);
+			Rb_Html::script('jui/js/template.js', $attribs, false);
 		}
 
 		// Load Bootstrap RTL CSS
