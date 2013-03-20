@@ -20,14 +20,14 @@ class Rb_AbstractHelperPatch
 		// also apply it to all menus J1.6 requirement
 		$db		= JFactory::getDBO();
 		
-		$query	= ' SELECT `id` FROM ' . $db->nameQuote( '#__modules' )
-		        . ' WHERE '  . $db->nameQuote('module').'='.$db->Quote($name);
+		$query	= ' SELECT `id` FROM ' . $db->quoteName( '#__modules' )
+		        . ' WHERE '  . $db->quoteName('module').'='.$db->Quote($name);
 		$db->setQuery($query);
 		$moduleId = $db->loadResult();
 		
 		
 		//during re-installation it will break, so added ignore
-		$query	= ' INSERT IGNORE INTO ' . $db->nameQuote( '#__modules_menu' )
+		$query	= ' INSERT IGNORE INTO ' . $db->quoteName( '#__modules_menu' )
 				. ' ( `moduleid` , `menuid` ) ' 
 				. " VALUES ({$moduleId}, '0') "    
 				;
@@ -42,10 +42,10 @@ class Rb_AbstractHelperPatch
 	{
 		$db		= JFactory::getDBO();
 	        
-		$query	= 'UPDATE '. $db->nameQuote( '#__extensions' )
-				. ' SET   '. $db->nameQuote('enabled').'='.$db->Quote($newState)
-				. ' WHERE '. $db->nameQuote('element').'='.$db->Quote($name)
-				. ' AND ' . $db->nameQuote('folder').'='.$db->Quote($folder) 
+		$query	= 'UPDATE '. $db->quoteName( '#__extensions' )
+				. ' SET   '. $db->quoteName('enabled').'='.$db->Quote($newState)
+				. ' WHERE '. $db->quoteName('element').'='.$db->Quote($name)
+				. ' AND ' . $db->quoteName('folder').'='.$db->Quote($folder) 
 				. " AND `type`='plugin' ";
 		
 		$db->setQuery($query);
@@ -59,9 +59,9 @@ class Rb_AbstractHelperPatch
 	{
 		$db		=& JFactory::getDBO();
 		
-		$query	= ' SELECT  `extension_id` FROM  '. $db->nameQuote( '#__extensions' )
-				. ' WHERE '. $db->nameQuote('element').'='.$db->Quote($name)
-				. ' AND ' . $db->nameQuote('folder').'='.$db->Quote($folder) 
+		$query	= ' SELECT  `extension_id` FROM  '. $db->quoteName( '#__extensions' )
+				. ' WHERE '. $db->quoteName('element').'='.$db->Quote($name)
+				. ' AND ' . $db->quoteName('folder').'='.$db->Quote($folder) 
 				. " AND `type`='plugin' ";
 				
 		$db->setQuery($query);
@@ -86,9 +86,9 @@ class Rb_AbstractHelperPatch
 	static function uninstallModule($name, $cid)
 	{
 		$db		=& JFactory::getDBO();
-		$query	= 'SELECT  `id` FROM ' . $db->nameQuote('#__modules' )
-		        . ' WHERE ' . $db->nameQuote('module').'='.$db->Quote($name)
-		        . ' AND ' . $db->nameQuote('client_id').'='.$db->Quote($cid)
+		$query	= 'SELECT  `id` FROM ' . $db->quoteName('#__modules' )
+		        . ' WHERE ' . $db->quoteName('module').'='.$db->Quote($name)
+		        . ' AND ' . $db->quoteName('client_id').'='.$db->Quote($cid)
 		        ;
 
 		$db->setQuery($query);
@@ -105,9 +105,9 @@ class Rb_AbstractHelperPatch
 	static function changeModuleOrder($order, $moduleName)
 	{
 		$db		=& JFactory::getDBO();
-		$query	= ' UPDATE ' . $db->nameQuote( '#__modules' )
-			. ' SET '    . $db->nameQuote('ordering').'='.$db->Quote($order)
-		        . ' WHERE '  . $db->nameQuote('module').'='.$db->Quote($moduleName);
+		$query	= ' UPDATE ' . $db->quoteName( '#__modules' )
+			. ' SET '    . $db->quoteName('ordering').'='.$db->Quote($order)
+		        . ' WHERE '  . $db->quoteName('module').'='.$db->Quote($moduleName);
 		$db->setQuery($query);
 		$db->query();
 	}
@@ -292,9 +292,9 @@ class Rb_HelperPatch extends Rb_AbstractHelperPatch
 		if(self::isTableExist('#__payplans_support'))
 		{
 			$db		=& JFactory::getDBO();
-			$query	= ' UPDATE ' . $db->nameQuote( '#__payplans_support' )
-					. ' SET '    . $db->nameQuote('value').'='.$db->Quote($patch)
-			        . ' WHERE '  . $db->nameQuote('key').'='.$db->Quote('lastDbPatch');
+			$query	= ' UPDATE ' . $db->quoteName( '#__payplans_support' )
+					. ' SET '    . $db->quoteName('value').'='.$db->Quote($patch)
+			        . ' WHERE '  . $db->quoteName('key').'='.$db->Quote('lastDbPatch');
 			$db->setQuery($query);
 			if(!$db->query())
 				return false;
@@ -312,10 +312,10 @@ class Rb_HelperPatch extends Rb_AbstractHelperPatch
 		$db		= JFactory::getDBO();
 		$query = array();
 		$query[]	= 'UPDATE #__payplans_support'
-				  .' SET '. $db->nameQuote('value') .' = '.$db->Quote('2925').' WHERE '. $db->nameQuote('key') .' = '.$db->Quote('build_version');
+				  .' SET '. $db->quoteName('value') .' = '.$db->Quote('2925').' WHERE '. $db->quoteName('key') .' = '.$db->Quote('build_version');
 
 		$query[] = 'UPDATE #__payplans_support'
-				  .' SET '. $db->nameQuote('value') .' = '.$db->Quote('2.2.0').' WHERE '. $db->nameQuote('key') .' = '.$db->Quote('global_version');
+				  .' SET '. $db->quoteName('value') .' = '.$db->Quote('2.2.0').' WHERE '. $db->quoteName('key') .' = '.$db->Quote('global_version');
 
 		foreach($query as $value){
 			$db->setQuery($value);

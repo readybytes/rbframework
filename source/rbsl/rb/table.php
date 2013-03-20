@@ -203,7 +203,7 @@ abstract class Rb_Table extends JTable
 		// RBFW_TODO : Add Testcase
 		$conditions = array();
 		foreach($oid as $key=> $value){
-			$conditions[]  = ' '. $db->nameQuote($key) . ' = '. $db->Quote($value);
+			$conditions[]  = ' '. $db->quoteName($key) . ' = '. $db->Quote($value);
 		}
 
 		$where = '';

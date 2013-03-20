@@ -91,7 +91,7 @@ class Rb_AbstractHelperJoomla extends Rb_AdaptHelperJoomla
 		$row->published 	= '1';
 		$row->component_id 	= $cid;
 //		$row->ordering 		= $order;
-//		$row->parent_id		= 1; // gives segmentation fault
+		$row->parent_id		= 1;
 		
 				
 		if(!$row->check() || !$row->store()){
