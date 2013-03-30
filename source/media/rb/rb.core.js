@@ -299,7 +299,7 @@ rb.ajax = {
 		if(successCallback == null) successCallback = rb.ajax.default_success_callback;
 
 		// properly oute the url
-		ajax_url = rb.route.url(url) + '&isAjax=true';
+		ajax_url = rb.route.url(url) + '&format=ajax';
 	
 		//execute ajax
 		// in jQ1.5+ first argument is url
