@@ -266,7 +266,7 @@ class Rb_AbstractHelperJoomla extends Rb_AdaptHelperJoomla
 		$db->setQuery( 'SELECT `title`'
 				. ' FROM #__usergroups'
 				. ' WHERE `id` IN (' . $groups . ')');
-		return $db->loadResultArray();	
+		return $db->loadColumn();	
 	  }
 
 	  $joomlagroups = array_keys($usergroups);

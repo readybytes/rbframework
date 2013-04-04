@@ -499,12 +499,7 @@ abstract class Rb_View extends Rb_AbstractView
 		$js = ob_get_contents();
 		ob_end_clean();
 
-		return $this->_getDynamicJavaScript().$js;
-	}
-
-	public function _getDynamicJavaScript()
-	{
-		return '';
+		return $js;
 	}
 
 	//Available Task for views, these should only
