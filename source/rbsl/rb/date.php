@@ -112,4 +112,11 @@ class Rb_Date extends Rb_AbstractDate
 	{
 		return unserialize(serialize($this));
 	}
+	
+	public function bind($date)
+	{
+		$date = is_numeric($date) ? $date : strtotime($date);
+		$this->setTimestamp($date);
+		return $this;
+	}
 }
