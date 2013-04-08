@@ -119,4 +119,9 @@ class Rb_Date extends Rb_AbstractDate
 		$this->setTimestamp($date);
 		return $this;
 	}
+	
+	public function toString()
+	{
+		return (string)$this;
+	}
 }

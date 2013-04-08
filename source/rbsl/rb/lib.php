@@ -73,15 +73,15 @@ abstract class Rb_Lib extends JObject
 		}
 
 		//if already there is an object and check for static cache clean up
-		if(isset($instance[$name][$id]) && $instance[$name][$id]->getId()==$id)
-			return $instance[$name][$id];
+		if(isset($instance[$className][$id]) && $instance[$className][$id]->getId()==$id)
+			return $instance[$className][$id];
 
 		//create new object, class must be autoloaded
-		$instance[$name][$id] = new $className();
+		$instance[$className][$id] = new $className();
 
 		//if bind data exist then bind with it, else load new data
-		return  $bindData 	? $instance[$name][$id]->bind($bindData)
-							: $instance[$name][$id]->load($id);
+		return  $bindData 	? $instance[$className][$id]->bind($bindData)
+							: $instance[$className][$id]->load($id);
 
 	}
 		
