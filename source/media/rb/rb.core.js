@@ -199,10 +199,9 @@ rb.ajax = {
 			var property 	= result[i][2];
 			var data 		= result[i][3];
 
-			var objElement = $(id);
-
 			switch(cmd){
 			case 'as': 	// assign or clear
+				var objElement = $(id);
 				if(objElement){
 					if(property == 'innerHtml' || property == 'innerHTML'){
 						$('#'+id).html(data);
