@@ -29,11 +29,17 @@ class Rb_ViewAjax extends Rb_View
 	//this will set popup window title
     function _setAjaxWinTitle($title)
     {
-    	Rb_Factory::getAjaxResponse()->addScriptCall('xi.ui.dialog.title',$title);
+    	Rb_Factory::getAjaxResponse()->addScriptCall('rb.ui.dialog.title', $title);
     }
 
+	//this will set popup window body
+    function _setAjaxWinBody($body)
+    {
+    	Rb_Factory::getAjaxResponse()->addScriptCall('rb.ui.dialog.body', $body);
+    }
+    
     //this will set action/submit button on bottom of popup window
-	function _addAjaxWinAction($text, $onButtonClick=null)
+	function _addAjaxWinAction($text, $onButtonClick=null, $class="btn", $attr = '')
 	{
 		static $actions = array();
 
@@ -41,6 +47,8 @@ class Rb_ViewAjax extends Rb_View
 			$obejct 		= new stdClass();
 			$object->click 	= $onButtonClick;
 			$object->text 	= $text;
+			$object->classes= $class;
+			$object->attr 	= $attr;
 			$actions[]=$object;
 		}
     	return $actions;
@@ -54,22 +62,22 @@ class Rb_ViewAjax extends Rb_View
     		return false;
     	}
 
-    	Rb_Factory::getAjaxResponse()->addScriptCall('xi.ui.dialog.button',$actions);
+    	Rb_Factory::getAjaxResponse()->addScriptCall('rb.ui.dialog.button',$actions);
     	return true;
     }
 
     function _setAjaxWinHeight($height)
     {
-    	Rb_Factory::getAjaxResponse()->addScriptCall('xi.ui.dialog.height',$height);
+    	Rb_Factory::getAjaxResponse()->addScriptCall('rb.ui.dialog.height',$height);
     }
     
 	function _setAjaxWinWidth($width)
 	{
-    	Rb_Factory::getAjaxResponse()->addScriptCall('xi.ui.dialog.width',$width);
+    	Rb_Factory::getAjaxResponse()->addScriptCall('rb.ui.dialog.width',$width);
     }
     
     function _setAjaxWinAutoclose($time)
     {
-    	Rb_Factory::getAjaxResponse()->addScriptCall('xi.ui.dialog.autoclose',$time);
+    	Rb_Factory::getAjaxResponse()->addScriptCall('rb.ui.dialog.autoclose',$time);
     }
 }
