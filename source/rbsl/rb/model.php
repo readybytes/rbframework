@@ -44,7 +44,7 @@ abstract class Rb_AbstractModel extends Rb_AdaptModel
 	public function getContext()
 	{
 		if(!isset($this->_context)){
-			$this->_context = strtolower($this->_component->getNameSmall().'.'.$this->getName());
+			$this->_context = strtolower($this->_component->getNameSmall().'_'.$this->getName());
 		}
 		
 		return $this->_context; 
@@ -526,7 +526,7 @@ abstract class Rb_Model extends Rb_AbstractModel
     	
     	
 		foreach($filters as $key=>$value){
-			if($value !== null && trim($value) !== ''){
+			if($value !== null){
 				$this->_filters[$key] = $value;
 			}
 		}
