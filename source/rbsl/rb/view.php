@@ -377,7 +377,7 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 	
 	function loadTemplate( $tpl = null, $args = null, $layout=null)
 	{
-		if($args === null){
+		if($args === null && isset($this->_tplVars)){
 			$args= $this->_tplVars;
 		}
 		
@@ -438,8 +438,21 @@ abstract class Rb_AbstractView extends Rb_AdaptView
         	$joomlaTemplatePath 	= JPATH_THEMES.'/'.$jTemplate.'/html/'.$this->_component->getNameCom();
         	$extTemplatePath 		= constant($this->_component->getNameCaps().'_PATH_SITE_TEMPLATE');
         	$extSiteTemplatePath 	= $extTemplatePath;
-			if($app->isAdmin()){
+        	
+			// To load temlates of view, irrespective of instance of app (admin or site)
+			// if current class name of current instance has admin word but not site, then load admin template
+			// if current class name of current instance has site word but not admin, then load site template
+			// in case if class name has bothe the word, throw exception
+        	// for admin view
+			if(preg_match('^(?!.*site).*admin.*$^i', get_class($this))){
 				$extTemplatePath = constant($this->_component->getNameCaps().'_PATH_ADMIN_TEMPLATE');
+			}
+			// for site view
+			elseif(preg_match('^(?!.*admin).*site.*$^i', get_class($this))){
+				//do nothing as it is already set
+			}
+			else{
+				throw new Exception("Class name of view must not contain 'admin' and 'site' both");
 			}
 
 			// joomla template override
@@ -476,7 +489,8 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 
 abstract class Rb_View extends Rb_AbstractView
 {
-	protected $_validateActions = array('apply', 'save', 'edit', 'delete', 'savenew');
+	// XITODO : check task for savenew in J2.5
+	protected $_validateActions = array('apply', 'save', 'save2new', 'savenew');
 	public function getDynamicJavaScript()
 	{
 		// get valid actions for validation submission

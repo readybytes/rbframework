@@ -44,88 +44,71 @@ if (typeof(rb)=='undefined')
 rb.ui = {};
 rb.ui.dialog = { 
 	create : function(call, winTitle, winContentWidth, winContentHeight){
-		//a workaround for a flaw in the demo system (http://dev.jqueryui.com/ticket/4375), ignore!
-		$("#rbWindowContent:ui-dialog").dialog( "destroy" );
-		
-		//
+
 		if(winTitle == null) winTitle = 'Title';
 		if(winContentWidth == null) winContentWidth = 'auto';
 		if(winContentHeight == null) winContentHeight = 'auto';
 		
 		// create a empty-div & show a dialog
 		$('#rbWindowContent').remove();
-		$('<div id="rbWindowContent" class="rbGlobalDialog loading"></div>')
+
+		//XITODO : loading class required or not
+		$('<div id="rbWindowContent" class="modal hide fade loading" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>') 
 				.addClass('new').appendTo('body');
-		$('#rbWindowContent').dialog({
-			autoOpen: false,
-			title : winTitle,
-			width : winContentWidth,
-			height: winContentHeight,
-			modal : true ,
-			close: function(event, ui) { 
-					$('.rbGlobalDialog').remove(); 
-				}
+		
+		// add title, body and footer block so that sequence can be maintained
+		$('<div id="rbWindowTitle"></div>').appendTo('#rbWindowContent');
+		$('<div id="rbWindowBody"></div>').appendTo('#rbWindowContent');
+		$('<div id="rbWindowFooter"></div>').appendTo('#rbWindowContent');
+		
+		// set the title
+		this.title(winTitle);
+		
+		// show the modal
+		$('#rbWindowContent').modal('show');
+		
+		// on hiding the popup, remove the div#rbWindowContent also 
+		$('#rbWindowContent').on('hidden', function(){
+			$('#rbWindowContent').remove();
 		});
 		
-		if(call.url === null){
-			$('#rbWindowContent').dialog('open');
-			$('#rbWindowContent').removeClass('loading');
-			if(call.data !== null){
-				$('#rbWindowContent').append(call.data);
-			}
-			return;
-		}
-		
-		var dialogCallback = function(result){
-			// process ajax content
-			rb.ajax.default_success_callback(result);
-			
-			//remove class loading
-			$('#rbWindowContent').removeClass('loading');
-			
-			// open dialog
-			$('#rbWindowContent').dialog('open');
-		};
-		
-		var dialogCallbackIframe = function(event){
-			// open dialog
-			$('#rbWindowContent').dialog('open');
-			$('#rbWindowContent').removeClass('loading');
-			// no scrollbar
-			$(this).contents().find('html').css('overflow-y', 'auto !important');
-			// no background
-			$(this).contents().find('body').css('background','transparent !important;');
-			$(this).contents().find('.pp-component').addClass('pp-iframe');
-		};
-		
-		if(typeof call.iframe === undefined){
-			call.iframe = false;
-		}
-		
-		if(call.iframe){
-			// show iframe
-			rb.iframe.show(call, '#rbWindowContent', dialogCallbackIframe);
-			return this;
-		}
-		
 		// call ajax
-		rb.ajax.go(call.url, call.data, dialogCallback);
+		rb.ajax.go(call.url, call.data);
 	},
 	
 	button : function(actions){
+		// empty previous action buttons
+		$('#rbWindowFooter').html('');
+		$('<div class="modal-footer"></div>').appendTo('#rbWindowFooter');
+
 		for(var i=0;i<actions.length;i++) {
 			actions[i].click = eval("(function(){" + actions[i].click + ";})" );
+			var button = '<button class="'+actions[i].classes+'" '+actions[i].attr+'>'+actions[i].text+'</button>';
+			$(button).bind('click', actions[i].click).appendTo('#rbWindowFooter > .modal-footer');			
+		}		
+	},
+	
+	body : function(body){
+		// empty previous body content
+		$('#rbWindowBody').html('');
+		if(body != null && body.length > 0){
+			$('<div class="modal-body"><p>'+body+'</p></div>').appendTo('#rbWindowBody');	
 		}
-		
-		$('#rbWindowContent').dialog("option", "buttons", actions);
 	},
 	
 	title : function(title){
-		$('#rbWindowContent').dialog("option", "title", title);
+		// empty previous title
+		$('#rbWindowTitle').html('');
+		
+		// show the header in case of title is not empty
+		if(title != null && title.length > 0){
+			$('<div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h3 id="myModalLabel">'+title+'</h3></div>')
+				.appendTo('#rbWindowTitle');	
+		}
 	},
 	
 	close : function(title){
-		$('#rbWindowContent').dialog('close');
+		$('#rbWindowContent').modal('hide');
 	},
 	
 	height : function(height){
@@ -138,7 +121,7 @@ rb.ui.dialog = {
 
 	autoclose : function($time){
 		setTimeout(function(){
-			$("#rbWindowContent").dialog('close')
+			$('#rbWindowContent').modal('hide')
 		}, $time);
 	}
 };
