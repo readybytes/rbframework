@@ -15,7 +15,7 @@
 	<files>
 		<filename plugin="rbsl">rbsl.php</filename>
 		<filename>index.html</filename>
-		<folder>rbsl</folder>
+		<folder>rb</folder>
 	</files>
 
 	<!-- RB Framework Langauge -->

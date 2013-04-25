@@ -26,7 +26,7 @@ class plgsystemrbslInstallerScript
 	
 	protected function _call_package_script($func = 'install')
 	{
-		$pkg_path = dirname(__FILE__).'/rbsl/pkg';
+		$pkg_path = dirname(__FILE__).'/rb/pkg';
 		$packages = JFolder::folders($pkg_path);
 		foreach($packages as $package){
 			$script_file = $pkg_path.'/'.$package.'/script.php';
