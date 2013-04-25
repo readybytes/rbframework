@@ -28,7 +28,7 @@ class plgsystemrbslInstallerScript
 	{
 		$pkg_path = dirname(__FILE__).'/rbsl/pkg';
 		$packages = JFolder::folders($pkg_path);
-		foreach($packages as $paskage){
+		foreach($packages as $package){
 			$script_file = $pkg_path.'/'.$package.'/script.php';
 			if(file_exists($script_file)){
 				require_once $script_file;
