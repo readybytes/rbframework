@@ -3,7 +3,7 @@
 /**
 * @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
-* @package 		RbEcommerce
+* @package 		Rb_Ecommerce
 * @subpackage	Back-end
 * @contact		team@readybytes.in
 */
@@ -17,8 +17,8 @@ if(!defined( '_JEXEC' )){
  * Invoice Model
  * @author Gaurav Jain
  */
-class RbEcommerceModelInvoice extends RbEcommerceModel
+class Rb_EcommerceModelInvoice extends Rb_EcommerceModel
 {
 }
 
-class RbEcommerceModelformInvoice extends RbEcommerceModelform { }
+class Rb_EcommerceModelformInvoice extends Rb_EcommerceModelform { }

@@ -3,7 +3,7 @@
 /**
 * @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
-* @package 		RbEcommerce
+* @package 		Rb_Ecommerce
 * @subpackage	Front-end
 * @contact		team@readybytes.in
 */
@@ -17,19 +17,19 @@ if(!defined( '_JEXEC' )){
  * Factory
  * @author Gaurav Jain
  */
-class RbEcommerceFactory extends Rb_Factory
+class Rb_EcommerceFactory extends Rb_Factory
 {
-	static function getInstance($name, $type='', $prefix='RbEcommerce', $refresh=false)
+	static function getInstance($name, $type='', $prefix='Rb_Ecommerce', $refresh=false)
 	{
 		return parent::getInstance($name, $type, $prefix, $refresh);
 	}
 	
-	static function getHelper($name = null, $type = 'Helper', $prefix = 'RbEcommerce')
+	static function getHelper($name = null, $type = 'Helper', $prefix = 'Rb_Ecommerce')
 	{
 		static $helper = null;
 		
 		if($helper === null){						
-			$path 	= RBECOMMERCE_PATH_CORE.'/helpers';
+			$path 	= RB_ECOMMERCE_PATH_CORE.'/helpers';
 			$files 	= JFolder::files($path, '.php');
 			$helper = new stdClass();
 			

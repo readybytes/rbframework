@@ -3,7 +3,7 @@
 /**
 * @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
-* @package 		RbEcommerce
+* @package 		Rb_Ecommerce
 * @subpackage	Front-end
 * @contact		team@readybytes.in
 */
@@ -17,7 +17,7 @@ if(!defined( '_JEXEC' )){
  * Transation Lib
  * @author Gaurav Jain
  */
-class RbEcommerceTransaction extends RbEcommerceLib
+class Rb_EcommerceTransaction extends Rb_EcommerceLib
 {	
 	protected $transaction_id		= 0;
 	protected $invoice_id			= 0;	
@@ -34,14 +34,14 @@ class RbEcommerceTransaction extends RbEcommerceLib
 	
 	
 	/**
-	 * Gets the instance of RbEcommercePaymentmethod
+	 * Gets the instance of Rb_EcommercePaymentmethod
 	 * 
 	 * @param  integer  $id    		Unique identifier of input entity
 	 * @param  string   $type  		
 	 * @param  mixed    $data  		Data to be binded with the object
 	 * @param  mixed	$dummy		Dummy arg, if its not here then PHP will give warning (while development mode is on)
 	 * 
-	 * @return Object RbEcommercePaymentmethod  Instance of RbEcommerceTransaction
+	 * @return Object Rb_EcommercePaymentmethod  Instance of Rb_EcommerceTransaction
 	 */	
 	public static function getInstance($id = 0, $data = null, $dummy = null)
 	{
@@ -51,7 +51,7 @@ class RbEcommerceTransaction extends RbEcommerceLib
 	/**
 	 * Reset all the properties  of  curent object to their default values
 	 * 
-	 * @return  Object RbEcommerceTransaction Instance of RbEcommerceTransaction
+	 * @return  Object Rb_EcommerceTransaction Instance of Rb_EcommerceTransaction
 	 */
 	public function reset()
 	{
@@ -80,7 +80,7 @@ class RbEcommerceTransaction extends RbEcommerceLib
 	public function getInvoice($instance_require = false)
 	{
 		if($instance_require === true){
-			return RbEcommerceInvoice::getInstance($this->invoice_id);
+			return Rb_EcommerceInvoice::getInstance($this->invoice_id);
 		}
 		
 		return $this->invoice_id;

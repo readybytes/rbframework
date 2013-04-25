@@ -3,7 +3,7 @@
 /**
 * @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
-* @package 		RbEcommerce
+* @package 		Rb_Ecommerce
 * @subpackage	Back-end
 * @contact		team@readybytes.in
 */
@@ -17,8 +17,8 @@ if(!defined( '_JEXEC' )){
  * Modifier Model
  * @author Gaurav Jain
  */
-class RbEcommerceModelModifier extends RbEcommerceModel
+class Rb_EcommerceModelModifier extends Rb_EcommerceModel
 {
 }
 
-class RbEcommerceModelformModifier extends RbEcommerceModelform { }
+class Rb_EcommerceModelformModifier extends Rb_EcommerceModelform { }

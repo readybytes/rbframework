@@ -3,7 +3,7 @@
 /**
 * @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
-* @package 		RbEcommerce
+* @package 		Rb_Ecommerce
 * @subpackage	Front-end
 * @contact		team@readybytes.in
 */
@@ -17,17 +17,17 @@ if(!defined( '_JEXEC' )){
  * Base Event
  * @author Gaurav Jain
  */
-class RbEcommerceEvent extends JEvent
+class Rb_EcommerceEvent extends JEvent
 {
 	public function onRbItemAfterSave($prev, $new)
 	{
-		// if this triger is for RbEcommerceInvoice
-		if($new instanceof RbEcommerceInvoice){			
-			return self::_onRbEcommerceInvoiceAfterSave($prev, $new);
+		// if this triger is for Rb_EcommerceInvoice
+		if($new instanceof Rb_EcommerceInvoice){			
+			return self::_onRb_EcommerceInvoiceAfterSave($prev, $new);
 		}
 	}
 	
-	protected function _onRbEcommerceInvoiceAfterSave($prev, $new)
+	protected function _onRb_EcommerceInvoiceAfterSave($prev, $new)
 	{		
 		// copy the THIS_AND_LATER type modifiers from its parent
 		if($prev == null && $new->isMaster() == false){			
@@ -36,15 +36,15 @@ class RbEcommerceEvent extends JEvent
 			$modifiers = $master->getModifiers();
 			
 			// if any modifier is for each time then apply it
-			$m_helper = RbEcommerceFactory::getHelper('modifier');
+			$m_helper = Rb_EcommerceFactory::getHelper('modifier');
 			$m_helper->applyConditionally($new, $master, $modifiers);
 			
 			return $new->refresh()->save();
 		}
 		
 		// mark moifiers as consumed, if invoice get paid
-		if($new->getStatus() == RbEcommerceInvoice::STATUS_PAID 
-			&& (($prev == null) || (!in_array($prev->getStatus(), array(RbEcommerceInvoice::STATUS_PAID, RbEcommerceInvoice::STATUS_REFUNDED))) )
+		if($new->getStatus() == Rb_EcommerceInvoice::STATUS_PAID 
+			&& (($prev == null) || (!in_array($prev->getStatus(), array(Rb_EcommerceInvoice::STATUS_PAID, Rb_EcommerceInvoice::STATUS_REFUNDED))) )
 			){
 				$modifiers = $new->getModifiers();
 				foreach($modifiers as $modifier){
@@ -59,4 +59,4 @@ class RbEcommerceEvent extends JEvent
 }
 
 $dispatcher = JDispatcher::getInstance();
-$dispatcher->register('onRbItemAfterSave', 'RbEcommerceEvent');
+$dispatcher->register('onRbItemAfterSave', 'Rb_EcommerceEvent');

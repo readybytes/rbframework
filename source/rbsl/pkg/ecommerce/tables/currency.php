@@ -3,7 +3,7 @@
 /**
 * @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
-* @package 		RbEcommerce
+* @package 		Rb_Ecommerce
 * @subpackage	Front-end
 * @contact		team@readybytes.in
 */
@@ -17,7 +17,7 @@ if(!defined( '_JEXEC' )){
  * Currency Table
  * @author Gaurav Jain
  */
-class RbEcommerceTableCurrency extends RbEcommerceTable
+class Rb_EcommerceTableCurrency extends Rb_EcommerceTable
 {
 	
 }

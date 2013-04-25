@@ -3,7 +3,7 @@
 /**
 * @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
-* @package 		RbEcommerce
+* @package 		Rb_Ecommerce
 * @subpackage	Front-end
 * @contact		team@readybytes.in
 */
@@ -17,7 +17,7 @@ if(!defined( '_JEXEC' )){
  * Response Base Class
  * @author Gaurav Jain
  */
-class RbEcommerceResponse extends Rb_Registry
+class Rb_EcommerceResponse extends Rb_Registry
 {	
 	const NONE              = '';
 	const PAYMENT_COMPLETE 	= 'payment_complete';
@@ -42,17 +42,17 @@ class RbEcommerceResponse extends Rb_Registry
     public function getStatusList()
 	{
 		return array(
-		    self::NONE 				=> Rb_Text::_('COM_RBECOMMERCE_TANSACTION_STATUS_NONE'),
-			self::PAYMENT_COMPLETE 	=> Rb_Text::_('COM_RBECOMMERCE_TANSACTION_STATUS_PAYMENT_COMPLETE'),
-	        self::PAYMENT_REFUND	=> Rb_Text::_('COM_RBECOMMERCE_TANSACTION_STATUS_PAYMENT_REFUND'),
-			self::PAYMENT_PENDING	=> Rb_Text::_('COM_RBECOMMERCE_TANSACTION_STATUS_PAYMENT_PENDING'),
-			self::PAYMENT_FAIL 	    => Rb_Text::_('COM_RBECOMMERCE_TANSACTION_STATUS_PAYMENT_FAIL'),
-		    self::SUBSCR_START	    => Rb_Text::_('COM_RBECOMMERCE_TANSACTION_STATUS_SUBSCR_START'),
-			self::SUBSCR_CANCEL  	=> Rb_Text::_('COM_RBECOMMERCE_TANSACTION_STATUS_SUBSCR_CANCEL'),
-			self::SUBSCR_END 	    => Rb_Text::_('COM_RBECOMMERCE_TANSACTION_STATUS_SUBSCR_END'),
-		    self::SUBSCR_FAIL   	=> Rb_Text::_('COM_RBECOMMERCE_TANSACTION_STATUS_SUBSCR_FAIL'),
-			self::NOTIFICATION  	=> Rb_Text::_('COM_RBECOMMERCE_TANSACTION_STATUS_NOTIFICATION'),
-			self::FAIL    	        => Rb_Text::_('COM_RBECOMMERCE_TANSACTION_STATUS_FAIL')	
+		    self::NONE 				=> Rb_Text::_('COM_RB_ECOMMERCE_TANSACTION_STATUS_NONE'),
+			self::PAYMENT_COMPLETE 	=> Rb_Text::_('COM_RB_ECOMMERCE_TANSACTION_STATUS_PAYMENT_COMPLETE'),
+	        self::PAYMENT_REFUND	=> Rb_Text::_('COM_RB_ECOMMERCE_TANSACTION_STATUS_PAYMENT_REFUND'),
+			self::PAYMENT_PENDING	=> Rb_Text::_('COM_RB_ECOMMERCE_TANSACTION_STATUS_PAYMENT_PENDING'),
+			self::PAYMENT_FAIL 	    => Rb_Text::_('COM_RB_ECOMMERCE_TANSACTION_STATUS_PAYMENT_FAIL'),
+		    self::SUBSCR_START	    => Rb_Text::_('COM_RB_ECOMMERCE_TANSACTION_STATUS_SUBSCR_START'),
+			self::SUBSCR_CANCEL  	=> Rb_Text::_('COM_RB_ECOMMERCE_TANSACTION_STATUS_SUBSCR_CANCEL'),
+			self::SUBSCR_END 	    => Rb_Text::_('COM_RB_ECOMMERCE_TANSACTION_STATUS_SUBSCR_END'),
+		    self::SUBSCR_FAIL   	=> Rb_Text::_('COM_RB_ECOMMERCE_TANSACTION_STATUS_SUBSCR_FAIL'),
+			self::NOTIFICATION  	=> Rb_Text::_('COM_RB_ECOMMERCE_TANSACTION_STATUS_NOTIFICATION'),
+			self::FAIL    	        => Rb_Text::_('COM_RB_ECOMMERCE_TANSACTION_STATUS_FAIL')	
 		);
 	}	
 }

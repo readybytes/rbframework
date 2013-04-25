@@ -3,7 +3,7 @@
 /**
 * @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
-* @package 		RbEcommerce
+* @package 		Rb_Ecommerce
 * @subpackage	Front-end
 * @contact		team@readybytes.in
 */
@@ -17,7 +17,7 @@ if(!defined( '_JEXEC' )){
  * Request Base Class
  * @author Gaurav Jain
  */
-class RbEcommerceRequest extends Rb_Registry
+class Rb_EcommerceRequest extends Rb_Registry
 {
 	/**
 	* Constructor

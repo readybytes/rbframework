@@ -3,7 +3,7 @@
 /**
  * @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
  * @license		GNU/GPL, see LICENSE.php
- * @package 	RbEcommerce
+ * @package 	Rb_Ecommerce
  * @subpackage	Front-end
  * @contact		team@readybytes.in
  */
@@ -17,10 +17,10 @@ if(!defined( '_JEXEC' )){
  * Base Model Form
  * @author Gaurav Jain
  */
-class RbEcommerceModelform extends Rb_Modelform
+class Rb_EcommerceModelform extends Rb_Modelform
 {
-	public	$_component			= RBECOMMERCE_COMPONENT_NAME;
+	public	$_component			= RB_ECOMMERCE_COMPONENT_NAME;
 	
-	protected $_forms_path 		= RBECOMMERCE_PATH_CORE_FORMS;
-	protected $_fields_path 	= RBECOMMERCE_PATH_CORE_FIELDS;
+	protected $_forms_path 		= RB_ECOMMERCE_PATH_CORE_FORMS;
+	protected $_fields_path 	= RB_ECOMMERCE_PATH_CORE_FIELDS;
 }

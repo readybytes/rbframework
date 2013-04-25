@@ -3,7 +3,7 @@
 /**
 * @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
-* @package 		RbEcommerce
+* @package 		Rb_Ecommerce
 * @subpackage	Front-end
 * @contact		team@readybytes.in
 */
@@ -17,7 +17,7 @@ if(!defined( '_JEXEC' )){
  * Processor Helper
  * @author Gaurav Jain
  */
-class RbEcommerceHelperProcessor extends JObject
+class Rb_EcommerceHelperProcessor extends JObject
 {
 	/** 
 	 * Holds list of avaialable processor
@@ -32,15 +32,15 @@ class RbEcommerceHelperProcessor extends JObject
 	private $__instances = array();
 	
 	/**
-	 * Load all RbEcommerce Processors by triggering an event
+	 * Load all Rb_Ecommerce Processors by triggering an event
 	 * 
 	 * @return true
 	 */
 	public function load()
 	{
-		// load rbecommerceprocessor plugin
+		// load rb_ecommerceprocessor plugin
 		$data = array();
-		$type = 'rbecommerceprocessor';
+		$type = 'rb_ecommerceprocessor';
 		Rb_HelperPlugin::loadPlugins($type);
 	}
 	

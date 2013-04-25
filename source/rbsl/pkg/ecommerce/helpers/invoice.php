@@ -3,7 +3,7 @@
 /**
 * @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
-* @package 		RbEcommerce
+* @package 		Rb_Ecommerce
 * @subpackage	Front-end
 * @contact		team@readybytes.in
 */
@@ -17,11 +17,11 @@ if(!defined( '_JEXEC' )){
  * Invoice Helper
  * @author Gaurav Jain
  */
-class RbEcommerceHelperInvoice extends JObject
+class Rb_EcommerceHelperInvoice extends JObject
 {
-	public function createTransaction(RbEcommerceInvoice $invoice, RbEcommerceResponse $response, $data = array())
+	public function createTransaction(Rb_EcommerceInvoice $invoice, Rb_EcommerceResponse $response, $data = array())
 	{	
-		$transaction = RbEcommerceTransaction::getInstance();		
+		$transaction = Rb_EcommerceTransaction::getInstance();		
 		$transaction->set('invoice_id', $invoice->getId())
 					->set('buyer_id', $invoice->getBuyer())					
 					->set('gateway_txn_id', $response->get('txn_id'))
@@ -46,7 +46,7 @@ class RbEcommerceHelperInvoice extends JObject
 	
 	public function get_invoice_number_from_response($processor_type, $response)
 	{
-		$processor_helper = RbEcommerceFactory::getHelper('processor');
+		$processor_helper = Rb_EcommerceFactory::getHelper('processor');
 		$processor 		  = $processor_helper->getInstance($processor_type);
 		return $processor->get_invoice_number($response);
 	}

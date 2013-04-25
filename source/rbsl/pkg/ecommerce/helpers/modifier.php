@@ -8,23 +8,23 @@
 */
 if(defined('_JEXEC')===false) die();
 
-class RbEcommerceHelperModifier extends Rb_Helper
+class Rb_EcommerceHelperModifier extends Rb_Helper
 {
 	public static $serials = array();
 
 	public function __construct()
 	{
-		self::$serials = RbEcommerceModifier::getSerialList();
+		self::$serials = Rb_EcommerceModifier::getSerialList();
 	}
 							
 	/**
 	 * Creat a modifier with the data provided
 	 * @param $data array
-	 * @return RbEcommerceModifier
+	 * @return Rb_EcommerceModifier
 	 */
 	public function create($data) 
 	{
-		$modifier = RbEcommerceModifier::getInstance();
+		$modifier = Rb_EcommerceModifier::getInstance();
 		$modifier->bind($data)->save();
 		return $modifier;
 	}
@@ -32,13 +32,13 @@ class RbEcommerceHelperModifier extends Rb_Helper
 	/**
 	 * return all the modifiers applid on this filter
 	 * @param $filter array() : contains the key and value
-	 * @return array of RbEcommerceModifier
+	 * @return array of Rb_EcommerceModifier
 	 */
 	public function get($filter, $instanceRequire = false)
 	{
 		// add filter and clean limit
 		//XITODO : remove limit filtering
-		$modifiers = RbEcommerceFactory::getInstance('modifier', 'model')
+		$modifiers = Rb_EcommerceFactory::getInstance('modifier', 'model')
 							->loadRecords($filter, array('limit'));
 							
 		if(count($modifiers) <= 0 ){
@@ -47,7 +47,7 @@ class RbEcommerceHelperModifier extends Rb_Helper
 		
 		if($instanceRequire == true){
 			foreach($modifiers as &$modifier){
-				$modifier = RbEcommerceModifier::getInstance($modifier->modifier_id, $modifier);
+				$modifier = Rb_EcommerceModifier::getInstance($modifier->modifier_id, $modifier);
 			}
 		}
 		
@@ -56,8 +56,8 @@ class RbEcommerceHelperModifier extends Rb_Helper
 	
 	/**
 	 * Re-arrange the modifier according to their serial 
-	 * @see RbEcommerceModifier constants
-	 * @param $records Array of RbEcommerceModifier
+	 * @see Rb_EcommerceModifier constants
+	 * @param $records Array of Rb_EcommerceModifier
 	 * @return Array stdclass
 	 */
 	function _rearrange($records)
@@ -146,7 +146,7 @@ class RbEcommerceHelperModifier extends Rb_Helper
 	{		
 		foreach($modifiers as $modifier){
 			switch ($modifier->getFrequency()){
-				case RbEcommerceModifier::FREQUENCY_THIS_AND_LATER :
+				case Rb_EcommerceModifier::FREQUENCY_THIS_AND_LATER :
 						$newModifier = $modifier->getClone();
 						$newModifier->setId(0)
 							->set('invoice_id', $invoice->getId())
@@ -166,7 +166,7 @@ class RbEcommerceHelperModifier extends Rb_Helper
 		$total = $subtotal;
 		foreach($modifiers as $modifier){
 			switch ($modifier->getFrequency()){
-				case RbEcommerceModifier::FREQUENCY_THIS_AND_LATER :
+				case Rb_EcommerceModifier::FREQUENCY_THIS_AND_LATER :
 						$total = self::getTotal($total, $modifier);
 						break;
 				

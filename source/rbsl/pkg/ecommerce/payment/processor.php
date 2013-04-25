@@ -3,7 +3,7 @@
 /**
 * @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
-* @package 		RbEcommerce
+* @package 		Rb_Ecommerce
 * @subpackage	Front-end
 * @contact		team@readybytes.in
 */
@@ -17,10 +17,10 @@ if(!defined( '_JEXEC' )){
  * Processor Base Class
  * @author Gaurav Jain
  */
-abstract class RbEcommerceProcessor 
+abstract class Rb_EcommerceProcessor 
 {
 	/**
-	 * @var RbEcommerceRequest The payment data to be used for processing
+	 * @var Rb_EcommerceRequest The payment data to be used for processing
 	*/
 	protected $data;
 		
@@ -30,7 +30,7 @@ abstract class RbEcommerceProcessor
 	protected $_name = '';
 	
 	/**
-	 * @var RbEcommerceRequest
+	 * @var Rb_EcommerceRequest
 	 */
 	protected $_config = null;
 	
@@ -43,14 +43,14 @@ abstract class RbEcommerceProcessor
 	public function __construct($config = array())
 	{
 		// load default configuration
-		$this->_config = new RbEcommerceRequest();
+		$this->_config = new Rb_EcommerceRequest();
 		$this->setConfig($config);
 	}
 	
 	/**
 	* Process the payment
 	*
-	* @return RbEcommerceResponse An object representing the transaction
+	* @return Rb_EcommerceResponse An object representing the transaction
 	*/
 	public function process()
 	{
@@ -74,7 +74,7 @@ abstract class RbEcommerceProcessor
 		if (empty( $name ))
 		{
 			$r = null;
-			Rb_Error::assert(preg_match('/Processor(.*)/i', get_class($this), $r) , Rb_Text::sprintf('COM_RBECOMMERCE_PROCESSOR_ERROR_CANT_GET_OR_PARSE_CLASS_NAME', get_class($this)), Rb_Error::ERROR);
+			Rb_Error::assert(preg_match('/Processor(.*)/i', get_class($this), $r) , Rb_Text::sprintf('COM_RB_ECOMMERCE_PROCESSOR_ERROR_CANT_GET_OR_PARSE_CLASS_NAME', get_class($this)), Rb_Error::ERROR);
 
 			$name = strtolower( $r[1] );
 		}

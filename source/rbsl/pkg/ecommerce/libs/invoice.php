@@ -3,7 +3,7 @@
 /**
 * @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
-* @package 		RbEcommerce
+* @package 		Rb_Ecommerce
 * @subpackage	Front-end
 * @contact		team@readybytes.in
 */
@@ -17,7 +17,7 @@ if(!defined( '_JEXEC' )){
  * Invoice Lib
  * @author Gaurav Jain
  */
-class RbEcommerceInvoice extends RbEcommerceLib
+class Rb_EcommerceInvoice extends Rb_EcommerceLib
 {
 	protected $invoice_id 			= 0;
 	protected $object_id 			= 0;
@@ -62,14 +62,14 @@ class RbEcommerceInvoice extends RbEcommerceLib
 //	const STATUS_WALLET_RECHARGE   	= 404;
 	
 	/**
-	 * Gets the instance of RbEcommerceInvoice
+	 * Gets the instance of Rb_EcommerceInvoice
 	 * 
 	 * @param  integer  $id    		Unique identifier of input entity
 	 * @param  string   $type  		
 	 * @param  mixed    $data  	Data to be binded with the object
 	 * @param  mixed	$dummy		Dummy arg, if its not here then PHP will give warning (while development mode is on)
 	 * 
-	 * @return RbEcommerceInvoice  Instance of RbEcommerceInvoice
+	 * @return Rb_EcommerceInvoice  Instance of Rb_EcommerceInvoice
 	 */	
 	public static function getInstance($id = 0, $data = null, $dummy1 = null, $dummy2 = null)
 	{
@@ -79,7 +79,7 @@ class RbEcommerceInvoice extends RbEcommerceLib
 	/**
 	 * Reset all the properties  of  curent object to their default values
 	 * 
-	 * @return  Object RbEcommerceInvoice Instance of RbEcommerceInvoice
+	 * @return  Object Rb_EcommerceInvoice Instance of Rb_EcommerceInvoice
 	 */
 	public function reset()
 	{		
@@ -132,14 +132,14 @@ class RbEcommerceInvoice extends RbEcommerceLib
 	
 	protected function _loadTransactions()
 	{
-		$transactions = RbEcommerceFactory::getInstance('transaction', 'model')
+		$transactions = Rb_EcommerceFactory::getInstance('transaction', 'model')
 									->loadRecords(array('invoice_id' => $this->getId()));
 
 		$this->_transactions = null;
 		
 		if(count($transactions) >0 ){
 			foreach($transactions as $transaction){
-				$this->_transactions[$transaction->transaction_id] = RbEcommerceTransaction::getInstance($transaction->transaction_id, $transaction);
+				$this->_transactions[$transaction->transaction_id] = Rb_EcommerceTransaction::getInstance($transaction->transaction_id, $transaction);
 			}
 		}
 		
@@ -148,7 +148,7 @@ class RbEcommerceInvoice extends RbEcommerceLib
 	
 	protected function _loadModifiers()
 	{
-		$m_helper = RbEcommerceFactory::getHelper('modifier');
+		$m_helper = Rb_EcommerceFactory::getHelper('modifier');
 		$this->_modifiers = $m_helper->get(array('invoice_id' => $this->getId()), true);
 		$total = $m_helper->getTotal($this->getSubtotal(), $this->_modifiers);
 		$this->set('total', $total);
@@ -200,7 +200,7 @@ class RbEcommerceInvoice extends RbEcommerceLib
 	}
 	
 	/**
-	 * @return object RbEcommerceTransaction
+	 * @return object Rb_EcommerceTransaction
 	 */
 	public function getTransaction($what = '', $value = '')
 	{
@@ -270,7 +270,7 @@ class RbEcommerceInvoice extends RbEcommerceLib
 			return $master->getProcessor();
 		}
 		
-		$helper = RbEcommerceFactory::getHelper();
+		$helper = Rb_EcommerceFactory::getHelper();
 		return $helper->processor->getInstance($this->processor_type, $this->getProcessorConfig());	
 	}
 	
@@ -280,7 +280,7 @@ class RbEcommerceInvoice extends RbEcommerceLib
 			return $this;
 		}
 		
-		return RbEcommerceInvoice::getInstance($this->master_invoice_id);
+		return Rb_EcommerceInvoice::getInstance($this->master_invoice_id);
 	}
 	
 	public function getModifiers()
@@ -291,10 +291,10 @@ class RbEcommerceInvoice extends RbEcommerceLib
 	public static function getStatusList()
 	{
 		return array(
-            self::NONE				=> Rb_Text::_('COM_RBECOMMERCE_INVOICE_STATUS_NONE'),
-			self::STATUS_CONFIRMED 	=> Rb_Text::_('COM_RBECOMMERCE_INVOICE_STATUS_CONFIRMED'),
-			self::STATUS_PAID		=> Rb_Text::_('COM_RBECOMMERCE_INVOICE_STATUS_PAID'),
-			self::STATUS_REFUNDED	=> Rb_Text::_('COM_RBECOMMERCE_INVOICE_STATUS_REFUNDED')		
+            self::NONE				=> Rb_Text::_('COM_RB_ECOMMERCE_INVOICE_STATUS_NONE'),
+			self::STATUS_CONFIRMED 	=> Rb_Text::_('COM_RB_ECOMMERCE_INVOICE_STATUS_CONFIRMED'),
+			self::STATUS_PAID		=> Rb_Text::_('COM_RB_ECOMMERCE_INVOICE_STATUS_PAID'),
+			self::STATUS_REFUNDED	=> Rb_Text::_('COM_RB_ECOMMERCE_INVOICE_STATUS_REFUNDED')		
 		);
 	}
 	
@@ -306,7 +306,7 @@ class RbEcommerceInvoice extends RbEcommerceLib
 		if($instance_require === true){
 			$invoices = array();
 			foreach($records as $record){
-				$invoices[$record->invoice_id] = RbEcommerceInvoice::getInstance($record->invoice_id, $record);
+				$invoices[$record->invoice_id] = Rb_EcommerceInvoice::getInstance($record->invoice_id, $record);
 			}
 			
 			return $invoices;
@@ -329,7 +329,7 @@ class RbEcommerceInvoice extends RbEcommerceLib
 		$this->buyer_id 			= $data->buyer_id;
 		$this->currency 			= $data->currency;
 		$this->serial 				= ''; // XITODO :
-		$this->expiration_type 		= isset($data->expiration_type) ? $data->expiration_type : RBECOMMERCE_EXPIRATION_TYPE_FIXED;		
+		$this->expiration_type 		= isset($data->expiration_type) ? $data->expiration_type : RB_ECOMMERCE_EXPIRATION_TYPE_FIXED;		
 		$this->recurrence_count		= isset($data->recurrence_count) ? $data->recurrence_count : 1;  // XITODO : is required for child invoice ??
 		$this->time_price->bind($data->time_price);		
 		
@@ -399,14 +399,14 @@ class RbEcommerceInvoice extends RbEcommerceLib
 		$payment_data->expiration_type	= $this->expiration_type;		
 		$payment_data->language			= Rb_HelperJoomla::getLanguageCode();
 		
-		if($this->expiration_type == RBECOMMERCE_EXPIRATION_TYPE_RECURRING){
+		if($this->expiration_type == RB_ECOMMERCE_EXPIRATION_TYPE_RECURRING){
 			$payment_data->recurrence_count = $this->recurrence_count;
 			
 			// get the future total by applying modifiers
 			$prices 	= $this->time_price->get('price', array());
 			$result 	= array();
 			$counter 	= 1;
-			$m_helper 	= RbEcommerceFactory::getHelper('modifier');
+			$m_helper 	= Rb_EcommerceFactory::getHelper('modifier');
 			$master 	= $this->getMasterInvoice();
 			$modifiers 	= $master->getModifiers();
 			foreach($prices as $price){
@@ -425,7 +425,7 @@ class RbEcommerceInvoice extends RbEcommerceLib
 	{
 		// set user data also
 		$userid 			 	= $this->getBuyer();
-		$user 				 	= RbEcommerceFactory::getUser($userid);		
+		$user 				 	= Rb_EcommerceFactory::getUser($userid);		
 		$user_data 			 	= new stdClass();
 		$user_data->name 	 	= $user->get('name');
 		$user_data->username 	= $user->get('username');
@@ -449,7 +449,7 @@ class RbEcommerceInvoice extends RbEcommerceLib
 	{
 		$data = (object) $data;
 		
-		$request = new RbEcommerceRequest();
+		$request = new Rb_EcommerceRequest();
 		$request->set('type', 'build');		
 		// call on newly created invoice [optional]
 		$request->set('payment_data', $this->__requestGetPaymentData());
@@ -470,7 +470,7 @@ class RbEcommerceInvoice extends RbEcommerceLib
 			$invoice = $this;
 		}
 		
-		$request = new RbEcommerceRequest();
+		$request = new Rb_EcommerceRequest();
 		$request->set('type', 'payment');		
 		// call on newly created invoice [optional]
 		$request->set('payment_data', $invoice->__requestGetPaymentData());
@@ -492,7 +492,7 @@ class RbEcommerceInvoice extends RbEcommerceLib
 	{
 		$data = (object) $data;
 		
-		$request = new RbEcommerceRequest();
+		$request = new Rb_EcommerceRequest();
 		$request->set('type', 'cancel');
 		// call on newly created invoice [optional]		
 		$request->set('user_data', $this->__requestGetUserData());		
@@ -507,11 +507,11 @@ class RbEcommerceInvoice extends RbEcommerceLib
 	{		
 		// txn_id  is already set
 		if(!isset($data['txn_id'])){
-			$transaction = $this->getTransaction('payment_status', RbEcommerceResponse::PAYMENT_COMPLETE);
+			$transaction = $this->getTransaction('payment_status', Rb_EcommerceResponse::PAYMENT_COMPLETE);
 			$data['txn_id'] = $transaction->getGatewayTxnId();						
 		}
 		
-		$request = new RbEcommerceRequest();
+		$request = new Rb_EcommerceRequest();
 		$request->set('type', 'refund');		
 		$request->set('payment_data', $this->__requestGetPaymentData());		
 		$request->set('user_data', $this->__requestGetUserData());		
@@ -537,23 +537,23 @@ class RbEcommerceInvoice extends RbEcommerceLib
 	{	
 		// if invoice id is set in response, then get instance of this invoice
 		// other wise work on $invoice	 
-		$invoice = isset($data->request->invoice_id) ? RbEcommerceInvoice::getInstance($data->request->invoice_id) : $this;
+		$invoice = isset($data->request->invoice_id) ? Rb_EcommerceInvoice::getInstance($data->request->invoice_id) : $this;
 		$response = $invoice->getProcessor()->process($data);
 		
 		$helper = $this->getHelper();
-		if($response->get('payment_status') == RbEcommerceResponse::PAYMENT_COMPLETE){
+		if($response->get('payment_status') == Rb_EcommerceResponse::PAYMENT_COMPLETE){
 			$invoice->_process_response_payment_completed($response, $data);
 		}
-		elseif($response->get('payment_status') == RbEcommerceResponse::PAYMENT_REFUND){
+		elseif($response->get('payment_status') == Rb_EcommerceResponse::PAYMENT_REFUND){
 			if(!isset($data->request) || !isset($data->request->invoice_id)){
 				$txn_id_refunded = $response->get('parent_txn');
-				$tranasction_records= RbEcommerceFactory::getInstance('transaction', 'model')
+				$tranasction_records= Rb_EcommerceFactory::getInstance('transaction', 'model')
 											->loadRecords(array('gateway_txn_id' => $txn_id_refunded, 
 																'processor_type' => $this->getProcessorType()));
 											
 				$tranasction_record = array_pop($tranasction_records);		
 				$invoice_id 		= $tranasction_record->invoice_id;
-				$invoice = RbEcommerceInvoice::getInstance($invoice_id);	
+				$invoice = Rb_EcommerceInvoice::getInstance($invoice_id);	
 			}
 			
 			$invoice->_process_response_payment_refund($response, $data);
@@ -578,18 +578,18 @@ class RbEcommerceInvoice extends RbEcommerceLib
 	{		
 		$helper = $this->getHelper();
 		// if the invoice is not paid than process it		
-		if($this->getStatus() != RbEcommerceInvoice::STATUS_PAID ){			
+		if($this->getStatus() != Rb_EcommerceInvoice::STATUS_PAID ){			
 			$transaction = $helper->createTransaction($this, $response, $data);
 			
 			// XITODO : should we trigger here..???
-			$this->set('status', RbEcommerceInvoice::STATUS_PAID)
+			$this->set('status', Rb_EcommerceInvoice::STATUS_PAID)
 					->save();
 
 			return $this;
 		}
 		
 		// if the invoice is already paid
-		if($this->getExpirationType() === RBECOMMERCE_EXPIRATION_TYPE_RECURRING){
+		if($this->getExpirationType() === RB_ECOMMERCE_EXPIRATION_TYPE_RECURRING){
 			
 			// if invoice is master
 			if($this->isMaster()){				
@@ -597,7 +597,7 @@ class RbEcommerceInvoice extends RbEcommerceLib
 				$transaction = $helper->createTransaction($new_invoice, $response, $data);
 			
 				// XITODO : should we trigger here..???
-				$new_invoice->set('status', RbEcommerceInvoice::STATUS_PAID)
+				$new_invoice->set('status', Rb_EcommerceInvoice::STATUS_PAID)
 					->save();
 
 				return $new_invoice;
@@ -611,11 +611,11 @@ class RbEcommerceInvoice extends RbEcommerceLib
 	protected function _process_response_payment_refund($response, $data)	
 	{
 		$helper = $this->getHelper();									 	  
-		if($this->getStatus() == RbEcommerceInvoice::STATUS_PAID ){			
+		if($this->getStatus() == Rb_EcommerceInvoice::STATUS_PAID ){			
 			$transaction = $helper->createTransaction($this, $response, $data);
 			
 			// XITODO : should we trigger here..???
-			$this->set('status', RbEcommerceInvoice::STATUS_REFUNDED)
+			$this->set('status', Rb_EcommerceInvoice::STATUS_REFUNDED)
 					->save();
 
 			return $this;
@@ -633,7 +633,7 @@ class RbEcommerceInvoice extends RbEcommerceLib
 		$invoice_data = $this->toArray();
 		$invoice_data['master_invoice_id'] = $this->getId();
 		$invoice_data['counter'] = $counter;
-		$new_invoice = RbEcommerceInvoice::getInstance();
+		$new_invoice = Rb_EcommerceInvoice::getInstance();
 		$new_invoice->create($invoice_data, false);
 		
 		return $new_invoice;

@@ -3,7 +3,7 @@
 * @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * @package 		Joomla.Plugin
-* @subpackage	Rb.RbEcommerce
+* @subpackage	Rb.Rb_Ecommerce
 * @contact	team@readybytes.in	
 */
 // no direct access
@@ -13,11 +13,11 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
  * Ecommerce Engine API
  * @author Gaurav Jain
  */
-class RbEcommerceAPI
+class Rb_EcommerceAPI
 {
 	public static function invoice_create($data, $is_master = true)
 	{
-		$invoice = RbEcommerceInvoice::getInstance();		
+		$invoice = Rb_EcommerceInvoice::getInstance();		
 		$invoice->create($data, $is_master);
 		$invoice->save();
 		return $invoice->getId();
@@ -25,7 +25,7 @@ class RbEcommerceAPI
 	
 	public static function invoice_update($invoice_id, $data, $refresh = false)
 	{
-		$invoice = RbEcommerceInvoice::getInstance($invoice_id);
+		$invoice = Rb_EcommerceInvoice::getInstance($invoice_id);
 		if($refresh){
 			$invoice->refresh();
 		}
@@ -50,7 +50,7 @@ class RbEcommerceAPI
 			$id		  = $invoice->invoice_id; 
 		}
 		
-		$invoice = RbEcommerceInvoice::getInstance($id, $invoice);
+		$invoice = Rb_EcommerceInvoice::getInstance($id, $invoice);
 		return $invoice->toArray();
 	}
 	
@@ -58,60 +58,60 @@ class RbEcommerceAPI
 	 * Gets Model Instance of Invoice
 	 * @param string $name
 	 * @param booloean $refresh
-	 * @return RbEcommerceModelInvoice
+	 * @return Rb_EcommerceModelInvoice
 	 */
 	public static function invoice_get_model($refresh=false)
 	{
-		return RbEcommerceFactory::getInstance('invoice', 'Model', 'RbEcommerce', $refresh);
+		return Rb_EcommerceFactory::getInstance('invoice', 'Model', 'Rb_Ecommerce', $refresh);
 	}
 
 	public static function invoice_request($request_name, $invoice_id, $data = array())
 	{		
-		$invoice = RbEcommerceInvoice::getInstance($invoice_id);
+		$invoice = Rb_EcommerceInvoice::getInstance($invoice_id);
 		$response = $invoice->request($request_name, $data);	
 		return $response;		
 	}	
 	
 	public static function invoice_process($invoice_id, $req_response)
 	{		
-		$invoice = RbEcommerceInvoice::getInstance($invoice_id);
+		$invoice = Rb_EcommerceInvoice::getInstance($invoice_id);
 		$response = $invoice->process($req_response);	
 		return $response;		
 	}
 	
 	public static function invoice_get_from_response($processor_type, $response)
 	{
-		return RbEcommerceFactory::getHelper('invoice')->get_invoice_number_from_response($processor_type, $response);		
+		return Rb_EcommerceFactory::getHelper('invoice')->get_invoice_number_from_response($processor_type, $response);		
 	} 
 
 	public static function invoice_delete_record($id)
 	{
-		return RbEcommerceInvoice::getInstance($id)->delete();
+		return Rb_EcommerceInvoice::getInstance($id)->delete();
 	}
 
     public static function invoice_get_status_list()
 	{
-		return RbEcommerceInvoice::getStatusList();
+		return Rb_EcommerceInvoice::getStatusList();
 	}
 	
 	public static function transaction_get_model($refresh=false)
 	{
-		return RbEcommerceFactory::getInstance('transaction', 'Model', 'RbEcommerce', $refresh);
+		return Rb_EcommerceFactory::getInstance('transaction', 'Model', 'Rb_Ecommerce', $refresh);
 	}
 
 	public function transaction_delete_record($id)
 	{
-		return RbEcommerceTransaction::getInstance($id)->delete();
+		return Rb_EcommerceTransaction::getInstance($id)->delete();
 	}
 
 	public static function response_get_status_list()
 	{
-		return RbEcommerceResponse::getStatusList();
+		return Rb_EcommerceResponse::getStatusList();
 	}
 	
 	public static function modifier_get($invoice_id, $type = null)
 	{
-		$model  = RbEcommerceFactory::getInstance('modifier', 'model');
+		$model  = Rb_EcommerceFactory::getInstance('modifier', 'model');
 		$filter = array('invoice_id' => $invoice_id);
 		if($type != null){
 			$filter['object_type'] = $type;
@@ -127,7 +127,7 @@ class RbEcommerceAPI
 	
 	public function modifier_create($data, $modifier_id = 0)
 	{
-		$modifier = RbEcommerceModifier::getInstance($modifier_id, $data);
+		$modifier = Rb_EcommerceModifier::getInstance($modifier_id, $data);
 		if($modifier->save()){
 			return $modifier->toArray();
 		}
@@ -137,12 +137,12 @@ class RbEcommerceAPI
 
     public static function get_processors_list()
 	{
-		return RbEcommerceFactory::getHelper('processor')->getList();
+		return Rb_EcommerceFactory::getHelper('processor')->getList();
 	}
 	
 	public static function get_processor_instance($name)
 	{
-		return RbEcommerceFactory::getHelper('processor')->getInstance($name);
+		return Rb_EcommerceFactory::getHelper('processor')->getInstance($name);
 	}
 	
 	public static function currency_get_records(Array $query_filters=array(), Array $query_clean = array(), $empty_record=false, $orderby = null)
@@ -152,7 +152,7 @@ class RbEcommerceAPI
 	
 	public static function currency_get_model($refresh=false)
 	{
-		return RbEcommerceFactory::getInstance('currency', 'Model', 'RbEcommerce', $refresh);
+		return Rb_EcommerceFactory::getInstance('currency', 'Model', 'Rb_Ecommerce', $refresh);
 	}
 	
 	public static function country_get_records(Array $query_filters=array(), Array $query_clean = array(), $empty_record=false, $orderby = null)
@@ -162,6 +162,6 @@ class RbEcommerceAPI
 	
 	public static function country_get_model($refresh=false)
 	{
-		return RbEcommerceFactory::getInstance('country', 'Model', 'RbEcommerce', $refresh);
+		return Rb_EcommerceFactory::getInstance('country', 'Model', 'Rb_Ecommerce', $refresh);
 	}
 }

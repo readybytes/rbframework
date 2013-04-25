@@ -3,7 +3,7 @@
 /**
 * @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
-* @package 		RbEcommerce
+* @package 		Rb_Ecommerce
 * @subpackage	Front-end
 * @contact		team@readybytes.in
 */
@@ -17,7 +17,7 @@ if(!defined( '_JEXEC' )){
  * Modifier Lib
  * @author Gaurav Jain
  */
-class RbEcommerceModifier extends RbEcommerceLib
+class Rb_EcommerceModifier extends Rb_EcommerceLib
 {
 	protected $modifier_id 		= 0;	
 	protected $invoice_id 		= 0;
@@ -89,14 +89,14 @@ class RbEcommerceModifier extends RbEcommerceLib
 	const FREQUENCY_THIS_AND_LATER 	= 'THIS_AND_LATER';
 	
 	/**
-	 * Gets the instance of RbEcommerceModifier
+	 * Gets the instance of Rb_EcommerceModifier
 	 * 
 	 * @param  integer  $id    		Unique identifier of input entity
 	 * @param  string   $type  		
 	 * @param  mixed    $data  		Data to be binded with the object
 	 * @param  mixed	$dummy		Dummy arg, if its not here then PHP will give warning (while development mode is on)
 	 * 
-	 * @return Object RbEcommerceModifier  Instance of RbEcommerceModifier
+	 * @return Object Rb_EcommerceModifier  Instance of Rb_EcommerceModifier
 	 */	
 	public static function getInstance($id = 0, $data = null, $dummy = null)
 	{
@@ -105,23 +105,23 @@ class RbEcommerceModifier extends RbEcommerceLib
 	
 	public static function getSerialList()
 	{
-		return array(	RbEcommerceModifier::FIXED_BEFORE_DISCOUNT 			=> Rb_Text::_('COM_RBECOMMERCE_MODIFIER_SERIAL_FIXED_BEFORE_DISCOUNT'),
-						RbEcommerceModifier::PERCENT_BEFORE_DISCOUNT 			=> Rb_Text::_('COM_RBECOMMERCE_MODIFIER_SERIAL_PERCENT_BEFORE_DISCOUNT'),
-						RbEcommerceModifier::FIXED_DISCOUNT 					=> Rb_Text::_('COM_RBECOMMERCE_MODIFIER_SERIAL_'),
-						RbEcommerceModifier::PERCENT_DISCOUNT				 	=> Rb_Text::_('COM_RBECOMMERCE_MODIFIER_SERIAL_'),
-						RbEcommerceModifier::FIXED_AFTER_DSCOUNT_BEFORE_TAX 	=> Rb_Text::_('COM_RBECOMMERCE_MODIFIER_SERIAL_'),
-						RbEcommerceModifier::PERCENT_AFTER_DSCOUNT_BEFORE_TAX 	=> Rb_Text::_('COM_RBECOMMERCE_MODIFIER_SERIAL_'),
-						RbEcommerceModifier::FIXED_TAX 						=> Rb_Text::_('COM_RBECOMMERCE_MODIFIER_SERIAL_'),
-						RbEcommerceModifier::PERCENT_TAX 						=> Rb_Text::_('COM_RBECOMMERCE_MODIFIER_SERIAL_'),
-						RbEcommerceModifier::FIXED_AFTER_TAX 					=> Rb_Text::_('COM_RBECOMMERCE_MODIFIER_SERIAL_'),
-						RbEcommerceModifier::PERCENT_AFTER_TAX 				=> Rb_Text::_('COM_RBECOMMERCE_MODIFIER_SERIAL_')
+		return array(	Rb_EcommerceModifier::FIXED_BEFORE_DISCOUNT 			=> Rb_Text::_('COM_RB_ECOMMERCE_MODIFIER_SERIAL_FIXED_BEFORE_DISCOUNT'),
+						Rb_EcommerceModifier::PERCENT_BEFORE_DISCOUNT 			=> Rb_Text::_('COM_RB_ECOMMERCE_MODIFIER_SERIAL_PERCENT_BEFORE_DISCOUNT'),
+						Rb_EcommerceModifier::FIXED_DISCOUNT 					=> Rb_Text::_('COM_RB_ECOMMERCE_MODIFIER_SERIAL_'),
+						Rb_EcommerceModifier::PERCENT_DISCOUNT				 	=> Rb_Text::_('COM_RB_ECOMMERCE_MODIFIER_SERIAL_'),
+						Rb_EcommerceModifier::FIXED_AFTER_DSCOUNT_BEFORE_TAX 	=> Rb_Text::_('COM_RB_ECOMMERCE_MODIFIER_SERIAL_'),
+						Rb_EcommerceModifier::PERCENT_AFTER_DSCOUNT_BEFORE_TAX 	=> Rb_Text::_('COM_RB_ECOMMERCE_MODIFIER_SERIAL_'),
+						Rb_EcommerceModifier::FIXED_TAX 						=> Rb_Text::_('COM_RB_ECOMMERCE_MODIFIER_SERIAL_'),
+						Rb_EcommerceModifier::PERCENT_TAX 						=> Rb_Text::_('COM_RB_ECOMMERCE_MODIFIER_SERIAL_'),
+						Rb_EcommerceModifier::FIXED_AFTER_TAX 					=> Rb_Text::_('COM_RB_ECOMMERCE_MODIFIER_SERIAL_'),
+						Rb_EcommerceModifier::PERCENT_AFTER_TAX 				=> Rb_Text::_('COM_RB_ECOMMERCE_MODIFIER_SERIAL_')
 					);
 	}
 	
 	/**
 	 * Reset all the properties  of  curent object to their default values
 	 * 
-	 * @return  Object RbEcommercePaymentmethod Instance of RbEcommercePaymentmethod
+	 * @return  Object Rb_EcommercePaymentmethod Instance of Rb_EcommercePaymentmethod
 	 */
 	public function reset()
 	{
