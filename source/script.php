@@ -11,15 +11,36 @@ class plgsystemrbslInstallerScript
 {
 	
 	/**
-         * method to run after an install/update/uninstall method
-         *
-         * @return void
-         */
+     * method to run after an install/update/uninstall method
+     *
+     * @return void
+     */
 	function postflight($type, $parent)
 	{
 		$executeOn = array('install', 'update');
 		if(in_array($type, $executeOn)){
 			$this->updateOrdering();
+			$this->_call_package_script();
+		} 
+	}
+	
+	protected function _call_package_script($func = 'install')
+	{
+		$pkg_path = dirname(__FILE__).'/rbsl/pkg';
+		$packages = JFolder::folders($pkg_path);
+		foreach($packages as $paskage){
+			$script_file = $pkg_path.'/'.$package.'/script.php';
+			if(file_exists($script_file)){
+				require_once $script_file;
+				
+				$classname = 'Rb_PackageScript'.$package;
+				$script_object = new $classname();
+				
+				if(method_exists($script_object, $func)){
+					$result = $script_object->$func();
+					//XITODO : if $result is false then ????
+				}
+			}
 		}
 	}
 

@@ -1,0 +1,23 @@
+<?php
+
+/**
+* @copyright	Copyright (C) 2009 - 2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @license		GNU/GPL, see LICENSE.php
+* @package 		RbEcommerce
+* @subpackage	Front-end
+* @contact		team@readybytes.in
+*/
+
+// no direct access
+if(!defined( '_JEXEC' )){
+	die( 'Restricted access' );
+}
+
+/** 
+ * Base Html
+ * @author Gaurav Jain
+ */
+class RbEcommerceHtml extends Rb_Html
+{
+	public $_component = RBECOMMERCE_COMPONENT_NAME;
+}
