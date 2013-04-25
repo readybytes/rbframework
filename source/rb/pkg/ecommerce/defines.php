@@ -27,7 +27,7 @@ define('RB_ECOMMERCE_VERSION', '0.0.1');
 define('RB_ECOMMERCE_REVISION','v0.0.1-5-gcdee801');
 
 //shared paths
-define('RB_ECOMMERCE_PATH_CORE', dirname(__FILE__).'/ecommerce');
+define('RB_ECOMMERCE_PATH_CORE', dirname(__FILE__));
 
 // Expiration Types
 define('RB_ECOMMERCE_EXPIRATION_TYPE_FIXED', 	'fixed');

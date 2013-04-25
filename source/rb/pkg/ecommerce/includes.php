@@ -35,3 +35,4 @@ Rb_HelperLoader::addAutoLoadFolder(RB_ECOMMERCE_PATH_CORE.'/payment',		'',	 		 '
 
 // include the event file so that events can be registered
 require_once RB_ECOMMERCE_PATH_CORE.'/base/event.php';
+require_once 'api.php';
