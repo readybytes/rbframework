@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `#__rbecommerce_invoice` (
+CREATE TABLE IF NOT EXISTS `#__rb_ecommerce_invoice` (
   `invoice_id` int(11) NOT NULL AUTO_INCREMENT,
   `object_id` int(11) NOT NULL DEFAULT '0',
   `object_type` varchar(255) DEFAULT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `#__rbecommerce_invoice` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;
 
 
-CREATE TABLE IF NOT EXISTS `#__rbecommerce_transaction` (
+CREATE TABLE IF NOT EXISTS `#__rb_ecommerce_transaction` (
   `transaction_id` int(11) NOT NULL AUTO_INCREMENT,
   `buyer_id` int(11) DEFAULT '0',
   `invoice_id` int(11) DEFAULT '0',
@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS `#__rbecommerce_transaction` (
   KEY `idx_invoice_id` (`invoice_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;
 
-CREATE TABLE IF NOT EXISTS `#__rbecommerce_modifier` (
+CREATE TABLE IF NOT EXISTS `#__rb_ecommerce_modifier` (
   `modifier_id` int(11) NOT NULL AUTO_INCREMENT,
   `buyer_id` int(11) NOT NULL,
   `invoice_id` int(11) DEFAULT NULL,
@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS `#__rbecommerce_modifier` (
 ) 
 ENGINE=MyISAM DEFAULT CHARSET=utf8 ;
 
-CREATE TABLE IF NOT EXISTS `#__rbecommerce_currency` (
+CREATE TABLE IF NOT EXISTS `#__rb_ecommerce_currency` (
   `currency_id` CHAR(3) NOT NULL,
   `title` varchar(255) DEFAULT NULL,
   `published` tinyint(1) DEFAULT 1,
@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `#__rbecommerce_currency` (
 ENGINE = MyISAM
 DEFAULT CHARACTER SET = utf8 ; 
 
-CREATE TABLE IF NOT EXISTS `#__rbecommerce_country` (
+CREATE TABLE IF NOT EXISTS `#__rb_ecommerce_country` (
   `country_id` INT NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
   `isocode2` CHAR(2) DEFAULT NULL,
@@ -96,7 +96,7 @@ CREATE TABLE IF NOT EXISTS `#__rbecommerce_country` (
 ENGINE = MyISAM
 DEFAULT CHARACTER SET = utf8 ; 
 
-INSERT IGNORE INTO `#__rbecommerce_currency` (`currency_id`, `title`, `published`, `params`, `symbol`) VALUES
+INSERT IGNORE INTO `#__rb_ecommerce_currency` (`currency_id`, `title`, `published`, `params`, `symbol`) VALUES
 ('ADP', 'Andorran Peseta', 1, NULL, NULL),
 ('AED', 'United Arab Emirates Dirham', 1, NULL, 'د.إ'),
 ('AFA', 'Afghanistan Afghani', 1, NULL, NULL),
@@ -242,7 +242,7 @@ INSERT IGNORE INTO `#__rbecommerce_currency` (`currency_id`, `title`, `published
 ('SKK', 'Slovak Koruna', 1, NULL, NULL);
 
 
-INSERT IGNORE INTO `#__rbecommerce_country` 
+INSERT IGNORE INTO `#__rb_ecommerce_country` 
 (`country_id` , `title` , `isocode3`, `isocode2`)
 VALUES
 (1, 'Afghanistan', 'AFG', 'AF'),
