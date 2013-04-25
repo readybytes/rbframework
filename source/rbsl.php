@@ -11,7 +11,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 jimport('joomla.filesystem.file');
 
 // Load particular autoloading required
-$fileName 	= dirname(__FILE__).DIRECTORY_SEPARATOR.'rbsl'.DIRECTORY_SEPARATOR.'includes.php';
+$fileName 	= dirname(__FILE__).DIRECTORY_SEPARATOR.'rb'.DIRECTORY_SEPARATOR.'includes.php';
 
 //do not load RB framework in backend installation screen
 $option	= JRequest::getVar('option');
@@ -19,6 +19,16 @@ if($option !== 'com_installer'){
 	//Load framework
 	require_once $fileName;
 
+	
+	if(!function_exists('rbimport')){
+		function rbimport($pakage_name)
+		{
+			// to load a package, the package must contain an autoload.php file
+			$package_path = dirname(__FILE__).'/rb/';
+			
+		}
+	}
+	
 	/**
 	 * RBSL Framework System Plugin
 	 *
