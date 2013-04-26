@@ -104,6 +104,26 @@ class Rb_EcommerceAPI
 		return Rb_EcommerceTransaction::getInstance($id)->delete();
 	}
 
+	public static function transaction_get($filter = array())
+	{
+		$id 			= 0; 
+		$transaction  	= null;
+		
+		if(array() !== $filter){
+			$transactions = self::transaction_get_records($filter);
+			$transaction  = array_pop($transactions);
+			$id		  	  = $transaction->transaction_id; 
+		}
+		
+		$transaction = Rb_EcommerceTransaction::getInstance($id, $transaction);
+		return $transaction->toArray();
+	}
+	
+	public static function transaction_get_records(Array $query_filters=array(), Array $query_clean = array(), $empty_record=false, $orderby = null)
+	{
+		return self::transaction_get_model()->loadRecords($query_filters, $query_clean, $empty_record, $orderby);
+	} 
+
 	public static function response_get_status_list()
 	{
 		return Rb_EcommerceResponse::getStatusList();

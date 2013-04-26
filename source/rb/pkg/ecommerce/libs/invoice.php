@@ -291,10 +291,10 @@ class Rb_EcommerceInvoice extends Rb_EcommerceLib
 	public static function getStatusList()
 	{
 		return array(
-            self::NONE				=> Rb_Text::_('COM_RB_ECOMMERCE_INVOICE_STATUS_NONE'),
-			self::STATUS_CONFIRMED 	=> Rb_Text::_('COM_RB_ECOMMERCE_INVOICE_STATUS_CONFIRMED'),
-			self::STATUS_PAID		=> Rb_Text::_('COM_RB_ECOMMERCE_INVOICE_STATUS_PAID'),
-			self::STATUS_REFUNDED	=> Rb_Text::_('COM_RB_ECOMMERCE_INVOICE_STATUS_REFUNDED')		
+            self::NONE				=> Rb_Text::_('PLG_SYSTEM_RBSL_ECOMMERCE_INVOICE_STATUS_NONE'),
+			self::STATUS_CONFIRMED 	=> Rb_Text::_('PLG_SYSTEM_RBSL_ECOMMERCE_INVOICE_STATUS_CONFIRMED'),
+			self::STATUS_PAID		=> Rb_Text::_('PLG_SYSTEM_RBSL_ECOMMERCE_INVOICE_STATUS_PAID'),
+			self::STATUS_REFUNDED	=> Rb_Text::_('PLG_SYSTEM_RBSL_ECOMMERCE_INVOICE_STATUS_REFUNDED')		
 		);
 	}
 	
