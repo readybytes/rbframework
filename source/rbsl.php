@@ -20,16 +20,16 @@ if($option !== 'com_installer'){
 	require_once $fileName;
 
 	
-	if(!function_exists('rbimport')){
-		function rbimport($package_name)
+	if(!function_exists('rb_import')){
+		function rb_import($package_name)
 		{
-			// to load a package, the package must contain an autoload.php file
-			$package_path = dirname(__FILE__).'/rb/';
-			if(!JFolder::exists($package_path.'/pkg/'.$package_name)){
+			// to load a package, the package must contain _autoload.php file
+			$package_path = dirname(__FILE__).'/rb/pkg';
+			if(!JFolder::exists($package_path.'/'.$package_name)){
 				// XITODO : Error
 			}
 			
-			include_once $package_path.'/pkg/'.$package_name.'/includes.php';			
+			include_once $package_path.'/'.$package_name.'/_autoload.php';			
 		}
 	}
 	
