@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+	<fieldset addfieldpath="/components/com_rb_ecommerce/rb_ecommerce/html/fields" name="form">
+		<field 	name="invoice"
+				id="rb_ecommerce_processor_paypal_invoice" 
+				type="hidden"
+				default=""/>
+	
+		<field 	name="item_name"
+				id="rb_ecommerce_processor_paypal_item_name" 
+				type="hidden"
+				default=""/>
+				
+		<field 	name="item_number"
+				id="rb_ecommerce_processor_paypal_item_number" 
+				type="hidden"
+				default=""/>	
+	
+		<field 	name="cmd" 
+				id="rb_ecommerce_processor_paypal_cmd"
+				type="hidden"
+				default="_xclick"/>
+				
+		<field 	name="business" 
+				id="rb_ecommerce_processor_paypal_business"
+				type="hidden"
+				default=""/>
+	
+		<field 	name="return"
+				id="rb_ecommerce_processor_paypal_return"
+				type="hidden"
+				default=""/>
+				
+		<field 	name="cancel_return" 
+				id="rb_ecommerce_processor_paypal_cancel_return"
+				type="hidden"
+				default=""/>
+				
+		<field 	name="notify_url" 
+				id="rb_ecommerce_processor_paypal_notify_url"
+				type="hidden"
+				default=""/>
+				
+		<field 	name="currency_code" 
+				id="rb_ecommerce_processor_paypal_currency_code"
+				type="hidden"
+				default=""/>
+								
+		<field 	name="no_note" 
+				id="rb_ecommerce_processor_paypal_no_note"
+				type="hidden"
+				default="1"/>
+				
+		<field 	name="a3" 
+				id="rb_ecommerce_processor_paypal_a3"
+				type="hidden"
+				default=""/>
+
+		<field 	name="p3" 
+				id="rb_ecommerce_processor_paypal_p3"
+				type="hidden"
+				default=""/>		
+				
+		<field 	name="t3" 
+				id="rb_ecommerce_processor_paypal_t3"
+				type="hidden"
+				default=""/>		
+
+		<field 	name="src" 
+				id="rb_ecommerce_processor_paypal_src"
+				type="hidden"
+				default="1"/>
+
+		<field 	name="sra" 
+				id="rb_ecommerce_processor_paypal_sra"
+				type="hidden"
+				default="1"/>		
+				
+		<field 	name="srt" 
+				id="rb_ecommerce_processor_paypal_srt"
+				type="hidden"
+				default=""/>
+				
+		<!--	METHOD in which data to be post from paypal 0-get,1,2-post -->
+		<field 	name="rm" 
+				id="rb_ecommerce_processor_paypal_rm"
+				type="hidden"
+				default="2"/>
+	</fieldset>	
+</form>

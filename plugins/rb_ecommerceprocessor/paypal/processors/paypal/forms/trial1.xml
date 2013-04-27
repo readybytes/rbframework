@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<fieldset addfieldpath="/components/com_rb_ecommerce/rb_ecommerce/html/fields" name="trial1_parameter">				
+		<field 	name="a1" 
+				id="rb_ecommerce_processor_paypal_a1"
+				type="hidden"
+				default=""/>
+
+		<field 	name="p1" 
+				id="rb_ecommerce_processor_paypal_p1"
+				type="hidden"
+				default=""/>		
+				
+		<field 	name="t1" 
+				id="rb_ecommerce_processor_paypal_t1"
+				type="hidden"
+				default=""/>
+	</fieldset>
+</config>

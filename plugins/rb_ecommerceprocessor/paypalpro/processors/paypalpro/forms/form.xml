@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+<fields name="payment_data">
+	<fieldset addfieldpath="/components/com_rb_ecommerce/rb_ecommerce/html/fields" name="plg_rb_ecommerceprocessor_paypalpro_form_paypalpro_fieldset_card_details">
+		<field 	name="cc_type"
+				id="rb_ecommerce_processor_paypalpro_cc_type"
+				type="list"
+				default=""
+				label="PLG_RB_ECOMMERCEPROCESSOR_PAYPALPRO_FORM_PAYPALPRO_CC_TYPE_LABEL"
+				description="PLG_RB_ECOMMERCEPROCESSOR_PAYPALPRO_FORM_PAYPALPRO_CC_TYPE_DESC"
+				required="true">
+				<option value="Visa">Visa</option>
+				<option value="MasterCard">MasterCard</option>
+				<option value="Discover">Discover</option>
+				<option value="Amex">American Express</option>
+		</field>
+		
+		<field 	name="card_number"
+				id="rb_ecommerce_processor_paypalpro_card_number"
+				type="text"
+				default=""
+				label="PLG_RB_ECOMMERCEPROCESSOR_PAYPALPRO_FORM_PAYPALPRO_CARD_NUMBER_LABEL"
+				description="PLG_RB_ECOMMERCEPROCESSOR_PAYPALPRO_FORM_PAYPALPRO_CARD_NUMBER_DESC"
+				required="true"/>
+		
+		<field 	name="expiration_month" 
+				id="rb_ecommerce_processor_paypalpro_expiration_month"
+				type="text"
+				default=""
+				label="PLG_RB_ECOMMERCEPROCESSOR_PAYPALPRO_FORM_PAYPALPRO_EXPIRATION_MONTH_LABEL"
+				description="PLG_RB_ECOMMERCEPROCESSOR_PAYPALPRO_FORM_PAYPALPRO_EXPIRATION_MONTH_DESC"
+				required="true"/>
+		
+		<field 	name="expiration_year" 
+				id="rb_ecommerce_processor_paypalpro_expiration_year"
+				type="text"
+				default=""
+				label="PLG_RB_ECOMMERCEPROCESSOR_PAYPALPRO_FORM_PAYPALPRO_EXPIRATION_YEAR_LABEL"
+				description="PLG_RB_ECOMMERCEPROCESSOR_PAYPALPRO_FORM_PAYPALPRO_EXPIRATION_YEAR_DESC"
+				required="true"/>				
+				
+		<field 	name="card_code" 
+				id="rb_ecommerce_processor_paypalpro_card_code"
+				type="text"
+				default=""
+				label="PLG_RB_ECOMMERCEPROCESSOR_PAYPALPRO_FORM_PAYPALPRO_CARD_CODE_LABEL"
+				description="PLG_RB_ECOMMERCEPROCESSOR_PAYPALPRO_FORM_PAYPALPRO_CARD_CODE_DESC"
+				required="true"/>
+	</fieldset>
+		
+	<fieldset addfieldpath="/components/com_rb_ecommerce/rb_ecommerce/html/fields" name="plg_rb_ecommerceprocessor_paypalpro_form_paypalpro_fieldset_customer_details">		
+		
+		<field 	name="first_name" 
+				id="rb_ecommerce_processor_paypalpro_first_name"
+				type="text"
+				default=""
+				label="PLG_RB_ECOMMERCEPROCESSOR_PAYPALPRO_FORM_PAYPALPRO_FIRST_NAME_LABEL"
+				description="PLG_RB_ECOMMERCEPROCESSOR_PAYPALPRO_FORM_PAYPALPRO_FIRST_NAME_DESC"/>
+				
+		<field 	name="last_name" 
+				id="rb_ecommerce_processor_paypalpro_last_name"
+				type="text"
+				default=""
+				label="PLG_RB_ECOMMERCEPROCESSOR_PAYPALPRO_FORM_PAYPALPRO_LAST_NAME_LABEL"
+				description="PLG_RB_ECOMMERCEPROCESSOR_PAYPALPRO_FORM_PAYPALPRO_LAST_NAME_DESC"/>
+				
+		<field 	name="email" 
+				id="rb_ecommerce_processor_paypalpro_email"
+				type="text"
+				default=""
+				label="PLG_RB_ECOMMERCEPROCESSOR_PAYPALPRO_FORM_PAYPALPRO_EMAIL_LABEL"
+				description="PLG_RB_ECOMMERCEPROCESSOR_PAYPALPRO_FORM_PAYPALPRO_EMAIL_DESC"
+				required="true"/>
+				
+		<field 	name="mobile" 
+				id="rb_ecommerce_processor_paypalpro_mobile"
+				type="text"
+				default=""
+				label="PLG_RB_ECOMMERCEPROCESSOR_PAYPALPRO_FORM_PAYPALPRO_MOBILE_LABEL"
+				description="PLG_RB_ECOMMERCEPROCESSOR_PAYPALPRO_FORM_PAYPALPRO_MOBILE_DESC"/>
+				
+		<field 	name="address" 
+				id="rb_ecommerce_processor_paypalpro_address"
+				type="textarea"
+				default=""
+				label="PLG_RB_ECOMMERCEPROCESSOR_PAYPALPRO_FORM_PAYPALPRO_ADDRESS_LABEL"
+				description="PLG_RB_ECOMMERCEPROCESSOR_PAYPALPRO_FORM_PAYPALPRO_ADDRESS_DESC"/>
+			
+		<field 	name="country" 
+				id="rb_ecommerce_processor_paypalpro_country"
+				type="rb_ecommerce.countries"
+				default="USA"
+				label="PLG_RB_ECOMMERCEPROCESSOR_PAYPALPRO_FORM_PAYPALPRO_COUNTRY_LABEL"
+				description="PLG_RB_ECOMMERCEPROCESSOR_PAYPALPRO_FORM_PAYPALPRO_COUNTRY_DESC"
+				readonly="true"/>
+		
+		<field 	name="state" 
+				id="rb_ecommerce_processor_paypalpro_state"
+				type="text"
+				default=""
+				label="PLG_RB_ECOMMERCEPROCESSOR_PAYPALPRO_FORM_PAYPALPRO_STATE_LABEL"
+				description="PLG_RB_ECOMMERCEPROCESSOR_PAYPALPRO_FORM_PAYPALPRO_STATE_DESC"/>
+					
+		<field 	name="city" 
+				id="rb_ecommerce_processor_paypalpro_city"
+				type="text"
+				default=""
+				label="PLG_RB_ECOMMERCEPROCESSOR_PAYPALPRO_FORM_PAYPALPRO_CITY_LABEL"
+				description="PLG_RB_ECOMMERCEPROCESSOR_PAYPALPRO_FORM_PAYPALPRO_CITY_DESC"/>
+		
+		<field 	name="zip" 
+				id="rb_ecommerce_processor_paypalpro_zip"
+				type="text"
+				default=""
+				label="PLG_RB_ECOMMERCEPROCESSOR_PAYPALPRO_FORM_PAYPALPRO_ZIP_LABEL"
+				description="PLG_RB_ECOMMERCEPROCESSOR_PAYPALPRO_FORM_PAYPALPRO_ZIP_DESC"/>						
+	</fieldset>
+</fields>	
+</form>
