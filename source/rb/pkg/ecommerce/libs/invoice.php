@@ -392,7 +392,8 @@ class Rb_EcommerceInvoice extends Rb_EcommerceLib
 	{
 		$payment_data 	= new stdClass();
 		// for fixed payment
-		$payment_data->invoice_number 	= $this->invoice_id;  //XITODO : should we use key or id
+		$payment_data->invoice_number 	= $this->getHelper()->create_invoice_number($this->invoice_id);
+		$payment_data->invoice_id 		= $this->invoice_id;
 		$payment_data->item_name 		= $this->title;
 		$payment_data->total			= $this->total;
 		$payment_data->currency			= $this->currency;

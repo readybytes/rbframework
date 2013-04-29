@@ -19,6 +19,8 @@ if(!defined( '_JEXEC' )){
  */
 class Rb_EcommerceHelperInvoice extends JObject
 {
+	public $invoice_number_algo = array('1' => 'algo_1');
+	
 	public function createTransaction(Rb_EcommerceInvoice $invoice, Rb_EcommerceResponse $response, $data = array())
 	{	
 		$transaction = Rb_EcommerceTransaction::getInstance();		
@@ -48,6 +50,37 @@ class Rb_EcommerceHelperInvoice extends JObject
 	{
 		$processor_helper = Rb_EcommerceFactory::getHelper('processor');
 		$processor 		  = $processor_helper->getInstance($processor_type);
-		return $processor->get_invoice_number($response);
+		$invoice_number   = $processor->get_invoice_number($response);
+		return $this->get_id_from_invoice_number($invoice_number);
+	}
+
+	public function get_id_from_invoice_number($invoice_number)
+	{
+		// get the last char
+		$algo_no 		= substr($invoice_number, -1);
+		
+		// get the invoice number
+		$invoice_number = substr($invoice_number, 0, -1);
+		
+		$func = '_parse_invoice_number_'.$this->invoice_number_algo[$algo_no];
+		return $this->$func($invoice_number);		
+	}
+
+	public function create_invoice_number($invoice_id)
+	{
+		// last digit is added in the last so that if in near future if we change the algo of generating 
+		// invoice number then decryption algo can be identified
+		$func = '_create_invoice_number_'.$this->invoice_number_algo['1'];
+		return $this->$func($invoice_id).'1';
+	}
+	
+	protected function _create_invoice_number_algo_1($invoice_id)
+	{
+		return ($invoice_id * 100) + rand(0, 99);
+	}
+	
+	protected function _parse_invoice_number_algo_1($invoice_number)
+	{
+		return intval($invoice_number/100);	
 	}
 }
