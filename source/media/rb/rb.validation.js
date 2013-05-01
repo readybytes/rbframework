@@ -913,7 +913,7 @@
 
   //Document ready
   $(document).ready(function(){
-	  $('.rb-validate-form').find("input,textarea,select").jqBootstrapValidation();
+	  $('.rb-validate-form').find("input,textarea,select").not('.no-validate').jqBootstrapValidation();
   });
   
 })( rb.jQuery );
