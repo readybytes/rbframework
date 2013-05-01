@@ -162,7 +162,7 @@
             // ---------------------------------------------------------
             //                                                  REQUIRED
             // ---------------------------------------------------------
-            if ($this.attr("required") !== undefined || $this.attr("aria-required") !== undefined) {
+            if ($this.attr("required") !== undefined || $this.attr("aria-required") !== undefined || $this.hasClass('required')) {
               message = settings.builtInValidators.required.message;
               if ($this.data("validationRequiredMessage")) {
                 message = $this.data("validationRequiredMessage");
@@ -172,7 +172,8 @@
             // ---------------------------------------------------------
             //                                                    NUMBER
             // ---------------------------------------------------------
-            if ($this.attr("type") !== undefined && $this.attr("type").toLowerCase() === "number") {
+            if (($this.attr("type") !== undefined && $this.attr("type").toLowerCase() === "number")
+            		|| $this.hasClass('validate-number')) {
               message = settings.builtInValidators.number.message;
               if ($this.data("validationNumberMessage")) {
                 message = $this.data("validationNumberMessage");
@@ -182,7 +183,8 @@
             // ---------------------------------------------------------
             //                                                     EMAIL
             // ---------------------------------------------------------
-            if ($this.attr("type") !== undefined && $this.attr("type").toLowerCase() === "email") {
+            if (($this.attr("type") !== undefined && $this.attr("type").toLowerCase() === "email")
+            		|| $this.hasClass('validate-email')) {
               message = "Not a valid email address<!-- data-validator-validemail-message to override -->";
               if ($this.data("validationValidemailMessage")) {
                 message = $this.data("validationValidemailMessage");
@@ -909,4 +911,9 @@
     $(":input").not("[type=image],[type=submit]").jqBootstrapValidation.apply(this,arguments);
   };
 
+  //Document ready
+  $(document).ready(function(){
+	  $('.rb-validate-form').find("input,textarea,select").jqBootstrapValidation();
+  });
+  
 })( rb.jQuery );
