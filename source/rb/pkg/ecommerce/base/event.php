@@ -42,19 +42,35 @@ class Rb_EcommerceEvent extends JEvent
 			return $new->refresh()->save();
 		}
 		
-		// mark moifiers as consumed, if invoice get paid
-		if($new->getStatus() == Rb_EcommerceInvoice::STATUS_PAID 
-			&& (($prev == null) || (!in_array($prev->getStatus(), array(Rb_EcommerceInvoice::STATUS_PAID, Rb_EcommerceInvoice::STATUS_REFUNDED))) )
-			){
+		// if invoice is paid
+		if($new->getStatus() == Rb_EcommerceInvoice::STATUS_PAID){
+			
+			// add modified amount in modifiers
+			if($prev == null || !in_array($prev->getStatus(), array(Rb_EcommerceInvoice::STATUS_PAID, Rb_EcommerceInvoice::STATUS_REFUNDED))){
 				$modifiers = $new->getModifiers();
 				foreach($modifiers as $modifier){
 					$modifier->set('value', $modifier->_modificationOf)
 							 ->set('consumed_date', new Rb_Date())
 							 ->save();
-				}
-				
-				return true;
+				}			
 			}
+			
+			// update the paid date
+			if($prev == null || $prev->getStatus() != Rb_EcommerceInvoice::STATUS_PAID){
+				$new->set('paid_date', new Rb_Date())->save();
+			}
+		}
+				
+		// if invoice is refunded
+		if($new->getStatus() == Rb_EcommerceInvoice::STATUS_REFUNDED){
+			
+			// update refund date
+			if($prev == null || $prev->getStatus() != Rb_EcommerceInvoice::STATUS_REFUNDED){
+				$new->set('refund_date', new Rb_Date())->save();
+			}
+		}
+		
+		return true;
 	}
 }
 

@@ -42,8 +42,8 @@ class Rb_EcommerceInvoice extends Rb_EcommerceLib
 	protected $params 				= '';
 	protected $created_date 		= null;
 	protected $modified_date 		= null;
-	protected $paid_on 				= null;
-	protected $refunded_on 			= null;
+	protected $paid_date 			= null;
+	protected $refund_date 			= null;
 	protected $due_date 			= null;
 	protected $issue_date 			= null;
 	
@@ -102,8 +102,8 @@ class Rb_EcommerceInvoice extends Rb_EcommerceLib
 		$this->params 				= '';
 		$this->created_date 		= null;
 		$this->modified_date 		= null;
-		$this->paid_on 				= null;
-		$this->refunded_on 			= null;
+		$this->paid_date 			= null;
+		$this->refund_date			= null;
 		$this->due_date 			= new Rb_Date();
 		$this->issue_date 			= new Rb_Date();
 		$this->processor_type 		= '';
