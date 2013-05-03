@@ -584,7 +584,8 @@ class Rb_EcommerceInvoice extends Rb_EcommerceLib
 			
 			// XITODO : should we trigger here..???
 			$this->set('status', Rb_EcommerceInvoice::STATUS_PAID)
-					->save();
+			     ->set('paid_date', new Rb_Date())
+				 ->save();
 
 			return $this;
 		}
@@ -617,7 +618,8 @@ class Rb_EcommerceInvoice extends Rb_EcommerceLib
 			
 			// XITODO : should we trigger here..???
 			$this->set('status', Rb_EcommerceInvoice::STATUS_REFUNDED)
-					->save();
+			     ->set('refund_date', new Rb_Date())
+			     ->save();
 
 			return $this;
 		}

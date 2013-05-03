@@ -55,19 +55,11 @@ class Rb_EcommerceEvent extends JEvent
 				}			
 			}
 			
-			// update the paid date
-			if($prev == null || $prev->getStatus() != Rb_EcommerceInvoice::STATUS_PAID){
-				$new->set('paid_date', new Rb_Date())->save();
-			}
 		}
 				
 		// if invoice is refunded
 		if($new->getStatus() == Rb_EcommerceInvoice::STATUS_REFUNDED){
 			
-			// update refund date
-			if($prev == null || $prev->getStatus() != Rb_EcommerceInvoice::STATUS_REFUNDED){
-				$new->set('refund_date', new Rb_Date())->save();
-			}
 		}
 		
 		return true;
