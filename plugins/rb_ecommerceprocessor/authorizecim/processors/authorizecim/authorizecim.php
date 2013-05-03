@@ -138,6 +138,19 @@ class Rb_EcommerceProcessorAuthorizecim extends Rb_EcommerceProcessor
 		return $this->$func($cim_response);
 	}	
     
+	protected function _processErrorResponse($cim_response)
+	{
+		$response = new Rb_EcommerceResponse();   	
+    	$response->set('txn_id', 	 0);
+    	$response->set('subscr_id',  0);
+    	$response->set('parent_txn', 0);
+    	$response->set('payment_status', Rb_EcommerceResponse::FAIL);
+		$response->set('amount', 	 0);
+		$response->set('message', $cim_response['text']);		
+		$response->set('params', $cim_response);
+		return $response;
+	}
+	
 	protected function _processConnectionFailedError($cim_response)
 	{       
 		$response = new Rb_EcommerceResponse();   	
