@@ -31,6 +31,7 @@ class Rb_EcommerceTransaction extends Rb_EcommerceLib
 	protected $message				= '';
 	protected $created_date			= null;
 	protected $params				= '';
+	protected $signature				= '';
 	
 	
 	/**
@@ -67,7 +68,7 @@ class Rb_EcommerceTransaction extends Rb_EcommerceLib
 		$this->message				= '';
 		$this->created_date			= null;
 		$this->params				= new Rb_Registry();
-	
+		$this->signature			= '';
 		return $this;
 	}
 	

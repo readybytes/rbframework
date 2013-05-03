@@ -44,9 +44,11 @@ CREATE TABLE IF NOT EXISTS `#__rb_ecommerce_transaction` (
   `message` varchar(255) DEFAULT NULL,
   `created_date` datetime NOT NULL,
   `params` text,
+  `signature` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`transaction_id`),
   KEY `idx_user_id` (`buyer_id`),
-  KEY `idx_invoice_id` (`invoice_id`)
+  KEY `idx_invoice_id` (`invoice_id`),
+  KEY `idx_signature` (`signature`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;
 
 CREATE TABLE IF NOT EXISTS `#__rb_ecommerce_modifier` (
