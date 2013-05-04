@@ -1,0 +1,34 @@
+#===============================================
+pkg.version=J2.5.6
+pkg.location=${user.home}/Dropbox/TEAM/dev/joomla
+dropbox.package.folder=${pkg.location}
+
+#=================================================
+#== joomla installation configuration on linux
+#=================================================
+joomla.owner		=${project.shortform.small}
+joomla.version		=latest
+joomla.rootpath		=/var/www
+joomla.folder		=${joomla.owner}${joomla.now}
+joomla.sitename		=${joomla.folder}
+
+joomla.dbuser		=${joomla.owner}${joomla.now}
+joomla.dbpassword	=password${joomla.now}
+joomla.dbname		=${joomla.owner}${joomla.now}
+joomla.dbprefix		=j${joomla.random3}_
+
+joomla.mysqlpath		=mysql
+joomla.createUserQuery	="CREATE USER '${joomla.dbuser}'@'localhost' IDENTIFIED BY '${joomla.dbpassword}';"
+joomla.createDBQuery	="CREATE DATABASE ${joomla.dbname};"
+joomla.createAcessQuery	="GRANT ALL PRIVILEGES ON ${joomla.dbname}.* TO ${joomla.dbuser};"
+joomla.importDBQuery	="source ${joomla.dbdump}"
+
+joomla.bakpath		=./${joomla.version}
+joomla.dbdump		=${joomla.rootpath}/${joomla.folder}/database.sql
+
+
+#======================================== 
+#== default admin account should be =====
+#======================================== 
+joomla.admin=admin
+joomla.password=ssv445
