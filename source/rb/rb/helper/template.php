@@ -45,7 +45,7 @@ class Rb_HelperTemplate
 		$script = ob_get_contents();
 		ob_end_clean();
 		Rb_Factory::getDocument()->addScriptDeclaration($script);
-		return self::$_setupScriptsEnv = true;;
+		return self::$_setupScriptsEnv = true;
 	}
 	
 	static $_setupScriptsLoaded = false;
@@ -62,6 +62,7 @@ class Rb_HelperTemplate
 		// Load RB Script (Maintain Order) then other scripts
 		Rb_Html::script('rb/rb.core.js');
 		Rb_Html::script('rb/rb.lib.js');
+		Rb_Html::script('rb/rb.validation.js');
 
 		return self::$_setupScriptsLoaded = true;
 	}
