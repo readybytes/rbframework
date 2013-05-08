@@ -54,7 +54,7 @@ rb.ui.dialog = {
 
 		//XITODO : loading class required or not
 		$('<div id="rbWindowContent" class="modal hide fade loading" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>') 
-				.addClass('new').appendTo('body');
+				.addClass('new').appendTo('.rb-wrap');
 		
 		// add title, body and footer block so that sequence can be maintained
 		$('<div id="rbWindowTitle"></div>').appendTo('#rbWindowContent');
@@ -371,3 +371,4 @@ $(document).ready(function(){
 //Scoping code for easy and non-conflicting access to $.
 //Should be last line, write code above this line.
 })(rb.jQuery);
+
