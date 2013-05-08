@@ -55,11 +55,12 @@ class Rb_EcommerceInvoice extends Rb_EcommerceLib
 	protected $_transactions		= array();
 	protected $_modifiers			= array();
 	
-    const NONE						= 0;	
-	const STATUS_CONFIRMED		   	= 401;
+    const STATUS_NONE				= 0;	
+	const STATUS_DUE		   		= 401;
 	const STATUS_PAID 			   	= 402;
 	const STATUS_REFUNDED		   	= 403;
-//	const STATUS_WALLET_RECHARGE   	= 404;
+	const STATUS_INPROCESS			= 404;
+	const STATUS_EXPIRED			= 405;
 	
 	/**
 	 * Gets the instance of Rb_EcommerceInvoice
@@ -291,10 +292,12 @@ class Rb_EcommerceInvoice extends Rb_EcommerceLib
 	public static function getStatusList()
 	{
 		return array(
-            self::NONE				=> Rb_Text::_('PLG_SYSTEM_RBSL_ECOMMERCE_INVOICE_STATUS_NONE'),
-			self::STATUS_CONFIRMED 	=> Rb_Text::_('PLG_SYSTEM_RBSL_ECOMMERCE_INVOICE_STATUS_CONFIRMED'),
+            self::STATUS_NONE		=> Rb_Text::_('PLG_SYSTEM_RBSL_ECOMMERCE_INVOICE_STATUS_NONE'),
+			self::STATUS_DUE 		=> Rb_Text::_('PLG_SYSTEM_RBSL_ECOMMERCE_INVOICE_STATUS_CONFIRMED'),
 			self::STATUS_PAID		=> Rb_Text::_('PLG_SYSTEM_RBSL_ECOMMERCE_INVOICE_STATUS_PAID'),
-			self::STATUS_REFUNDED	=> Rb_Text::_('PLG_SYSTEM_RBSL_ECOMMERCE_INVOICE_STATUS_REFUNDED')		
+			self::STATUS_REFUNDED	=> Rb_Text::_('PLG_SYSTEM_RBSL_ECOMMERCE_INVOICE_STATUS_REFUNDED'),
+			self::STATUS_INPROCESS	=> Rb_Text::_('PLG_SYSTEM_RBSL_ECOMMERCE_INVOICE_STATUS_PAID'),
+			self::STATUS_EXPIRED	=> Rb_Text::_('PLG_SYSTEM_RBSL_ECOMMERCE_INVOICE_STATUS_REFUNDED')		
 		);
 	}
 	
@@ -329,6 +332,7 @@ class Rb_EcommerceInvoice extends Rb_EcommerceLib
 		$this->buyer_id 			= $data->buyer_id;
 		$this->currency 			= $data->currency;
 		$this->serial 				= ''; // XITODO :
+		$this->status				= isset($data->status) ? $data->status : self::STATUS_NONE;
 		$this->expiration_type 		= isset($data->expiration_type) ? $data->expiration_type : RB_ECOMMERCE_EXPIRATION_TYPE_FIXED;		
 		$this->recurrence_count		= isset($data->recurrence_count) ? $data->recurrence_count : 1;  // XITODO : is required for child invoice ??
 		$this->time_price->bind($data->time_price);		
