@@ -293,7 +293,7 @@ class Rb_EcommerceInvoice extends Rb_EcommerceLib
 	{
 		return array(
             self::STATUS_NONE		=> Rb_Text::_('PLG_SYSTEM_RBSL_ECOMMERCE_INVOICE_STATUS_NONE'),
-			self::STATUS_DUE 		=> Rb_Text::_('PLG_SYSTEM_RBSL_ECOMMERCE_INVOICE_STATUS_CONFIRMED'),
+			self::STATUS_DUE 		=> Rb_Text::_('PLG_SYSTEM_RBSL_ECOMMERCE_INVOICE_STATUS_DUE'),
 			self::STATUS_PAID		=> Rb_Text::_('PLG_SYSTEM_RBSL_ECOMMERCE_INVOICE_STATUS_PAID'),
 			self::STATUS_REFUNDED	=> Rb_Text::_('PLG_SYSTEM_RBSL_ECOMMERCE_INVOICE_STATUS_REFUNDED'),
 			self::STATUS_INPROCESS	=> Rb_Text::_('PLG_SYSTEM_RBSL_ECOMMERCE_INVOICE_STATUS_PAID'),
@@ -563,6 +563,14 @@ class Rb_EcommerceInvoice extends Rb_EcommerceLib
 			
 			$invoice->_process_response_payment_refund($response, $data);
 		}
+		elseif($response->get('payment_status') == Rb_EcommerceResponse::PAYMENT_PENDING || $response->get('payment_status') == Rb_EcommerceResponse::SUBSCR_START){
+			if($this->getStatus() == Rb_EcommerceInvoice::STATUS_DUE){
+				$invoice->_process_response_payment_inprocess($response, $data);
+			}
+		}
+		elseif($response->get('payment_status') == Rb_EcommerceResponse::FAIL || $response->get('payment_status') == Rb_EcommerceResponse::PAYMENT_FAIL){
+			$invoice->_process_response_payment_due($response, $data);	
+		}
 		else{		
 			$helper->createTransaction($invoice, $response, $data);
 		}
@@ -644,5 +652,23 @@ class Rb_EcommerceInvoice extends Rb_EcommerceLib
 		$new_invoice->create($invoice_data, false);
 		
 		return $new_invoice;
+	}
+	
+	protected function _process_response_payment_inprocess($response, $data)	
+	{	
+		$this->set('status', Rb_EcommerceInvoice::STATUS_INPROCESS)
+		     ->save();
+
+		return $this;
+		
+	}
+	
+	protected function _process_response_payment_due($response, $data)	
+	{	
+		$this->set('status', Rb_EcommerceInvoice::STATUS_DUE)
+		     ->save();
+
+		return $this;
+		
 	}
 }
