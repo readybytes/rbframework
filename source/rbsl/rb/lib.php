@@ -335,7 +335,7 @@ abstract class Rb_Lib extends JObject
 
 			// trigger on before save
 			$args  = array($previousObject, $this, $class);
-			$event = 'onRbItemBeforeSave';
+			$event = 'on'.$class.'BeforeSave';
 			$result = Rb_HelperPlugin::trigger($event, $args, '', $this);
 		}
 
@@ -353,7 +353,7 @@ abstract class Rb_Lib extends JObject
 
 		// trigger on after save
 		if($this->_trigger === true){		
-			$event = 'onRbItemAfterSave';
+			$event = 'on'.$class.'AfterSave';
 			$args  = array($previousObject, $this, $class);
 			Rb_HelperPlugin::trigger($event, $args, '', $this);
 		}
@@ -367,7 +367,7 @@ abstract class Rb_Lib extends JObject
 		// getName must be there
 		if($this->_trigger === true){
 			// trigger on before delete
-			$event = 'onRbItemBeforeDelete';
+			$event = 'on'.$class.'BeforeDelete';
 			$args  = array($this, $class);
 			$result = Rb_HelperPlugin::trigger($event, $args, '', $this);
 		}
@@ -385,7 +385,7 @@ abstract class Rb_Lib extends JObject
 
 		// trigger on after delete
 		if($this->_trigger === true){
-			$event = 'onRbItemAfterDelete';
+			$event = 'on'.$class.'AfterDelete';
 			$args  = array($id, $class);
 			Rb_HelperPlugin::trigger($event, $args, '', $this);
 		}
