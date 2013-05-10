@@ -19,15 +19,7 @@ if(!defined( '_JEXEC' )){
  */
 class Rb_EcommerceEvent extends JEvent
 {
-	public function onRbItemAfterSave($prev, $new)
-	{
-		// if this triger is for Rb_EcommerceInvoice
-		if($new instanceof Rb_EcommerceInvoice){			
-			return self::_onRb_EcommerceInvoiceAfterSave($prev, $new);
-		}
-	}
-	
-	protected function _onRb_EcommerceInvoiceAfterSave($prev, $new)
+	public function onRb_EcommerceInvoiceAfterSave($prev, $new)
 	{		
 		// copy the THIS_AND_LATER type modifiers from its parent
 		if($prev == null && $new->isMaster() == false){			
@@ -67,4 +59,5 @@ class Rb_EcommerceEvent extends JEvent
 }
 
 $dispatcher = JDispatcher::getInstance();
-$dispatcher->register('onRbItemAfterSave', 'Rb_EcommerceEvent');
+$dispatcher->register('onRb_EcommerceInvoiceAfterSave', 'Rb_EcommerceEvent');
+
