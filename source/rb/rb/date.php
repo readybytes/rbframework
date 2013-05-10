@@ -84,16 +84,6 @@ class Rb_Date extends Rb_AbstractDate
 	
 	public function toFormat($format=Rb_Date::INVOICE_FORMAT, $user=null, $config=null, $javascript=false)
 	{
-		$tz = Rb_HelperJoomla::getUserTimeZone($config, $user);
-
-		// set the offset
-		$this->setTimezone($tz);
-		
-		// now format it
-		if($javascript && strpos($format, '%n') !== false && $this->_date !== false){
-			$format = str_replace('%n',intval(date('n', $this->_date + $this->_offset) -1),$format );
-		}
-		
 		return parent::format($format) ;
 	}
 	
@@ -111,13 +101,6 @@ class Rb_Date extends Rb_AbstractDate
 	public function getClone()
 	{
 		return unserialize(serialize($this));
-	}
-	
-	public function bind($date)
-	{
-		$date = is_numeric($date) ? $date : strtotime($date);
-		$this->setTimestamp($date);
-		return $this;
 	}
 	
 	public function toString()

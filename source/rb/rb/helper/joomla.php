@@ -241,17 +241,17 @@ class Rb_AbstractHelperJoomla extends Rb_AdaptHelperJoomla
 	public static function getUserTimeZone($config = null, $user = null)
 	{
 		//$user and $config is for testing purpose only
-		$config = ($config==null) ? Rb_Factory::getConfig() 	: $config;
-		$my		= ($user==null)   ? Rb_Factory::getUser() 	: $user;
+		$config 	= ($config==null) ? Rb_Factory::getConfig() : $config;
+		$user		= ($user==null)   ? Rb_Factory::getUser() 	: $user;
 		
-		//default offset
-		$timezone = $config->get('offset');
+		//timezone calculation
+		$timezone 	= $config->get('offset');
+		$userTz 	= $user->getParam('timezone');
 		
-		//if user is logged in, then do it as per him
-		if($my->id){
-			$timezone = $my->getParam('timezone', $timezone);
-		}
-		
+        if($userTz) {
+            $timeZone = $userTz;
+        }
+        
 		return new DateTimeZone($timezone);
 	}
 	
