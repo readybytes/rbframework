@@ -1,3 +1,30 @@
+.rb-wrap .clearfix {
+	*zoom: 1;
+}
+.rb-wrap .clearfix:before,
+.rb-wrap .clearfix:after {
+	display: table;
+	content: "";
+	line-height: 0;
+}
+.rb-wrap .clearfix:after {
+	clear: both;
+}
+.rb-wrap .hide-text {
+	font: 0/0 a;
+	color: transparent;
+	text-shadow: none;
+	background-color: transparent;
+	border: 0;
+}
+.rb-wrap .input-block-level {
+	display: block;
+	width: 100%;
+	min-height: 30px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
 .rb-wrap .pull-right {
 	float: left;
 }
@@ -35,16 +62,17 @@
 	float: right;
 	margin-right: 2.127659574%;
 	*margin-right: 2.0744680846382977%;
-	margin-left: 0px;
-	*margin-left: 0px;
+	margin-left: 0px !important;
+	*margin-left: 0px !important;
 }
 .rb-wrap .row-fluid [class*="span"]:first-child {
 	margin-right: 0;
 }
 .rb-wrap .form-horizontal .control-label {
 	float: right;
-	width: 140px;
-	padding-top: 10px;
+	width: auto;
+	padding-left: 5px;
+	padding-right: 0;
 	text-align: right;
 }
 .rb-wrap .form-horizontal .controls {
@@ -59,6 +87,15 @@
 .rb-wrap .form-horizontal .controls:first-child {
 	*padding-right: 160px;
 }
+.rb-wrap .form-vertical .controls {
+	*display: inline-block;
+	*padding-right: 20px;
+	margin-right: 0;
+	*margin-right: 0;
+	margin-left: 0;
+	text-align: right;
+	margin-top: 6px;
+}
 .rb-wrap .form-vertical .control-label {
 	float: none;
 	padding-right: 0;
@@ -66,9 +103,17 @@
 	text-align: right;
 	width: auto;
 }
+.rb-wrap .chzn-container-single-nosearch .chzn-search input {
+	position: absolute;
+	left: -9000px;
+	display: none;
+}
 .rb-wrap .nav-tabs > li,
 .rb-wrap .nav-pills > li {
 	float: right;
+}
+.rb-wrap .nav-stacked > li {
+	float: none;
 }
 .rb-wrap .btn-group > .btn {
 	float: right;
@@ -255,6 +300,11 @@
 .rb-wrap .icon-refresh {
 	background-position: -240px -23px;
 }
+.rb-wrap #refresh-status {
+	background-position: right center;
+	padding-left: 0;
+	padding-right: 25px;
+}
 .rb-wrap .radio input[type="radio"],
 .rb-wrap .checkbox input[type="checkbox"] {
 	float: right;
@@ -372,4 +422,124 @@
 }
 .rb-wrap .profile> ul {
 	margin: 9px 25px 0 0;
+}
+.rb-wrap .dropdown-submenu > a:after {
+	float: left;
+	border-width: 5px 5px 5px 0;
+	margin-left: -10px;
+	border-left-color: transparent;
+	border-right-color: #CCC;
+}
+.rb-wrap .badge {
+	margin-left: 10px;
+}
+.rb-wrap .tip-text {
+	text-align: right;
+}
+.rb-wrap .icon-file-add:before {
+	content: "(";
+}
+.rb-wrap .icon-eye-open:before,
+.rb-wrap .icon-eye:before {
+	content: ">";
+}
+.rb-wrap .icon-checkin:before,
+.rb-wrap .icon-checkbox:before {
+	content: "<";
+}
+.rb-wrap .icon-save-new:before,
+.rb-wrap .icon-plus-2:before {
+	content: "[";
+}
+.rb-wrap .btn-toolbar .btn + .btn,
+.rb-wrap .btn-toolbar .btn-group + .btn,
+.rb-wrap .btn-toolbar .btn + .btn-group {
+	margin-left: 0;
+	margin-right: 5px;
+}
+.rb-wrap .btn-group > .btn + .btn {
+	margin-left: 0;
+	margin-right: -1px;
+}
+.rb-wrap .input-append .add-on,
+.rb-wrap .input-append .btn,
+.rb-wrap .input-prepend .add-on,
+.rb-wrap .input-prepend .btn {
+	margin-left: 0;
+	margin-right: -1px;
+}
+.rb-wrap .table-bordered {
+	border-right-width: 0;
+	border-left-width: 1px;
+	border-right-style: none;
+	border-left-style: solid;
+	border-right-color: -moz-use-text-color;
+	border-left-color: #DDDDDD;
+}
+.rb-wrap .chzn-container-single .chzn-single {
+	padding-right: 8px;
+	padding-left: 0;
+}
+.rb-wrap .chzn-container-single .chzn-single span {
+	margin-left: 26px;
+	margin-right: 0;
+}
+.rb-wrap .chzn-container-single .chzn-single abbr {
+	left: 26px;
+	right: auto;
+}
+.rb-wrap .chzn-container-single .chzn-single div {
+	left: 0;
+	right: auto;
+}
+.rb-wrap .chzn-container-multi .chzn-choices li {
+	float: right;
+}
+.rb-wrap .chzn-container-multi .chzn-choices .search-choice {
+	margin-right: 5px;
+	margin-left: 0;
+	padding-right: 5px;
+	padding-left: 20px;
+}
+.rb-wrap .chzn-container-multi .chzn-choices .search-choice .search-choice-close {
+	left: 3px;
+	right: auto;
+}
+.rb-wrap .alert {
+	padding-right: 14px;
+	padding-left: 35px;
+}
+.rb-wrap .alert .close {
+	left: -21px;
+	right: auto;
+}
+.rb-wrap .close {
+	float: left;
+}
+.rb-wrap .form-search .radio,
+.rb-wrap .form-search .checkbox,
+.rb-wrap .form-inline .radio,
+.rb-wrap .form-inline .checkbox {
+	margin-bottom: 9px;
+}
+.rb-wrap .form-search .radio input[type="radio"],
+.rb-wrap .form-search .checkbox input[type="checkbox"],
+.rb-wrap .form-inline .radio input[type="radio"],
+.rb-wrap .form-inline .checkbox input[type="checkbox"] {
+	float: right;
+	margin-left: 3px;
+	margin-right: 0;
+}
+.rb-wrap .com_media .container-main .media {
+	display: inline-block;
+}
+.rb-wrap .thumbnails > li {
+	float: right;
+	margin-bottom: 18px;
+	margin-right: 20px;
+}
+.rb-wrap #mediamanager-form .description,
+.rb-wrap #mediamanager-form .filesize,
+.rb-wrap #mediamanager-form .dimensions {
+	direction: ltr;
 }

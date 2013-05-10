@@ -1,3 +1,30 @@
+.rb-wrap .clearfix {
+	*zoom: 1;
+}
+.rb-wrap .clearfix:before,
+.rb-wrap .clearfix:after {
+	display: table;
+	content: "";
+	line-height: 0;
+}
+.rb-wrap .clearfix:after {
+	clear: both;
+}
+.rb-wrap .hide-text {
+	font: 0/0 a;
+	color: transparent;
+	text-shadow: none;
+	background-color: transparent;
+	border: 0;
+}
+.rb-wrap .input-block-level {
+	display: block;
+	width: 100%;
+	min-height: 30px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
 .rb-wrap .small {
 	font-size: 11px;
 }
@@ -43,13 +70,13 @@
 .rb-wrap .row-odd {
 	padding: 5px;
 	width: 99%;
-	border-bottom: 1px solid ;
+	border-bottom: 1px solid #ddd;
 }
 .rb-wrap .row-odd {
-	background-color: ;
+	background-color: transparent;
 }
 .rb-wrap .row-even {
-	background-color: ;
+	background-color: #f9f9f9;
 }
 .rb-wrap .blog-row-rule,
 .rb-wrap .blog-item-rule {
@@ -202,27 +229,27 @@
 	line-height: 18px;
 	text-align: left;
 	vertical-align: middle;
-	border-top: 1px solid ;
+	border-top: 1px solid #ddd;
 	margin-left: 0;
 }
 .rb-wrap .list-striped li,
 .rb-wrap .list-striped dd,
 .rb-wrap .row-striped .row,
 .rb-wrap .row-striped .row-fluid {
-	border-bottom: 1px solid ;
+	border-bottom: 1px solid #ddd;
 	padding: 8px;
 }
 .rb-wrap .list-striped li:nth-child(odd),
 .rb-wrap .list-striped dd:nth-child(odd),
 .rb-wrap .row-striped .row:nth-child(odd),
 .rb-wrap .row-striped .row-fluid:nth-child(odd) {
-	background-color: ;
+	background-color: #f9f9f9;
 }
 .rb-wrap .list-striped li:hover,
 .rb-wrap .list-striped dd:hover,
 .rb-wrap .row-striped .row:hover,
 .rb-wrap .row-striped .row-fluid:hover {
-	background-color: ;
+	background-color: #f5f5f5;
 }
 .rb-wrap .row-striped .row-fluid {
 	width: 97%;
@@ -250,7 +277,10 @@
 	text-align: left;
 	vertical-align: middle;
 	margin-left: 0;
-	border: 1px solid ;
+	border: 1px solid #ddd;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
 }
 .rb-wrap .radio.btn-group input[type=radio] {
 	display: none;
@@ -268,7 +298,7 @@
 	padding-left: 0;
 }
 .rb-wrap .iframe-bordered {
-	border: 1px solid ;
+	border: 1px solid #ddd;
 }
 .rb-wrap .tab-content {
 	overflow: visible;
@@ -297,10 +327,10 @@
 .rb-wrap .tip-wrap {
 	max-width: 200px;
 	padding: 3px 8px;
-	color: ;
+	color: #fff;
 	text-align: center;
 	text-decoration: none;
-	background-color: ;
+	background-color: #000;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	border-radius: 4px;
@@ -311,7 +341,7 @@
 	padding-bottom: 5px;
 }
 .rb-wrap .input-prepend .chzn-container-single .chzn-single {
-	border-color: ;
+	border-color: #ccc;
 	height: 26px;
 	-webkit-border-radius: 0 3px 3px 0;
 	-moz-border-radius: 0 3px 3px 0;
@@ -326,7 +356,7 @@
 	border-radius: 0 3px 0 0;
 }
 .rb-wrap .input-prepend .chzn-container-single .chzn-drop {
-	border-color: ;
+	border-color: #ccc;
 }
 .rb-wrap .input-prepend > .add-on,
 .rb-wrap .input-append > .add-on {
@@ -356,4 +386,17 @@
 }
 .rb-wrap .btn-group .chzn-results {
 	white-space: normal;
+}
+.rb-wrap .accordion-body.in:hover {
+	overflow: visible;
+}
+.rb-wrap .invalid {
+	color: #9d261d;
+	font-weight: bold;
+}
+.rb-wrap input.invalid {
+	border: 1px solid #9d261d;
+}
+.rb-wrap .tip-text {
+	text-align: left;
 }
