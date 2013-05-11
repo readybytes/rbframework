@@ -28,4 +28,10 @@ class Rb_HelperToolbar extends Rb_AbstractHelperToolbar
 		$title 		= Rb_Text::_(strtoupper($comName).'_SUBMENU_'.strtoupper($menu));
 		JSubMenuHelper::addEntry($title,$link, $selected);
 	}
+
+	public static function deleteList($alt = 'Delete')
+	{
+		$alt = Rb_Text::_('COM_PAYINVOICE_JS_ARE_YOU_SURE_TO_DELETE');
+		JToolBarHelper::deleteList($alt);
+	}
 }
