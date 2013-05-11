@@ -184,7 +184,7 @@ abstract class Rb_Lib extends JObject
 				}
 				
 				if(is_a($this->$key, 'Rb_Date')){
-					$ret[$key] = (string) $this->$key;
+					$ret[$key] = $this->$key->toSql();
 					continue;
 				}
 			
@@ -279,6 +279,12 @@ abstract class Rb_Lib extends JObject
 			if(isset($data[$k]) === false)
 				continue;
 
+			// if its a rb_date object
+			if(is_a($this->$k, 'Rb_Date')){
+				$this->$k = new Rb_Date($data[$k]);				
+				continue;
+			}
+			
 			// its an object and supports bind function data, bind it
 			if(is_object($this->$k) && method_exists($this->$k,'bind')){
 				$this->$k->bind($data[$k]);
