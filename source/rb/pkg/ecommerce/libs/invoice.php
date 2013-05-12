@@ -656,6 +656,7 @@ class Rb_EcommerceInvoice extends Rb_EcommerceLib
 	
 	protected function _process_response_payment_inprocess($response, $data)	
 	{	
+		$transaction = $this->getHelper()->createTransaction($this, $response, $data);
 		$this->set('status', Rb_EcommerceInvoice::STATUS_INPROCESS)
 		     ->save();
 
@@ -665,6 +666,7 @@ class Rb_EcommerceInvoice extends Rb_EcommerceLib
 	
 	protected function _process_response_payment_due($response, $data)	
 	{	
+		$transaction = $this->getHelper()->createTransaction($this, $response, $data);
 		$this->set('status', Rb_EcommerceInvoice::STATUS_DUE)
 		     ->save();
 
