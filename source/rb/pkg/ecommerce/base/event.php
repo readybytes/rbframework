@@ -56,8 +56,22 @@ class Rb_EcommerceEvent extends JEvent
 		
 		return true;
 	}
+	
+	public function onRb_EcommerceInvoiceAfterDelete($invoice_id, $class)
+	{
+		// delete the modifiers
+		// XITODO : error handling
+		Rb_EcommerceFactory::getInstance('modifier', 'model')
+							->deletemany(array('invoice_id' => $invoice_id));
+							
+		Rb_EcommerceFactory::getInstance('transaction', 'model')
+							->deletemany(array('invoice_id' => $invoice_id));
+
+		return true;
+	}
 }
 
 $dispatcher = JDispatcher::getInstance();
 $dispatcher->register('onRb_EcommerceInvoiceAfterSave', 'Rb_EcommerceEvent');
+$dispatcher->register('onRb_EcommerceInvoiceAfterDelete', 'Rb_EcommerceEvent');
 

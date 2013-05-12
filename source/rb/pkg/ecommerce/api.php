@@ -54,6 +54,11 @@ class Rb_EcommerceAPI
 		return $invoice->toArray();
 	}
 	
+	public static function invoice_delete($invoice_id)
+	{
+		return Rb_EcommerceInvoice::getInstance($id)->delete();
+	}
+	
 	/**
 	 * Gets Model Instance of Invoice
 	 * @param string $name
