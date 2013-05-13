@@ -56,7 +56,7 @@ class Rb_EcommerceAPI
 	
 	public static function invoice_delete($invoice_id)
 	{
-		return Rb_EcommerceInvoice::getInstance($id)->delete();
+		return Rb_EcommerceInvoice::getInstance($invoice_id)->delete();
 	}
 	
 	/**
