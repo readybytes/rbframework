@@ -46,8 +46,10 @@ class Rb_EcommerceAPI
 		
 		if(array() !== $filter){
 			$invoices = self::invoice_get_records($filter);
-			$invoice  = array_pop($invoices);
-			$id		  = $invoice->invoice_id; 
+			if(count($invoices) > 0){
+				$invoice  = array_pop($invoices);
+				$id		  = $invoice->invoice_id;
+			} 
 		}
 		
 		$invoice = Rb_EcommerceInvoice::getInstance($id, $invoice);
@@ -190,3 +192,4 @@ class Rb_EcommerceAPI
 		return Rb_EcommerceFactory::getInstance('country', 'Model', 'Rb_Ecommerce', $refresh);
 	}
 }
+
