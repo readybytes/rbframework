@@ -103,8 +103,8 @@ class Rb_EcommerceInvoice extends Rb_EcommerceLib
 		$this->params 				= '';
 		$this->created_date 		= new Rb_Date();
 		$this->modified_date 		= new Rb_Date();
-		$this->paid_date 			= new Rb_Date();
-		$this->refund_date			= new Rb_Date();
+		$this->paid_date 			= null;
+		$this->refund_date			= null;
 		$this->due_date 			= new Rb_Date();
 		$this->issue_date 			= new Rb_Date();
 		$this->processor_type 		= '';
