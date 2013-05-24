@@ -24,9 +24,8 @@ abstract class Rb_HtmlNvd3
 			$loaded = true;
 			Rb_Html::stylesheet('nvd3/nv.d3.css', $attribs, false);
 			
-			Rb_Html::script('nvd3/d3.v3.js', $attribs, false);
+			Rb_Html::script('nvd3/d3.v2.js', $attribs, false);
 			Rb_Html::script('nvd3/nv.d3.js', $attribs, false);
-			
 		}
 	}
 }
