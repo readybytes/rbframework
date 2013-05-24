@@ -2,11 +2,11 @@
 /**
 * @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
-* @package		PayPlans
+* @package		Rb_Ecommerce
 * @subpackage	Frontend
 * @contact 		team@readybytes.in
 */
-if(defined('_JEXEC')===false) die();
+if(defined('_JEXEC')===false) die('Restricted access' );
 
 class Rb_EcommerceHelperModifier extends Rb_Helper
 {

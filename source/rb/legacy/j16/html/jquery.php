@@ -2,10 +2,12 @@
 /**
  * @package     Joomla.Libraries
  * @subpackage  HTML
- *
+ * @license		GNU/GPL, see LICENSE.php
  * @copyright   Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
+
+if(defined('_JEXEC')===false) die('Restricted access' );
 
 defined('JPATH_PLATFORM') or die;
 

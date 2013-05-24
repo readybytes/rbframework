@@ -6,7 +6,7 @@
 * @subpackage	Frontend
 * @contact 		shyam@readybytes.in
 */
-if(defined('_JEXEC')===false) die();
+if(defined('_JEXEC')===false) die('Restricted access' );
 
 class Rb_FileTree
 {
@@ -25,7 +25,7 @@ class Rb_FileTree
 	    $data = var_export($gtree,true);
 	    ob_start();
 	    ?>
-	    	if(defined('_JEXEC')===false) die();
+	    	if(defined('_JEXEC')===false) die('Restricted access' );
 	    	
 	    	class Rb_FileTreeProvider
 	    	{

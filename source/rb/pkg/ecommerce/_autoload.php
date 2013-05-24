@@ -7,5 +7,7 @@
 * @contact		team@readybytes.in
 */
 
+defined( '_JEXEC' ) or die( 'Restricted access' );
+
 // include 
 include_once dirname(__FILE__).'/includes.php';

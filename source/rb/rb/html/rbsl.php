@@ -7,6 +7,8 @@
 * @contact 		payplans@readybytes.in
 */
 
+if(defined('_JEXEC')===false) die('Restricted access' );
+
 defined('JPATH_PLATFORM') or die;
 
 /**

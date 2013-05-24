@@ -6,7 +6,7 @@
 * @subpackage	Elements
 * @contact 		shyam@readybytes.in
 */
-if(defined('_JEXEC')===false) die();
+if(defined('_JEXEC')===false) die('Restricted access' );
 
 jimport('joomla.form.formfield');
 

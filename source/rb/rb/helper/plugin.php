@@ -6,7 +6,7 @@
 * @subpackage	Frontend
 * @contact 		shyam@readybytes.in
 */
-if(defined('_JEXEC')===false) die();
+if(defined('_JEXEC')===false) die('Restricted access' );
 
 //RBFW_TODO : remove this class
 class Rb_HelperPlugin

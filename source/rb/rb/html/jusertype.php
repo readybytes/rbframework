@@ -6,7 +6,7 @@
 * @subpackage	Frontend
 * @contact 		payplans@readybytes.in
 */
-if(defined('_JEXEC')===false) die();
+if(defined('_JEXEC')===false) die('Restricted access' );
 
 class Rb_HtmlJusertype extends Rb_Html
 {
