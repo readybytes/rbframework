@@ -336,6 +336,10 @@ class Rb_EcommerceInvoice extends Rb_EcommerceLib
 		$this->expiration_type 		= isset($data->expiration_type) ? $data->expiration_type : RB_ECOMMERCE_EXPIRATION_TYPE_FIXED;		
 		$this->recurrence_count		= isset($data->recurrence_count) ? $data->recurrence_count : 1;  // XITODO : is required for child invoice ??
 		$this->time_price->bind($data->time_price);		
+		$this->issue_date			= isset($data->issue_date) ? $data->issue_date : new Rb_Date();
+		$this->due_date				= isset($data->due_date)   ? $data->due_date   : new Rb_Date();
+		$this->subtotal				= isset($data->subtotal)	?	$data->subtotal  : 0 ;
+		$this->notes				= isset($data->notes)	? $data->notes : '';
 		
 		if($master){
 			$this->master_invoice_id 	= 0;
@@ -343,7 +347,7 @@ class Rb_EcommerceInvoice extends Rb_EcommerceLib
 		}
 		else{
 			$this->master_invoice_id 	= $data->master_invoice_id;
-			$this->sequence 			= $data->counter;		
+			$this->sequence 			= $data->sequence;		
 		}
 		
 		$this->__createDoCalculation($master, $this->sequence);		
