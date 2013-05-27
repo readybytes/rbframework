@@ -122,6 +122,14 @@ class Rb_EcommerceInvoice extends Rb_EcommerceLib
 	
 	public function bind($data, $ignore = array())
 	{
+		if(is_array($data)){
+			$data = (object) $data;		
+		}
+		
+		if(isset($data->processor_config)){
+			$this->processor_config = new Rb_Registry() ;
+		}
+		
 		parent::bind($data, $ignore);
 		
 		if(!$this->getId()){
