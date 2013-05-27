@@ -33,6 +33,11 @@ abstract class Rb_EcommerceProcessor
 	 * @var Rb_EcommerceRequest
 	 */
 	protected $_config = null;
+
+	/**
+	 * @var string Holds that processor support for refund or not
+	 */
+	protected $_support_refund = false;
 	
 	/**
 	* Constructor.
@@ -101,4 +106,9 @@ abstract class Rb_EcommerceProcessor
 		$this->_config->bind($config);
 		return $this;
 	} 
+
+	public function supportForRefund()
+	{
+		return $this->_support_refund;
+	}
 }
