@@ -527,6 +527,9 @@ abstract class Rb_Model extends Rb_AbstractModel
     	
 		foreach($filters as $key=>$value){
 			if($value !== null){
+				if(is_array($value) == false){
+					$value= array($value);
+				}
 				$this->_filters[$key] = $value;
 			}
 		}
