@@ -398,4 +398,12 @@ abstract class Rb_Lib extends JObject
 			
 		return $this;
 	}
+	
+	/**
+	 * We use this function in various entities, so it must be defined in parent.
+	 */	
+	public function reset()
+	{
+		return $this;
+	}
 }
