@@ -143,6 +143,9 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 		
 		$this->assign('plugin_result', $pluginResult);
 
+		//load assets file first, then load its tmpls
+		$this->loadTemplate('assets');
+				
 		//load the template file
 		$output = $this->loadTemplate($this->getTpl());
 
