@@ -133,8 +133,8 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 
 		// Trigger event before we load templates
 		// Different apps will send on respective positions
-		$args	= array(&$this, &$task);
-		$pluginResult = Rb_HelperPlugin::trigger('onRbViewBeforeRender',$args, '', $this);
+		$args	= array(&$this, &$task, $this->getName());		
+		$pluginResult = Rb_HelperPlugin::trigger('on'.$this->_component->getPrefixClass().'ViewBeforeRender',$args, '', $this);
 		$pluginResult = $this->_filterPluginResult($pluginResult);
 		
 		// now get html from different plugins and views
@@ -150,8 +150,8 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 		$output = $this->loadTemplate($this->getTpl());
 
 		//post template rendering load trigger
-		$args	= array(&$this, &$task, &$output);
-		$result =  Rb_HelperPlugin::trigger('onRbViewAfterRender', $args, '', $this);
+		$args	= array(&$this, &$task, $this->getName(), &$output);
+		$result =  Rb_HelperPlugin::trigger('on'.$this->_component->getPrefixClass().'ViewAfterRender', $args, '', $this);
 	
 		//render output
 		return $this->render($output, $this->_renderOptions);

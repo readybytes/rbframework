@@ -204,16 +204,16 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 		}
 
 		//trigger before
-		$args	= array(&$this, &$task);
-		$result = Rb_HelperPlugin::trigger('onRbControllerBeforeExecute',$args);
+		$args	= array(&$this, &$task, $this->getName());
+		$result = Rb_HelperPlugin::trigger('on'.$this->_component->getPrefixClass().'ControllerBeforeExecute',$args);
 
 		//let the task execute in controller
 		//if task have failed, simply return and do not go to view
 		$executeResult= parent::execute($task);
 
 		//trigger after
-		$args	= array(&$this, &$task, &$executeResult);
-		$result = Rb_HelperPlugin::trigger('onRbControllerAfterExecute', $args);
+		$args	= array(&$this, &$task, $this->getName(), &$executeResult);
+		$result = Rb_HelperPlugin::trigger('on'.$this->_component->getPrefixClass().'ControllerAfterExecute', $args);
 		
 		if($executeResult===false){
 			return false;
