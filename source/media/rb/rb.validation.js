@@ -456,6 +456,11 @@
               var errorsFound = [];
 
               $controlGroup.find("input,textarea,select").each(function (i, el) {
+            	// return in case if field does not have any name
+            	if(typeof(el) == 'undefined' || el.name == ""){
+            		return false;
+            	}
+            	
                 var oldCount = errorsFound.length;
                 $.each($(el).triggerHandler("validation.validation", params), function (j, message) {
                   errorsFound.push(message);
