@@ -30,6 +30,7 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 		
 		// setup extension naming convention
 		$this->_component = Rb_Extension::getInstance($this->_component);
+		$this->_getTemplatePath();
 	}
 	/*
 	 * We need to override joomla behaviour as they differ in
@@ -423,9 +424,8 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 		return $output;
 	}
 	
-	protected function _getTemplatePath($layout = 'default')
+	protected function _getTemplatePath()
     {
-    	
     	$app 		= Rb_Factory::getApplication();
     	$view 		= strtolower($this->getName());
     	
@@ -481,11 +481,21 @@ abstract class Rb_AbstractView extends Rb_AdaptView
         return $this->_templatePaths;
     }
 
-    function addPathToView($templatePaths)
+    function addPathToTemplate($templatePaths)
     {
+    	if(!is_array($templatePaths)){
+    		$templatePaths = array($templatePaths);    		
+    	}
+    	
+    	if($this->_templatePaths == null){
+    		$this->_getTemplatePath();
+    	}
+    	
 		foreach($templatePaths as $tmpl){
-			$this->addTemplatePath($tmpl);
+			$this->_templatePaths[] = $tmpl;
 		}
+		
+		return $this;
     }
 }
 
