@@ -414,7 +414,7 @@ abstract class Rb_Model extends Rb_AbstractModel
 				->from($this->getTable()->getTableName());
 
 		foreach($condition as $key => $value)
-			$query->where(" $key $operator '$value' ", $glue);
+			$query->where(" $key $operator $value ", $glue);
 
 		return $query->dbLoadQuery()->query();
 	}

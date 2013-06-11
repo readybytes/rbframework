@@ -33,69 +33,25 @@ class Rb_Date extends Rb_AbstractDate
 	}
 	
 	/**
-	 * @param $expirationTime : this will be in formation of YYMMDDHHMMSS
-	 * @return unknown
+	 * @param string time 		this will be in formation of YYMMDDHHMMSS
+	 * @param string function 	name of the function to execute. It could be add or sub only.
+	 * 
+	 * @return Rb_Date
 	 */
-	public function addExpiration($expirationTime)
+	public function alter($time, $function = 'add')
 	{
-		Rb_Error::assert(is_string($expirationTime), Rb_Error::ERROR, "Expiration time is not as string");
+		Rb_Error::assert(is_string($time), Rb_Error::ERROR, "Time is not as string");
 		
-		$timerElements = array('year', 'month', 'day', 'hour', 'minute', 'second');
-		$date = date_parse($this->toString());
+		$timeInterval = str_split($time, 2);
+		$dateInterval = 'P'.$timeInterval[0].'Y'.$timeInterval[1].'M'.$timeInterval[2].'DT'.$timeInterval[3].'H'.$timeInterval[4].'M'.$timeInterval[5].'S';
 		
-		if($this->_date == false){
-			return $this;
-		}
-
-		$count = count($timerElements);
-		if($expirationTime != 0){
-			for($i=0; $i<$count ; $i++){
-				$date[$timerElements[$i]] +=   intval(JString::substr($expirationTime, $i*2, 2), 10);
-			}
-			$this->_date = mktime($date['hour'], $date['minute'], $date['second'], $date['month'], $date['day'], $date['year']);
-		}
-		else{ 
-			$this->_date=false;
-		}
-
-		return $this;
-	}
-	
-	public function subtractExpiration($expirationTime)
-	{
-		Rb_Error::assert(is_string($expirationTime), Rb_Error::ERROR, "Expiration time is not as string");
-		
-		$timerElements = array('year', 'month', 'day', 'hour', 'minute', 'second');
-		$date = date_parse($this->toString());
-		
-		$count = count($timerElements);
-		for($i=0; $i<$count ; $i++){
-			//RBFW_TODO : convert to integer before adding
-			$date[$timerElements[$i]] -=   JString::substr($expirationTime, $i*2, 2);
-		}
-		
-		$result= mktime($date['hour'], $date['minute'], $date['second'], $date['month'], $date['day'], $date['year']);
-		Rb_Error::assert($result);
-		$this->_date = $result; 
-						
-		return $this;
+		return $this->$function(new DateInterval($dateInterval));
 	}
 	
 	
 	public function toFormat($format=Rb_Date::INVOICE_FORMAT, $user=null, $config=null, $javascript=false)
 	{
 		return parent::format($format) ;
-	}
-	
-	static public function timeago($time)
-	{	//RBFW_TODO : setting up timestamp
-		//RBFW_TODO : check if user timzone was considered or not
-		$date = new Rb_Date($time);
-		$str  = $date->toISO8601();
-		if($time=='0000-00-00 00:00:00' || !isset($time)){
-			return Rb_Text::_('PLG_SYSTEM_RBSL_NEVER');
-		}
-		return "<span class='timeago' title='{$str}'>$time</span>"; 
 	}
 	
 	public function getClone()
