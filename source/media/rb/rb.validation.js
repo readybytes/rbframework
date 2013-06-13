@@ -494,7 +494,7 @@
                 }
               } else {
                 $controlGroup.removeClass("warning error success");
-                if (value.length > 0) {
+                if (value!= null && value.length > 0) {
                   $controlGroup.addClass("success");
                 }
                 $helpBlock.html($helpBlock.data("original-contents"));
