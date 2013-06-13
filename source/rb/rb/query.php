@@ -26,20 +26,6 @@ class Rb_Query extends JDatabaseQuery
 		return $db;
 	}
 	
-	
-	public function clear($clause = null)
-	{
-		if($clause === 'limit' || is_string($clause)==false )
-		{
-			// reset oddset also whle reseting limit
-			$this->limit = null;
-			$this->offset = null;
-			return $this;
-		}
-		
-		return parent::clear($clause);
-	}
-	
     public function limit($limit=0, $offset=0)
 	{
 		//IMP : Do not apply limit if it is Zero

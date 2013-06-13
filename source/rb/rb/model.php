@@ -234,7 +234,7 @@ abstract class Rb_Model extends Rb_AbstractModel
 	 * Returns Records from Model Tables
 	 * as per Model STATE
 	 */
-	public function loadRecords(Array $queryFilters=array(), Array $queryClean = array(), $emptyRecord=false, $orderby = null)
+	public function loadRecords(Array $queryFilters=array(), Array $queryClean = array(), $emptyRecord=false, $indexedby = null)
 	{
 		$query = $this->getQuery();
 
@@ -274,13 +274,13 @@ abstract class Rb_Model extends Rb_AbstractModel
 			
 		}
 
-		if($orderby === null){
-			$orderby = $this->getTable()->getKeyName();
+		if($indexedby === null){
+			$indexedby = $this->getTable()->getKeyName();
 		}
 		
 		//we want returned record indexed by columns
 		$this->_recordlist = $tmpQuery->dbLoadQuery()
-		 							  ->loadObjectList($orderby);
+		 							  ->loadObjectList($indexedby);
 
 		//handle if some one required empty records, only if query records were null
 		if($emptyRecord && empty($this->_recordlist)){
