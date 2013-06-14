@@ -111,7 +111,7 @@ abstract class Rb_HtmlDaterangepicker
                   <?php endif;?>
 
                });
-               })(payinvoice.jQuery);
+               })(rb.jQuery);
 			</script>
 		<?php 
 		$content = ob_get_contents();
