@@ -5,7 +5,9 @@
 * @package		Rb_Framework
 * @contact 		shyam@readybytes.in
 */
-if(defined('_JEXEC')===false) die('Restricted access' );
+
+// no direct access
+defined( '_JEXEC' ) or die( 'Restricted access' );
 
 // if already loaded do not load
 if(defined('RB_FRAMEWORK_LOADED')){

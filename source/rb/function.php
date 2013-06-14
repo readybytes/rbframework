@@ -6,7 +6,9 @@
 * @subpackage	Frontend
 * @contact 		shyam@readybytes.in
 */
-if(defined('_JEXEC')===false) die('Restricted access' );
+
+// no direct access
+defined( '_JEXEC' ) or die( 'Restricted access' );
 
 function _rb_cms_version()
 {

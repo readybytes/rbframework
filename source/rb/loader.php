@@ -6,7 +6,9 @@
 * @subpackage	Frontend
 * @contact 		shyam@readybytes.in
 */
-if(defined('_JEXEC')===false) die('Restricted access' );
+
+// no direct access
+defined( '_JEXEC' ) or die( 'Restricted access' );
 
 jimport('joomla.filesystem.folder');
 jimport('joomla.filesystem.file');
