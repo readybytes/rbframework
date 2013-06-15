@@ -5,7 +5,9 @@
 * @package			RB-Framework
 * @subpackage		Backend
 */
-if(defined('_JEXEC')===false) die('Restricted access' );
+
+// no direct access
+defined( '_JEXEC' ) or die( 'Restricted access' );
 
 class Rb_PackageScriptEcommerce
 {

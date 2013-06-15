@@ -73,7 +73,10 @@ rb.ui.dialog = {
 		});
 		
 		// call ajax
-		rb.ajax.go(call.url, call.data);
+		if(call != null){
+			rb.ajax.go(call.url, call.data);
+		}
+		return true;
 	},
 	
 	button : function(actions){

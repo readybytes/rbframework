@@ -8,9 +8,7 @@
 */
 
 // no direct access
-if(!defined( '_JEXEC' )){
-	die( 'Restricted access' );
-}
+defined( '_JEXEC' ) or die( 'Restricted access' );
 
 // if Rb_Ecommerce already loaded, then do not load it again
 if(defined('RB_ECOMMERCE_CORE_LOADED')){

@@ -9,9 +9,7 @@
 */
 
 // no direct access
-if(!defined( '_JEXEC' )){
-	die( 'Restricted access' );
-}
+defined( '_JEXEC' ) or die( 'Restricted access' );
 
 /** 
  * Base Event
@@ -19,8 +17,11 @@ if(!defined( '_JEXEC' )){
  */
 class Rb_EcommerceEvent extends JEvent
 {
-	public function onRb_EcommerceInvoiceAfterSave($prev, $new)
-	{		
+	public function onRb_EcommerceAfterSave($prev, $new, $entity)
+	{
+		if('invoice' !== strtolower($entity)){
+			return true;
+		}		
 		// copy the THIS_AND_LATER type modifiers from its parent
 		if($prev == null && $new->isMaster() == false){			
 			$master = $new->getMasterInvoice();
@@ -57,8 +58,11 @@ class Rb_EcommerceEvent extends JEvent
 		return true;
 	}
 	
-	public function onRb_EcommerceInvoiceAfterDelete($invoice_id, $class)
+	public function onRb_EcommerceAfterDelete($invoice_id, $class)
 	{
+		if('invoice' !== strtolower($class)){
+			return true;
+		}
 		// delete the modifiers
 		// XITODO : error handling
 		Rb_EcommerceFactory::getInstance('modifier', 'model')
