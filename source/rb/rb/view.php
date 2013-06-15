@@ -546,8 +546,9 @@ abstract class Rb_View extends Rb_AbstractView
 		$records = $model->loadRecords(array(), array());
 
 		// if total of records is more than 0
-		if($model->getTotal() > 0)
+		if(count($records) > 0) {
 			return $this->_displayGrid($records);
+		}
 
 		return $this->_displayBlank();
 	}

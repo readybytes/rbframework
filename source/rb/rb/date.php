@@ -27,7 +27,7 @@ class Rb_Date extends Rb_AbstractDate
 	 * 
 	 * @return Rb_Date
 	 */
-	public static function getInstance($date = 'now', $tzOffset = 0)
+	public static function getInstance($date = 'now', $tzOffset = null)
 	{
 		return new Rb_Date($date,$tzOffset);	
 	}
