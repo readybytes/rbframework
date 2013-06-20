@@ -19,7 +19,9 @@ class Rb_EcommerceAPI
 	{
 		$invoice = Rb_EcommerceInvoice::getInstance();		
 		$invoice->create($data, $is_master);
-		$invoice->save();
+		if(!$invoice->save()){
+			return false;
+		}
 		return $invoice->getId();
 	}
 	
