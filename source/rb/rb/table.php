@@ -185,7 +185,7 @@ abstract class Rb_Table extends JTable
     	return parent::set($property, $value);
     }
 
-	public function load($oid)
+	public function load($oid=null, $reset = true)
 	{
 		//if its a pk, then simple call parent
 		if(is_array($oid)===false)
@@ -229,7 +229,7 @@ abstract class Rb_Table extends JTable
 
 
 	/** Everytime we are storing a record, try to use correct ordering */
-	public function store($updateNulls=false, $new=false)
+	public function rb_store($updateNulls=false, $new=false)
 	{
 		// #21 Ordering Bug fix
 		$k = $this->_tbl_key;
@@ -272,14 +272,14 @@ abstract class Rb_Table extends JTable
 		return parent::store( $updateNulls );
 	}
 
-	public function save($new=false)
+	public function rb_save($new=false)
 	{
 		//check the reocrds
 		if($this->check()===FALSE)
 			return false;
 
 		//store the record
-		if($this->store(false, $new)===FALSE)
+		if($this->rb_store(false, $new)===FALSE)
 			return false;
 
 		//checkin the record, without returning false, just mark error if any
@@ -311,7 +311,7 @@ abstract class Rb_Table extends JTable
 			$this->set($columnName, $oldValue ? 0 : 1);
 
 		//now save
-		if($this->save()===false)
+		if($this->rb_save()===false)
 		{
 			$this->setError( $this->_db->stderr() );
 			return false;
