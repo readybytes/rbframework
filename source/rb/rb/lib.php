@@ -312,9 +312,9 @@ abstract class Rb_Lib extends JObject
 		Rb_Error::assert($this);
 		Rb_Error::assert($id);
 		
-		//if we are working on a single element then we need to clear the limit from query
+		//if we are working on a single element then we need to clear the limit and where from query
 		$item = Rb_Factory::getInstance($this->getName(), 'Model', $this->_component->getPrefixClass())
-						->loadRecords(array('id' => $id), array('limit'));
+						->loadRecords(array('id' => $id), array('limit', 'where'));
 
 		// if no items found
 		if(count($item) === 0){

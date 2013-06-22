@@ -115,7 +115,7 @@ class Rb_EcommerceInvoice extends Rb_EcommerceLib
 
 	public function refresh()
 	{
-		return $this->_loadModifiers()->_loadTransactions();
+		return $this->__createDoCalculation()->_loadModifiers()->_loadTransactions();
 	} 
 	
 	public function bind($data, $ignore = array())

@@ -355,7 +355,7 @@ abstract class Rb_Model extends Rb_AbstractModel
 
 		//bind, and then save
 		//$myData = $data[$this->getName()][$pk===null ? 0 : $pk];
-	    if($table->bind($data) && $table->save($new))
+	    if($table->bind($data) && $table->rb_save($new))
 	    {
 	    	// We should return the record's ID rather then true false
 			return $table->{$table->getKeyName()};
