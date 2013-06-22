@@ -63,4 +63,17 @@ class Rb_Date extends Rb_AbstractDate
 	{
 		return (string)$this;
 	}
+
+	public static function timeago($time)
+  	{ 
+  		//RBFW_TODO : setting up timestamp
+   	    //RBFW_TODO : check if user timzone was considered or not
+    	$date = new Rb_Date($time);
+    	$str  = $date->toISO8601();
+        if($time=='0000-00-00 00:00:00' || !isset($time)){
+     		return Rb_Text::_('PLG_SYSTEM_RBSL_NEVER');
+   	 	}
+   	 	
+   	 	return "<span class='rb-timeago' title='{$str}'>$time</span>";
+  	}
 }

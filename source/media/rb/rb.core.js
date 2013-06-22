@@ -368,6 +368,9 @@ $(document).ready(function(){
 
 	// load translation
 	rb.cms.text.load(rb.joomla.text.strings);
+
+	// load timeago
+	$('.rb-timeago').timeago();
 });
 
 //ENDING :
