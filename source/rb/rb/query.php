@@ -36,4 +36,17 @@ class Rb_Query extends JDatabaseQuery
 		
 		return $this;
 	}
+
+	public function clear($clause = null)
+	{
+		// IMP : JOOMLA25 : this is not avialable in Joomla 2.5, so we have added it
+		if($clause === 'limit' || $clause === null ){
+			// reset offset also whle reseting limit
+			$this->limit = null;
+			$this->offset = null;
+			return $this;
+		}
+
+		return parent::clear($clause);
+	}
 }
