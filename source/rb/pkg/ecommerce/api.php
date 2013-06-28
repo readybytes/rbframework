@@ -51,7 +51,10 @@ class Rb_EcommerceAPI
 			if(count($invoices) > 0){
 				$invoice  = array_pop($invoices);
 				$id		  = $invoice->invoice_id;
-			} 
+			}
+			else { 
+				return array();
+			}
 		}
 		
 		$invoice = Rb_EcommerceInvoice::getInstance($id, $invoice);
