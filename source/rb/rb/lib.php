@@ -345,9 +345,8 @@ abstract class Rb_Lib extends JObject
 			$result = Rb_HelperPlugin::trigger($event, $args, '', $this);
 		}
 
-
 		// save to data to table
-		$id = $this->getModel()->save($this->toDatabase(), $this->getId());
+		$id = $this->_save($previousObject);
 
 		//if save was not complete, then id will be null, do not trigger after save
 		if(!$id){
@@ -365,6 +364,18 @@ abstract class Rb_Lib extends JObject
 		}
 
 		return $this;
+	}
+	
+	/**
+	 * 
+	 * We can override it
+	 * @param Lib_Object $previousObject
+	 */
+	protected function _save($previousObject)
+	{
+		// save to data to table
+		return $this->getModel()->save($this->toDatabase(), $this->getId());
+		
 	}
 	
 	public function delete()
