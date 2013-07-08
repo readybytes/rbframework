@@ -269,7 +269,7 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 		//3: cids in post(always)
 		// we will only support ONE id here, to get multiple IDs, respective function will collect cids
 		$post = JRequest::getVar("{$this->_component->getNameSmall()}_form", null);
-		if(isset($post["{$this->getName()}_id"])){
+		if( isset($post["{$this->getName()}_id"])  || isset($post['id']) ){
 			$entId = $post["{$this->getName()}_id"];
 			if($entId !== null){ 
 				return $entId;
