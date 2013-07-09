@@ -193,7 +193,7 @@ abstract class Rb_AbstractModel extends Rb_AdaptModel
 	 * Get an object of model-corresponding table.
 	 * @return Rb_Table
 	 */
-	public function getTable($tableName=null)
+	public function getTable($tableName=null, $prefix = 'Table', $options = array())
 	{
 		// support for parameter
 		if($tableName===null)
