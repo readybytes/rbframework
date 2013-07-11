@@ -442,6 +442,7 @@ class Rb_EcommerceInvoice extends Rb_EcommerceLib
 		$userid 			 	= $this->getBuyer();
 		$user 				 	= Rb_EcommerceFactory::getUser($userid);		
 		$user_data 			 	= new stdClass();
+		$user_data->id			= $user->get('id');
 		$user_data->name 	 	= $user->get('name');
 		$user_data->username 	= $user->get('username');
 		$user_data->email 	 	= $user->get('email');
