@@ -44,7 +44,10 @@ class Rb_Query extends JDatabaseQuery
 			// reset offset also whle reseting limit
 			$this->limit = null;
 			$this->offset = null;
-			return $this;
+			
+			if($clause === 'limit'){
+				return $this;
+			}
 		}
 
 		return parent::clear($clause);
