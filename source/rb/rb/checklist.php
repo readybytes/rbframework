@@ -9,7 +9,7 @@
 if(defined('_JEXEC')===false) die('Restricted access' );
 
 
-abstract class Rb_Setup
+abstract class Rb_Checklist
 {
 
 	public $_location = __FILE__;
@@ -23,7 +23,7 @@ abstract class Rb_Setup
 	public function __construct()
 	{
 		$r = null;
-		if (!preg_match('/Setup(.*)/i', get_class($this), $r)) {
+		if (!preg_match('/Checklist(.*)/i', get_class($this), $r)) {
 			JError::raiseError (500, "Rb_View::getName() : Can't get or parse class name.");
 		}
 		$this->_name = strtolower( $r[1] );
@@ -37,7 +37,7 @@ abstract class Rb_Setup
 	}
 
 
-	static public function getInstance($name)
+	static public function getInstance($componentName, $name)
 	{
 		static $instance=array();
 
@@ -47,7 +47,7 @@ abstract class Rb_Setup
 		}
 
 		//generate class name
-		$className	= $this->_component->getPrefixClass().'Setup'.ucfirst($name);
+		$className	= $componentName.'Checklist'.ucfirst($name);
 
 		//if already there is an object and check for static cache clean up
 		if(isset($instance[$name]))
