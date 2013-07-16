@@ -337,7 +337,7 @@ class Rb_EcommerceInvoice extends Rb_EcommerceLib
 		$this->object_type 			= $data->object_type;
 		$this->buyer_id 			= $data->buyer_id;
 		$this->currency 			= $data->currency;
-		$this->serial 				= ''; // XITODO :
+		$this->serial 				= isset($data->serial) ? $data->serial : ''; // XITODO :  autoincrement
 		$this->status				= isset($data->status) ? $data->status : self::STATUS_NONE;
 		$this->expiration_type 		= isset($data->expiration_type) ? $data->expiration_type : RB_ECOMMERCE_EXPIRATION_TYPE_FIXED;		
 		$this->recurrence_count		= isset($data->recurrence_count) ? $data->recurrence_count : 1;  // XITODO : is required for child invoice ??
