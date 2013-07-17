@@ -417,4 +417,30 @@ abstract class Rb_Lib extends JObject
 	{
 		return $this;
 	}
+	
+	public function setParam($key, $value, $property='params')
+	{
+		$this->$property->set($key, $value);
+		return $this;
+	}
+	
+	public function setParams($value, $key='params')
+	{
+		$this->$key->bind($value);
+		return $this;
+	}
+	
+	public function getParam($key, $default = null, $property='params')
+	{
+		return $this->$property->get($key, $default);
+	}
+	
+	public function getParams($object = true, $property='params')
+	{
+		if($object){
+			return $this->$property->toObject();
+		}
+		
+		return $this->$property->toArray();
+	}
 }
