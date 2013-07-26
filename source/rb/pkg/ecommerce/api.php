@@ -41,7 +41,7 @@ class Rb_EcommerceAPI
 		return self::invoice_get_model()->loadRecords($query_filters, $query_clean, $empty_record, $orderby);
 	} 
 	
-	public static function invoice_get($filter = array())
+	public static function invoice_get($filter = array(), $empty_record = false)
 	{
 		$id = 0; 
 		$invoice  = null;
@@ -53,7 +53,9 @@ class Rb_EcommerceAPI
 				$id		  = $invoice->invoice_id;
 			}
 			else { 
-				return array();
+				if($empty_record === false){
+					return array();
+				}
 			}
 		}
 		
