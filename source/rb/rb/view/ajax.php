@@ -11,13 +11,13 @@ if(defined('_JEXEC')===false) die('Restricted access' );
 
 class Rb_ViewAjax extends Rb_View
 {
-	public 	$_renderOptions = array('domObject'=>'xiWindowContent','domProperty'=>'innerHTML');
+	public 	$_renderOptions = array('domObject'=>'rbWindowContent','domProperty'=>'innerHTML');
 	public 	$headerFooters 	= true;
 	
-	protected function render($html, $options = array('domObject'=>'xiWindowContent','domProperty'=>'innerHTML'))
+	protected function render($html, $options = array('domObject'=>'rbWindowContent','domProperty'=>'innerHTML'))
 	{
-		$domObject	 = JRequest::getVar('domObject',$options['domObject']);
-		$domProperty = JRequest::getVar('domProperty',$options['domProperty']);
+		$domObject	 = $this->input->get('domObject',$options['domObject']);
+		$domProperty = $this->input->get('domProperty',$options['domProperty']);
 
 		$response	= Rb_Factory::getAjaxResponse();
 		$response->addAssign( $domObject , $domProperty , $html );
