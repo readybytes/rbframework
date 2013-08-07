@@ -496,10 +496,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 		$redirect  = "index.php?option={$this->_component->getNameCom()}&view={$this->getName()}";
 
 		if(JRequest::getVar('task')==='apply' && $msgType != 'error') {
-			//ToDO:: get Id from lib obj
-			$table		=	$this->getModel()->getTable();
-			$keyName	=	$table->getKeyName();
-			$redirect  .= "&task=edit&id={$table->$keyName}";
+			$redirect  .= "&task=edit&id={$entity->getId()}";
 		}
 
 	   if(JRequest::getVar('task')==='savenew' && $msgType != 'error') {
