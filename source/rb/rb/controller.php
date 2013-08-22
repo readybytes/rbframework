@@ -493,20 +493,24 @@ abstract class Rb_Controller extends Rb_AbstractController
 		}
 
 		//perform redirection
-		$redirect  = "index.php?option={$this->_component->getNameCom()}&view={$this->getName()}";
+		$return	 = false;
+		$redirectTo  = "index.php?option={$this->_component->getNameCom()}&view={$this->getName()}";
 
-		if(JRequest::getVar('task')==='apply' && $msgType != 'error') {
-			$redirect  .= "&task=edit&id={$entity->getId()}";
+		if($this->input->get('task')==='apply' && $msgType != 'error') {
+			$redirectTo .= "&task=edit&id={$entity->getId()}";
+			$return  	 = true;
 		}
 
-	   if(JRequest::getVar('task')==='savenew' && $msgType != 'error') {
-			$redirect  .= "&task=new";
+	   if($this->input->get('task')==='savenew' && $msgType != 'error') {
+			$redirectTo  .= "&task=new";
+			$return  	 = true;
 		}
 		
-		$redirect = Rb_Route::_($redirect);
-		$this->setRedirect( $redirect , $this->getMessage(), $msgType);
-		
-		if($msgType	==	'error') {
+		$redirectTo = Rb_Route::_($redirectTo);
+		$this->setRedirect( $redirectTo , $this->getMessage(), $msgType);
+
+		// do not need to execute any stuff just redirect it
+		if($msgType	==	'error' || $return ) {
 			return false;
 		}
 		

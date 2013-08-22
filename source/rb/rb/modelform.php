@@ -99,13 +99,13 @@ abstract class Rb_Modelform extends JModelForm
 		// Get the form.
 		// check before using
 		if(defined('JPATH_COMPONENT')){
-			JForm::addFormPath(JPATH_COMPONENT . '/models/forms');
-			JForm::addFieldPath(JPATH_COMPONENT . '/models/fields');
+			Rb_Form::addFormPath(JPATH_COMPONENT . '/models/forms');
+			Rb_Form::addFieldPath(JPATH_COMPONENT . '/models/fields');
 		}
 
 		try
 		{
-			$form = JForm::getInstance($name, $source, $options, false, $xpath);
+			$form = Rb_Form::getInstance($name, $source, $options, false, $xpath);
 
 			if (isset($options['load_data']) && $options['load_data'])
 			{
