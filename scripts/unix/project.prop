@@ -1,0 +1,13 @@
+#change project code names
+project.shortform		= RBSL
+project.shortform.small = rbsl
+project.codename		= RBSL
+
+# Version
+build.version 	= 1.0.0
+#build.number	= Will be created dynamically
+
+# Output settings
+file.package		= ${project.shortform}
+file.compression	= gzip
+file.extension		= zip

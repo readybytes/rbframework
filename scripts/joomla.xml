@@ -1,0 +1,81 @@
+<?xml version="1.0" ?>
+<!-- $Id: build.xml shyam $ -->
+<project name="Joomla Installation" basedir="." default="setup" description="Installing Joomla.">
+
+	<target name="setup" depends="install_joomla,config_joomla, create_database">
+	    <echo msg="Build done." />
+	</target>	
+
+	<target name="jconfig" description="Load configuration file">
+		<!-- check for config, if not loaded, then please ask to user -->
+	</target>
+
+
+	<target name="config_joomla" depends="jconfig">
+
+		<copy file="${pkg.location}/${pkg.version}/database.sql" tofile="${joomla.rootpath}/${joomla.folder}/database.sql" overwrite="true"/>
+		<copy file="${pkg.location}/${pkg.version}/configuration.php" tofile="${joomla.rootpath}/${joomla.folder}/configuration.php" overwrite="true"/>
+
+		<!-- replace configuration-->
+		<reflexive>
+			<fileset dir="${joomla.rootpath}/${joomla.folder}">
+			    <include name="configuration.php" />
+			    <include name="database.sql" />
+                <include name="test/system/jdefines.php" />
+			</fileset>
+			 <filterchain>
+				<replacetokens>
+				    <token key="joomla.sitename" 		value="${joomla.sitename}/"/>
+				    <token key="joomla.dbuser"   		value="${joomla.dbuser}"/>
+				    <token key="joomla.dbpassword"   	value="${joomla.dbpassword}"/>
+				    <token key="joomla.dbname"   		value="${joomla.dbname}"/>
+				    <token key="joomla.dbprefix"   		value="${joomla.dbprefix}"/>
+				    <token key="joomla.rootpath"   		value="${joomla.rootpath}"/>
+				    <token key="joomla.folder"   		value="${joomla.folder}"/>
+				</replacetokens>
+			</filterchain>
+		</reflexive>
+		<echo msg="Joomla files copied .." />
+	</target>
+
+	<target name="install_joomla" depends="jconfig">
+
+		<echo msg="Installing Joomla Files..." />
+		<!-- Copy Joomla Folder to ROOT // FOLDERNAME  -->
+		<mkdir dir="${joomla.rootpath}/${joomla.folder}" />
+
+		<untar todir="${joomla.rootpath}/${joomla.folder}">
+			<fileset dir="${pkg.location}/${pkg.version}">
+				<include name="Joomla.tar.gz"/>
+			</fileset>
+		</untar>
+
+<!--
+		<copy todir="${joomla.rootpath}/${joomla.folder}" verbose="false" >
+		  <fileset dir="${joomla.rootpath}/${joomla.folder}/Joomla/">
+			<include name="**" />
+		  </fileset>
+		</copy>
+		<delete dir="${joomla.rootpath}/${joomla.folder}/Joomla/" includeemptydirs="true" verbose="false" failonerror="true" />
+-->
+
+		<echo msg="Joomla files copied .." />
+		
+		<!--  for linux only change owner of files to www-data -->
+		<exec command="sudo chmod -R 777 ." dir="${joomla.rootpath}/${joomla.folder}" />
+		<exec command="sudo chown -R www-data ." dir="${joomla.rootpath}/${joomla.folder}" />
+
+	</target>
+
+
+	<target name="create_database" depends="jconfig">
+		<!-- fill data base -->
+		<echo msg="Creating database and dumping sql into it." />
+		<exec command="${joomla.mysqlpath} -uroot -ppassword --execute=${joomla.createDBQuery}" passthru="true" />
+		<exec command="${joomla.mysqlpath} -uroot -ppassword --execute=${joomla.createUserQuery}" passthru="true" />
+		<exec command="${joomla.mysqlpath} -uroot -ppassword --execute=${joomla.createAcessQuery}"  passthru="true" />
+		<exec command="${joomla.mysqlpath} -uroot -ppassword --database=${joomla.dbname} --execute=${joomla.importDBQuery} "  passthru="true" />
+		<echo msg="Database work done." />
+	</target>
+</project>
+

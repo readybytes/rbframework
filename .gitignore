@@ -1,0 +1,5 @@
+source/dumpyard/
+source/extend/
+packages
+*.zip
+*.tar.gz

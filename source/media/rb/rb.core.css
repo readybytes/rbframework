@@ -1,0 +1,45 @@
+/**
+* @copyright	Copyright (C) 2009-2012 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @license		GNU/GPL, see LICENSE.php
+* @package		PayPlans
+* @contact 		shyam@readybytes.in
+*/
+
+/* Instructions :
+==================================================
+1. Every output from payplans must be packed via two div 
+	a) one with class payplans-wrap 
+	b) second with class payplans and rb-PURPOSE (replace purpose with purpose) + rb-view + rb-task
+
+	<div class="payplans-wrap">  				<-- always wrap with this div and ONLY class
+		<div class="payplans {rb-site rb-plan}">  <-- always wrap with this div, with additional classes
+			<div class="rb-component">			<-- always wrap with this div
+				------------------------
+				--------YOUR------------
+				--------HTML------------
+				--------HERE------------
+				------------------------
+			<div>
+		</div>
+	</div>
+ 
+2. No class should use payplans in name, use rb- instead.
+
+3. No underscores in class names, use dash
+
+4. Do not use id's for css styling
+
+
+7.  Write CSS comments in C-Style only 
+
+8.  payplans rule nomenclature for component output
+	 page  class =>  rb-{view}-{task}
+	 block class =>  rb-{block}-{purpose}
+	 item  class =>  rb-{purpose}
+	 
+	 write rules as -
+	 page  => .rb-wrap .rb-component .rb-{view}-{task} 
+	 block => .rb-component .rb-{view}-{task} .rb-{block}-{purpose}
+	 item  => .rb-component .rb-{block}-{purpose} .rb-{purpose}
+	 
+*/

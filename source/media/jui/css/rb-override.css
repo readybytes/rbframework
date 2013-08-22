@@ -1,0 +1,8 @@
+/* Issue fix for input-prepand class in joomla2.5  */
+.rb-wrap .input-prepend input, 
+.rb-wrap .input-prepend select, 
+.rb-wrap .input-prepend .uneditable-input{
+	 border-radius: 0 3px 3px 0;
+ 	 font-size: 14px;
+	 position : absolute;	
+}

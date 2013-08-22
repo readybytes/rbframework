@@ -1,0 +1,105 @@
+<?xml version="1.0" ?>
+<project name="RB Framework" basedir="." default="setup" description="Phing setup script for PayPlans package.">
+
+	<target name="config" description="Load configuration file">
+		<php expression="(PHP_OS == 'WINNT') ? 'win/' :'unix/'" returnProperty="IF_OS"/>
+
+		<property file="${IF_OS}global.prop"  override="true" />
+		<property file="${IF_OS}project.prop"  override="true" />
+		<property file="${IF_OS}build.prop" override="true" />
+
+		<if>
+		  <isset property="${joomla.now}"/>
+		  <then><echo msg="Setting it to ${joomla.now}" /></then>
+		  <else><php expression="rand(1000,9999)" returnProperty="joomla.now" /></else>
+		</if>
+
+		<echo msg="${joomla.now}" />
+
+		<if>
+		 <isset property="${pkg.version}"/>
+		  <then>
+		 	<echo msg="pkg.version already set to ${pkg.version}" />
+		 </then>
+		</if>
+
+		<php expression="rand(100,999)" returnProperty="joomla.random3"/>
+		<property file="${IF_OS}setup.prop"  override="false" />
+
+	</target>
+	
+	<target name="setup" description="build installable package only" depends="config">
+		<phing phingfile="joomla.xml" inheritAll="true" target="setup" />
+		<phingcall target="copy_kit" />
+		<phingcall target="copy_testcase" />
+		<phingcall target="copy_revbuild" />
+	</target>
+
+	<target name="copy_revbuild">
+		<copy 	file="${dir.root}/scripts/rev_build.xml" 
+				tofile="${joomla.rootpath}/${joomla.folder}/build.xml" />
+		<copy 	file="${dir.root}/scripts/rev_delete.xml" 
+				tofile="${joomla.rootpath}/${joomla.folder}/delete.xml" />
+				
+	<!-- Replace current location path in revbuild.xml for replacing the code -->
+		<reflexive>
+			<fileset dir="${joomla.rootpath}/${joomla.folder}">
+			    <include name="build.xml" />
+			    <include name="delete.xml" />
+			</fileset>
+			<filterchain>
+			    <replacetokens>
+				    <token key="local.repository.location" 	value="${project.basedir}/../"/>
+				    <token key="joomla.sitename" 		value="${joomla.sitename}/"/>
+				    <token key="joomla.dbuser"   		value="${joomla.dbuser}"/>
+				    <token key="joomla.dbpassword"   	value="${joomla.dbpassword}"/>
+				    <token key="joomla.dbname"   		value="${joomla.dbname}"/>
+				    <token key="joomla.dbprefix"   		value="${joomla.dbprefix}"/>
+				    <token key="joomla.rootpath"   		value="${joomla.rootpath}"/>
+				    <token key="joomla.folder"   		value="${joomla.folder}"/>
+				    <token key="build.number" 			value="${build.number}" />
+				    <token key="build.version"   		value="${build.version}" />
+				</replacetokens>
+ 			</filterchain>
+		</reflexive>
+	</target>
+
+	<target name="copy_testcase">
+		<!-- Copy testcases -->
+		<copy todir="${joomla.rootpath}/${joomla.folder}/test" >
+		  <fileset dir="${dir.root}/test" />
+		</copy>
+		
+		<exec command="sudo chmod -R 777 test" dir="${joomla.rootpath}/${joomla.folder}" />
+
+		<!-- replace configuration-->
+		<reflexive>
+			<fileset dir="${joomla.rootpath}/${joomla.folder}/test">
+			    <include name="system/jdefines.php" />
+			</fileset>
+			<filterchain>
+				<replacetokens>
+					<token key="joomla.folder" 		value="${joomla.folder}"/>
+				    <token key="dropbox.package.folder"  	value="${pkg.location}"/>
+				    <token key="pkg.location"            	value="${pkg.location}"/>
+				    <token key="local.repository.location" 	value="${project.basedir}/../"/>
+				    <token key="joomla.sitename" 		value="${joomla.sitename}/"/>
+				    <token key="joomla.dbuser"   		value="${joomla.dbuser}"/>
+				    <token key="joomla.dbpassword"   	value="${joomla.dbpassword}"/>
+				    <token key="joomla.dbname"   		value="${joomla.dbname}"/>
+				    <token key="joomla.dbprefix"   		value="${joomla.dbprefix}"/>
+				    <token key="joomla.rootpath"   		value="${joomla.rootpath}"/>
+				    <token key="joomla.mysqlpath"   	value="${joomla.mysqlpath}"/>
+					<token key="build.number" 			value="${build.number}" />
+				    <token key="build.version"   		value="${build.version}" />
+				</replacetokens>
+			</filterchain>
+		</reflexive>
+	</target>
+
+	<target name="copy_kit">
+		<exec command="git describe" dir="${dir.root}" outputProperty="build.number"  />
+		<copy file="${dir.packages}/${file.package}.${build.number}.${file.extension}" 
+				tofile="${joomla.rootpath}/${joomla.folder}/${project.shortform.small}.zip" />
+	</target>
+</project>

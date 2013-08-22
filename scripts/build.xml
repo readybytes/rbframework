@@ -1,0 +1,60 @@
+<?xml version="1.0" ?>
+<project name="Package Builder" basedir="." default="build" description="Phing build script for package.">
+
+	<target name="get_build_number">
+		<exec command="git describe" dir="${dir.root}" outputProperty="build.number"  />
+		<property name='build.number' value="${build.number}"  override="true" />
+
+	</target>
+
+	<target name="config" description="Load configuration file">
+	    <php expression="(PHP_OS == 'WINNT') ? 'win/' :'unix/'" returnProperty="IF_OS"/>
+
+		<property file="${IF_OS}global.prop" override="true" />
+		<phingcall target="get_build_number" />
+
+		<property file="${IF_OS}project.prop" override="true" />
+		<property file="${IF_OS}build.prop" override="true" />
+	</target>
+
+	
+	<target name="build" description="build installable package only" depends="config">
+		<exec command="git describe" dir="${dir.root}" outputProperty="build.number"  />
+
+		<delete dir="${dir.packages}" includeemptydirs="true" />
+		<delete dir="${dir.tmp}" includeemptydirs="true" />
+
+		<mkdir dir="${dir.packages}" />
+
+		<phingcall target="export_sourcecode" />
+		
+		<phing phingfile="${project.shortform.small}.xml" inheritAll="true" target="build" />
+
+
+		<zip destfile="${dir.packages}/${file.package}.${build.version}.${file.extension}" 
+			basedir="${dir.tmp}" />
+	</target>
+
+	<!-- Global Target -->
+	<target name="export_sourcecode" description="Export files from a local repository to package folder">		
+
+		<!-- Copy Source Code -->
+		<copy todir="${dir.tmp}" >
+		  <fileset dir="${dir.src}" />
+		</copy>
+		
+
+		<!-- Apply the version change to all files. -->
+		<reflexive>
+			<fileset dir="${dir.tmp}">
+			     <include name="**/*.*" />
+			</fileset>
+			 <filterchain>
+				<replacetokens>
+				    <token key="build.version" 	value="${build.version}" />
+				    <token key="build.number"   value="${build.number}" />
+				</replacetokens>
+			</filterchain>
+		</reflexive>		
+	</target>
+</project>

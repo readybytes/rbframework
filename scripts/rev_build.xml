@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Copying PayPlans data to SVN" basedir="." default="copy_to_svn">
+
+	<property name="target" 		value="/vobs/rbsl/scripts/../" 	override="true" />
+	<property name="source" 		value="${project.basedir}" 		override="true" />
+	<property name="build.version" 	value="0.9.0" 					override="true" />
+	<property name="build.number" 	value="0.9-6-g0c56a2c" 			override="true" />
+	<property name="A@T" 			value="@" />
+	
+	<!-- Copy Target -->
+	<target name="copy_to_svn" description="copy target">
+		<phingcall target="copy_rbslfw" />
+	</target>
+
+	<target name="copy_rbslfw">
+
+		<copy file="${source}/administrator/language/en-GB/en-GB.plg_system_rbsl.ini" 
+			tofile="${target}/source/languages/en-GB.plg_system_rbsl.ini" />
+		
+		<copy file="${source}/administrator/language/en-GB/en-GB.plg_system_rbsl.sys.ini"
+			tofile="${target}/source/languages/en-GB.plg_system_rbsl.sys.ini" />
+
+		<copy todir="${target}/source/">
+			<fileset dir="${source}/plugins/system/rbsl">
+				<include name="**/*.*" />
+				<depend targetdir="${target}/source/"/>
+			</fileset>
+		</copy>
+		
+		<copy todir="${target}/test">
+			<fileset dir="${source}/test/">
+				<include name="**/*.*" />
+				<exclude name="**/screenshots/*_log.png" />
+			</fileset>
+		</copy>	
+		
+		<copy file="${source}/build.xml"  tofile="${target}/scripts/rev_build.xml" />
+		<copy file="${source}/delete.xml" tofile="${target}/scripts/rev_delete.xml" />
+	</target>
+	
+	
+	<!-- Delete testing screen shots before running phing -->
+	<fileset dir="./test/test/" id="deleteScreenshots">
+		<include name="sel/com/site/order/SCSOScreenshotTest/screenshots/*.png" />
+	</fileset>
+	<target name="screenshots">
+		<delete>
+			<fileset refid="deleteScreenshots" />
+		</delete>
+	</target>
+
+	<target name="versionclean">
+		<php function="str_replace" returnProperty="versionString1">
+			    <param value="."/>
+		      	<param value="\."/>
+		      	<param value="${build.version}"/>
+		</php>
+		<php function="str_replace" returnProperty="versionString2">
+					    <param value="."/>
+				      	<param value="\."/>
+				      	<param value="${build.number}"/>
+		</php>
+		
+		<reflexive>
+			<fileset dir="${target}/source">
+				<include name="**/*.xml" />
+				<include name="**/*.php" />
+				<include name="**/*.js" />
+				<include name="**/*.css" />
+				<include name="**/*.ini" />
+				<include name="**/*.html" />
+				<include name="**/*.sql" />
+			</fileset>
+		 <filterchain>
+		 	    <replaceregexp>
+		 	       <regexp pattern="${versionString1}" replace="${A@T}build.version${A@T}"/>
+		 	       <regexp pattern="${versionString2}" replace="${A@T}build.number${A@T}"/>
+		 	    </replaceregexp>
+		</filterchain>
+		</reflexive>
+	</target>
+	
+</project>
