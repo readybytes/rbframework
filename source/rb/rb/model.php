@@ -391,7 +391,9 @@ abstract class Rb_Model extends Rb_AbstractModel
 		}
 
 		//try to delete
-	    if($table->delete($pk)){
+		// Load table so as to get all the available table data for other processing
+		// Like joomla tag untagging works on table data
+	    if($table->load($pk) && $table->delete($pk)){
 	    	return true;
 	    }
 

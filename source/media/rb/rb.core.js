@@ -64,13 +64,27 @@ rb.ui.dialog = {
 		// set the title
 		this.title(winTitle);
 		
-		// show the modal
-		$('#rbWindowContent').modal('show');
+		$('#rbWindowContent').on('show', function () {
+			var modal = $(this);
+			
+			//@RBTODO:: Should be responsive
+			// Customize height and width.			
+			// Centralize modal window after set required width and height.
+			modal.css({	width:winContentWidth, height:winContentHeight });
+				 //.css('margin-top', (modal.outerHeight() / 2) * -1)				 
+		         //.css('margin-left', (modal.outerWidth() / 2) * -1);
+			
+		    return this;
+		    
+		});
 		
 		// on hiding the popup, remove the div#rbWindowContent also 
-		$('#rbWindowContent').on('hidden', function(){
+		$('#rbWindowContent').on('hidden', function() {
 			$('#rbWindowContent').remove();
 		});
+		
+		// show the modal
+		$('#rbWindowContent').modal('show');
 		
 		// call ajax
 		if(call != null){
