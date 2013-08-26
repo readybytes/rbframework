@@ -70,9 +70,9 @@ rb.ui.dialog = {
 			//@RBTODO:: Should be responsive
 			// Customize height and width.			
 			// Centralize modal window after set required width and height.
-			modal.css({	width:winContentWidth, height:winContentHeight })
-				 .css('margin-top', (modal.outerHeight() / 2) * -1)				 
-		         .css('margin-left', (modal.outerWidth() / 2) * -1);
+			modal.css({	width:winContentWidth, height:winContentHeight });
+				 //.css('margin-top', (modal.outerHeight() / 2) * -1)				 
+		         //.css('margin-left', (modal.outerWidth() / 2) * -1);
 			
 		    return this;
 		    
