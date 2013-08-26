@@ -332,14 +332,15 @@ abstract class Rb_Lib extends JObject
 	{
 		$entity = $this->getName();
 
-		if($this->_trigger === true){
-			$previousObject = null;
-			if($this->getId()){
-				$previousObject = $this->getClone();
-				$previousObject->load($this->getId());
-			}
-
-			// trigger on before save
+		//$previous object should be defined
+		$previousObject = null;
+		if ($this->getId()) {
+			$previousObject = $this->getClone();
+			$previousObject->load($this->getId());
+		}
+		
+		// trigger on before save		
+		if ($this->_trigger === true) {
 			$args  = array($previousObject, $this, $entity);
 			$event = 'on'.$this->getPrefix().'BeforeSave';
 			$result = Rb_HelperPlugin::trigger($event, $args, '', $this);
