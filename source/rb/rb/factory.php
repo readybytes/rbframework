@@ -26,6 +26,10 @@ class Rb_Factory extends Rb_AbstractFactory
 		// Clean the name
 		$className	= preg_replace( '/[^A-Z0-9_]/i', '', $className );
 
+		//even thought class name are not case-senstivite but array index are
+		//so convert the case so that if instance is available isset does not results false due to case 
+		$className = strtolower($className);
+
 		//if already there is an object
 		if(isset($instance[$className]) && !$refresh){
 			return $instance[$className];
