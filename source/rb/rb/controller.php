@@ -495,8 +495,11 @@ abstract class Rb_Controller extends Rb_AbstractController
 		//perform redirection
 		$redirect  = "index.php?option={$this->_component->getNameCom()}&view={$this->getName()}";
 
+		// We use Table key name to work in both case with or without lib
 		if(JRequest::getVar('task')==='apply' && $msgType != 'error') {
-			$redirect  .= "&task=edit&id={$entity->getId()}";
+			$table    	=  $this->getModel()->getTable();
+      		$keyName  	=  $table->getKeyName();
+     		$redirect  .= "&task=edit&id={$table->$keyName}"; 
 		}
 
 	   if(JRequest::getVar('task')==='savenew' && $msgType != 'error') {
