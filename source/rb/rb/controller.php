@@ -496,8 +496,11 @@ abstract class Rb_Controller extends Rb_AbstractController
 		$return	 = false;
 		$redirectTo  = "index.php?option={$this->_component->getNameCom()}&view={$this->getName()}";
 
+		// We use Table key name to work in both case with or without lib
 		if($this->input->get('task')==='apply' && $msgType != 'error') {
-			$redirectTo .= "&task=edit&id={$entity->getId()}";
+			$table    	 =  $this->getModel()->getTable();
+  			$keyName  	 =  $table->getKeyName();
+ 			$redirectTo .= "&task=edit&id={$table->$keyName}"; 
 			$return  	 = true;
 		}
 
