@@ -49,11 +49,11 @@ abstract class Rb_Modelform extends JModelForm
 	
 	protected function loadFormData()
 	{
+		$data = array();
 		if(isset($this->_lib_data)){
-			return $this->_lib_data->toArray();
+			$data = $this->_lib_data->toArray();
 		}
-		
-		return array();
+		return $data;
 	}
 	
 	public function getName()
