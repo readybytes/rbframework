@@ -37,7 +37,7 @@ class Rb_Factory extends Rb_AbstractFactory
 		//class_exists function checks if class exist,
 		// and also try auto-load class if it can
 		if(class_exists($className, true)===false){
-			throw new Exception("RB Factory::getInstance = Class $className not found");
+			throw new RuntimeException("RB Factory::getInstance = Class $className not found");
 		}
 
 		//create new object, class must be autoloaded

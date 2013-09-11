@@ -249,31 +249,8 @@ abstract class Rb_Model extends Rb_AbstractModel
 			$tmpQuery->clear(strtolower($clean));
 		}
 
-		foreach($queryFilters as $key=>$value){
-			//support id too, replace with actual name of key
-			$key = ($key==='id')? $this->getTable()->getKeyName() : $key;
-			
-			// only one condition for this key
-			if(is_array($value)==false){
-				$tmpQuery->where("`tbl`.`$key` =".$this->_db->Quote($value));
-				continue;
-			}
-			
-			// multiple keys are there
-			foreach($value as $condition){
-				
-				// not properly formatted
-				if(is_array($condition)==false){
-					continue;
-				}
-				
-				// first value is condition, second one is value
-				list($operator, $val)= $condition;
-				$tmpQuery->where("`tbl`.`$key` $operator ".$val);
-			}
-			
-		}
-
+		$this->_buildWhereClause($tmpQuery, $queryFilters);
+		
 		if($indexedby === null){
 			$indexedby = $this->getTable()->getKeyName();
 		}
@@ -288,6 +265,39 @@ abstract class Rb_Model extends Rb_AbstractModel
 		}
 
 		return $this->_recordlist;
+	}
+	
+	/**
+	 * 
+	 * Applied query filter on $query instance 
+	 * @param Rb_Query $query
+	 * @param array $queryFilters
+	 * 
+	 * @return void
+	 */
+	protected function _buildWhereClause(Rb_Query $query, Array $queryFilters) 
+	{
+		foreach($queryFilters as $key=>$value){
+			//support id too, replace with actual name of key
+			$key = ($key==='id')? $this->getTable()->getKeyName() : $key;
+			
+			// only one condition for this key
+			if(is_array($value)==false){
+				$query->where("`tbl`.`$key` =".$this->_db->Quote($value));
+				continue;
+			}
+			
+			// multiple keys are there
+			foreach($value as $condition){
+				// not properly formatted
+				if(is_array($condition)==false){
+					continue;
+				}
+				// first value is condition, second one is value
+				list($operator, $val)= $condition;
+				$query->where("`tbl`.`$key` $operator ".$val);
+			}
+		}
 	}
 
 
