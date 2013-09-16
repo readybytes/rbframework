@@ -42,6 +42,6 @@ class Rb_HtmlJusertype extends Rb_Html
 		$attr['none'] = true;
 		$attr['userAutocomplete'] = false;
 		$attr['style']= 'onchange="document.adminForm.submit();"';
-		return Rb_Html::_('jusertype.edit', $elementName.'[]', $elementValue, $attr);
+		return Rb_Html::_('rb_html.jusertype.edit', $elementName.'[]', $elementValue, $attr);
 	}
 }
