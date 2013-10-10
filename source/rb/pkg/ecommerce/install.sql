@@ -241,6 +241,7 @@ INSERT IGNORE INTO `#__rb_ecommerce_currency` (`currency_id`, `title`, `publishe
 ('ZMK', 'Zambian Kwacha', 1, NULL, 'ZK'),
 ('ZRZ', 'Zaire Zaire', 1, NULL, NULL),
 ('ZWD', 'Zimbabwe Dollar', 1, NULL, NULL),
+('HRK', 'Croatian kuna' , 1, NULL, 'Kn'),
 ('SKK', 'Slovak Koruna', 1, NULL, NULL);
 
 
