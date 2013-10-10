@@ -38,7 +38,7 @@ function _rb_cms_version()
 
 function _rb_cms_profiler_mark($mark)
 {
-	if (JDEBUG) {
+	if (defined('JDEBUG') && JDEBUG) {
 		jimport( 'joomla.error.profiler' );
 		JProfiler::getInstance( 'Application' )->mark( $mark );
 	}
