@@ -28,9 +28,9 @@ class Rb_HelperTemplate
 		$vars->request->view 	= JRequest::getVar('view','');
 		$vars->request->task 	= JRequest::getVar('task','');
 		
-		$vars->time = new stdClass();
-		$vars->time->timzone 	= Rb_HelperJoomla::getUserTimeZone();
-		$vars->time->offset 	= Rb_HelperJoomla::getUserTimeZone()* 60;
+//		$vars->time = new stdClass();
+//		$vars->time->timzone 	= Rb_HelperJoomla::getUserTimeZone();
+//		$vars->time->offset 	= Rb_HelperJoomla::getUserTimeZone()* 60;
 		
 		
 		ob_start();
