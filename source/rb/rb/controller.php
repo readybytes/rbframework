@@ -712,35 +712,6 @@ abstract class Rb_Controller extends Rb_AbstractController
 		$this->setError($model->getError());
 		return false;
 	}
-
-	/*
-	 * Implement enable/multienable methods
-	 */
-	public function dobool()
-	{
-		$task	= JRequest::getVar('task',	'enable');
-
-		//setup error message, if no mapping exists
-		if(array_key_exists($task, $this->_boolMap)===false)
-		{
-			$this->setRedirect(null, Rb_Text::_('PLG_SYSTEM_RBSL_NO_MAPPING_FOUND_FOR_CURRENT_ACTION'), 'error');
-			return false;
-		}
-
-
-		//find and trigger the call
-		$mapping	= $this->_boolMap[$task];
-		$switch		= $mapping['switch'];
-		$column		= $mapping['column'];
-		$value		= $mapping['value'];
-
-		if($this->_doBool($column, $value, $switch)===false)
-			$this->setMessage($this->getError());
-
-		//redirect now
-		$this->setRedirect();
-		return false;
-	}
 	
 	/*
 	 * Update record
@@ -786,7 +757,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 		//if we have error messages
 		if(empty($errMsg)===false)
 		{
-			$this->message = $this->errMsg;
+			$this->message = $errMsg;
 			$this->messagetype = 'error';
 		}
 
