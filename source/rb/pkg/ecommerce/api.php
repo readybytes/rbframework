@@ -98,6 +98,11 @@ class Rb_EcommerceAPI
 		return Rb_EcommerceFactory::getHelper('invoice')->get_invoice_number_from_response($processor_type, $response);		
 	} 
 
+	public static function invoice_get_id_from_number($invoice_number)
+ 	{
+    	return Rb_EcommerceFactory::getHelper('invoice')->get_id_from_invoice_number($invoice_number);                
+   	}
+
 	public static function invoice_delete_record($id)
 	{
 		return Rb_EcommerceInvoice::getInstance($id)->delete();
