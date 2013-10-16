@@ -4,7 +4,7 @@ project.shortform.small = rbsl
 project.codename		= RBSL
 
 # Version
-build.version 	= 1.0.0
+build.version 	= 1.0.1
 #build.number	= Will be created dynamically
 
 # Output settings
