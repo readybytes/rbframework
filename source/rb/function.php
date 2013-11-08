@@ -25,9 +25,7 @@ function _rb_cms_version()
 			$family='16';
 			break;
 
-		case '30':
-		case '31':
-		case '35':
+		case ($major >= 30):
 			$family='35';
 			break;			
 	}
