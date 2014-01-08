@@ -48,17 +48,11 @@ abstract class Rb_Lib extends JObject
 	/**
 	 * @return : Rb_Lib
 	 */
+	static $instance = array();
 	static public function getInstance($comName, $name, $id=0, $bindData=null)
 	{
-		static $instance=array();
-
-		//clean cache if required
-		if(Rb_Factory::cleanStaticCache()){
-			$instance=array();
-		}
-
 		//generate class name
-		$className	= $comName.$name;
+		$className	= strtolower($comName.$name);
 		
 		// in classname does not exists then return false
 		if(class_exists($className, true) === FALSE){
@@ -73,15 +67,16 @@ abstract class Rb_Lib extends JObject
 		}
 
 		//if already there is an object and check for static cache clean up
-		if(isset($instance[$className][$id]) && $instance[$className][$id]->getId()==$id)
-			return $instance[$className][$id];
+		if(isset(self::$instance[$className][$id]) && self::$instance[$className][$id]->getId()==$id){
+			return self::$instance[$className][$id];
+		}
 
 		//create new object, class must be autoloaded
-		$instance[$className][$id] = new $className();
+		self::$instance[$className][$id] = new $className();
 
 		//if bind data exist then bind with it, else load new data
-		return  $bindData 	? $instance[$className][$id]->bind($bindData)
-							: $instance[$className][$id]->load($id);
+		return  $bindData 	? self::$instance[$className][$id]->bind($bindData)
+							: self::$instance[$className][$id]->load($id);
 
 	}
 		
