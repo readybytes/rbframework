@@ -387,7 +387,7 @@ abstract class Rb_Lib extends JObject
 
 		// delete data from table
 		$id  = $this->getId();
-		$result = $this->getModel()->delete($id);
+		$result = $this->_delete();
 		$this->reset();
 		
 		// if above delete was not complete, then result will be null
@@ -406,6 +406,10 @@ abstract class Rb_Lib extends JObject
 		return $this;
 	}
 	
+	protected function _delete()
+	{
+		return $this->getModel()->delete($this->getId());
+	}
 	/**
 	 * We use this function in various entities, so it must be defined in parent.
 	 */	
