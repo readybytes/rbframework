@@ -10,7 +10,7 @@ if(defined('_JEXEC')===false) die('Restricted access' );
 
 class Rb_HtmlText
 {
-	function filter($name, $view, Array $filters = array(), $prefix='filter_payplans')
+	static function filter($name, $view, Array $filters = array(), $prefix='filter_payplans')
 	{
 		$elementName  = $prefix.'_'.$view.'_'.$name;
 		$elementValue = @array_shift($filters[$name]);

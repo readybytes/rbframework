@@ -10,7 +10,7 @@ if(defined('_JEXEC')===false) die('Restricted access' );
 
 class Rb_HtmlDatetime extends Rb_Html
 {
-	function edit($name, $id, $value, $format = '%Y-%m-%d', $attr = null)
+	static function edit($name, $id, $value, $format = '%Y-%m-%d', $attr = null)
 	{
 		$style = isset($attr['style']) ? $attr['style'] : '';
 		$style .= 'class="payplans-xidatetime"';
