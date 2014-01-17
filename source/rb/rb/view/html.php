@@ -29,7 +29,7 @@ class Rb_ViewHtml extends Rb_View
 		//Get dynamic java script
 		$jsScript	=	$this->getDynamicJavaScript();
 		if($jsScript){
-			$document	=& Rb_Factory::getDocument();
+			$document	= Rb_Factory::getDocument();
 			$document->addScriptDeclaration($jsScript);
 		}
 	}
