@@ -11,6 +11,12 @@ if(defined('_JEXEC')===false) die('Restricted access' );
 class Rb_AdaptJ35View extends JViewLegacy
 {
 	protected	$_name		= null;
+	
+	function setModel($model, $default = false)
+	{
+		 $this->_model = $model;
+		 return $this;
+	}
 }
 
 class Rb_AdaptView extends Rb_AdaptJ35View
