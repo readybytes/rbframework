@@ -552,7 +552,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 	/**
 	 * Saves an item (new or old)
 	 */
-	public function _save(array $data, $itemId=null, $type=null)
+	public function _save(array $data, $itemId=null)
 	{
 		//create new lib instance
 		return Rb_Lib::getInstance($this->_component->getPrefixClass(), $this->getName(), $itemId)
