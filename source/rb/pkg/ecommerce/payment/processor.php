@@ -55,7 +55,7 @@ abstract class Rb_EcommerceProcessor
 	*
 	* @return Rb_EcommerceResponse An object representing the transaction
 	*/
-	public function process()
+	public function process($response)
 	{
 		
 	}
@@ -65,7 +65,7 @@ abstract class Rb_EcommerceProcessor
 	*
 	* @return JHttpResponse The response from the url
 	*/
-	public function request()
+	public function request(Rb_EcommerceRequest $request)
 	{
 		
 	}
