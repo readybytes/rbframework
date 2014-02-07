@@ -42,7 +42,7 @@ class Rb_EcommerceTransaction extends Rb_EcommerceLib
 	 * 
 	 * @return Object Rb_EcommercePaymentmethod  Instance of Rb_EcommerceTransaction
 	 */	
-	public static function getInstance($id = 0, $data = null, $dummy = null)
+	public static function getInstance($id = 0, $data = null, $dummy = null, $dummy1 = null)
 	{
 		return parent::getInstance('transaction', $id, $data);
 	}
@@ -70,7 +70,7 @@ class Rb_EcommerceTransaction extends Rb_EcommerceLib
 		return $this;
 	}
 	
-	public function setParams($params)
+	public function setParams($params, $value = null, $property='params')
 	{
 		$this->params->bind($params);
 		return $this;
