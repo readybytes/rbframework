@@ -57,7 +57,7 @@ class Rb_HelperTemplate
 		
 		Rb_Html::_('jquery.framework');
 		Rb_Html::_('jquery.ui');
-		Rb_html::_('bootstrap.framework');	// Load bootstrap.min.js
+		Rb_Html::_('bootstrap.framework');	// Load bootstrap.min.js
 		
 		// Load RB Script (Maintain Order) then other scripts
 		Rb_Html::script('rb/rb.core.js');
@@ -83,55 +83,5 @@ class Rb_HelperTemplate
 		
 		// prepend URL-root, and append slash
 		return ($root ? JURI::root() : '').$path.($append ? '/' : '');
-	}
-	
-	public static function partial($layout='default', $args=array())
-	{
-		$app 				= Rb_Factory::getApplication();
-    	$pTemplate			= 'default'; 			// RBFW_TODO : the template being used
-    	$pDefaultTemplate 	= 'default'; 			// default template
-		$jTemplate 			= $app->getTemplate(); 	// joomla template
-
-        // get the template and default paths for the layout
-        static $paths = null;
-
-        if($paths === null)
-        {
-        	$paths = array();
-        
-        	$joomlaTemplatePath = JPATH_THEMES.'/'.$jTemplate.'/html'.'/'.PAYPLANS_COMPONENT_NAME;
-			if($app->isAdmin()){
-				$payplanTemplatePath = PAYPLANS_PATH_TEMPLATE_ADMIN;
-			}
-			else{
-				$payplanTemplatePath =  PAYPLANS_PATH_TEMPLATE;
-			}
-
-			// joomla template override
-        	$paths[] = $joomlaTemplatePath.'/_partials';
-			$paths[] = $payplanTemplatePath.'/'.$pTemplate.'/_partials';
-			$paths[] = $payplanTemplatePath.'/'.$pDefaultTemplate.'/_partials';
-			// default to frontend partials
-			$paths[] = PAYPLANS_PATH_TEMPLATE.'/'.$pDefaultTemplate.'/_partials';
-        }
-        
-        //find the path and return
-        jimport('joomla.filesystem.path');
-        $template = JPath::find($paths, $layout.'.php');
-        
-		if ($template == false) {
-			return JError::raiseError( 500, "Layout $file [$template] not found");
-		}
-		
-        // setup args and render 
-        extract((array)$args,  EXTR_OVERWRITE);
-		
-		ob_start();
-		include $template;
-		$output = ob_get_contents();
-		ob_end_clean();
-
-		return $output;
-        
 	}
 }

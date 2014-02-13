@@ -461,23 +461,18 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 			// joomla template override
         	$paths[] = $joomlaTemplatePath.'/'.$view;
             $paths[] = $joomlaTemplatePath;
-        	$paths[] = $joomlaTemplatePath.'/_partials';
         	
 			// selected template path
 			$paths[] = $extTemplatePath.'/'.$extTemplate.'/'.$view;
 			$paths[] = $extTemplatePath.'/'.$extTemplate;
-			$paths[] = $extTemplatePath.'/'.$extTemplate.'/_partials';
 
 			// default template path			
 			$paths[] = $extTemplatePath.'/'.$extDefaultTemplate.'/'.$view;
 			$paths[] = $extTemplatePath.'/'.$extDefaultTemplate;
-			$paths[] = $extTemplatePath.'/'.$extDefaultTemplate.'/_partials';
 
-			// finally default partials
-			$paths[] = $extSiteTemplatePath.'/'.$extDefaultTemplate.'/_partials';
 			$this->_templatePaths = $paths;
         }
-        //JError::raiseError( 500, var_export($this->_templatePaths, true)); 
+
         return $this->_templatePaths;
     }
 
