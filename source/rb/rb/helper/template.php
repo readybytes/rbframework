@@ -59,12 +59,36 @@ class Rb_HelperTemplate
 		Rb_Html::_('jquery.ui');
 		Rb_Html::_('bootstrap.framework');	// Load bootstrap.min.js
 		
-		// Load RB Script (Maintain Order) then other scripts
-		Rb_Html::script('rb/rb.core.js');
-		Rb_Html::script('rb/rb.lib.js');
-		Rb_Html::script('rb/rb.validation.js');
+		// For backward compatibility should be #removed in 1.3
+		self::loadMedia(array('rb'));
 
 		return self::$_setupScriptsLoaded = true;
+	}
+
+	public static function loadMedia($list=array('rb'))
+	{
+		// Load RB Script (Maintain Order) then other scripts
+		if(in_array('rb', $list, false)){
+			Rb_Html::script('rb/rb.core.js');
+			Rb_Html::script('rb/rb.lib.js');
+			Rb_Html::script('rb/rb.validation.js');
+		}
+		
+		if(in_array('angular', $list, false)){
+			Rb_Html::script('angular/angular.js');
+			Rb_Html::script('angular/ui-router.js');
+		}
+		
+		if(in_array('font-awesome', $list, false)){
+			Rb_Html::stylesheet('font-awesome/css/font-awesome.css');
+		}
+		
+		if(in_array('nvd3', $list, false)){
+			Rb_Html::script('nvd3/d3.v2.js');
+			Rb_Html::script('nvd3/nv.d3.js');
+			Rb_Html::stylesheet('nv.d3.css');
+		}
+		
 	}
 	
 	
