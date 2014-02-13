@@ -10,7 +10,7 @@ if(defined('_JEXEC')===false) die('Restricted access' );
 
 class Rb_HtmlCombo extends Rb_Html
 {
-	function edit($arr, $name, $attributes=null, $key='value', $text='text', $selected = null) 
+	static function edit($arr, $name, $attributes=null, $key='value', $text='text', $selected = null) 
 	{
 		static $notLoaded = true;
 		

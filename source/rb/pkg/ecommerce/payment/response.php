@@ -37,7 +37,7 @@ class Rb_EcommerceResponse extends Rb_Registry
 		return $this;
 	}
 	
-    public function getStatusList()
+    public static function getStatusList()
 	{
 		return array(
 		    self::NONE 				=> Rb_Text::_('PLG_SYSTEM_RBSL_ECOMMERCE_TANSACTION_STATUS_NONE'),

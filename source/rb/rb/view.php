@@ -71,15 +71,9 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 	/**
 	 * @return Rb_Model
 	 */
-	function getModel()
+	function getModel($name = null)
 	{
 		return $this->_model;
-	}
-	
-	function setModel($model)
-	{
-		 $this->_model = $model;
-		 return $this;
 	}
 
 	function setTpl($tpl=null)
@@ -364,7 +358,7 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 		$this->assign( 'model', $this->getModel());
 	}
 	
-	public function get($tpl=null)
+	public function get($tpl, $default = null)
 	{
 		// for templates data is assigned to tplVars
 		if(isset($this->_tplVars[$tpl])){
@@ -374,7 +368,13 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 		return parent::get($tpl);
 	}
 	
-	public function assign($key, $value)
+	/**
+	 * (non-PHPdoc)
+	 * @see libraries/legacy/view/JViewLegacy::assign()
+	 * @param $key   Initialized with default value '', to remove strict standard warning
+	 * @param $value Initialized with default value '', to remove strict standard warning
+	 */
+	public function assign($key = '', $value = '')
 	{
 		$this->_tplVars[$key] = $value;
 	}

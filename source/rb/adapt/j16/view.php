@@ -13,6 +13,12 @@ jimport( 'joomla.application.component.view' );
 class Rb_AdaptJ16View extends JViewLegacy
 {
 	protected	$_name		= null;
+	
+	function setModel(&$model, $default = false)
+	{
+		 $this->_model = $model;
+		 return $this;
+	}
 }
 
 class Rb_AdaptView extends Rb_AdaptJ16View

@@ -869,6 +869,9 @@
 	var getValue = function ($this) {
 		// Extract the value we're talking about
 		var value = $this.val();
+		if(value == null){
+			return '';
+		}
 		var type = $this.attr("type");
 		if (type === "checkbox") {
 			value = ($this.is(":checked") ? value : "");

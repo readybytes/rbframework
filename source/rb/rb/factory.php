@@ -19,6 +19,11 @@ class Rb_Factory extends Rb_AbstractFactory
 	static function getInstance($name, $type='', $prefix='Rb_', $refresh=false)
 	{
 		static $instance=array();
+		
+		//clean cache if required
+		if(self::cleanStaticCache()){
+			$instance=array();
+		}
 
 		//generate class name
 		$className	= $prefix.$type.$name;
