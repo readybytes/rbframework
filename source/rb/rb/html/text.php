@@ -10,15 +10,21 @@ if(defined('_JEXEC')===false) die('Restricted access' );
 
 class Rb_HtmlText
 {
-	static function filter($name, $view, Array $filters = array(), $prefix='filter_payplans')
+	function filter($name, $view, Array $filters = array(), $prefix='filter_payplans', $attrs = array())
 	{
 		$elementName  = $prefix.'_'.$view.'_'.$name;
 		$elementValue = @array_shift($filters[$name]);
 		
 		$html  = '<input id="'.$elementName.'" ' 
 						.'name="'.$elementName.'[]" ' 
-						.'value="'.$elementValue.'" '
-						.'size="25" />';
+						.'value="'.$elementValue.'" ';
+		
+		if(!empty($attrs)){
+			foreach ($attrs as $attr => $attrValue){
+				$html .= ' '.$attr.'="'.$attrValue.'"';
+			}
+		}
+		$html  .= '/>';
 						
 		return $html;
 	}
