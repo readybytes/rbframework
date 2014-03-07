@@ -19,6 +19,11 @@ class Rb_Factory extends Rb_AbstractFactory
 	static function getInstance($name, $type='', $prefix='Rb_', $refresh=false)
 	{
 		static $instance=array();
+		
+		//clean cache if required
+		if(self::cleanStaticCache()){
+			$instance=array();
+		}
 
 		//generate class name
 		$className	= $prefix.$type.$name;
@@ -26,6 +31,9 @@ class Rb_Factory extends Rb_AbstractFactory
 		// Clean the name
 		$className	= preg_replace( '/[^A-Z0-9_]/i', '', $className );
 
+		//even thought class name are not case-senstivite but array index are
+		//so convert the case so that if instance is available isset does not results false due to case
+		$className = strtolower($className);
 		//if already there is an object
 		if(isset($instance[$className]) && !$refresh){
 			return $instance[$className];
@@ -34,7 +42,7 @@ class Rb_Factory extends Rb_AbstractFactory
 		//class_exists function checks if class exist,
 		// and also try auto-load class if it can
 		if(class_exists($className, true)===false){
-			throw new Exception("RB Factory::getInstance = Class $className not found");
+			throw new RuntimeException("RB Factory::getInstance = Class $className not found");
 		}
 
 		//create new object, class must be autoloaded

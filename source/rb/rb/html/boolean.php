@@ -10,7 +10,7 @@ if(defined('_JEXEC')===false) die('Restricted access' );
 
 class Rb_HtmlBoolean extends Rb_Html
 {
-	function grid( $row,$what , $i, $imgY = 'tick.png', $imgX = 'publish_x.png', $prefix='', $langPrefix='PLG_SYSTEM_RBSL' )
+	static function grid( $row,$what , $i, $imgY = 'tick.png', $imgX = 'publish_x.png', $prefix='', $langPrefix='PLG_SYSTEM_RBSL' )
 	{
 		$img 	= $row->$what ? $imgY : $imgX;
 		$task 	= $row->$what ? 'switchOff'.$what : 'switchOn'.$what;
@@ -23,7 +23,7 @@ class Rb_HtmlBoolean extends Rb_Html
 		return $href;
 	}
 	
-	function filter($name, $view, Array $filters = array(), $prefix='filter_payplans', $langPrefix='PLG_SYSTEM_RBSL')
+	static function filter($name, $view, Array $filters = array(), $prefix='filter_payplans', $langPrefix='PLG_SYSTEM_RBSL')
 	{
 		$elementName  = $prefix.'_'.$view.'_'.$name;
 		$elementValue = @array_shift($filters[$name]);

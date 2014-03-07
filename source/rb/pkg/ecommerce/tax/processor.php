@@ -12,31 +12,23 @@
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
 /** 
- * Processor Base Class
- * @author Gaurav Jain
+ * Tax Processor Base Class
+ * @author Shyam Sunder Verma
  */
-abstract class Rb_EcommerceProcessor 
-{
+
+abstract class Rb_EcommerceTaxProcessor 
+{		
 	/**
-	 * @var Rb_EcommerceRequest The payment data to be used for processing
-	*/
-	protected $data;
-		
-	/**
-	 * @var string Holds the name of Processor
+	 * @var string Holds the name of Tax Processor
 	 */
 	protected $_name = '';
 	
 	/**
-	 * @var Rb_EcommerceRequest
+	 * @var Rb_Registry
 	 */
 	protected $_config = null;
 
-	/**
-	 * @var string Holds that processor support for refund or not
-	 */
-	protected $_support_refund = false;
-	
+
 	/**
 	* Constructor.
 	*
@@ -46,29 +38,20 @@ abstract class Rb_EcommerceProcessor
 	public function __construct($config = array())
 	{
 		// load default configuration
-		$this->_config = new Rb_EcommerceRequest();
+		$this->_config = new Rb_Registry();
 		$this->setConfig($config);
 	}
 	
+			
 	/**
-	* Process the payment
-	*
-	* @return Rb_EcommerceResponse An object representing the transaction
+	* Process the Tax request
+	* @param Rb_EcommerceTaxRequest $request
+	* @return Rb_EcommerceTaxResponse An object representing the shipping cost and response
 	*/
-	public function process($response)
-	{
-		
-	}
+	abstract public function process(Rb_EcommerceTaxRequest $request)
+	{}
 	
-	/**
-	* Send the request to the processor url
-	*
-	* @return JHttpResponse The response from the url
-	*/
-	public function request(Rb_EcommerceRequest $request)
-	{
-		
-	}
+	
 	
 	public function getName()
 	{
@@ -77,8 +60,7 @@ abstract class Rb_EcommerceProcessor
 		if (empty( $name ))
 		{
 			$r = null;
-			Rb_Error::assert(preg_match('/Processor(.*)/i', get_class($this), $r) , Rb_Text::sprintf('COM_RB_ECOMMERCE_PROCESSOR_ERROR_CANT_GET_OR_PARSE_CLASS_NAME', get_class($this)), Rb_Error::ERROR);
-
+			Rb_Error::assert(preg_match('/TaxProcessor(.*)/i', get_class($this), $r) , Rb_Text::sprintf('COM_RB_ECOMMERCE_PROCESSOR_ERROR_CANT_GET_OR_PARSE_CLASS_NAME', get_class($this)), Rb_Error::ERROR);
 			$name = strtolower( $r[1] );
 		}
 
@@ -105,8 +87,4 @@ abstract class Rb_EcommerceProcessor
 		return $this;
 	} 
 
-	public function supportForRefund()
-	{
-		return $this->_support_refund;
-	}
 }

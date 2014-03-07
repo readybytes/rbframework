@@ -10,7 +10,7 @@ if(defined('_JEXEC')===false) die('Restricted access' );
 
 class Rb_HtmlJusertype extends Rb_Html
 {
-	function edit($name, $value, $attr=null, $ignore=array())
+	static function edit($name, $value, $attr=null, $ignore=array())
 	{
 		$options = array();
 		
@@ -34,7 +34,7 @@ class Rb_HtmlJusertype extends Rb_Html
 	    return Rb_Html::_('autocomplete.edit', $groups, $name, $attr, $textField, $valueField, $value);		
 	}
 	
-	function filter($name, $view, Array $filters = array(), $prefix='filter_payplans')
+	static function filter($name, $view, Array $filters = array(), $prefix='filter_payplans')
 	{
 		$elementName  = $prefix.'_'.$view.'_'.$name;
 		$elementValue = @array_shift($filters[$name]);
@@ -42,6 +42,6 @@ class Rb_HtmlJusertype extends Rb_Html
 		$attr['none'] = true;
 		$attr['userAutocomplete'] = false;
 		$attr['style']= 'onchange="document.adminForm.submit();"';
-		return Rb_Html::_('jusertype.edit', $elementName.'[]', $elementValue, $attr);
+		return Rb_Html::_('rb_html.jusertype.edit', $elementName.'[]', $elementValue, $attr);
 	}
 }

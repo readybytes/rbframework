@@ -25,9 +25,7 @@ function _rb_cms_version()
 			$family='16';
 			break;
 
-		case '30':
-		case '31':
-		case '35':
+		case ($major >= 30):
 			$family='35';
 			break;			
 	}
@@ -38,7 +36,7 @@ function _rb_cms_version()
 
 function _rb_cms_profiler_mark($mark)
 {
-	if (JDEBUG) {
+	if (defined('JDEBUG') && JDEBUG) {
 		jimport( 'joomla.error.profiler' );
 		JProfiler::getInstance( 'Application' )->mark( $mark );
 	}

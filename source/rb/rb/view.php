@@ -71,15 +71,9 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 	/**
 	 * @return Rb_Model
 	 */
-	function getModel()
+	function getModel($name = null)
 	{
 		return $this->_model;
-	}
-	
-	function setModel($model)
-	{
-		 $this->_model = $model;
-		 return $this;
 	}
 
 	function setTpl($tpl=null)
@@ -145,10 +139,10 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 		$this->assign('plugin_result', $pluginResult);
 
 		//load assets file first, then load its tmpls
-		$this->loadTemplate('assets');
+		$output = $this->loadTemplate('assets');
 				
 		//load the template file
-		$output = $this->loadTemplate($this->getTpl());
+		$output .= $this->loadTemplate($this->getTpl());
 
 		//post template rendering load trigger
 		$args	= array(&$this, &$task, $this->getName(), &$output);
@@ -364,7 +358,7 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 		$this->assign( 'model', $this->getModel());
 	}
 	
-	public function get($tpl=null)
+	public function get($tpl, $default = null)
 	{
 		// for templates data is assigned to tplVars
 		if(isset($this->_tplVars[$tpl])){
@@ -374,7 +368,13 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 		return parent::get($tpl);
 	}
 	
-	public function assign($key, $value)
+	/**
+	 * (non-PHPdoc)
+	 * @see libraries/legacy/view/JViewLegacy::assign()
+	 * @param $key   Initialized with default value '', to remove strict standard warning
+	 * @param $value Initialized with default value '', to remove strict standard warning
+	 */
+	public function assign($key = '', $value = '')
 	{
 		$this->_tplVars[$key] = $value;
 	}
@@ -461,23 +461,18 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 			// joomla template override
         	$paths[] = $joomlaTemplatePath.'/'.$view;
             $paths[] = $joomlaTemplatePath;
-        	$paths[] = $joomlaTemplatePath.'/_partials';
         	
 			// selected template path
 			$paths[] = $extTemplatePath.'/'.$extTemplate.'/'.$view;
 			$paths[] = $extTemplatePath.'/'.$extTemplate;
-			$paths[] = $extTemplatePath.'/'.$extTemplate.'/_partials';
 
 			// default template path			
 			$paths[] = $extTemplatePath.'/'.$extDefaultTemplate.'/'.$view;
 			$paths[] = $extTemplatePath.'/'.$extDefaultTemplate;
-			$paths[] = $extTemplatePath.'/'.$extDefaultTemplate.'/_partials';
 
-			// finally default partials
-			$paths[] = $extSiteTemplatePath.'/'.$extDefaultTemplate.'/_partials';
 			$this->_templatePaths = $paths;
         }
-        //JError::raiseError( 500, var_export($this->_templatePaths, true)); 
+
         return $this->_templatePaths;
     }
 

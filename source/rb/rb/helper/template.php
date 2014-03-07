@@ -28,9 +28,9 @@ class Rb_HelperTemplate
 		$vars->request->view 	= JRequest::getVar('view','');
 		$vars->request->task 	= JRequest::getVar('task','');
 		
-		$vars->time = new stdClass();
-		$vars->time->timzone 	= Rb_HelperJoomla::getUserTimeZone();
-		$vars->time->offset 	= Rb_HelperJoomla::getUserTimeZone()* 60;
+//		$vars->time = new stdClass();
+//		$vars->time->timzone 	= Rb_HelperJoomla::getUserTimeZone();
+//		$vars->time->offset 	= Rb_HelperJoomla::getUserTimeZone()* 60;
 		
 		
 		ob_start();
@@ -57,14 +57,38 @@ class Rb_HelperTemplate
 		
 		Rb_Html::_('jquery.framework');
 		Rb_Html::_('jquery.ui');
-		Rb_html::_('bootstrap.framework');	// Load bootstrap.min.js
+		Rb_Html::_('bootstrap.framework');	// Load bootstrap.min.js
 		
-		// Load RB Script (Maintain Order) then other scripts
-		Rb_Html::script('rb/rb.core.js');
-		Rb_Html::script('rb/rb.lib.js');
-		Rb_Html::script('rb/rb.validation.js');
+		// For backward compatibility should be #removed in 1.3
+		self::loadMedia(array('rb'));
 
 		return self::$_setupScriptsLoaded = true;
+	}
+
+	public static function loadMedia($list=array('rb'))
+	{
+		// Load RB Script (Maintain Order) then other scripts
+		if(in_array('rb', $list, false)){
+			Rb_Html::script('rb/rb.core.js');
+			Rb_Html::script('rb/rb.lib.js');
+			Rb_Html::script('rb/rb.validation.js');
+		}
+		
+		if(in_array('angular', $list, false)){
+			Rb_Html::script('angular/angular.js');
+			Rb_Html::script('angular/ui-router.js');
+		}
+		
+		if(in_array('font-awesome', $list, false)){
+			Rb_Html::stylesheet('font-awesome/css/font-awesome.css');
+		}
+		
+		if(in_array('nvd3', $list, false)){
+			Rb_Html::script('nvd3/d3.v2.js');
+			Rb_Html::script('nvd3/nv.d3.js');
+			Rb_Html::stylesheet('nv.d3.css');
+		}
+		
 	}
 	
 	
@@ -83,55 +107,5 @@ class Rb_HelperTemplate
 		
 		// prepend URL-root, and append slash
 		return ($root ? JURI::root() : '').$path.($append ? '/' : '');
-	}
-	
-	public static function partial($layout='default', $args=array())
-	{
-		$app 				= Rb_Factory::getApplication();
-    	$pTemplate			= 'default'; 			// RBFW_TODO : the template being used
-    	$pDefaultTemplate 	= 'default'; 			// default template
-		$jTemplate 			= $app->getTemplate(); 	// joomla template
-
-        // get the template and default paths for the layout
-        static $paths = null;
-
-        if($paths === null)
-        {
-        	$paths = array();
-        
-        	$joomlaTemplatePath = JPATH_THEMES.'/'.$jTemplate.'/html'.'/'.PAYPLANS_COMPONENT_NAME;
-			if($app->isAdmin()){
-				$payplanTemplatePath = PAYPLANS_PATH_TEMPLATE_ADMIN;
-			}
-			else{
-				$payplanTemplatePath =  PAYPLANS_PATH_TEMPLATE;
-			}
-
-			// joomla template override
-        	$paths[] = $joomlaTemplatePath.'/_partials';
-			$paths[] = $payplanTemplatePath.'/'.$pTemplate.'/_partials';
-			$paths[] = $payplanTemplatePath.'/'.$pDefaultTemplate.'/_partials';
-			// default to frontend partials
-			$paths[] = PAYPLANS_PATH_TEMPLATE.'/'.$pDefaultTemplate.'/_partials';
-        }
-        
-        //find the path and return
-        jimport('joomla.filesystem.path');
-        $template = JPath::find($paths, $layout.'.php');
-        
-		if ($template == false) {
-			return JError::raiseError( 500, "Layout $file [$template] not found");
-		}
-		
-        // setup args and render 
-        extract((array)$args,  EXTR_OVERWRITE);
-		
-		ob_start();
-		include $template;
-		$output = ob_get_contents();
-		ob_end_clean();
-
-		return $output;
-        
 	}
 }

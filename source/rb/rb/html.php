@@ -28,9 +28,9 @@ class Rb_Html extends JHtml
 			}
 		}
 		
-}
+	}
 
-	public function _refinePath($file)
+	public static function _refinePath($file)
 	{
 		if(JFile::exists($file)){
 			return  Rb_HelperTemplate::mediaURI($file,false);

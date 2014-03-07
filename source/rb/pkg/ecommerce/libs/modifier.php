@@ -92,11 +92,12 @@ class Rb_EcommerceModifier extends Rb_EcommerceLib
 	 * @param  integer  $id    		Unique identifier of input entity
 	 * @param  string   $type  		
 	 * @param  mixed    $data  		Data to be binded with the object
-	 * @param  mixed	$dummy		Dummy arg, if its not here then PHP will give warning (while development mode is on)
+	 * @param  mixed	$dummy1		Dummy arg, if its not here then PHP will give warning (while development mode is on)
+	 * @param  mixed	$dummy2		Dummy arg
 	 * 
 	 * @return Object Rb_EcommerceModifier  Instance of Rb_EcommerceModifier
 	 */	
-	public static function getInstance($id = 0, $data = null, $dummy = null)
+	public static function getInstance($id = 0, $data = null, $dummy1 = null, $dummy2 = null)
 	{
 		return parent::getInstance('modifier', $id, $data);
 	}

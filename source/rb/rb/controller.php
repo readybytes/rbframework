@@ -151,10 +151,14 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 	/**
 	 * @return Rb_View
 	 */
-	public function getView($name='', $format='')
+	public function getView($name='', $format='', $prefix = '', $config = array())
 	{
 		if(empty($name)){
 			$name 	= $this->getName();
+		}
+		
+		if(empty($prefix)){
+			$prefix = $this->getPrefix();
 		}
 		
 		if(empty($format)){
@@ -162,7 +166,7 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 		}
 
 		//get Instance from Factory
-		$view = Rb_Factory::getInstance($name, 'View', $this->getPrefix());	
+		$view = Rb_Factory::getInstance($name, 'View', $prefix);	
 
 		return $view;
 	}
@@ -228,7 +232,8 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 
 		//create view
 		$view = $this->getView();
-		$view->setModel($this->getModel());
+		$model = $this->getModel();
+		$view->setModel($model);
 
 		// Set the layout
 		$view->setLayout($viewLayout);
@@ -368,7 +373,13 @@ abstract class Rb_Controller extends Rb_AbstractController
 		return false;
 	}
 
-	function display()
+	/**
+	 * (non-PHPdoc)
+	 * @see libraries/legacy/controller/JControllerLegacy::display()
+	 * @param $cachable : dummy parameters for removing strict standard issue
+	 * @param $urlparams: dummy parameters for removing strict standard issue
+	 */
+	function display($cachable = false, $urlparams = array())
 	{
 		return $this->_display();
 	}
@@ -496,8 +507,11 @@ abstract class Rb_Controller extends Rb_AbstractController
 		$return	 = false;
 		$redirectTo  = "index.php?option={$this->_component->getNameCom()}&view={$this->getName()}";
 
+		// We use Table key name to work in both case with or without lib
 		if($this->input->get('task')==='apply' && $msgType != 'error') {
-			$redirectTo .= "&task=edit&id={$entity->getId()}";
+			$table    	 =  $this->getModel()->getTable();
+  			$keyName  	 =  $table->getKeyName();
+ 			$redirectTo .= "&task=edit&id={$table->$keyName}"; 
 			$return  	 = true;
 		}
 
@@ -542,7 +556,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 	/**
 	 * Saves an item (new or old)
 	 */
-	public function _save(array $data, $itemId=null, $type=null)
+	public function _save(array $data, $itemId=null)
 	{
 		//create new lib instance
 		return Rb_Lib::getInstance($this->_component->getPrefixClass(), $this->getName(), $itemId)
@@ -709,35 +723,6 @@ abstract class Rb_Controller extends Rb_AbstractController
 		$this->setError($model->getError());
 		return false;
 	}
-
-	/*
-	 * Implement enable/multienable methods
-	 */
-	public function dobool()
-	{
-		$task	= JRequest::getVar('task',	'enable');
-
-		//setup error message, if no mapping exists
-		if(array_key_exists($task, $this->_boolMap)===false)
-		{
-			$this->setRedirect(null, Rb_Text::_('PLG_SYSTEM_RBSL_NO_MAPPING_FOUND_FOR_CURRENT_ACTION'), 'error');
-			return false;
-		}
-
-
-		//find and trigger the call
-		$mapping	= $this->_boolMap[$task];
-		$switch		= $mapping['switch'];
-		$column		= $mapping['column'];
-		$value		= $mapping['value'];
-
-		if($this->_doBool($column, $value, $switch)===false)
-			$this->setMessage($this->getError());
-
-		//redirect now
-		$this->setRedirect();
-		return false;
-	}
 	
 	/*
 	 * Update record
@@ -783,7 +768,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 		//if we have error messages
 		if(empty($errMsg)===false)
 		{
-			$this->message = $this->errMsg;
+			$this->message = $errMsg;
 			$this->messagetype = 'error';
 		}
 
