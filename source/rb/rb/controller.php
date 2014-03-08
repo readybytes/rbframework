@@ -184,6 +184,14 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 
 	function execute($task)
 	{
+		//IMP : check authorize before executing any task
+		//so as to make sure site controller does not execute any task of admin/base controller 
+		$access = $this->authorize($task);
+		
+		if ($access == false){
+			throw new Exception(JText::sprintf('JLIB_APPLICATION_ERROR_TASK_NOT_FOUND', $task), 404);
+		}
+
 		// RBFW_TODO : Check for token
 		
 		//populate model state first
