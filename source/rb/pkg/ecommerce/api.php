@@ -103,6 +103,13 @@ class Rb_EcommerceAPI
 		return Rb_EcommerceFactory::getHelper('invoice')->get_id_from_invoice_number($invoice_number);                
  	} 
 
+	/**
+ 	 * 
+ 	 * Enter description here ...
+ 	 * @param $id
+ 	 * 
+ 	 * @deprecated use invoice_delete
+ 	 */
 	public static function invoice_delete_record($id)
 	{
 		return Rb_EcommerceInvoice::getInstance($id)->delete();
