@@ -13,6 +13,8 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
  * Ecommerce Engine API
  * @author Gaurav Jain
  */
+include_once 'includes.php';
+
 class Rb_EcommerceAPI
 {
 	public static function invoice_create($data, $is_master = true)

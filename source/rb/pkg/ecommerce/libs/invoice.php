@@ -451,7 +451,7 @@ class Rb_EcommerceInvoice extends Rb_EcommerceLib
 		$user_data->name 	 	= $user->get('name');
 		$user_data->username 	= $user->get('username');
 		$user_data->email 	 	= $user->get('email');
-		$user_data->ip_address 	= $_SERVER['REMOTE_ADDR'];
+		$user_data->ip_address 	= isset($_SERVER['REMOTE_ADDR'])?$_SERVER['REMOTE_ADDR'] : '';
 
 		return $user_data;
 	}
