@@ -184,14 +184,6 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 
 	function execute($task)
 	{
-		//IMP : check authorize before executing any task
-		//so as to make sure site controller does not execute any task of admin/base controller 
-		$access = $this->authorize($task);
-		
-		if ($access == false){
-			throw new Exception(JText::sprintf('JLIB_APPLICATION_ERROR_TASK_NOT_FOUND', $task), 404);
-		}
-
 		// RBFW_TODO : Check for token
 		
 		//populate model state first
@@ -218,6 +210,14 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 		//trigger before
 		$args	= array(&$this, &$task, $this->getName());
 		$result = Rb_HelperPlugin::trigger('on'.$this->_component->getPrefixClass().'ControllerBeforeExecute',$args);
+
+		//IMP : check authorize before executing any task
+		//so as to make sure site controller does not execute any task of admin/base controller 
+		$access = $this->authorize($task);
+		
+		if ($access == false){
+			throw new Exception(JText::sprintf('JLIB_APPLICATION_ERROR_TASK_NOT_FOUND', $task), 404);
+		}
 
 		//let the task execute in controller
 		//if task have failed, simply return and do not go to view
@@ -260,6 +260,9 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 		// V. Imp. Security Measures, 
 		// From frontend, function explicitly defined in frontend-controller are allowed
 		if(Rb_Factory::getApplication()->isAdmin()==false){
+			 if(empty($task) && isset($this->taskMap['__default'])){
+				$task = $this->taskMap['__default'];
+			 }
 			$access = in_array($task, Rb_HelperUtils::getMethodsDefinedByClass(get_class($this)));
 		}
 		
