@@ -44,7 +44,7 @@ class Rb_ViewAjax extends Rb_View
 		static $actions = array();
 
 		if($onButtonClick !== null){
-			$obejct 		= new stdClass();
+			$object 		= new stdClass();
 			$object->click 	= $onButtonClick;
 			$object->text 	= $text;
 			$object->classes= $class;
