@@ -211,6 +211,14 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 		$args	= array(&$this, &$task, $this->getName());
 		$result = Rb_HelperPlugin::trigger('on'.$this->_component->getPrefixClass().'ControllerBeforeExecute',$args);
 
+		//IMP : check authorize before executing any task
+		//so as to make sure site controller does not execute any task of admin/base controller 
+		$access = $this->authorize($task);
+		
+		if ($access == false){
+			throw new Exception(JText::sprintf('JLIB_APPLICATION_ERROR_TASK_NOT_FOUND', $task), 404);
+		}
+		
 		//let the task execute in controller
 		//if task have failed, simply return and do not go to view
 		$executeResult= parent::execute($task);
@@ -252,6 +260,9 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 		// V. Imp. Security Measures, 
 		// From frontend, function explicitly defined in frontend-controller are allowed
 		if(Rb_Factory::getApplication()->isAdmin()==false){
+			if(empty($task) && isset($this->taskMap['__default'])){
+                $task = $this->taskMap['__default'];
+            }
 			$access = in_array($task, Rb_HelperUtils::getMethodsDefinedByClass(get_class($this)));
 		}
 		
@@ -504,27 +515,23 @@ abstract class Rb_Controller extends Rb_AbstractController
 		}
 
 		//perform redirection
-		$return	 = false;
-		$redirectTo  = "index.php?option={$this->_component->getNameCom()}&view={$this->getName()}";
+		$redirect  = "index.php?option={$this->_component->getNameCom()}&view={$this->getName()}";
 
 		// We use Table key name to work in both case with or without lib
-		if($this->input->get('task')==='apply' && $msgType != 'error') {
-			$table    	 =  $this->getModel()->getTable();
-  			$keyName  	 =  $table->getKeyName();
- 			$redirectTo .= "&task=edit&id={$table->$keyName}"; 
-			$return  	 = true;
+		if(JRequest::getVar('task')==='apply' && $msgType != 'error') {
+			$table    	=  $this->getModel()->getTable();
+      		$keyName  	=  $table->getKeyName();
+     		$redirect  .= "&task=edit&id={$table->$keyName}"; 
 		}
 
-	   if($this->input->get('task')==='savenew' && $msgType != 'error') {
-			$redirectTo  .= "&task=new";
-			$return  	 = true;
+	   if(JRequest::getVar('task')==='savenew' && $msgType != 'error') {
+			$redirect  .= "&task=new";
 		}
 		
-		$redirectTo = Rb_Route::_($redirectTo);
-		$this->setRedirect( $redirectTo , $this->getMessage(), $msgType);
-
-		// do not need to execute any stuff just redirect it
-		if($msgType	==	'error' || $return ) {
+		$redirect = Rb_Route::_($redirect);
+		$this->setRedirect( $redirect , $this->getMessage(), $msgType);
+		
+		if($msgType	==	'error') {
 			return false;
 		}
 		
@@ -848,3 +855,4 @@ abstract class Rb_Controller extends Rb_AbstractController
 		return Rb_HelperEvent::trigger($event, $args);
 	}
 }
+

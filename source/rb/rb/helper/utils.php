@@ -58,7 +58,8 @@ class Rb_HelperUtils
 	            if ($rMethod->getDeclaringClass()->getName()
 	                == $rClass->getName())
 	            {
-	                $array[] =  $rMethod->getName();
+	                // Convert task into lowercase because in controller's execute function task will be check in lower case only
+	                $array[] =  strtolower($rMethod->getName());
 	            }
 	        }
 	        catch (exception $e)
