@@ -54,19 +54,25 @@ class Rb_HelperTemplate
 		if(self::$_setupScriptsLoaded === true){
 			return true;
 		}
-		
-		Rb_Html::_('jquery.framework');
-		Rb_Html::_('jquery.ui');
-		Rb_Html::_('bootstrap.framework');	// Load bootstrap.min.js
-		
+				
 		// For backward compatibility should be #removed in 1.3
-		self::loadMedia(array('rb'));
+		self::loadMedia();
 
 		return self::$_setupScriptsLoaded = true;
 	}
 
-	public static function loadMedia($list=array('rb'))
+	public static function loadMedia($list=array('bootstrap', 'jquery', 'rb'))
 	{
+		if(in_array('jquery', $list, false)){
+			Rb_Html::_('jquery.framework');
+			Rb_Html::_('jquery.ui');
+		}
+		
+		if(in_array('bootstrap', $list, false)){
+			Rb_Html::_('bootstrap.framework');	// Load bootstrap.min.js
+			Rb_Html::_('bootstrap.loadCss'); // load bootstrap css
+		}
+		
 		// Load RB Script (Maintain Order) then other scripts
 		if(in_array('rb', $list, false)){
 			Rb_Html::script('rb/rb.core.js');
