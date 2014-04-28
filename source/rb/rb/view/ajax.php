@@ -14,6 +14,8 @@ class Rb_ViewAjax extends Rb_View
 	public 	$_renderOptions = array('domObject'=>'rbWindowContent','domProperty'=>'innerHTML');
 	public 	$headerFooters 	= true;
 	
+	static $actions = Array();
+	
 	protected function render($html, $options = array('domObject'=>'rbWindowContent','domProperty'=>'innerHTML'))
 	{
 		$domObject	 = $this->input->get('domObject',$options['domObject']);
@@ -41,28 +43,24 @@ class Rb_ViewAjax extends Rb_View
     //this will set action/submit button on bottom of popup window
 	function _addAjaxWinAction($text, $onButtonClick=null, $class="btn", $attr = '')
 	{
-		static $actions = array();
-
-		if($onButtonClick !== null){
-			$object 		= new stdClass();
-			$object->click 	= $onButtonClick;
-			$object->text 	= $text;
-			$object->classes= $class;
-			$object->attr 	= $attr;
-			$actions[]=$object;
-		}
-    	return $actions;
+		$object 		= new stdClass();
+		$object->click 	= $onButtonClick;
+		$object->text 	= $text;
+		$object->classes= $class;
+		$object->attr 	= $attr;
+		
+		self::$actions[]=$object;
+		
+    	return self::$actions;
     }
 
 	function _setAjaxWinAction()
 	{
-    	$actions = $this->_addAjaxWinAction('',null);
-
-    	if(count($actions)===0){
+    	if (count(self::$actions) === 0) {
     		return false;
     	}
 
-    	Rb_Factory::getAjaxResponse()->addScriptCall('rb.ui.dialog.button',$actions);
+    	Rb_Factory::getAjaxResponse()->addScriptCall('rb.ui.dialog.button',self::$actions);
     	return true;
     }
 

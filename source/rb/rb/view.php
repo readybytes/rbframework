@@ -118,9 +118,9 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 		$this->setTask($task);
 		$this->setTpl($tpl);
 
-		// Execute the task 
-		if(false === $this->$task()){
-			throw new Exception("Error in function $task of ".get_class($this));
+		// Execute the task
+		if(!(bool)$this->$task()) {
+			return false;
 		}
 		
 		//Task executed successfully

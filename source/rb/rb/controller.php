@@ -161,10 +161,6 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 			$prefix = $this->getPrefix();
 		}
 		
-		if(empty($format)){
-			$format	= RB_REQUEST_DOCUMENT_FORMAT;
-		}
-
 		//get Instance from Factory
 		$view = Rb_Factory::getInstance($name, 'View', $prefix);	
 
@@ -247,8 +243,7 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 		$view->setLayout($viewLayout);
 
 		// Call the view, It will call function equal to the resolved-task-name
-		$view->showTask($this->getdoTask(), $this->_tpl);
-		return true;
+		return $view->showTask($this->getdoTask(), $this->_tpl);
 	}
 
 	//Implement common authorization system over here
@@ -359,6 +354,43 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 	public function getTpl()
 	{
 		return $this->_tpl;
+	}
+	
+	/**
+	 * Redirects the browser or returns false if no redirect is set.
+	 *
+	 * @return  boolean  False if no redirect exists.
+	 *
+	 * @since   12.2
+	 */
+	public function redirect()
+	{
+		switch ($this->input->get('format','html')) 
+		{	
+			case 'ajax' :
+				return $this->_redirect_ajax();
+		
+			case 'html'	:
+			default:
+				return parent::redirect();
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * 
+	 * Invoke it when request formater is ajax 
+	 */
+	protected function _redirect_ajax() 
+	{
+		$ajax_response = Rb_Factory::getAjaxResponse();
+		
+		if ($this->redirect) {
+			$ajax_response->addScriptCall('rb.url.redirect', $this->redirect);
+		}
+		
+		return $ajax_response->sendResponse();
 	}
 }
 
@@ -497,7 +529,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 	{
 		//RBFW_TODO : verify form token
 		//try to save
-		$post = Rb_Factory::getApplication()->input->post->get($this->_component->getNameSmall().'_form', array(), 'array');
+		$post = $this->input->post->get($this->_component->getNameSmall().'_form', array(), 'array');
 		//Currently not required
 		//$post   = $this->_filterPost($post);
 

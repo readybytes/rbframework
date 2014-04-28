@@ -38,3 +38,4 @@ define('RB_STATE_DISABLE', 0);
 
 // Define Document format, needed for views autoloading
 define('RB_REQUEST_DOCUMENT_FORMAT', _rb_cms_doc_req_format());
+

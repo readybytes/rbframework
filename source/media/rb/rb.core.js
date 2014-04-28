@@ -145,22 +145,53 @@ rb.ui.dialog = {
 
 /*--------------------------------------------------------------
   URL related work
+  	# url.modal		:	Open a url in modal window
+   	# url.redirect	:	Redirect current window to new url
 --------------------------------------------------------------*/
+//deprecated and move into rb.url
 rb.route = {
 	url : function(url){
-				// already a complete URL
-				if(url.indexOf('http://') === -1){
-						// is it already routed URL without http ?
-					  var base2_url_index = url.indexOf(rb_vars['url']['base_without_scheme']);
-					  // only add if, its not routed URL
-					  if(base2_url_index === -1 ){
-						  url = rb_vars['url']['base'] + url;
-					  }
-				}
-				
-				return url;
+				return rb.url.route(url)
 	}
 };
+
+
+rb.url = {
+	  	modal	: 	function( theurl, options, windowWidth, windowHeight)
+	  	{
+			var ajaxCall = {'url':theurl, 'data': {}, 'iframe': false};
+				
+			if(options) {
+			  ajaxCall = {'url':theurl, 'data':options.data, 'iframe' : false};
+			}
+			
+			if (!windowWidth)  { windowWidth = 'auto';	 }
+			
+			if (!windowHeight) { windowHeight = 'auto'; }
+
+			rb.ui.dialog.create(ajaxCall, '', windowWidth, windowHeight);
+		},
+			
+		redirect	:	function(url) 
+		{
+			document.location.href=url;
+		},
+		
+		route	:	function(url)
+		{
+			// already a complete URL
+			if(url.indexOf('http://') === -1) {
+					// is it already routed URL without http ?
+				  var base2_url_index = url.indexOf(rb_vars['url']['base_without_scheme']);
+				  // only add if, its not routed URL
+				  if(base2_url_index === -1 ){
+					  url = rb_vars['url']['base'] + url;
+				  }
+			}
+			
+			return url;
+		}
+	};
 
 /*--------------------------------------------------------------
   Ajax related works
@@ -297,8 +328,8 @@ rb.ajax = {
 		if(errorCallback == null) errorCallback = rb.ajax.default_error_callback;
 		if(successCallback == null) successCallback = rb.ajax.default_success_callback;
 
-		// properly oute the url
-		ajax_url = rb.route.url(url) + '&format=ajax';
+		// properly route the url
+		ajax_url = rb.url.route(url) + '&format=ajax';
 	
 		//execute ajax
 		// in jQ1.5+ first argument is url
@@ -334,7 +365,7 @@ rb.iframe = {
 		$iframe.load(onLoadCallback).appendTo(appendTo);
 				
 		// properly output the url
-		url = rb.route.url(call.url);
+		url = rb.url.route(call.url);
 		
 		url += '&' + $.param(call.data);
 		$iframe.attr('src',url);
