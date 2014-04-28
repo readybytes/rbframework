@@ -30,6 +30,9 @@
 		<folder>nvd3</folder>
 		<folder>rb</folder>
 		<folder>daterangepicker</folder>
+		<filename>index.html</filename>
+		<folder>angular</folder>
+		<folder>font-awesome</folder>
 	</media>
 
 	<config>
