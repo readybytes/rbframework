@@ -23,6 +23,13 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 	protected 	$_boolMap	= array();
 	protected	$_defaultOrderingDirection = 'ASC';
 	
+	
+	/**
+	 * @var string  $_id_data_type : Request type for the variable (INT, UINT, FLOAT, BOOLEAN, WORD, ALNUM, CMD, BASE64, STRING, ARRAY, PATH, NONE)
+	 * 
+	 */
+	protected $_id_data_type	=	'INT';
+	
 	/**
 	 * Publish/Ordering functionality can be common on various forms
 	 * If child class want to differ, then it can over-ride, savePublish or saveOrder
@@ -232,7 +239,7 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 
 		// now handle output part centrally
 		// instansiate view and let them process
-		$viewLayout	= JRequest::getCmd( 'layout', 'default' );
+		$viewLayout	= $this->input->get( 'layout', 'default' );
 
 		//create view
 		$view = $this->getView();
@@ -271,7 +278,7 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 	 * is properly identified at all levels.
 	 * @return int
 	 */
-	public function _getId()
+	protected function _getId()
 	{	
 		//Id's can come in three ways
 		//0. comname_form[id] or comname_form[entity_id]  
@@ -279,7 +286,8 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 		//2: enitityname_id in post
 		//3: cids in post(always)
 		// we will only support ONE id here, to get multiple IDs, respective function will collect cids
-		$post = JRequest::getVar("{$this->_component->getNameSmall()}_form", null);
+		$post = $this->input->get("{$this->_component->getNameSmall()}_form", null);
+		
 		if( isset($post["{$this->getName()}_id"])  || isset($post['id']) ){
 			$entId = $post["{$this->getName()}_id"];
 			if($entId !== null){ 
@@ -292,17 +300,22 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 			}
 		}
 
-		$entId = JRequest::getVar("{$this->getName()}_id", null, '', 'int');
-		if($entId !== null)
+		$entId = $this->input->get("{$this->getName()}_id", null, $this->_id_data_type);
+		
+		if ($entId) {
 			return $entId;
+		}
 
-		$uId	= JRequest::getVar('id', null , '', 'int');
-		if($uId !== null)
+		$uId	= $this->input->get('id', null, $this->_id_data_type);
+		if($uId) {
 			return $uId;
+		}
 
-		$cids 	= JRequest::getVar('cid', null, 'post', 'array');
-		if($cids !== null)
+		$cids 	= $this->input->get('cid', null, 'ARRAY');
+		
+		if($cids !== null) {
 			return $cids[0];
+		}
 
 		return -1;
 	}
@@ -337,7 +350,7 @@ abstract class Rb_AbstractController extends Rb_AdaptController
         $filters['filter']			 = $app->getUserStateFromRequest($context.'.filter', 'filter', '', 'string');
 
         //start link does not redirect to the first page because offset is used as limitstart   
-        $filters['limitstart'] 		 = JRequest::getVar('limitstart',0);
+        $filters['limitstart'] 		 = $this->input->get('limitstart',0);
         //also support generic filters
         $model->_populateGenericFilters($filters);
 
@@ -482,10 +495,6 @@ abstract class Rb_Controller extends Rb_AbstractController
 		//get the model
 		$model 		= $this->getModel();
 
-		//find the user, if nothing mentioned
-		if($userId	=== null)
-			$userId = Rb_Factory::getUser()->id;
-
 		//if Item Id is given then set to model
 		if($itemId !== null)
 			$this->getModel()->setState('id',$itemId);
@@ -550,13 +559,13 @@ abstract class Rb_Controller extends Rb_AbstractController
 		$redirect  = "index.php?option={$this->_component->getNameCom()}&view={$this->getName()}";
 
 		// We use Table key name to work in both case with or without lib
-		if(JRequest::getVar('task')==='apply' && $msgType != 'error') {
+		if($this->input->get('task')==='apply' && $msgType != 'error') {
 			$table    	=  $this->getModel()->getTable();
       		$keyName  	=  $table->getKeyName();
      		$redirect  .= "&task=edit&id={$table->$keyName}"; 
 		}
 
-	   if(JRequest::getVar('task')==='savenew' && $msgType != 'error') {
+	   if($this->input->get('task')==='savenew' && $msgType != 'error') {
 			$redirect  .= "&task=new";
 		}
 		
@@ -570,30 +579,9 @@ abstract class Rb_Controller extends Rb_AbstractController
 		return $entity;
 	}
 
-//	/**
-//	 * This function filters variable for forms
-//	 */
-//	public function _filterPost($post)
-//	{
-//		$returnData = array();
-//		//we need to remove the prefix
-//		foreach($post as $key=>$data){
-//			$r = null;
-//			if (!preg_match('/'.RB_FORM_VARIABLE_PREFIX.'(.*)/i', $key, $r))
-//				continue;
-//
-//			// xi_order_0 -> data[order][0]
-//			$index = $r[1];
-//			$pos=strrpos($index,'_');
-//
-//			$count = substr($index,$pos+1);
-//			$index = substr($index,0, $pos);
-//			$returnData[$index][$count] = $data;
-//		}
-//		return $returnData;
-//	}
 	/**
 	 * Saves an item (new or old)
+	 * @TODO:: should be protected.
 	 */
 	public function _save(array $data, $itemId=null)
 	{
@@ -617,7 +605,7 @@ abstract class Rb_Controller extends Rb_AbstractController
         // to get ID in _remove function for deleting in edit screen
 		//$this->getModel()->setState('id',null);
 
-		$cids = JRequest::getVar('cid', array (0), 'request', 'array');
+		$cids = $this->input->get('cid', array(0), 'Array');
 		foreach (@$cids as $cid)
 		{
 			if($this->_remove($cid)===false)
@@ -640,9 +628,6 @@ abstract class Rb_Controller extends Rb_AbstractController
 	    if($itemId === null || $itemId === 0){
 			$itemId = $model->getId();
 		}
-		//find the user, if nothing mentioned
-		if($userId	== null)
-			$userId 	= Rb_Factory::getUser()->id;
 
 		$item = Rb_Lib::getInstance($this->_component->getPrefixClass(), $this->getName(), $itemId, null)
 				->delete();
@@ -664,7 +649,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 		$messagetype 	= 'message';
 		$message 		= Rb_Text::_($this->_component->getPrefixText().'PLG_SYSTEM_RBSL_ITEMS_COPIED');
 		
-		$cids = JRequest::getVar('cid', $cids, 'request', 'array');
+		$cids = $this->input->get('cid', $cids, 'ARRAY');
 		foreach ($cids as $cid)
 		{
 			if($this->_copy($cid)===false)
@@ -694,10 +679,10 @@ abstract class Rb_Controller extends Rb_AbstractController
 	 */
 	function order()
 	{
-		$task	= JRequest::getVar('task', 'orderdown', 'post');
+		$task	= $this->input->get('task', 'orderdown');
 		$change = ($task === 'orderup') ? -1 : 1;
 
-		$cids 	= JRequest::getVar('cid', array (0), 'post', 'array');
+		$cids 	= $this->input->get('cid', array(0), 'ARRAY');
 
 		//try to order
 		if($this->_order($change, $cids[0])===false)
@@ -722,8 +707,8 @@ abstract class Rb_Controller extends Rb_AbstractController
 		$this->message 		= Rb_Text::_($this->_component->getPrefixText().'PLG_SYSTEM_RBSL_ITEMS_REORDERED');
 
 		//RBFW_TODO : User proper variable names
-		$ordering 	= JRequest::getVar('ordering', array(0), 'post', 'array');
-		$cids 		= JRequest::getVar('cid', array (0), 'post', 'array');
+		$ordering 	= $this->input->get('ordering', array(0), 'ARRAY');
+		$cids 		= $this->input->get('cid', array(0), 'ARRAY');
 
 		foreach ($cids as $cid)
 		{
@@ -768,8 +753,8 @@ abstract class Rb_Controller extends Rb_AbstractController
 	 */
 	public function update()
 	{
-		$name	= JRequest::getVar('name',	null);
-		$value	= JRequest::getVar('value',	null);
+		$name	= $this->input->get('name',	null);
+		$value	= $this->input->get('value',	null);
 		$itemId 	= $this->getModel()->getId();
 		
 		$data  = array($name => $value);
@@ -789,14 +774,14 @@ abstract class Rb_Controller extends Rb_AbstractController
 		$this->messagetype 	= 'notice';
 		$this->message 		= Rb_Text::_($this->_component->getPrefixText().'PLG_SYSTEM_RBSL_ITEMS_REORDERED');
 
-		$task	= strtolower(JRequest::getVar('task',	'enable'));
+		$task	= strtolower($this->input->get('task',	'enable'));
 
 		$mapping	= $this->_boolMap[$task];
 		$switch		= $mapping['switch'];
 		$column		= $mapping['column'];
 		$value		= $mapping['value'];
 
-		$cids 	= JRequest::getVar('cid', array (0), 'post', 'array');
+		$cids 	= $this->input->get('cid', array (0), 'ARRAY');
 
 		foreach ($cids as $cid)
 		{
@@ -839,7 +824,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 	}
 
 	/**
-	 * This function will collect the data, from JRequest 
+	 * This function will collect the data, from Request 
 	 * And only for those, whose name starts with 'args#' 
 	 * # is the count 1,2,3
 	 */
@@ -849,7 +834,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 		// RBFW_TODO : loop array till argument count
 		$args = array(); 
 		for($i=1 ; $i < 10 ; $i++){
-			$arg = JRequest::getVar('arg'.$i,null);
+			$arg = $this->input->get('arg'.$i,null);
 			
 			if($arg == null){
 				break;
@@ -860,14 +845,14 @@ abstract class Rb_Controller extends Rb_AbstractController
 
 		// if it is an ajax request, decode the args 
 		// (all ajax args are json-encoded)
-		if(JRequest::getBool('isAjax',	false)){
+		if($this->input->get('isAjax',	false, 'BOOLEAN')){
 			foreach($args as $index => $arg){
 				$args[$index] = json_decode($arg);
 			}
 		}
 		
 		// for system starting from 2.0
-		$event_args = JRequest::getVar('event_args',null);
+		$event_args = $this->input->get('event_args',null);
 		if($event_args !== null){
 			$args = $event_args;
 		}
@@ -878,7 +863,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 	public function trigger($event=null,$args=null)
 	{
 		//RBFW_TODO:High : Event should be filtered
-		$event 		= JRequest::getVar('event', $event);
+		$event 		= $this->input->get('event', $event);
 		Rb_Error::assert($event,Rb_Text::_('PLG_SYSTEM_RBSL_ERROR_PAYPLANS_UNKNOWN_EVENT_TRIGGER_REQUESTED'));
 
 		$args = $this->_getArgs();
