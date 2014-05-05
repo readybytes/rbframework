@@ -34,7 +34,10 @@ abstract class Rb_Modelform extends JModelForm
 		Rb_Error::assert(isset($this->_fields_path));
 		Rb_Form::addFieldPath($this->_fields_path);
 	}
-	
+	/**
+	 * 
+	 * @see /libraries/legacy/model/JModelForm::getForm()
+	 */
 	public function getForm($data = array(), $loadData = true)
 	{
 		// Get the form.
@@ -42,6 +45,11 @@ abstract class Rb_Modelform extends JModelForm
 		$form = $this->loadForm($name, $this->getName(), array('control' => $this->_component->getNameSmall().'_form', 'load_data' => $loadData));
 		if (empty($form)) {
 			return false;
+		}
+		
+		// issue #30
+		if ( is_array($data) && !empty($data)) {
+			$form->bind($data);
 		}
 
 		return $form;

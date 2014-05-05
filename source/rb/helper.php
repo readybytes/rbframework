@@ -57,7 +57,7 @@ abstract class Rb_Helper
 		return $args['controller'];
 	}
 	
-	public function handleException(Exception $e, $scope='Rb_')
+	public static function handleException(Exception $e, $scope='Rb_')
 	{
 		$args['e']		= & $e;
 		$args['scope']	= & $scope;

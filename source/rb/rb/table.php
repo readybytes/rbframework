@@ -247,17 +247,14 @@ abstract class Rb_Table extends JTable
 		
 		// It must be required when migration is running from any subscription system to payplans system 
 		// and we need to insert manually created and modified date. 
-		if( !(defined('PAYPLANS_MIGRATION_START') && !defined('PAYPLANS_MIGRATION_END')))
-			{
-			// if a new record, handle created date
-			if(($new || !($this->$k)) && in_array('created_date', $columns)){
-				$this->created_date = $now->toSql();
-			}
+		// if a new record, handle created date
+		if(($new || !($this->$k)) && in_array('created_date', $columns)){
+			$this->created_date = $now->toSql();
+		}
 	
-			//handle modified date
-			if(in_array('modified_date', $columns)){
-				$this->modified_date = $now->toSql();
-			}
+		//handle modified date
+		if(in_array('modified_date', $columns)){
+			$this->modified_date = $now->toSql();
 		}
 
 		//Special Case :  we have pk and want to add new record
@@ -269,7 +266,7 @@ abstract class Rb_Table extends JTable
 			return true;
 		}
 		
-		return parent::store( $updateNulls );
+		return $this->store( $updateNulls );
 	}
 
 	public function rb_save($new=false)

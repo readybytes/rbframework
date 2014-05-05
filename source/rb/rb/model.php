@@ -414,6 +414,7 @@ abstract class Rb_Model extends Rb_AbstractModel
 
 	/**
 	 * Method to delete more than one rows according to given condition and glue.
+	 * //@RBFWTODO :: @ISSUE :: 32 Consistency should be required. Condition build like loadrecords's condition
 	 */
 	public function deleteMany($condition, $glue='AND', $operator='=')
 	{
@@ -426,9 +427,9 @@ abstract class Rb_Model extends Rb_AbstractModel
 				->from($this->getTable()->getTableName());
 
 		foreach($condition as $key => $value)
-			$query->where(" $key $operator $value ", $glue);
+			$query->where(" $key $operator $value", $glue);
 
-		return $query->dbLoadQuery()->query();
+		return $query->dbLoadQuery()->execute();
 	}
 
 	/**
