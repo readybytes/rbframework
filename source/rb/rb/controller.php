@@ -286,7 +286,7 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 		//2: enitityname_id in post
 		//3: cids in post(always)
 		// we will only support ONE id here, to get multiple IDs, respective function will collect cids
-		$post = $this->input->get("{$this->_component->getNameSmall()}_form", null);
+		$post = $this->input->get("{$this->_component->getNameSmall()}_form", Array(), 'ARRAY');
 		
 		if( isset($post["{$this->getName()}_id"])  || isset($post['id']) ){
 			$entId = $post["{$this->getName()}_id"];
