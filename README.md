@@ -1,5 +1,4 @@
 ##RB-Frameowrk for Joomla CMS
------
 
 A frameowrk on top of Joomla cms, which enable developers to build component with speed and standards.
 - It will be installed as plugin
@@ -7,13 +6,13 @@ A frameowrk on top of Joomla cms, which enable developers to build component wit
 
 
 ###Installation
---------------
+
 
 
 
 
 ###Usage
-------
+
 
 
 
