@@ -15,6 +15,8 @@ class Rb_AbstractFactory  extends JFactory
 
 class Rb_Factory extends Rb_AbstractFactory 
 {
+	public static $response = null;
+	
 	//Returns a Model/View/Controller/Table/Lib object
 	static function getInstance($name, $type='', $prefix='Rb_', $refresh=false)
 	{
@@ -56,15 +58,11 @@ class Rb_Factory extends Rb_AbstractFactory
 	 */
 	static public function getAjaxResponse()
   	{
-  		//We want to send our DB object instead of Joomla Object
-  		//so that we can check our sql performance on the fly.
- 		static $response = null;
-
- 		if ($response === null){
- 			$response = Rb_AjaxResponse::getInstance();
+ 		if (self::$response === null){
+ 			self::$response = Rb_AjaxResponse::getInstance();
  		}
 
-  		return $response;
+  		return self::$response;
   	}
 
 	static public function cleanStaticCache($set = null)

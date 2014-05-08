@@ -52,4 +52,24 @@ class Rb_Query extends JDatabaseQuery
 
 		return parent::clear($clause);
 	}
+
+	/**
+	 * Delete from multiple tables with specified elements to the DELETE clause of the query
+	 * 
+	 * @param   string  $table  The name of the table to delete from.
+	 * @param   string  $elements The name of elements to be deleted,
+	 * @return  JDatabaseQuery  Returns this object to allow chaining.
+	 */
+	public function multiDelete($table = null,$elements=null)
+	{
+		$this->type = 'delete';
+		$this->delete = new JDatabaseQueryElement('DELETE', $elements);
+
+		if (!empty($table))
+		{
+			$this->from($table);
+		}
+
+		return $this;
+	}
 }

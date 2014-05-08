@@ -349,6 +349,13 @@ abstract class Rb_Lib extends JObject
 			return false;
 		}
 
+		//save $this to static cache, so that if someone tries to create instance in between the save process
+		//then proper object would be returned 
+		if(!$previousObject){
+			$classname = strtolower(get_class($this));
+			self::$instance[$classname][$id] = $this;
+		}
+
 		// correct the id, for new records required
 		$this->setId($id);
 
