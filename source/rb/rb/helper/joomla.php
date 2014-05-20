@@ -108,7 +108,7 @@ class Rb_AbstractHelperJoomla extends Rb_AdaptHelperJoomla
 	
 	public static function getUsertype()
 	{
-		$db= & JFactory::getDBO();
+		$db=  JFactory::getDBO();
 		$sql = ' SELECT `title`, `id` FROM '.$db->quoteName('#__usergroups')
 				.' WHERE '.$db->quoteName('title').' NOT LIKE "%Public%"';
 		$db->setQuery($sql);
