@@ -852,7 +852,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 		}
 		
 		// for system starting from 2.0
-		$event_args = $this->input->get('event_args',null);
+		$event_args = $this->input->get('event_args',null, 'array');
 		if($event_args !== null){
 			$args = $event_args;
 		}
