@@ -349,6 +349,12 @@ abstract class Rb_Model extends Rb_AbstractModel
 			$this->setError(Rb_Text::_('PLG_SYSTEM_RBSL_TABLE_DOES_NOT_EXIST'));
 			return false;
 		}
+		
+		return $this->_save($table, $data, $pk, $new);
+	}
+	
+	protected function _save($table, $data, $pk=null, $new=false)
+	{		
 		// Bug #29
 		// If table object was loaded by some code previously
 		// then it can overwrite the previous record
