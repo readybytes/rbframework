@@ -17,6 +17,8 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
  */
 class Rb_EcommerceRequest extends Rb_Registry
 {
+	const BUILD_TYPE_XML	=	'xml';
+	const BUILD_TYPE_HTML	=	'html';	
 	/**
 	* Constructor
 	*

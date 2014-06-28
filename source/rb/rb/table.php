@@ -94,9 +94,7 @@ abstract class Rb_Table extends JTable
 		}
 
 		if(Rb_HelperTable::isTableExist($tblFullName)===false){	
-			//RBFW_TODO : raise exception
-			$this->setError(Rb_Text::_("PLG_SYSTEM_RBSL_NO_TABLE_EXISTS").' : '.$this->_tbl);
-			return false;
+			throw new Exception(JText::_("PLG_SYSTEM_RBSL_NO_TABLE_EXISTS").' : '.$this->_tbl);
 		}
 		
 		//call parent to build the table object
@@ -179,8 +177,9 @@ abstract class Rb_Table extends JTable
     public function set($property, $value=null)
     {
     	//fix set also
-    	if ($property === 'id')
+    	if ($property === 'id') {
         	$property = $this->getKeyName();
+    	}
 
     	return parent::set($property, $value);
     }

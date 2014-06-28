@@ -11,14 +11,16 @@ if(defined('_JEXEC')===false) die('Restricted access' );
 
 class Rb_ViewJson extends Rb_View
 {	
+	protected $json;
+	
 	public function render($output, $options)
 	{
-		echo json_encode($this->get('json'));
+		echo json_encode($output);
 		exit;
 	}
 	
 	function _showTask()
 	{
- 		return '';
+ 		return $this->get('json');
 	}
 }

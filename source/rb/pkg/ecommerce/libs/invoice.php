@@ -477,7 +477,9 @@ class Rb_EcommerceInvoice extends Rb_EcommerceLib
 		$request->set('user_data', $this->__requestGetUserData());		
 		$request->set('url_data', $this->__requestGetUrl($data));
 		$request->set('post_data', (object)$data);
-		$request->set('processor_data', $this->getProcessorData());	
+		$request->set('processor_data', $this->getProcessorData());
+
+		$request->set('build_type', isset($data->build_type) ? $data->build_type : Rb_EcommerceRequest::BUILD_TYPE_XML );	
 		
 		return $this->getProcessor()->request($request);
 	}

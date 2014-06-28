@@ -20,11 +20,11 @@ class Rb_EcommerceAPI
 	public static function invoice_create($data, $is_master = true)
 	{
 		$invoice = Rb_EcommerceInvoice::getInstance();		
-		$invoice->create($data, $is_master);
-		if(!$invoice->save()){
-			return false;
+		if ( $invoice->create($data, $is_master) ) {
+			return $invoice->getId();
 		}
-		return $invoice->getId();
+
+		return false;
 	}
 	
 	public static function invoice_update($invoice_id, $data, $refresh = false)
