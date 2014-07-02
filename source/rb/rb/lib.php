@@ -79,7 +79,17 @@ abstract class Rb_Lib extends JObject
 							: self::$instance[$className][$id]->load($id);
 
 	}
-		
+	
+	public static function setInstance($object)
+	{		
+		if(!($object instanceof Rb_Lib) || !$object->getId()){
+			throw new Exception('RB Framewor : Invalid instalnce of Lib to set');
+		}
+				
+		$classname = strtolower(get_class($object));
+		self::$instance[$classname][$object->getId()] = $object;
+	}
+			
 	public function getName()
 	{
 		if(empty($this->_name))
@@ -351,8 +361,7 @@ abstract class Rb_Lib extends JObject
 		//save $this to static cache, so that if someone tries to create instance in between the save process
 		//then proper object would be returned 
 		if(!$previousObject){
-			$classname = strtolower(get_class($this));
-			self::$instance[$classname][$id] = $this;
+			self::setInstance($this);			
 		}
 
 		// correct the id, for new records required
