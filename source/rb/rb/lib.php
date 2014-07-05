@@ -312,9 +312,8 @@ abstract class Rb_Lib extends JObject
 						->loadRecords(array('id' => $id), array('limit', 'where'));
 
 		// if no items found
-		if(count($item) === 0){
-			return false;
-			// raise exception
+		if(count($item) === 0) {
+			throw new RuntimeException('Record not found in table '. $this->getModel()->getTable()->getTableName() );
 		}
 
 		return $this->reset()->bind(array_shift($item));
