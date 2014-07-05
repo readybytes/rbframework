@@ -23,12 +23,7 @@ if (!defined('_JDEFINES'))
 
 require_once JPATH_LIBRARIES . '/import.php';
 
-JLoader::registerPrefix('J', __DIR__ . '/libraries');
-
 require_once JPATH_LIBRARIES . '/cms.php';
-
-// Load the configuration
-require_once JPATH_CONFIGURATION . '/configuration.php';
 
 /**
  * This script will fetch the update information for all extensions and store
@@ -48,14 +43,21 @@ class GenerateCss extends JApplicationCli
 	 */
 	public function doExecute()
 	{
-		$location = JPATH_PLUGINS.'/system/rbsl/rbsl/media/jui/';
+		$location = JPATH_SITE.'/media/rb/jui';
 		$templates = array(
-			'/bootstrap.less' 			=> 	'/bootstrap.css',
-			'/bootstrap-extended.less' => 	'/bootstrap-extended.css',
-			'/bootstrap-rtl.less' 		=> 	'/bootstrap-rtl.css',
-			'/responsive.less' 		=> 		'/bootstrap-responsive.css'
+			'bootstrap.less' 			=> 	'bootstrap.css',
+			'bootstrap-extended.less' => 	'bootstrap-extended.css',
+			'bootstrap-rtl.less' 		=> 	'bootstrap-rtl.css',
+			'responsive.less' 		=> 		'bootstrap-responsive.css'
 		);
-		$less = new JLess;
+
+		if (!defined('FOF_INCLUDED'))
+		{
+			require_once JPATH_LIBRARIES . '/fof/include.php';
+		}
+
+		$less = new FOFLess;
+		$less->setFormatter(new FOFLessFormatterJoomla);
 
 		foreach ($templates as $source => $output)
 		{

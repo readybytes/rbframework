@@ -69,6 +69,17 @@
 		display: none !important;
 	}
 }
+.rb-wrap .visible-print {
+	display: none !important;
+}
+@media print {
+	.rb-wrap .visible-print {
+		display: inherit !important;
+	}
+	.rb-wrap .hidden-print {
+		display: none !important;
+	}
+}
 @media (min-width: 1200px) {
 	.rb-wrap .row {
 		margin-left: -30px;
@@ -85,6 +96,7 @@
 	}
 	.rb-wrap [class*="span"] {
 		float: left;
+		min-height: 1px;
 		margin-left: 30px;
 	}
 	.rb-wrap .container,
@@ -191,6 +203,9 @@
 	}
 	.rb-wrap .row-fluid [class*="span"]:first-child {
 		margin-left: 0;
+	}
+	.rb-wrap .row-fluid .controls-row [class*="span"] + [class*="span"] {
+		margin-left: 2.5641025641026%;
 	}
 	.rb-wrap .row-fluid .span12 {
 		width: 100%;
@@ -344,40 +359,64 @@
 	.rb-wrap .controls-row [class*="span"] + [class*="span"] {
 		margin-left: 30px;
 	}
-	.rb-wrap input.span12, textarea.span12, .uneditable-input.span12 {
+	.rb-wrap input.span12,
+	.rb-wrap textarea.span12,
+	.rb-wrap .uneditable-input.span12 {
 		width: 1156px;
 	}
-	.rb-wrap input.span11, textarea.span11, .uneditable-input.span11 {
+	.rb-wrap input.span11,
+	.rb-wrap textarea.span11,
+	.rb-wrap .uneditable-input.span11 {
 		width: 1056px;
 	}
-	.rb-wrap input.span10, textarea.span10, .uneditable-input.span10 {
+	.rb-wrap input.span10,
+	.rb-wrap textarea.span10,
+	.rb-wrap .uneditable-input.span10 {
 		width: 956px;
 	}
-	.rb-wrap input.span9, textarea.span9, .uneditable-input.span9 {
+	.rb-wrap input.span9,
+	.rb-wrap textarea.span9,
+	.rb-wrap .uneditable-input.span9 {
 		width: 856px;
 	}
-	.rb-wrap input.span8, textarea.span8, .uneditable-input.span8 {
+	.rb-wrap input.span8,
+	.rb-wrap textarea.span8,
+	.rb-wrap .uneditable-input.span8 {
 		width: 756px;
 	}
-	.rb-wrap input.span7, textarea.span7, .uneditable-input.span7 {
+	.rb-wrap input.span7,
+	.rb-wrap textarea.span7,
+	.rb-wrap .uneditable-input.span7 {
 		width: 656px;
 	}
-	.rb-wrap input.span6, textarea.span6, .uneditable-input.span6 {
+	.rb-wrap input.span6,
+	.rb-wrap textarea.span6,
+	.rb-wrap .uneditable-input.span6 {
 		width: 556px;
 	}
-	.rb-wrap input.span5, textarea.span5, .uneditable-input.span5 {
+	.rb-wrap input.span5,
+	.rb-wrap textarea.span5,
+	.rb-wrap .uneditable-input.span5 {
 		width: 456px;
 	}
-	.rb-wrap input.span4, textarea.span4, .uneditable-input.span4 {
+	.rb-wrap input.span4,
+	.rb-wrap textarea.span4,
+	.rb-wrap .uneditable-input.span4 {
 		width: 356px;
 	}
-	.rb-wrap input.span3, textarea.span3, .uneditable-input.span3 {
+	.rb-wrap input.span3,
+	.rb-wrap textarea.span3,
+	.rb-wrap .uneditable-input.span3 {
 		width: 256px;
 	}
-	.rb-wrap input.span2, textarea.span2, .uneditable-input.span2 {
+	.rb-wrap input.span2,
+	.rb-wrap textarea.span2,
+	.rb-wrap .uneditable-input.span2 {
 		width: 156px;
 	}
-	.rb-wrap input.span1, textarea.span1, .uneditable-input.span1 {
+	.rb-wrap input.span1,
+	.rb-wrap textarea.span1,
+	.rb-wrap .uneditable-input.span1 {
 		width: 56px;
 	}
 	.rb-wrap .thumbnails {
@@ -406,6 +445,7 @@
 	}
 	.rb-wrap [class*="span"] {
 		float: left;
+		min-height: 1px;
 		margin-left: 20px;
 	}
 	.rb-wrap .container,
@@ -512,6 +552,9 @@
 	}
 	.rb-wrap .row-fluid [class*="span"]:first-child {
 		margin-left: 0;
+	}
+	.rb-wrap .row-fluid .controls-row [class*="span"] + [class*="span"] {
+		margin-left: 2.7624309392265%;
 	}
 	.rb-wrap .row-fluid .span12 {
 		width: 100%;
@@ -665,40 +708,64 @@
 	.rb-wrap .controls-row [class*="span"] + [class*="span"] {
 		margin-left: 20px;
 	}
-	.rb-wrap input.span12, textarea.span12, .uneditable-input.span12 {
+	.rb-wrap input.span12,
+	.rb-wrap textarea.span12,
+	.rb-wrap .uneditable-input.span12 {
 		width: 710px;
 	}
-	.rb-wrap input.span11, textarea.span11, .uneditable-input.span11 {
+	.rb-wrap input.span11,
+	.rb-wrap textarea.span11,
+	.rb-wrap .uneditable-input.span11 {
 		width: 648px;
 	}
-	.rb-wrap input.span10, textarea.span10, .uneditable-input.span10 {
+	.rb-wrap input.span10,
+	.rb-wrap textarea.span10,
+	.rb-wrap .uneditable-input.span10 {
 		width: 586px;
 	}
-	.rb-wrap input.span9, textarea.span9, .uneditable-input.span9 {
+	.rb-wrap input.span9,
+	.rb-wrap textarea.span9,
+	.rb-wrap .uneditable-input.span9 {
 		width: 524px;
 	}
-	.rb-wrap input.span8, textarea.span8, .uneditable-input.span8 {
+	.rb-wrap input.span8,
+	.rb-wrap textarea.span8,
+	.rb-wrap .uneditable-input.span8 {
 		width: 462px;
 	}
-	.rb-wrap input.span7, textarea.span7, .uneditable-input.span7 {
+	.rb-wrap input.span7,
+	.rb-wrap textarea.span7,
+	.rb-wrap .uneditable-input.span7 {
 		width: 400px;
 	}
-	.rb-wrap input.span6, textarea.span6, .uneditable-input.span6 {
+	.rb-wrap input.span6,
+	.rb-wrap textarea.span6,
+	.rb-wrap .uneditable-input.span6 {
 		width: 338px;
 	}
-	.rb-wrap input.span5, textarea.span5, .uneditable-input.span5 {
+	.rb-wrap input.span5,
+	.rb-wrap textarea.span5,
+	.rb-wrap .uneditable-input.span5 {
 		width: 276px;
 	}
-	.rb-wrap input.span4, textarea.span4, .uneditable-input.span4 {
+	.rb-wrap input.span4,
+	.rb-wrap textarea.span4,
+	.rb-wrap .uneditable-input.span4 {
 		width: 214px;
 	}
-	.rb-wrap input.span3, textarea.span3, .uneditable-input.span3 {
+	.rb-wrap input.span3,
+	.rb-wrap textarea.span3,
+	.rb-wrap .uneditable-input.span3 {
 		width: 152px;
 	}
-	.rb-wrap input.span2, textarea.span2, .uneditable-input.span2 {
+	.rb-wrap input.span2,
+	.rb-wrap textarea.span2,
+	.rb-wrap .uneditable-input.span2 {
 		width: 90px;
 	}
-	.rb-wrap input.span1, textarea.span1, .uneditable-input.span1 {
+	.rb-wrap input.span1,
+	.rb-wrap textarea.span1,
+	.rb-wrap .uneditable-input.span1 {
 		width: 28px;
 	}
 }
@@ -708,7 +775,8 @@
 		padding-right: 20px;
 	}
 	.rb-wrap .navbar-fixed-top,
-	.rb-wrap .navbar-fixed-bottom {
+	.rb-wrap .navbar-fixed-bottom,
+	.rb-wrap .navbar-static-top {
 		margin-left: -20px;
 		margin-right: -20px;
 	}
@@ -734,12 +802,20 @@
 	.rb-wrap .thumbnails {
 		margin-left: 0;
 	}
+	.rb-wrap .thumbnails > li {
+		float: none;
+		margin-left: 0;
+	}
 	.rb-wrap [class*="span"],
+	.rb-wrap .uneditable-input[class*="span"],
 	.rb-wrap .row-fluid [class*="span"] {
 		float: none;
 		display: block;
-		width: auto;
+		width: 100%;
 		margin-left: 0;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
 	}
 	.rb-wrap .span12,
 	.rb-wrap .row-fluid .span12 {
@@ -747,6 +823,9 @@
 		-webkit-box-sizing: border-box;
 		-moz-box-sizing: border-box;
 		box-sizing: border-box;
+	}
+	.rb-wrap .row-fluid [class*="offset"]:first-child {
+		margin-left: 0;
 	}
 	.rb-wrap .input-large,
 	.rb-wrap .input-xlarge,
@@ -769,16 +848,8 @@
 		display: inline-block;
 		width: auto;
 	}
-	.rb-wrap div.modal {
-		position: fixed;
-		top: 20px;
-		left: 20px;
-		right: 20px;
-		width: auto;
-		margin: 0;
-	}
-	.rb-wrap div.modal.fade.in {
-		top: auto;
+	.rb-wrap .controls-row [class*="span"] + [class*="span"] {
+		margin-left: 0;
 	}
 }
 @media (max-width: 480px) {
@@ -793,7 +864,7 @@
 	.rb-wrap input[type="radio"] {
 		border: 1px solid #ccc;
 	}
-	.rb-wrap .form-horizontal .control-group > label {
+	.rb-wrap .form-horizontal .control-label {
 		float: none;
 		width: auto;
 		padding-top: 0;
@@ -809,10 +880,15 @@
 		padding-left: 10px;
 		padding-right: 10px;
 	}
-	.rb-wrap div.modal {
-		top: 10px;
-		left: 10px;
-		right: 10px;
+	.rb-wrap .media .pull-left,
+	.rb-wrap .media .pull-right {
+		float: none;
+		display: block;
+		margin-bottom: 10px;
+	}
+	.rb-wrap .media-object {
+		margin-right: 0;
+		margin-left: 0;
 	}
 	.rb-wrap .modal-header .close {
 		padding: 10px;
@@ -866,14 +942,14 @@
 		display: none;
 	}
 	.rb-wrap .nav-collapse .nav .nav-header {
-		color: #555;
+		color: #777;
 		text-shadow: none;
 	}
 	.rb-wrap .nav-collapse .nav > li > a,
 	.rb-wrap .nav-collapse .dropdown-menu a {
 		padding: 9px 15px;
 		font-weight: bold;
-		color: #555;
+		color: #777;
 		-webkit-border-radius: 3px;
 		-moz-border-radius: 3px;
 		border-radius: 3px;
@@ -889,11 +965,19 @@
 		margin-bottom: 2px;
 	}
 	.rb-wrap .nav-collapse .nav > li > a:hover,
-	.rb-wrap .nav-collapse .dropdown-menu a:hover {
+	.rb-wrap .nav-collapse .nav > li > a:focus,
+	.rb-wrap .nav-collapse .dropdown-menu a:hover,
+	.rb-wrap .nav-collapse .dropdown-menu a:focus {
 		background-color: #f2f2f2;
 	}
+	.rb-wrap .navbar-inverse .nav-collapse .nav > li > a,
+	.rb-wrap .navbar-inverse .nav-collapse .dropdown-menu a {
+		color: #999;
+	}
 	.rb-wrap .navbar-inverse .nav-collapse .nav > li > a:hover,
-	.rb-wrap .navbar-inverse .nav-collapse .dropdown-menu a:hover {
+	.rb-wrap .navbar-inverse .nav-collapse .nav > li > a:focus,
+	.rb-wrap .navbar-inverse .nav-collapse .dropdown-menu a:hover,
+	.rb-wrap .navbar-inverse .nav-collapse .dropdown-menu a:focus {
 		background-color: #111111;
 	}
 	.rb-wrap .nav-collapse.in .btn-group {
@@ -905,7 +989,7 @@
 		top: auto;
 		left: auto;
 		float: none;
-		display: block;
+		display: none;
 		max-width: none;
 		margin: 0 15px;
 		padding: 0;
@@ -918,11 +1002,18 @@
 		-moz-box-shadow: none;
 		box-shadow: none;
 	}
+	.rb-wrap .nav-collapse .open > .dropdown-menu {
+		display: block;
+	}
 	.rb-wrap .nav-collapse .dropdown-menu:before,
 	.rb-wrap .nav-collapse .dropdown-menu:after {
 		display: none;
 	}
 	.rb-wrap .nav-collapse .dropdown-menu .divider {
+		display: none;
+	}
+	.rb-wrap .nav-collapse .nav > li > .dropdown-menu:before,
+	.rb-wrap .nav-collapse .nav > li > .dropdown-menu:after {
 		display: none;
 	}
 	.rb-wrap .nav-collapse .navbar-form,
@@ -935,6 +1026,11 @@
 		-webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 1px 0 rgba(255,255,255,.1);
 		-moz-box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 1px 0 rgba(255,255,255,.1);
 		box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 1px 0 rgba(255,255,255,.1);
+	}
+	.rb-wrap .navbar-inverse .nav-collapse .navbar-form,
+	.rb-wrap .navbar-inverse .nav-collapse .navbar-search {
+		border-top-color: #111111;
+		border-bottom-color: #111111;
 	}
 	.rb-wrap .navbar .nav-collapse .nav.pull-right {
 		float: none;
