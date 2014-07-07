@@ -25,7 +25,7 @@
 	</languages>
 
 	<!-- Media files -->
-	<media destination="rb" folder="media">
+	<media destination="plg_system_rbsl" folder="media">
 		<folder>jui</folder>
 		<folder>nvd3</folder>
 		<folder>rb</folder>

@@ -1,6 +1,13 @@
 <?xml version="1.0" ?>
 <project name="Package Builder" basedir="." default="build" description="Phing build script for package.">
 
+	<property 
+			name="jsdirs" 
+			value="${dir.tmp}/media/angular/js/, ${dir.tmp}/media/daterangepicker/js/, ${dir.tmp}/media/jui/js/, ${dir.tmp}/media/nvd3/js, ${dir.tmp}/media/rb/js/" />
+	<property 
+			name="cssdirs" 
+			value="${dir.tmp}/media/font-awesome/css/, ${dir.tmp}/media/daterangepicker/css/, ${dir.tmp}/media/jui/css/, ${dir.tmp}/media/nvd3/css/" />
+		
 	<target name="get_build_number">
 		<exec command="git describe" dir="${dir.root}" outputProperty="build.number"  />
 		<property name='build.number' value="${build.number}"  override="true" />
@@ -27,7 +34,14 @@
 		<mkdir dir="${dir.packages}" />
 
 		<phingcall target="export_sourcecode" />
-		
+
+		<!-- Minify Javascript files -->
+		<foreach list="${jsdirs}" param="jsdir" target="minifyjs" />
+
+		<!-- MD5 SUM Calculation -->
+		<foreach list="${jsdirs}" param="folder" target="calculate_md5" />
+		<foreach list="${cssdirs}" param="folder" target="calculate_md5" />
+
 		<phing phingfile="${project.shortform.small}.xml" inheritAll="true" target="build" />
 
 
@@ -57,4 +71,47 @@
 			</filterchain>
 		</reflexive>		
 	</target>
+
+	<target name="minifyjs" description="Minify JS files">
+		<jsMin targetDir="${jsdir}" failOnError="false" suffix=".min">
+			<fileset dir="${jsdir}">
+				<include name="*.js"/>
+				<exclude name="*.min.js"/>
+			</fileset>
+		</jsMin>
+	</target> 
+
+	<target name="calculate_md5">
+		<!-- Generate new MD5 -->
+			<exec command="find ${folder} -maxdepth 1 -type f -regex '.*\(php\|xml\|png\|js\|css\|html\|json\)$' -exec md5sum {} + | awk '{print $1}' | sort  | md5sum | awk '{print $1}'" escape="false" outputProperty="new_md5"/>
+			<!-- Get old MD5 -->
+			<if>
+				<available file='${folder}/MD5SUM' type='file' />
+				<then>
+					<loadfile property="old_md5" srcFile="${folder}/MD5SUM"/>
+				</then>
+				<else>
+					<property name='old_md5' value=""  override="true" />
+					<touch file="${folder}/MD5SUM" />		
+				</else>
+			</if>
+
+			<if>
+			   	<equals arg1="${old_md5}" arg2="${new_md5}" />			
+				<then>
+				</then>	
+				<else>
+					<reflexive>
+						<fileset dir="${folder}">
+							<include pattern="MD5SUM" />
+						</fileset>
+						<filterchain>
+							<replaceregexp>
+								<regexp pattern="${old_md5}" replace="${new_md5}"/>
+							</replaceregexp>
+						</filterchain>
+					</reflexive>
+				</else>
+			</if>		
+	</target>		
 </project>

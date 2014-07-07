@@ -8,9 +8,9 @@
 */
 if(defined('_JEXEC')===false) die('Restricted access' );
 
-class Rb_Html extends JHtml
+class Rb_Html extends Rb_AdaptHtml
 {	
-	public static function stylesheet($file, $attribs = array(), $relative = false, $path_only = true, $detect_browser = true, $detect_debug = true)
+	public static function stylesheet($file, $attribs = array(), $relative = true, $path_only = true, $detect_browser = true, $detect_debug = true)
 	{
 		// We don't know file is loaded or not by joomla so we passed 3rd parameter as true 
 		// and we get only file paths & load manually by us.
@@ -34,8 +34,8 @@ class Rb_Html extends JHtml
 	{
 		if(JFile::exists($file)){
 			return  Rb_HelperTemplate::mediaURI($file,false);
-		}elseif(JFile::exists(RB_PATH_MEDIA.'/'.$file)){
-			return Rb_HelperTemplate::mediaURI(RB_PATH_MEDIA.'/'.$file,false);
+		}elseif(JFile::exists(JPATH_ROOT.RB_PATH_MEDIA.'/'.$file)){
+			return Rb_HelperTemplate::mediaURI(JPATH_ROOT.RB_PATH_MEDIA.'/'.$file,false);
 		}
 		return false;
 	}

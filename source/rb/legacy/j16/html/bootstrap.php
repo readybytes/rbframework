@@ -161,7 +161,7 @@ abstract class JHtmlBootstrap
 			$debug  = (boolean) $config->get('debug');
 		}
 
-		Rb_Html::script('jui/js/bootstrap.min.js', false, true, false, false, $debug);
+		Rb_Html::script('plg_system_rbsl/jui/bootstrap.min.js', false, true, false, false, $debug);
 		self::$loaded[__METHOD__] = true;
 
 		return;
@@ -593,17 +593,17 @@ abstract class JHtmlBootstrap
 		// Load Bootstrap main CSS
 		if ($includeMainCss)
 		{
-			Rb_Html::stylesheet('jui/css/bootstrap.css', $attribs, false);
-			Rb_Html::stylesheet('jui/css/bootstrap-responsive.css', $attribs, false);
-			Rb_Html::stylesheet('jui/css/bootstrap-extended.css', $attribs, false);
-			Rb_Html::stylesheet('jui/css/rb-override.css', $attribs, false);
-			Rb_Html::script('jui/js/template.js', $attribs, false);
+			Rb_Html::stylesheet('plg_system_rbsl/jui/bootstrap.css');
+			Rb_Html::stylesheet('plg_system_rbsl/jui/bootstrap-responsive.css');
+			Rb_Html::stylesheet('plg_system_rbsl/jui/bootstrap-extendedcss');
+			Rb_Html::stylesheet('plg_system_rbsl/jui/rb-override.css');
+			Rb_Html::script('plg_system_rbsl/jui/template.min.js');
 		}
 
 		// Load Bootstrap RTL CSS
 		if ($direction === 'rtl')
 		{
-			JHtml::_('stylesheet', 'rb/jui/bootstrap-rtl.css', $attribs, false);
+			Rb_Html::stylesheet('plg_system_rbsl/jui/bootstrap-rtl.css', $attribs, false);
 		}
 	}
 }

@@ -75,26 +75,25 @@ class Rb_HelperTemplate
 		
 		// Load RB Script (Maintain Order) then other scripts
 		if(in_array('rb', $list, false)){
-			Rb_Html::script('rb/rb.core.js');
-			Rb_Html::script('rb/rb.lib.js');
-			Rb_Html::script('rb/rb.validation.js');
+			Rb_Html::script('plg_system_rbsl/rb/rb.core.min.js');
+			Rb_Html::script('plg_system_rbsl/rb/rb.lib.min.js');
+			Rb_Html::script('plg_system_rbsl/rb/rb.validation.min.js');
 		}
 		
 		if(in_array('angular', $list, false)){
-			Rb_Html::script('angular/angular.js');
-			Rb_Html::script('angular/ui-router.js');
+			Rb_Html::script('plg_system_rbsl/angular/angular.min.js');
+			Rb_Html::script('plg_system_rbsl/angular/ui-router.min.js');
 		}
 		
 		if(in_array('font-awesome', $list, false)){
-			Rb_Html::stylesheet('font-awesome/css/font-awesome.css');
+			Rb_Html::stylesheet('plg_system_rbsl/font-awesome/font-awesome.min.css');
 		}
 		
 		if(in_array('nvd3', $list, false)){
-			Rb_Html::script('nvd3/d3.v2.js');
-			Rb_Html::script('nvd3/nv.d3.js');
-			Rb_Html::stylesheet('nv.d3.css');
+			Rb_Html::script('plg_system_rbsl/nvd3/d3.v2.min.js');
+			Rb_Html::script('plg_system_rbsl/nvd3/nv.d3.min.js');
+			Rb_Html::stylesheet('plg_system_rbsl/nvd3/nv.d3.min.css');
 		}
-		
 	}
 	
 	
