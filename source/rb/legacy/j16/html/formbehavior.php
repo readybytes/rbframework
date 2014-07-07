@@ -48,15 +48,8 @@ abstract class JHtmlFormbehavior
 		// Include jQuery
 		JHtml::_('jquery.framework');
 
-		// If no debugging value is set, use the configuration setting
-		if ($debug === null)
-		{
-			$config = JFactory::getConfig();
-			$debug  = (boolean) $config->get('debug');
-		}
-
-		JHtml::_('script', JURI::root().'media/rb/jui/js/chosen.jquery.min.js', false, true, false, false, $debug);
-		JHtml::_('stylesheet', JURI::root().'media/rb/jui/css/chosen.css', false, true);
+		Rb_Html::script('plg_system_rbsl/jui/chosen.jquery.min.js');
+		Rb_Html::stylesheet('plg_system_rbsl/jui/chosen.css');
 		JFactory::getDocument()->addScriptDeclaration("
 				rb.jQuery(document).ready(function (){
 					rb.jQuery('.rb-wrap').find('" . $selector . "').chosen({

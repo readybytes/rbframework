@@ -22,10 +22,10 @@ abstract class Rb_HtmlDaterangepicker
 		
 		if($loaded === false){
 			$loaded = true;
-			Rb_Html::stylesheet('daterangepicker/daterangepicker.css', $attribs, false);
+			Rb_Html::stylesheet('plg_system_rbsl/daterangepicker/daterangepicker.min.css', $attribs);
 			
-			Rb_Html::script('daterangepicker/moment.js', $attribs, false);
-			Rb_Html::script('daterangepicker/daterangepicker.js', $attribs, false);			
+			Rb_Html::script('plg_system_rbsl/daterangepicker/moment.min.js', $attribs);
+			Rb_Html::script('plg_system_rbsl/daterangepicker/daterangepicker.min.js', $attribs);			
 		}
 	}
 	
