@@ -20,8 +20,7 @@ define('RB_FRAMEWORK_LOADED', true);
 define('RB_PATH_FRAMEWORK', dirname(__FILE__));
 
 // IMP : use relative path for filesystem path
-//       if we use Joomla contants JPATH_SITE/JPATH_ROOT, it won't work with JMS (Joomla Sulti Site)
-define('RB_PATH_MEDIA',		dirname(dirname(dirname(dirname(dirname(__FILE__))))).'/media/rb');
+define('RB_PATH_MEDIA',		'/media/plg_system_rbsl');
 define('RB_PATH_FILEDS',	RB_PATH_FRAMEWORK.'/fields');
 
 list($prefix, $family, $major, $minor) = _rb_cms_version();
