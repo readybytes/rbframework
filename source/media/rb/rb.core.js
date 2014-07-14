@@ -286,35 +286,54 @@ rb.ajax = {
 		errorCallback(message);	
 	},
 	
-	success : function(msg, successCallback, errorCallback) {
-		// Initialize
-		var junk = null;
-		var message = "";
-		
-		// Get rid of junk before the data
-		var valid_pos = msg.indexOf('###');
-		var valid_last_pos = msg.lastIndexOf('###');
-		if( valid_pos == -1 ) {
-			// Valid data not found in the response
-			msg = 'Invalid AJAX data: ' + msg;
-			errorCallback(msg);
-			return;
-		}
-		
-		// get message between ###<----->### second argument is length
-		message = msg.substr(valid_pos+3, valid_last_pos-(valid_pos+3)); 
+	success : function(msg, successCallback, errorCallback) 
+	{
+		var data = false;
+		var exception = false;
 		
 		try {
-			var data = JSON.parse(message);
-		}catch(err) {
-			var msg = err.message + "\n<br/>\n<pre>\n" + message + "\n</pre>";
-			errorCallback(msg);
-			return;
+			data = rb.ajax.junkFilter(msg);
+		} catch(err) {
+			data = err.message + "\n<br/>\n<pre>\n" + message + "\n</pre>";
+			exception = true;
+		}
+		
+		if (!data || exception){
+			return errorCallback(data);
 		}
 		
 		// Call the callback function
-		successCallback(data);
+		return successCallback(data);
 	},
+	
+	/**
+	 * Invoke to clear data (remove warnings and error) from response
+	 * response always availble betwwen '###' so we will propely formate it.
+	 *   
+	 */
+	junkFilter : function( response_data) 
+	{
+		// Get rid of junk before the data
+		var valid_pos = response_data.indexOf('###');
+		var valid_last_pos = response_data.lastIndexOf('###');
+		
+		if( valid_pos == -1 ) {
+			return false;
+		}
+		
+		// get message between ###<----->### second argument is length
+		meaningful_response_data = response_data.substr(valid_pos+3, valid_last_pos-(valid_pos+3)); 
+		
+		try {
+			meaningful_response_data = $.parseJSON(meaningful_response_data);
+			
+		} catch(e) {
+			console.log({'exception_was : ': e});
+			return false;
+		}
+			
+		return meaningful_response_data;
+	}, 
 	
 	/*
 	 * url : URL to call
