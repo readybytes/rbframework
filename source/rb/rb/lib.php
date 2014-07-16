@@ -83,7 +83,7 @@ abstract class Rb_Lib extends JObject
 	public static function setInstance($object)
 	{		
 		if(!($object instanceof Rb_Lib) || !$object->getId()){
-			throw new Exception('RB Framewor : Invalid instalnce of Lib to set');
+			throw new Exception('RB Framework : Invalid instance of Lib to set');
 		}
 				
 		$classname = strtolower(get_class($object));
@@ -358,14 +358,14 @@ abstract class Rb_Lib extends JObject
 			return false;
 		}
 
+		// correct the id, for new records required
+		$this->setId($id);
+		
 		//save $this to static cache, so that if someone tries to create instance in between the save process
 		//then proper object would be returned 
 		if(!$previousObject){
 			self::setInstance($this);			
 		}
-
-		// correct the id, for new records required
-		$this->setId($id);
 
 		// trigger on after save
 		if($this->_trigger === true){		

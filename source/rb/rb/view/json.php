@@ -15,7 +15,7 @@ class Rb_ViewJson extends Rb_View
 	
 	public function render($output, $options)
 	{
-		echo json_encode($output);
+		echo '###'.json_encode($output).'###';
 		exit;
 	}
 	
