@@ -869,7 +869,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 		$args = $this->_getArgs();
 
 		//args must be an array
-		return Rb_HelperEvent::trigger($event, $args);
+		return Rb_HelperPlugin::trigger($event, $args);
 	}
 }
 

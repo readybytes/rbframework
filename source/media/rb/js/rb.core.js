@@ -129,11 +129,11 @@ rb.ui.dialog = {
 	},
 	
 	height : function(height){
-		$('#rbWindowContent').dialog("option", "height", height);
+		$('#rbWindowBody').css("height", height);
 	},
-	
+
 	width : function(width){
-		$('#rbWindowContent').dialog("option", "width", width);
+		$('#rbWindowContent').css("width", width);
 	},
 
 	autoclose : function($time){
