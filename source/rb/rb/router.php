@@ -16,11 +16,15 @@ abstract class Rb_Router
     protected $_component = '';
     protected $_menus = null;
     
-    public function __construct()
-    {
-    	// setup extension naming convention
-		$this->_component = Rb_Extension::getInstance($this->_component);
-    }
+   
+    /**
+     * 
+     * Invoke to getroute parameter according to key
+     * @param String $key , key have route path
+     */
+    abstract protected function _routes($key);
+    
+    
     
 	function getName()
 	{
@@ -34,17 +38,23 @@ abstract class Rb_Router
 		}
 		return $name;
 	}
-    
-    public static function getInstance($name)
+
+	/**
+	 * 
+	 * Invoke to get router instance
+	 * @param unknown_type $name 
+	 * @param unknown_type $prefix
+	 */
+ 	public static function getInstance( $prefix='Rb_')
     {
-        return Rb_Factory::getInstance($name, '', $this->_component->getPrefixClass());
+    	return Rb_Factory::getInstance('router', '', $prefix);
     }
     
     // Load component menu records
     public function _getMenus()
     {
         if($this->_menus ===null){
-			$this->_menus 	= JSite::getMenu()->getItems('component_id',JComponentHelper::getComponent($this->_option)->id);
+			$this->_menus 	= Rb_Factory::getApplication()->getMenu('site')->getItems('component_id',JComponentHelper::getComponent($this->_component)->id);
 		}
 
 		return $this->_menus;
@@ -139,14 +149,30 @@ abstract class Rb_Router
     }
     
 
+    /**
+     * 
+     * Invoke to get Slugify query parameter (Encode-logic)
+     * @param Array $query  Array of query Parameter 
+     * @param $var, Parameter need to slugify
+     * 
+     * @return slug (slugify var)
+     */
     protected function _slugify($query, $var)
     {
        return $query[$var];
     }
     
-    protected function _deSlugify($var, $value, $parts)
+    /**
+     * 
+     * Invoke to de-slugify query parameter
+     * @param $var 
+     * @param $value
+     * @param $segments
+     */
+    protected function _deSlugify($var, &$segments,  $parts)
     {
-       return $value;
+    	$value = array_shift($segments);
+        return $value;
     }
     
     public function build( &$query )
@@ -156,15 +182,18 @@ abstract class Rb_Router
             $temp_added_vars = array();
             // if itemId is the first key, then these are menu links, only then consider it.
             // else the itemID might be of current page, not for the link
-            if(isset($query['Itemid']) && (array_shift(array_keys($query)) === 'Itemid') ){
-                // if item-id exists, then pick the var from menu and put into query, if not exist already
-     			$item = JSite::getMenu()->getItem($query['Itemid']);
-            	foreach($item->query as $var=>$value){
-            		if(!isset($query[$var])){
-						$query[$var]= $value;
-						$temp_added_vars[]=$var;
-					}
-            	}
+            if(isset($query['Itemid']) ) {
+            	$keys = array_keys($query);
+	            if ( (array_shift($keys) === 'Itemid') ){
+	                // if item-id exists, then pick the var from menu and put into query, if not exist already
+	     			$item = Rb_Factory::getApplication()->getMenu()->getItem($query['Itemid']);
+	            	foreach($item->query as $var=>$value){
+	            		if(!isset($query[$var])){
+							$query[$var]= $value;
+							$temp_added_vars[]=$var;
+						}
+	            	}
+	            }
             }
             
             //find the selected menu
@@ -176,7 +205,7 @@ abstract class Rb_Router
             }
             
             //can we process the route further
-            $key = @$query['view'] .'/'. @$query['task'];
+            $key = $this->getBuildKey($query, $segments, $selMenu);
             $route=$this->_routes($key);
             
             $route = array_merge(array('view', 'task'), $route);
@@ -224,9 +253,16 @@ abstract class Rb_Router
     {
         // initialize
         $parts = array();           
+        $view='';
+        $task = '';
         
+        // fix segments (see JRouter::_decodeSegments)
+    	foreach (array_keys($segments) as $key) {
+			$segments[$key] = str_replace(':', '-', $segments[$key]);
+		}
+	
         // find if any menu selected
-        $item = JFactory::getApplication()->getMenu()->getActive();
+        $item = Rb_Factory::getApplication()->getMenu()->getActive();
         
         // find view
         if(isset($item->query['view'])){
@@ -242,18 +278,36 @@ abstract class Rb_Router
         	$task = array_shift($segments); 
         }
         
-        $key = $view.'/'.$task;
+        $key = $this->getParseKey($view, $task, $segments);
         $route=$this->_routes($key);
 
         //remove not-required variables, which can be calculated from URL itself
+       	$parts['view'] = $view;
+      	$parts['task'] = $task;
+ 
         
-        $parts = array('view'=>$view , 'task' => $task);
         foreach($route as $var){
-            $value = array_shift($segments);
-            $value = $this->_deSlugify($var, $value, $parts);
+            $value = $this->_deSlugify($var,$segments , $parts);
             $parts[$var]=$value;
         }
         
        return $parts;
+    }
+    
+ 	public function getBuildKey(&$query, &$segments, &$selMenu)
+    {
+    	return @$query['view'] .'/'. @$query['task'];
+    }
+    
+    /**
+     * 
+     * Generate key. Using this key we will get query parameter 
+     * @param $view
+     * @param $task
+     */
+	public function getParseKey($view, $task, $segments)
+    {
+    	$key = $view.'/'.$task; 
+    	return $key;
     }
 }
