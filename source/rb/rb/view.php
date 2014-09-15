@@ -507,6 +507,11 @@ abstract class Rb_View extends Rb_AbstractView
 	protected $_validateActions = array('apply', 'save', 'save2new', 'savenew');
 	public function getDynamicJavaScript()
 	{
+		// no need to load these admin specific strings in frontend.
+		if(!Rb_Factory::getApplication()->isAdmin()){
+			return '';
+		}
+
 		// get valid actions for validation submission
 		$validActions = $this->_validateActions;
 		Rb_Error::assert(is_array($validActions));
