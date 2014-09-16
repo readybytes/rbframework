@@ -372,16 +372,10 @@ class Rb_HelperJoomla extends Rb_AbstractHelperJoomla
 		
 	public function getLogoutLink($routed=true)
 	{
-		$link = 'index.php?option='.PAYPLANS_COM_USER;
-	
-		if(RB_CMS_VERSION_FAMILY==15){
-			$link .= '&view=user&task=logout';
-		}else{
-			
-			$link .= '&task=user.logout';
-			// add token
-			$link .= '&'.JUtility::getToken().'=1';
-		}
+		$link = 'index.php?option=com_users&task=user.logout'
+		$link .= '&task=user.logout';
+		$link .= '&'.JUtility::getToken().'=1';
+
 		
 		//set return in url to redirect to home page after logout
 		$sitename = JURI::root();
@@ -397,16 +391,10 @@ class Rb_HelperJoomla extends Rb_AbstractHelperJoomla
 
 	public function getLoginLink($routed=true)
 	{
-		$link = 'index.php?option='.PAYPLANS_COM_USER;
-	
-		if(RB_CMS_VERSION_FAMILY==15){
-			$link .= '&view=user&task=login';
-		}else{
-			
-			$link .= '&task=login';
-			// add token
-			$link .= '&'.JUtility::getToken().'=1';
-		}
+		$link = 'index.php?option=com_users&task=login';
+		$link .= '&task=login';
+		$link .= '&'.JUtility::getToken().'=1';
+
 		
 		//set return in url to redirect to home page after login
 		$sitename  = JURI::getInstance()->toString();
@@ -427,20 +415,15 @@ class Rb_HelperJoomla extends Rb_AbstractHelperJoomla
         */
        public static function getLanguageCode()
        {
-               //RBFW_TODO : fixit for Joomfish
+           //RBFW_TODO : fixit for Joomfish
+           // as if now no way to collect language code
+           //RBFW_TODO : fixit for 1.7
+           $code = $lang->get('tag');
 
-               $lang = Rb_Factory::getLanguage();
-               if(RB_CMS_VERSION_FAMILY == '15'){
-                       $code = $lang->_lang;
-               }else{
-                       // as if now no way to collect language code
-                       //RBFW_TODO : fixit for 1.7
-                       $code = $lang->get('tag');
-               }
                
-               list ($langCode, $localCode)=explode('-', $code, 2);
-               return array('code' => $code, 'language' => $langCode, 'local' => $localCode);
-       }
+		list ($langCode, $localCode)=explode('-', $code, 2);
+		return array('code' => $code, 'language' => $langCode, 'local' => $localCode);
+      }
        
     public static function isLocalHost()
 	{
