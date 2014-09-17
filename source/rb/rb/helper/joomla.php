@@ -372,7 +372,7 @@ class Rb_HelperJoomla extends Rb_AbstractHelperJoomla
 		
 	public function getLogoutLink($routed=true)
 	{
-		$link = 'index.php?option=com_users&task=user.logout'
+		$link = 'index.php?option=com_users&task=user.logout';
 		$link .= '&task=user.logout';
 		$link .= '&'.JUtility::getToken().'=1';
 
