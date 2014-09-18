@@ -8,7 +8,7 @@
 */
 if(defined('_JEXEC')===false) die('Restricted access' );
 
-class Rb_AbstractHelperJoomla extends Rb_AdaptHelperJoomla
+class Rb_AbstractHelperJoomla
 {
 	public static function changePluginState($element, $folder = 'system', $state=parent::ENABLE)
 	{

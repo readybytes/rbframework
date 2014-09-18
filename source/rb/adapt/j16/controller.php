@@ -47,6 +47,3 @@ class Rb_AdaptJ16Controller extends JController
 		return $this;		
 	}
 }
-
-class Rb_AdaptController extends Rb_AdaptJ16Controller
-{}

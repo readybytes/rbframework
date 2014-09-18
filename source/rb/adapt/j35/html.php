@@ -13,5 +13,3 @@ class Rb_AdaptJ35Html extends JHtml
 	
 }
 
-class Rb_AdaptHtml extends Rb_AdaptJ35Html
-{}

@@ -27,23 +27,20 @@ _rb_cms_profiler_mark('RB-Framework-Before-Load');
 //load basic defines
 require_once dirname(__FILE__).'/defines.php'	;
 
-// load filetree, will help in reducing filesystem IO
-require_once RB_PATH_FRAMEWORK.'/filetree.php'; 
-
 // load the loader
 require_once RB_PATH_FRAMEWORK.'/loader.php'	;
 require_once dirname(__FILE__).'/helper.php'	;
 
-// adding JRegistryFormatRb_INI formatter
-// require_once RB_PATH_INCLUDES.'/ini.php'	;
-
-
-//autoload core library
-Rb_HelperLoader::addAutoLoadFolder(RB_PATH_FRAMEWORK.'/rb',		'');
-// adapt common code as per CMS
-Rb_HelperLoader::addAutoLoadFolder(RB_PATH_FRAMEWORK.'/adapt/'.RB_CMS_ADAPTER,	'Adapt');
-// use legacy code for legacy CMS
-Rb_HelperLoader::addAutoLoadFolder(RB_PATH_FRAMEWORK.'/legacy/'.RB_CMS_ADAPTER, ''	, 'J');
+// set autoload for all classes
+$classes = require_once RB_PATH_FRAMEWORK.'/classes.php';
+foreach ($classes as $className => $filePath) {
+	// if adapater and legacy files then only adpater version should be loaded
+	if((strpos($filePath, 'legacy/')===0) && (strpos($filePath, 'legacy/'.RB_CMS_ADAPTER) !==0) ){
+		continue;
+	}
+	Rb_HelperLoader::addAutoLoadFile(RB_PATH_FRAMEWORK.'/'.$filePath, $className);
+	
+}
 
 // mark to profiler
 _rb_cms_profiler_mark('RB-Framework-After-Load');
