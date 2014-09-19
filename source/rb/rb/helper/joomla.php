@@ -482,5 +482,32 @@ class Rb_HelperJoomla extends Rb_AbstractHelperJoomla
 					 ->dbLoadQuery()
 					 ->loadObjectList('id');
 	}
+
+
+	public static function addDocumentMetadata($title=null, $keywords=null, $description=null, $robots=null)
+	{
+		$document 	= Rb_Factory::getDocument();		
+
+		// set title
+		if($title)
+		{
+			$document->setTitle($title);
+		}
+
+		if($description)
+		{
+			$document->setDescription($description);
+		}
+
+		if ($keywords)
+		{
+			$document->setMetadata('keywords', $keywords);
+		}
+
+		if($robots)
+		{
+			$document->setMetadata('robots', $robots);
+		}
+	}
 	
 }
