@@ -255,22 +255,19 @@ class Rb_AbstractHelperJoomla
 		return new DateTimeZone($timezone);
 	}
 	
+	//RBFW_TODO : This returns usergroups strings, should be named properly.
 	public static function getJoomlaUserGroups($userid)
 	{
-	  jimport('joomla.user.helper');
-	  $usergroups = JUserHelper::getUserGroups($userid);
-	  if(PAYPLANS_JVERSION_25)
-	  {
-	  	$db      = Rb_Factory::getDBO();
-	  	$groups  = implode(',', $usergroups);
+		jimport('joomla.user.helper');
+		$usergroups = JUserHelper::getUserGroups($userid);
+		
+		$db      = Rb_Factory::getDBO();
+		$groups  = implode(',', $usergroups);
 		$db->setQuery( 'SELECT `title`'
-				. ' FROM #__usergroups'
-				. ' WHERE `id` IN (' . $groups . ')');
+			. ' FROM #__usergroups'
+			. ' WHERE `id` IN (' . $groups . ')');
 		return $db->loadColumn();	
-	  }
 
-	  $joomlagroups = array_keys($usergroups);
-	  return $joomlagroups;
 	}
 
 	public static function getUserEditLink($user)
