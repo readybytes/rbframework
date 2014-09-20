@@ -864,7 +864,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 	{
 		//RBFW_TODO:High : Event should be filtered
 		$event 		= $this->input->get('event', $event);
-		Rb_Error::assert($event,Rb_Text::_('PLG_SYSTEM_RBSL_ERROR_PAYPLANS_UNKNOWN_EVENT_TRIGGER_REQUESTED'));
+		Rb_Error::assert($event,'Unknown Event Triggered');
 
 		$args = $this->_getArgs();
 
