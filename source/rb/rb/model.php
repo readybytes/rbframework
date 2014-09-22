@@ -213,6 +213,20 @@ abstract class Rb_AbstractModel extends Rb_AdaptModel
 	{
 		return $this->getState('id') ;
 	}
+	
+	/**
+	 * Gets modelform instance of current model
+	 * @return Rb_Modelform
+	 */
+	public function getModelform()
+	{	
+		return Rb_Factory::getInstance($this->getName(), 'Modelform' , $this->_component->getPrefixClass());
+	}
+		
+	public function getValidator()
+	{
+		return Rb_Factory::getValidator();
+	} 
 }
 
 abstract class Rb_Model extends Rb_AbstractModel
@@ -300,20 +314,6 @@ abstract class Rb_Model extends Rb_AbstractModel
 		}
 	}
 
-
-	/**
-	 * This should vaildate and filter the data
-	 * @param unknown_type $data
-	 * @param unknown_type $pk
-	 * @param array $filter
-	 * @param array $ignore
-	 */
-	function validate(&$data, $pk=null,array $filter = array(),array $ignore = array())
-	{
-		return true;
-	}
-
-
 	/**
 	 * Save given data for the given record
 	 * @param array $data : date to be saved
@@ -332,13 +332,8 @@ abstract class Rb_Model extends Rb_AbstractModel
 		 if($pk === null)
 			$pk = (int) $this->getId();
 
-		//also validate via model
-		if($this->validate($data, $pk)===false)
-		{
-			//$this->setError(Rb_Text::_("FIELDS VALUE ARE NOT VALIDATE"));
-			//$this->setError(Rb_Factory::getErrorObject()->setError())
-			return false;
-		}
+		// IMP : Dadat must be validated before saving 
+		// Should we validate here ?? @RBTODO
 
 		// resolve parameter type variables
 		//$this->resolveParameters($data);
@@ -653,4 +648,58 @@ abstract class Rb_Model extends Rb_AbstractModel
        	}
        	return;
     }
+    
+	public function validateFormData($data, $pk=null)
+	{
+		$form 			= $this->getModelform()->getForm($data);
+		$fieldsets 		= $form->getFieldsets();
+		$errorFieldIds 	= array();
+		
+		$validator 	= $this->getValidator();
+		
+		// Validate the fields.
+		foreach($fieldsets as $fieldset){
+			foreach ($form->getFieldset($fieldset->name) as $field){
+				$value = null;
+				$name = (string) $field->name;
+				$value = $field->value;
+				
+				// get validation type from field
+				$validateRules = $field->getAttribute('validate', '');				
+				if(empty($validateRules)){
+					continue;
+				}
+				$validateRules = explode(',', $validateRules);
+				
+				// special case 
+				$required = $field->getAttribute('required', '');
+				// if field is required then add validation required in the params
+				if(!in_array('required', $validateRules) && !empty($required)){
+					$validateRules[] = 'required';
+				}	
+				
+				foreach ($validateRules as $rule){					
+					$funcName 	= 'validate'.ucfirst(trim($rule));
+					if(!method_exists($validator, $funcName)){
+						$errorFieldIds[] = $field->id;
+						continue;
+					}
+					
+					$params 	= $validator->getParamsFromField($field, trim($rule));
+					if($validator->$funcName($value, $params, $data) === false){
+						$errorFieldIds[] = $field->id;
+					}
+				}
+			}
+		}
+		
+		return $errorFieldIds;
+	}
+	
+	public function filterFormData($data, $itemId = null)
+	{
+		$form = $this->getModelform()->getForm($data);
+		$data = $form->filter($data);
+		return $data;
+	}
 }

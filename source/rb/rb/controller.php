@@ -349,7 +349,13 @@ abstract class Rb_AbstractController extends Rb_AdaptController
         $filters['filter_order_Dir'] = $app->getUserStateFromRequest($context.'.filter_order_Dir', 'filter_order_Dir', $this->_defaultOrderingDirection , 'word');
         $filters['filter']			 = $app->getUserStateFromRequest($context.'.filter', 'filter', '', 'string');
 
-        //start link does not redirect to the first page because offset is used as limitstart   
+        // get post data and error fields occured in previous record and clear them also
+        $filters['post_data']	  	 = $app->getUserStateFromRequest($context.'.post_data', 'post_data', array(), 'array');
+        $filters['error_fields'] 	 = $app->getUserStateFromRequest($context.'.error_fields', 'error_fields', array(), 'array');
+        $app->setUserState($context . '.post_data', null);
+        $app->setUserState($context . '.error_fields', null);
+        
+		//start link does not redirect to the first page because offset is used as limitstart   
         $filters['limitstart'] 		 = $this->input->get('limitstart',0);
         //also support generic filters
         $model->_populateGenericFilters($filters);
@@ -558,15 +564,25 @@ abstract class Rb_Controller extends Rb_AbstractController
 		//perform redirection
 		$redirect  = "index.php?option={$this->_component->getNameCom()}&view={$this->getName()}";
 
-		// We use Table key name to work in both case with or without lib
-		if($this->input->get('task')==='apply' && $msgType != 'error') {
-			$table    	=  $this->getModel()->getTable();
-      		$keyName  	=  $table->getKeyName();
-     		$redirect  .= "&task=edit&id={$table->$keyName}"; 
+		if($msgType != 'error'){
+			// We use Table key name to work in both case with or without lib
+			if($this->input->get('task')==='apply') {
+				$table    	=  $this->getModel()->getTable();
+	      		$keyName  	=  $table->getKeyName();
+	     		$redirect  .= "&task=edit&id={$table->$keyName}"; 
+			}
+	
+		    if($this->input->get('task')==='savenew') {
+				$redirect  .= "&task=new";
+			}
 		}
-
-	   if($this->input->get('task')==='savenew' && $msgType != 'error') {
-			$redirect  .= "&task=new";
+		else{
+			if($itemId){
+				$redirect  .= "&task=edit&id=$itemId";
+			}
+			else{
+				$redirect  .= "&task=new";
+			}
 		}
 		
 		$redirect = Rb_Route::_($redirect);
@@ -870,6 +886,40 @@ abstract class Rb_Controller extends Rb_AbstractController
 
 		//args must be an array
 		return Rb_HelperPlugin::trigger($event, $args);
+	}
+	
+	/**
+	 * 
+	 * Validate an Filter the data w.r.t to its form
+	 * @param array $data
+	 * @param mixed $itemId
+	 * @return boolean
+	 */
+	protected function __validate(array &$data, $itemId=null)
+	{
+		$model = $this->getModel();
+		
+		// IMP: If there is no model, then no validation.
+		//      So return true in this case
+		if(!$model){
+			return true;			
+		}
+		
+		$data 		 = $model->filterFormData($data, $itemId);
+		$errorFields = $model->validateFormData($data, $itemId);
+		
+		// if validation failed 
+		// Save the data in session and these data will be fetched and cleared 
+		// while populating controller in next request (redirection)		 		
+		if(count($errorFields) > 0){
+			$app = RB_Factory::getApplication();
+			$context = $this->getModel()->getContext();
+			$app->setUserState($context . '.post_data', $data);			
+			$app->setUserState($context . '.error_fields', $errorFields);
+			return false;
+		}
+		
+		return true;
 	}
 }
 

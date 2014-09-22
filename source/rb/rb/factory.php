@@ -74,4 +74,14 @@ class Rb_Factory extends Rb_AbstractFactory
 
 		return $reset;
 	}
+	
+	public static $validator = null;
+	public function getValidator()
+	{	
+		if(!self::$validator){
+			self::$validator = new RB_Validator();
+		}
+		
+		return self::$validator;
+	}
 }
