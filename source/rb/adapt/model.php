@@ -8,11 +8,12 @@
 */
 if(defined('_JEXEC')===false) die('Restricted access' );
 
-class Rb_HelperContext
-{
-	static function getObjectContext($object)
-	{
-		Rb_Error::assertValue($object);
-		return strtolower($object->getPrefix().'_'.$object->getName());
-	}
+if(RB_CMS_ADAPTER==='j16'){
+	class Rb_AdaptModel extends Rb_AdaptJ16Model
+	{}
+}
+
+if(RB_CMS_ADAPTER==='j35'){
+	class Rb_AdaptModel extends Rb_AdaptJ35Model
+	{}
 }

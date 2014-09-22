@@ -48,5 +48,3 @@ class Rb_AdaptJ35Controller extends JControllerLegacy
 	}
 }
 
-class Rb_AdaptController extends Rb_AdaptJ35Controller
-{}

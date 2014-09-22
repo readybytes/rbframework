@@ -15,5 +15,3 @@ class Rb_AdaptJ35Model extends JModelLegacy
 	protected	$_name		= null;
 }
 
-class Rb_AdaptModel extends Rb_AdaptJ35Model
-{}

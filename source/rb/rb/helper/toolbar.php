@@ -12,6 +12,9 @@ class Rb_AbstractHelperToolbar extends JToolBarHelper
 {
 }
 
+/*
+* @deprecated  1.1 Use JToolBarHelper instead.
+*/
 class Rb_HelperToolbar extends Rb_AbstractHelperToolbar
 {
 	

@@ -10,7 +10,7 @@ if(defined('_JEXEC')===false) die('Restricted access' );
 
 class Rb_HtmlRange
 {	
-	static function filter($name, $view, Array $filters = array(), $type="date", $prefix='filter_payplans')
+	static function filter($name, $view, Array $filters = array(), $type="date", $prefix='')
 	{
 		$elementName   = $prefix.'_'.$view.'_'.$name;
 		$elementValue0 = @array_shift($filters[$name]);

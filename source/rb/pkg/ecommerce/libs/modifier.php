@@ -141,12 +141,8 @@ class Rb_EcommerceModifier extends Rb_EcommerceLib
 		return $this;
 	} 
 	
-	public function getInvoice($requireinstance = false)
+	public function getInvoice()
 	{
-		if($requireinstance == PAYPLANS_INSTANCE_REQUIRE){
-			return PayplansInvoice::getInstance($this->invoice_id);
-		}
-		
 		return $this->invoice_id;
 	}
 	

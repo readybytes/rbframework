@@ -8,7 +8,7 @@
 */
 if(defined('_JEXEC')===false) die('Restricted access' );
 
-class Rb_AbstractHelperJoomla extends Rb_AdaptHelperJoomla
+class Rb_AbstractHelperJoomla
 {
 	public static function changePluginState($element, $folder = 'system', $state=parent::ENABLE)
 	{
@@ -255,22 +255,19 @@ class Rb_AbstractHelperJoomla extends Rb_AdaptHelperJoomla
 		return new DateTimeZone($timezone);
 	}
 	
+	//RBFW_TODO : This returns usergroups strings, should be named properly.
 	public static function getJoomlaUserGroups($userid)
 	{
-	  jimport('joomla.user.helper');
-	  $usergroups = JUserHelper::getUserGroups($userid);
-	  if(PAYPLANS_JVERSION_25)
-	  {
-	  	$db      = Rb_Factory::getDBO();
-	  	$groups  = implode(',', $usergroups);
+		jimport('joomla.user.helper');
+		$usergroups = JUserHelper::getUserGroups($userid);
+		
+		$db      = Rb_Factory::getDBO();
+		$groups  = implode(',', $usergroups);
 		$db->setQuery( 'SELECT `title`'
-				. ' FROM #__usergroups'
-				. ' WHERE `id` IN (' . $groups . ')');
+			. ' FROM #__usergroups'
+			. ' WHERE `id` IN (' . $groups . ')');
 		return $db->loadColumn();	
-	  }
 
-	  $joomlagroups = array_keys($usergroups);
-	  return $joomlagroups;
 	}
 
 	public static function getUserEditLink($user)
@@ -322,7 +319,7 @@ class Rb_HelperJoomla extends Rb_AbstractHelperJoomla
 			$dispatcher = JDispatcher::getInstance();
 		}
 
-		//load payplans plugins
+		//load plugins
 		self::loadPlugins($type);
 		//$eventName = $prefix.JString::ucfirst($eventName);
 		return $dispatcher->trigger($eventName, $data);
@@ -332,7 +329,7 @@ class Rb_HelperJoomla extends Rb_AbstractHelperJoomla
 	 * Loads plugin of given type
 	 * @param $type
 	 */
-	static function loadPlugins($type='payplans')
+	static function loadPlugins($type='')
 	{
 		static $loaded = array();
 
@@ -418,6 +415,7 @@ class Rb_HelperJoomla extends Rb_AbstractHelperJoomla
            //RBFW_TODO : fixit for Joomfish
            // as if now no way to collect language code
            //RBFW_TODO : fixit for 1.7
+           $lang = Rb_Factory::getLanguage();
            $code = $lang->get('tag');
 
                
@@ -464,7 +462,7 @@ class Rb_HelperJoomla extends Rb_AbstractHelperJoomla
 	// get joomla categories
 	public static function getJoomlaCategories()
 	{
-		$db 	= PayplansFactory::getDBO();
+		$db 	= Rb_Factory::getDBO();
 		
 		$query = 'SELECT  `id`  as category_id, title'
 			 	. ' FROM #__categories'
@@ -481,6 +479,33 @@ class Rb_HelperJoomla extends Rb_AbstractHelperJoomla
 					 ->from('`#__content`')
 					 ->dbLoadQuery()
 					 ->loadObjectList('id');
+	}
+
+
+	public static function addDocumentMetadata($title=null, $keywords=null, $description=null, $robots=null)
+	{
+		$document 	= Rb_Factory::getDocument();		
+
+		// set title
+		if($title)
+		{
+			$document->setTitle($title);
+		}
+
+		if($description)
+		{
+			$document->setDescription($description);
+		}
+
+		if ($keywords)
+		{
+			$document->setMetadata('keywords', $keywords);
+		}
+
+		if($robots)
+		{
+			$document->setMetadata('robots', $robots);
+		}
 	}
 	
 }

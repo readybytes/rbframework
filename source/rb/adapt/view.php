@@ -4,14 +4,16 @@
 * @license		GNU/GPL, see LICENSE.php
 * @package		RB Framework
 * @subpackage	Frontend
-* @contact 		team@readybytes.in
+* @contact 		shyam@readybytes.in
 */
 if(defined('_JEXEC')===false) die('Restricted access' );
-	    	
-class Rb_FileTreeProvider
-{   
-    static public function get($index)
-    {
-    	return false;
-    }
+
+if(RB_CMS_ADAPTER==='j16'){
+	class Rb_AdaptView extends Rb_AdaptJ16View
+	{}
+}
+
+if(RB_CMS_ADAPTER==='j35'){
+	class Rb_AdaptView extends Rb_AdaptJ35View
+	{}
 }

@@ -19,5 +19,3 @@ class Rb_AdaptJ35View extends JViewLegacy
 	}
 }
 
-class Rb_AdaptView extends Rb_AdaptJ35View
-{}
