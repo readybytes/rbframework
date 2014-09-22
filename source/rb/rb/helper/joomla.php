@@ -415,6 +415,7 @@ class Rb_HelperJoomla extends Rb_AbstractHelperJoomla
            //RBFW_TODO : fixit for Joomfish
            // as if now no way to collect language code
            //RBFW_TODO : fixit for 1.7
+           $lang = Rb_Factory::getLanguage();
            $code = $lang->get('tag');
 
                

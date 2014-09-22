@@ -41,7 +41,9 @@ class Rb_ViewHtml extends Rb_View
 	
 	protected function generateMetadata()
 	{	
-		if(Rb_Factory::getApplication()->isAdmin()){
+        $app = Rb_Factory::getApplication();
+                
+		if($app->isAdmin()){
 			return true;
 		}
 		
