@@ -93,7 +93,7 @@ abstract class Rb_Table extends JTable
 			$db	= Rb_Factory::getDBO();
 		}
 
-		if(Rb_HelperTable::isTableExist($tblFullName)===false){	
+		if(Rb_HelperUtils::isTableExist($tblFullName)===false){	
 			throw new Exception(JText::_("PLG_SYSTEM_RBSL_NO_TABLE_EXISTS").' : '.$this->_tbl);
 		}
 		
@@ -148,7 +148,7 @@ abstract class Rb_Table extends JTable
 		$tableName 	= $this->getTableName();
 
 		if($fields === null || isset($fields[$tableName]) ===false){
-			if(Rb_HelperTable::isTableExist($tableName)===FALSE)
+			if(Rb_HelperUtils::isTableExist($tableName)===FALSE)
 			{
 				$this->setError("Table $this->_tbl does not exist");
 				return null;

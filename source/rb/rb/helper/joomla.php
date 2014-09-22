@@ -319,7 +319,7 @@ class Rb_HelperJoomla extends Rb_AbstractHelperJoomla
 			$dispatcher = JDispatcher::getInstance();
 		}
 
-		//load payplans plugins
+		//load plugins
 		self::loadPlugins($type);
 		//$eventName = $prefix.JString::ucfirst($eventName);
 		return $dispatcher->trigger($eventName, $data);
@@ -329,7 +329,7 @@ class Rb_HelperJoomla extends Rb_AbstractHelperJoomla
 	 * Loads plugin of given type
 	 * @param $type
 	 */
-	static function loadPlugins($type='payplans')
+	static function loadPlugins($type='')
 	{
 		static $loaded = array();
 
@@ -461,7 +461,7 @@ class Rb_HelperJoomla extends Rb_AbstractHelperJoomla
 	// get joomla categories
 	public static function getJoomlaCategories()
 	{
-		$db 	= PayplansFactory::getDBO();
+		$db 	= Rb_Factory::getDBO();
 		
 		$query = 'SELECT  `id`  as category_id, title'
 			 	. ' FROM #__categories'

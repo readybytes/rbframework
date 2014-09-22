@@ -69,7 +69,7 @@
 		</foreach>
 
 		<exec command="php getclassesinfile.php" dir="${dir.root}/scripts" checkreturn="true" passthru="true"/>
-		<!-- delete file="${dir.src}/rb/_filelist.php" / -->
+		<delete file="${dir.src}/rb/_filelist.php" />
 
 		<!-- Copy Source Code -->
 		<copy todir="${dir.tmp}" >

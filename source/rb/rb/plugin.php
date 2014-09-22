@@ -78,7 +78,7 @@ class Rb_Plugin extends JPlugin
 		$this->_tplVars[$key] = $value;
 	}
 
-	protected function _loadTemplate( $tpl = null, $args = null, $type = 'payplans', $layout=null)
+	protected function _loadTemplate( $tpl = null, $args = null, $type = '', $layout=null)
 	{
 		if($args === null){
 			$args= (array)$this->_tplVars;
@@ -116,7 +116,7 @@ class Rb_Plugin extends JPlugin
 	}
 	
 
-    protected function _getTemplatePath($plugin=null, $type='payplans')
+    protected function _getTemplatePath($plugin=null, $type='')
     {
 
         $app = Rb_Factory::getApplication();

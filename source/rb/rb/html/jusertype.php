@@ -34,7 +34,7 @@ class Rb_HtmlJusertype extends Rb_Html
 	    return Rb_Html::_('autocomplete.edit', $groups, $name, $attr, $textField, $valueField, $value);		
 	}
 	
-	static function filter($name, $view, Array $filters = array(), $prefix='filter_payplans')
+	static function filter($name, $view, Array $filters = array(), $prefix='')
 	{
 		$elementName  = $prefix.'_'.$view.'_'.$name;
 		$elementValue = @array_shift($filters[$name]);
