@@ -302,11 +302,7 @@ class Rb_Validator
     public function validateSlug($value, $params = array(), $data = array())
     {
     	$value = strtolower($value);
-		
-        $slug = str_ireplace(array('$',','), '', $value);
-		// Handle by Joomla global configuration varible 'unicodeslugs'
-		$slug = JApplicationHelper::stringURLSafe($slug);
-		$slug = trim($string);
+		$slug = JApplicationHelper::stringURLSafe($value);
 
         return $slug == $value;
     }

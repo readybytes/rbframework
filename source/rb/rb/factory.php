@@ -76,7 +76,7 @@ class Rb_Factory extends Rb_AbstractFactory
 	}
 	
 	public static $validator = null;
-	public function getValidator()
+	public static function getValidator()
 	{	
 		if(!self::$validator){
 			self::$validator = new RB_Validator();

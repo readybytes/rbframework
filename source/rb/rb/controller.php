@@ -905,7 +905,8 @@ abstract class Rb_Controller extends Rb_AbstractController
 			return true;			
 		}
 		
-		$data 		 = $model->filterFormData($data, $itemId);
+		// IMP : Need to merge the data, otherwise filter will remove the data which does not exist in form
+		$data 		 = array_merge($data, $model->filterFormData($data, $itemId));
 		$errorFields = $model->validateFormData($data, $itemId);
 		
 		// if validation failed 
