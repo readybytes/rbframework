@@ -33,6 +33,7 @@ foreach($files as $file){
 	}
 }
 
+ksort($classes);
 $data = '<?php '.PHP_EOL
 		.' return '.var_export($classes,true)
 		.';';
