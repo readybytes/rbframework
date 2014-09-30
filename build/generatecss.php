@@ -43,7 +43,7 @@ class GenerateCss extends JApplicationCli
 	 */
 	public function doExecute()
 	{
-		$location = JPATH_SITE.'/media/rb/jui';
+		$location = dirname(__FILE__);
 		$templates = array(
 			'bootstrap.less' 			=> 	'bootstrap.css',
 			'bootstrap-extended.less' => 	'bootstrap-extended.css',
