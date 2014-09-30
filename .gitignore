@@ -3,3 +3,5 @@ source/extend/
 packages
 *.zip
 *.tar.gz
+*.min.js
+MD5SUM
