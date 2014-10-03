@@ -165,7 +165,8 @@ class Rb_EcommerceHelperModifier extends Rb_Helper
 	
 	public function getTotalByFrequencyOnInvoiceNumber($modifiers, $subtotal, $invoiceNumber)
 	{
-		$total = $subtotal;
+		$total 		= $subtotal;
+		$modifiers 	= $this->_rearrange($modifiers);
 		foreach($modifiers as $modifier){
 			switch ($modifier->getFrequency()){
 				case Rb_EcommerceModifier::FREQUENCY_THIS_AND_LATER :
