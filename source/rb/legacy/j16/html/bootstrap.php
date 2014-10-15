@@ -161,7 +161,7 @@ abstract class JHtmlBootstrap
 			$debug  = (boolean) $config->get('debug');
 		}
 
-		Rb_Html::script('jui/js/bootstrap.min.js', false, true, false, false, $debug);
+		Rb_Html::script('rb/jui/bootstrap.min.js', false, true, false, false, $debug);
 		self::$loaded[__METHOD__] = true;
 
 		return;
@@ -593,11 +593,11 @@ abstract class JHtmlBootstrap
 		// Load Bootstrap main CSS
 		if ($includeMainCss)
 		{
-			Rb_Html::stylesheet('jui/css/bootstrap.css', $attribs, false);
-			Rb_Html::stylesheet('jui/css/bootstrap-responsive.css', $attribs, false);
-			Rb_Html::stylesheet('jui/css/bootstrap-extended.css', $attribs, false);
-			Rb_Html::stylesheet('jui/css/rb-override.css', $attribs, false);
-			Rb_Html::script('jui/js/template.js', $attribs, false);
+			Rb_Html::stylesheet('rb/jui/bootstrap.css', $attribs);
+			Rb_Html::stylesheet('rb/jui/bootstrap-responsive.css', $attribs);
+			Rb_Html::stylesheet('rb/jui/bootstrap-extended.css', $attribs);
+			Rb_Html::stylesheet('rb/jui/rb-override.css', $attribs);
+			Rb_Html::script('rb/jui/template.js', $attribs);
 		}
 
 		// Load Bootstrap RTL CSS

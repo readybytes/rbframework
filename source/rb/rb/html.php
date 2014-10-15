@@ -10,7 +10,7 @@ if(defined('_JEXEC')===false) die('Restricted access' );
 
 class Rb_Html extends JHtml
 {	
-	public static function stylesheet($file, $attribs = array(), $relative = false, $path_only = true, $detect_browser = true, $detect_debug = true)
+	public static function stylesheet($file, $attribs = array(), $relative = true, $path_only = true, $detect_browser = true, $detect_debug = true)
 	{
 		// We don't know file is loaded or not by joomla so we passed 3rd parameter as true 
 		// and we get only file paths & load manually by us.

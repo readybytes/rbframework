@@ -53,12 +53,12 @@ abstract class JHtmlJquery
 			$debug  = (boolean) $config->get('debug');
 		}
 
-		Rb_Html::script('jui/js/jquery.js', false, true, false, false, $debug);
+		Rb_Html::script('rb/jui/jquery.js', false, true, false, false, $debug);
 
 		// Check if we are loading in noConflict
 		if ($noConflict)
 		{
-			Rb_Html::script('jui/js/jquery-noconflict.js', false, true, false, false, false);
+			Rb_Html::script('rb/jui/jquery-noconflict.js', false, true, false, false, false);
 		}
 
 		self::$loaded[__METHOD__] = true;
@@ -99,7 +99,7 @@ abstract class JHtmlJquery
 			// Only attempt to load the component if it's supported in core and hasn't already been loaded
 			if (in_array($component, $supported) && empty(self::$loaded[__METHOD__][$component]))
 			{
-				Rb_Html::script('jui/js/jquery.ui.' . $component . '.js', false, true, false, false, $debug);
+				Rb_Html::script('rb/jui/jquery.ui.' . $component . '.js', false, true, false, false, $debug);
 				self::$loaded[__METHOD__][$component] = true;
 			}
 		}

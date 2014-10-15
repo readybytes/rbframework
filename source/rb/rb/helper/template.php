@@ -60,9 +60,9 @@ class Rb_HelperTemplate
 		Rb_html::_('bootstrap.framework');	// Load bootstrap.min.js
 		
 		// Load RB Script (Maintain Order) then other scripts
-		Rb_Html::script('rb/rb.core.js');
-		Rb_Html::script('rb/rb.lib.js');
-		Rb_Html::script('rb/rb.validation.js');
+		Rb_Html::script('rb/rb/rb.core.js');
+		Rb_Html::script('rb/rb/rb.lib.js');
+		Rb_Html::script('rb/rb/rb.validation.js');
 
 		return self::$_setupScriptsLoaded = true;
 	}

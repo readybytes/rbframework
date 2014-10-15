@@ -22,10 +22,10 @@ abstract class Rb_HtmlNvd3
 		
 		if($loaded === false){
 			$loaded = true;
-			Rb_Html::stylesheet('nvd3/nv.d3.css', $attribs, false);
+			Rb_Html::stylesheet('rb/nvd3/nv.d3.css', $attribs);
 			
-			Rb_Html::script('nvd3/d3.v2.js', $attribs, false);
-			Rb_Html::script('nvd3/nv.d3.js', $attribs, false);
+			Rb_Html::script('rb/nvd3/d3.v2.js', $attribs);
+			Rb_Html::script('rb/nvd3/nv.d3.js', $attribs);
 		}
 	}
 }
