@@ -14,8 +14,8 @@ class Rb_HtmlBoolean extends Rb_Html
 	{
 		$img 	= $row->$what ? $imgY : $imgX;
 		$task 	= $row->$what ? 'switchOff'.$what : 'switchOn'.$what;
-		$alt 	= $row->$what ? Rb_Text::_( $langPrefix.'_SWITCH_ON_'.JString::strtoupper($what )) : Rb_Text::_( $langPrefix.'_SWITCH_OFF_'.JString::strtoupper($what));
-		$action = $row->$what ? Rb_Text::_( $langPrefix.'_SWITCH_OFF_'.JString::strtoupper($what).'_ITEM' ) : Rb_Text::_( $langPrefix.'_SWITCh_ON_'.JString::strtoupper($what).'_ITEM' );
+		$alt 	= $row->$what ? JText::_( $langPrefix.'_SWITCH_ON_'.JString::strtoupper($what )) : JText::_( $langPrefix.'_SWITCH_OFF_'.JString::strtoupper($what));
+		$action = $row->$what ? JText::_( $langPrefix.'_SWITCH_OFF_'.JString::strtoupper($what).'_ITEM' ) : JText::_( $langPrefix.'_SWITCh_ON_'.JString::strtoupper($what).'_ITEM' );
 
 		$href = ' <a href="javascript:void(0);" onclick="return listItemTask(\'cb'. $i .'\',\''. $prefix.$task .'\')" title="'. $action .'">'.
 		 		  JHtml::_('image','admin/'.$img, $alt, NULL, true);
@@ -29,11 +29,11 @@ class Rb_HtmlBoolean extends Rb_Html
 		$elementValue = @array_shift($filters[$name]);
 		
 		$data[] = array('value' => '', 
-		  				'text'  => Rb_Text::_( $langPrefix.'_FILTERS_SELECT_'.JString::strtoupper($name).'_STATE'));
+		  				'text'  => JText::_( $langPrefix.'_FILTERS_SELECT_'.JString::strtoupper($name).'_STATE'));
 		$data[] = array('value' => 0, 
-		  				'text'  => Rb_Text::_( $langPrefix.'_FILTERS_OFF_'.JString::strtoupper($name)));
+		  				'text'  => JText::_( $langPrefix.'_FILTERS_OFF_'.JString::strtoupper($name)));
 		$data[] = array('value' => 1, 
-		  				'text'  => Rb_Text::_( $langPrefix.'_FILTERS_ON_'.JString::strtoupper($name)));
+		  				'text'  => JText::_( $langPrefix.'_FILTERS_ON_'.JString::strtoupper($name)));
 		
 		foreach($data as $d)
     		$options[] = JHTML::_('select.option', $d['value'], $d['text']);

@@ -99,7 +99,7 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 		if (empty( $name ))
 		{
 			$r = null;
-			Rb_Error::assert(preg_match('/Controller(.*)/i', get_class($this), $r) , Rb_Text::sprintf('PLG_SYSTEM_RBSL_ERROR_XICONTROLLER_CANT_GET_OR_PARSE_CLASS_NAME', get_class($this)), Rb_Error::ERROR);
+			Rb_Error::assert(preg_match('/Controller(.*)/i', get_class($this), $r) , JText::sprintf('PLG_SYSTEM_RBSL_ERROR_XICONTROLLER_CANT_GET_OR_PARSE_CLASS_NAME', get_class($this)), Rb_Error::ERROR);
 
 			$name = strtolower( $r[1] );
 		}
@@ -116,7 +116,7 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 			return $this->_prefix;
 
 		$r = null;
-		Rb_Error::assert(preg_match('/(.*)Controller/i', get_class($this), $r), Rb_Text::sprintf('PLG_SYSTEM_RBSL_ERROR_CANT_GET_PARSE_CLASS_NAME',Rb_Controller::getName()), Rb_Error::ERROR);
+		Rb_Error::assert(preg_match('/(.*)Controller/i', get_class($this), $r), JText::sprintf('PLG_SYSTEM_RBSL_ERROR_CANT_GET_PARSE_CLASS_NAME',Rb_Controller::getName()), Rb_Error::ERROR);
 
 		$this->_prefix  =  strtolower($r[1]);
 		return $this->_prefix;
@@ -149,7 +149,7 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 		$model	= Rb_Factory::getInstance($name,'Model', $prefix);
 
 		if (!$model) {
-			$this->setError(Rb_Text::_('NOT_ABLE_TO_GET_INSTANCE_OF_MODEL'.' : '.$this->getName()));
+			$this->setError(JText::_('NOT_ABLE_TO_GET_INSTANCE_OF_MODEL'.' : '.$this->getName()));
 		}
 
 		return $model;
@@ -431,7 +431,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 	 */
 	function notask()
 	{
-		echo Rb_Text::_('PLG_SYSTEM_RBSL_NO_TASK_PROVIDED');
+		echo JText::_('PLG_SYSTEM_RBSL_NO_TASK_PROVIDED');
 		return false;
 	}
 
@@ -558,7 +558,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 			$msgType	=	'error';
 		}
 		else {
-			$this->setMessage(Rb_Text::_($this->_component->getPrefixText().'PLG_SYSTEM_RBSL_ITEM_SAVED_SUCCESSFULLY'));
+			$this->setMessage(JText::_($this->_component->getPrefixText().'PLG_SYSTEM_RBSL_ITEM_SAVED_SUCCESSFULLY'));
 		}
 
 		//perform redirection
@@ -614,7 +614,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 	{
 		$errMsg				= '';
 		$messagetype 	= 'message';
-		$message 		= Rb_Text::_($this->_component->getPrefixText().'PLG_SYSTEM_RBSL_ITEMS_DELETED');
+		$message 		= JText::_($this->_component->getPrefixText().'PLG_SYSTEM_RBSL_ITEMS_DELETED');
 
 
 		//ensure model state is blank, so no mishappening :-)
@@ -663,7 +663,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 	{
 		$errMsg				= '';
 		$messagetype 	= 'message';
-		$message 		= Rb_Text::_($this->_component->getPrefixText().'PLG_SYSTEM_RBSL_ITEMS_COPIED');
+		$message 		= JText::_($this->_component->getPrefixText().'PLG_SYSTEM_RBSL_ITEMS_COPIED');
 		
 		$cids = $this->input->get('cid', $cids, 'ARRAY');
 		foreach ($cids as $cid)
@@ -704,7 +704,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 		if($this->_order($change, $cids[0])===false)
 			$this->setMessage($this->getError());
 		else
-			$this->setMessage(Rb_Text::_($this->_component->getPrefixText().'PLG_SYSTEM_RBSL_ITEM_ORDERED_SUCCESSFULLY'));
+			$this->setMessage(JText::_($this->_component->getPrefixText().'PLG_SYSTEM_RBSL_ITEM_ORDERED_SUCCESSFULLY'));
 
 		//perform redirection
 		$this->setRedirect();
@@ -720,7 +720,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 	{
 		$errMsg				= '';
 		$this->messagetype 	= 'notice';
-		$this->message 		= Rb_Text::_($this->_component->getPrefixText().'PLG_SYSTEM_RBSL_ITEMS_REORDERED');
+		$this->message 		= JText::_($this->_component->getPrefixText().'PLG_SYSTEM_RBSL_ITEMS_REORDERED');
 
 		//RBFW_TODO : User proper variable names
 		$ordering 	= $this->input->get('ordering', array(0), 'ARRAY');
@@ -788,7 +788,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 	{
 		$errMsg				= '';
 		$this->messagetype 	= 'notice';
-		$this->message 		= Rb_Text::_($this->_component->getPrefixText().'PLG_SYSTEM_RBSL_ITEMS_REORDERED');
+		$this->message 		= JText::_($this->_component->getPrefixText().'PLG_SYSTEM_RBSL_ITEMS_REORDERED');
 
 		$task	= strtolower($this->input->get('task',	'enable'));
 

@@ -16,8 +16,8 @@ class Rb_HtmlRange
 		$elementValue0 = @array_shift($filters[$name]);
 		$elementValue1 = @array_shift($filters[$name]);
 		
-		$from  = '<label class="pp-grid_3">'.Rb_Text::_('PLG_SYSTEM_RBSL_FILTERS_FROM').'</label>';
-		$to    = '<label class="pp-grid_3">'.Rb_Text::_('PLG_SYSTEM_RBSL_FILTERS_TO').'</label>';
+		$from  = '<label class="pp-grid_3">'.JText::_('PLG_SYSTEM_RBSL_FILTERS_FROM').'</label>';
+		$to    = '<label class="pp-grid_3">'.JText::_('PLG_SYSTEM_RBSL_FILTERS_TO').'</label>';
 			
 			
 		if(strtolower($type)=="date"){

@@ -28,7 +28,7 @@ class Rb_HelperToolbar extends Rb_AbstractHelperToolbar
 	{
 		$selected 	= ($menu==$selMenu);
 		$link 		= "index.php?option=".$comName."&view=$menu";
-		$title 		= Rb_Text::_(strtoupper($comName).'_SUBMENU_'.strtoupper($menu));
+		$title 		= JText::_(strtoupper($comName).'_SUBMENU_'.strtoupper($menu));
 		JSubMenuHelper::addEntry($title,$link, $selected);
 	}
 
