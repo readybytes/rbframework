@@ -21,7 +21,7 @@ class Rb_HtmlJusertype extends Rb_Html
 		
 		if(isset($attr) && isset($attr['userAutocomplete']) && $attr['userAutocomplete'] == false){
 			if(isset($attr['none']))
-                       $options[] = JHTML::_('select.option', '', Rb_Text::_('PLG_SYSTEM_RBSL_SELECT_USERTYPE'));
+                       $options[] = JHTML::_('select.option', '', JText::_('PLG_SYSTEM_RBSL_SELECT_USERTYPE'));
                        
             foreach($groups as $group=>$val){
             	$options[] = JHTML::_('select.option', $val, $val);        

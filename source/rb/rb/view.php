@@ -61,7 +61,7 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 			return $this->_prefix;
 
 		$r = null;
-		Rb_Error::assert(preg_match('/(.*)View/i', get_class($this), $r), Rb_Text::sprintf('PLG_SYSTEM_RBSL_ERROR_XIVIEW_GETPREFIX_CANT_GET_OR_PARSE_CLASSNAME', get_class($this)), Rb_Error::ERROR);
+		Rb_Error::assert(preg_match('/(.*)View/i', get_class($this), $r), JText::sprintf('PLG_SYSTEM_RBSL_ERROR_XIVIEW_GETPREFIX_CANT_GET_OR_PARSE_CLASSNAME', get_class($this)), Rb_Error::ERROR);
 
 
 		$this->_prefix  =  strtolower($r[1]);
@@ -278,7 +278,7 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 	protected function _adminToolbarTitle($title=null, $image=null)
 	{
 		if($title === null){
-			$title = Rb_Text::_($this->_component->getPrefixText().'_SUBMENU_'.strtoupper($this->getName()));
+			$title = JText::_($this->_component->getPrefixText().'_SUBMENU_'.strtoupper($this->getName()));
 		}
 		
 		if($image === null){
@@ -567,8 +567,8 @@ abstract class Rb_View extends Rb_AbstractView
 		$heading = $textPrefix.'_ADMIN_BLANK_'.strtoupper($this->getName());
 		$message = $heading.'_MSG';
 		
-		$this->assign('heading', Rb_Text::_($heading));
-		$this->assign('msg', Rb_Text::_($message));
+		$this->assign('heading', JText::_($heading));
+		$this->assign('msg', JText::_($message));
 		$this->assign('filters', $model->getState($model->getContext()));
 		$this->setTpl('blank');
 		

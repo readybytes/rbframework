@@ -49,7 +49,7 @@ class Rb_Html extends Rb_AdaptHtml
 			// option($value, $text = '', $optKey = 'value', $optText = 'text', $disable = false)
 			$tmp = JHtml::_(
 						'select.option', (string) $value,
-						Rb_Text::alt($label, preg_replace('/[^a-zA-Z0-9_\-]/', '_', $label)), 
+						JText::alt($label, preg_replace('/[^a-zA-Z0-9_\-]/', '_', $label)), 
 						'value', 'text',((string) @$option->disabled == 'true')
 					);
 

@@ -82,12 +82,12 @@ abstract class Rb_Checklist
 
 	public function getMessage()
 	{
-		return Rb_Text::_($this->_message);
+		return JText::_($this->_message);
 	}
 
 	public function getTooltip()
 	{
-		return Rb_Text::_('PLG_SYSTEM_RBSL_SETUP_'.JString::strtoupper($this->_name).'_TOOLTIP');
+		return JText::_('PLG_SYSTEM_RBSL_SETUP_'.JString::strtoupper($this->_name).'_TOOLTIP');
 		//return $this->_tooltip;
 	}
 
