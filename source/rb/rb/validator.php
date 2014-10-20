@@ -36,7 +36,15 @@ class Rb_Validator
 							    			'notin'		=> array('values' => ''),
 							    			'contains'	=> array('contains' => ''),
 							    			'regex'		=> array('regex' => ''),
-							    			'dateformat'=> array('format' => '')
+							    			'dateformat'=> array('format' => ''),
+											'image'		=> array('mimeType' => array('image/png',
+																				     'image/gif',
+																				     'image/jpg',
+																				     'image/bmp',
+																				     'image/ico',
+																				     'image/jpeg',
+																				     'image/psd',
+																				     'image/eps',))
 							    		);
     }
     
@@ -452,5 +460,33 @@ class Rb_Validator
 
         // if we've got this far, the card has passed no validation so it's invalid!
         return false;
+    }
+    
+    /**
+     * Validate that a the given files are images or not  
+     *
+     * @param mixed $value
+     * @param array $params
+     * @return bool
+     */
+    public function validateImage($value, $params = array(), $data = array())
+    {
+    	$result = true;
+    	$allowedFormats = $params['mimeType']; 
+    	if(!is_array($allowedFormats)){
+    		$allowedFormats = explode(',', $allowedFormats);
+    	}
+    	
+    	//if any of the image file is not valid then return false
+    	foreach ($value as $image) {
+	    	if(isset($image['type']) && !empty($image['type'])){
+		    	$type   = $image['type'];
+		    	if(in_array($type,$allowedFormats) == false){
+		    		$result = false;
+		    		break;
+		    	}
+	    	}
+    	}
+    	return $result;
     }
 }
