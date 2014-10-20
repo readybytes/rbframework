@@ -10,52 +10,19 @@ if(defined('_JEXEC')===false) die('Restricted access' );
 
 class Rb_Html extends Rb_AdaptHtml
 {	
-	public static function stylesheet($file, $attribs = array(), $relative = true, $path_only = true, $detect_browser = true, $detect_debug = true)
+	public static function stylesheet($file, $attribs = array(), $relative = true, $path_only = false, $detect_browser = true, $detect_debug = true)
 	{
 		// We don't know file is loaded or not by joomla so we passed 3rd parameter as true 
 		// and we get only file paths & load manually by us.
-		$paths = parent::stylesheet($file, $attribs, $relative, $path_only, $detect_browser, $detect_debug);
-		
-		if(!$paths){
-			$paths = self::_refinePath($file);  
-		}
-		
-		if($paths){
-			$paths =  is_array($paths) ? $paths : array($paths);
-			$document = JFactory::getDocument();
-			foreach ($paths as $include){
-				$document->addStylesheet($include, 'text/css', null, $attribs);
-			}
-		}
+		return parent::stylesheet($file, $attribs, $relative, $path_only, $detect_browser, $detect_debug);
 		
 	}
-
-	public static function _refinePath($file)
-	{
-		if(JFile::exists($file)){
-			return  Rb_HelperTemplate::mediaURI($file,false);
-		}elseif(JFile::exists(JPATH_ROOT.RB_PATH_MEDIA.'/'.$file)){
-			return Rb_HelperTemplate::mediaURI(JPATH_ROOT.RB_PATH_MEDIA.'/'.$file,false);
-		}
-		return false;
-	}
 		
-	public static function script($file, $framework = false, $relative = true, $path_only = true, $detect_browser = true, $detect_debug = true)
+	public static function script($file, $framework = false, $relative = true, $path_only = false, $detect_browser = true, $detect_debug = true)
 	{
 		// We don't know file is loaded or not by joomla so we passed 3rd parameter as true 
 		// and we get only file paths & load manually by us.
-		$paths = parent::script($file, $framework, $relative, $path_only, $detect_browser, $detect_debug);
-		if(!$paths){
-			$paths = self::_refinePath($file);  
-		}
-		
-		if($paths){
-			$paths =  is_array($paths) ? $paths : array($paths);
-			$document = JFactory::getDocument();
-			foreach ($paths as $include){
-				$document->addScript($include);
-			}
-		}
+		return parent::script($file, $framework, $relative, $path_only, $detect_browser, $detect_debug);
 	}
 
 	/**
