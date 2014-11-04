@@ -133,7 +133,11 @@ class Rb_EcommerceInvoice extends Rb_EcommerceLib
 		if(!$this->getId()){
 			return $this;
 		}
-		
+
+		// load transactions and modifiers
+		$this->_loadTransactions();
+		//$this->_loadModifiers();
+
 		// if invoice is still unpaid then every time need to re-calculation (with modifiers)
 		if ($this->getStatus() == self::STATUS_DUE ) {
 			$this->refresh();
