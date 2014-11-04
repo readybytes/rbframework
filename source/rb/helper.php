@@ -19,18 +19,19 @@ abstract class Rb_Helper
 	{
 		// RB_FWXXX:: Clean var
 		// extract data from request
-		$option	= strtolower(JRequest::getCmd('option', 	$option));
-		$view	= strtolower(JRequest::getCmd('view', 	$view));
-		$task 	= strtolower(JRequest::getCmd('task'));
-		$format	= strtolower(JRequest::getCmd('format', $format));
+		$app = Rb_Factory::getApplication();
+		$option	= strtolower($app->input->getCmd('option', 	$option));
+		$view	= strtolower($app->input->getCmd('view', 	$view));
+		$task 	= strtolower($app->input->getCmd('task'));
+		$format	= strtolower($app->input->getCmd('format', $format));
 		
 		// Check for a controller.task command.
 		if (strpos($task, '.') !== false) {
 			// Explode the controller.task command. We find controller by view
 			list ($view, $task) = explode('.', $task);
 			// Reset the task without the controller context.
-			JRequest::setVar('task', $task);
-			JRequest::setVar('view', $view);
+			$app->input->set('task', $task);
+			$app->input->set('view', $view);
 		}
 
 		// now we need to create a object of proper controller

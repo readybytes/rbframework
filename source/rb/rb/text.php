@@ -8,6 +8,11 @@
 */
 if(defined('_JEXEC')===false) die('Restricted access' );
 
+/**
+ * 
+ * @deprecated Use Joomla class Jtext
+ *
+ */
 
 class Rb_Text extends JText
 {

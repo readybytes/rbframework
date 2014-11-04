@@ -240,7 +240,7 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 			return '';
 		}
 		
-		if(JRequest::getVar('tmpl')=='component'){
+		if(Rb_Factory::getApplication()->input->get('tmpl')=='component'){
 			return '';
 		}
 		
@@ -334,7 +334,7 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 	protected static $_subMenuRenderingDone = false;
 	public function _adminSubmenu($selMenu = 'dashboard')
 	{
-		$selMenu	= strtolower(JRequest::getVar('view',$selMenu));
+		$selMenu	= strtolower(Rb_Factory::getApplication()->input->get('view',$selMenu));
 
 		foreach(self::$_submenus as $menu){
 			Rb_HelperToolbar::addSubMenu($menu, $selMenu, $this->_component->getNameCom());
@@ -347,7 +347,7 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 	{
 		//setup the action URL
 		$url 	= 'index.php?option='.$this->_component->getNameCom().'&view='.$this->getName();
-		$task	= JRequest::getVar('task', $task);
+		$task	= Rb_Factory::getApplication()->input->get('task', $task);
 		if($task){
 			$url .= '&task='.$task;
 		}

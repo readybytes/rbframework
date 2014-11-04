@@ -18,15 +18,15 @@ class Rb_HelperTemplate
 		}
 
 		$vars  = new stdClass();
-		
+		$app = Rb_Factory::getApplication();
 		$vars->url = new stdClass();
 		$vars->url->base = JURI::base();
 		$vars->url->root = JURI::root();
 		$vars->url->base_without_scheme = JURI::base(true);
 		$vars->request = new stdClass();
-		$vars->request->option 	= JRequest::getVar('option','');
-		$vars->request->view 	= JRequest::getVar('view','');
-		$vars->request->task 	= JRequest::getVar('task','');
+		$vars->request->option 	= $app->input->get('option','');
+		$vars->request->view 	= $app->input->get('view','');
+		$vars->request->task 	= $app->input->get('task','');
 		
 //		$vars->time = new stdClass();
 //		$vars->time->timzone 	= Rb_HelperJoomla::getUserTimeZone();
@@ -49,6 +49,9 @@ class Rb_HelperTemplate
 	}
 	
 	static $_setupScriptsLoaded = false;
+	/**
+	 *@deprecated use Rb_HelperTemplate::loadMedia()
+	 */
 	public static function loadSetupScripts($jquery=true, $jquery_ui=true)
 	{
 		if(self::$_setupScriptsLoaded === true){

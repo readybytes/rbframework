@@ -136,15 +136,15 @@ abstract class Rb_Table extends JTable
 	/**
 	 * Get structure of table from db table
 	 */
-	public function getFields($typeOnly=false)
+	static $fields = null;
+	public function getFields($typeOnly=false, $refresh=false )
 	{
-		static $fields = null;
+		
 
 		//clean cache if required
-		if(Rb_Factory::cleanStaticCache()){
-			$fields = null;
-		}
-
+		if($refresh){
+				$fields = null;
+			}
 		$tableName 	= $this->getTableName();
 
 		if($fields === null || isset($fields[$tableName]) ===false){

@@ -18,14 +18,9 @@ class Rb_Factory extends Rb_AbstractFactory
 	public static $response = null;
 	
 	//Returns a Model/View/Controller/Table/Lib object
+    static $instance=array();
 	static function getInstance($name, $type='', $prefix='Rb_', $refresh=false)
 	{
-		static $instance=array();
-		
-		//clean cache if required
-		if(self::cleanStaticCache()){
-			$instance=array();
-		}
 
 		//generate class name
 		$className	= $prefix.$type.$name;
@@ -65,6 +60,11 @@ class Rb_Factory extends Rb_AbstractFactory
   		return self::$response;
   	}
 
+  	/**
+  	 * 
+  	 * @Deprecated 1.1 Use Static variable
+  	 * @param $set
+  	 */
 	static public function cleanStaticCache($set = null)
 	{
 		static $reset = false;

@@ -69,18 +69,14 @@ class Rb_HelperUtils
 	    return $array;
 	}
 	
-	public static function isTableExist($tableName, $prefix='#__')
+	static $tables = null;
+	public static function isTableExist($tableName, $prefix='#__', $refresh=false)
 	{
-		static $tables = null;
+		
 		$db		 	   = Rb_Factory::getDBO();
 
-		//clean cache if required
-		if(Rb_Factory::cleanStaticCache()){
-			$tables = null;
-		}
-
 		// load tables if required
-		if($tables == null){
+		if($tables == null || $refresh == true){
 			$tables	= $db->getTableList();
 		}
 

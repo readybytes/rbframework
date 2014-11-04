@@ -8,6 +8,9 @@
 */
 if(defined('_JEXEC')===false) die('Restricted access' );
 
+/**
+ * @deprecated Not used anywhere, if you want to use, then modily the current file and then use it.
+ */
 
 abstract class Rb_Checklist
 {

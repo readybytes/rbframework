@@ -47,7 +47,7 @@ function _rb_cms_profiler_mark($mark)
 
 function _rb_cms_doc_req_format()
 {
-	$format	= JRequest::getCmd('format','html');
+	$format	= JFactory::getApplication()->input->getCmd('format','html');
 	return $format;
 }
 

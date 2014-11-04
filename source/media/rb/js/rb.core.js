@@ -397,41 +397,8 @@ rb.iframe = {
 };
 
 
-/*---------------------------------------------------------
-Joomla function available through rb.cms framework 
----------------------------------------------------------*/
-rb.joomla = {};
-
-rb.joomla.text = {
-	// string holder
-	strings: {
-	},
-	
-	// translate
-	"_": function(key, def) {
-		return typeof this.strings[key.toUpperCase()] !== "undefined" ? this.strings[key.toUpperCase()] : def;
-	},
-	
-	// add all keys
-	load: function(object) {
-		for (var key in object) {
-			this.strings[key.toUpperCase()] = object[key];
-		}
-		return this;
-	}
-};
-
-/*---------------------------------------------------------
-	Javascript interface to underline framework 
----------------------------------------------------------*/
-rb.cms = rb.joomla;
-
-
 //Document ready
 $(document).ready(function(){
-
-	// load translation
-	rb.cms.text.load(rb.joomla.text.strings);
 
 	// load timeago
 	$('.rb-timeago').timeago();
