@@ -21,7 +21,6 @@ class Rb_Factory extends Rb_AbstractFactory
     static $instance=array();
 	static function getInstance($name, $type='', $prefix='Rb_', $refresh=false)
 	{
-
 		//generate class name
 		$className	= $prefix.$type.$name;
 
@@ -32,8 +31,8 @@ class Rb_Factory extends Rb_AbstractFactory
 		//so convert the case so that if instance is available isset does not results false due to case
 		$className = strtolower($className);
 		//if already there is an object
-		if(isset($instance[$className]) && !$refresh){
-			return $instance[$className];
+		if(isset(self::$instance[$className]) && !$refresh){
+			return self::$instance[$className];
 		}
 
 		//class_exists function checks if class exist,
@@ -43,9 +42,9 @@ class Rb_Factory extends Rb_AbstractFactory
 		}
 
 		//create new object, class must be autoloaded
-		$instance[$className]= new $className();
+		self::$instance[$className]= new $className();
 
-		return $instance[$className];
+		return self::$instance[$className];
 	}
 
 	/**

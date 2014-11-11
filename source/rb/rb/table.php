@@ -139,25 +139,23 @@ abstract class Rb_Table extends JTable
 	static $fields = null;
 	public function getFields($typeOnly=false, $refresh=false )
 	{
-		
-
 		//clean cache if required
 		if($refresh){
-				$fields = null;
+				self::$fields = null;
 			}
 		$tableName 	= $this->getTableName();
 
-		if($fields === null || isset($fields[$tableName]) ===false){
+		if(self::$fields === null || isset(self::$fields[$tableName]) ===false){
 			if(Rb_HelperUtils::isTableExist($tableName)===FALSE)
 			{
 				$this->setError("Table $this->_tbl does not exist");
 				return null;
 			}
 
-			$fields[$tableName]	= $this->_db->getTableColumns($tableName, $typeOnly);			 
+			self::$fields[$tableName]	= $this->_db->getTableColumns($tableName, $typeOnly);			 
 		}
 
-		return $fields[$tableName];
+		return self::$fields[$tableName];
 	}
 
 	/*

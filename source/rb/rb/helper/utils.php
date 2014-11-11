@@ -76,8 +76,8 @@ class Rb_HelperUtils
 		$db		 	   = Rb_Factory::getDBO();
 
 		// load tables if required
-		if($tables == null || $refresh == true){
-			$tables	= $db->getTableList();
+		if(self::$tables == null || $refresh == true){
+			self::$tables	= $db->getTableList();
 		}
 
 
@@ -85,6 +85,6 @@ class Rb_HelperUtils
 		$tableName = str_replace($prefix, $db->getPrefix(), $tableName);
 
 		//check if table exist
-		return in_array($tableName,$tables ) ? true : false;
+		return in_array($tableName,self::$tables ) ? true : false;
 	}
 }
