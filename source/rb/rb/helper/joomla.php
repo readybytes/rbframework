@@ -207,7 +207,7 @@ class Rb_AbstractHelperJoomla
 		}
 
 		if (empty($title)) {
-			$title = Rb_Text::_('PLG_SYSTEM_RBSL_APP_CONTENT_JOOMLA_SELECT_ARTICLE');
+			$title = JText::_('PLG_SYSTEM_RBSL_APP_CONTENT_JOOMLA_SELECT_ARTICLE');
 		}
 		$title = htmlspecialchars($title, ENT_QUOTES, 'UTF-8');
 
@@ -219,7 +219,7 @@ class Rb_AbstractHelperJoomla
 		// The user select button.
 		$html[] = '<div class="button2-left">';
 		$html[] = '  <div class="blank">';
-		$html[] = '	<a class="modal" title="'.Rb_Text::_('PLG_SYSTEM_RBSL_APP_CONTENT_JOOMLA_SELECT_ARTICLE').'"  href="'.$link.'" rel="{handler: \'iframe\', size: {x: 800, y: 450}}">'.JText::_('PLG_SYSTEM_RBSL_APP_CONTENT_JOOMLA_SELECT_ARTICLE_BUTTON').'</a>';
+		$html[] = '	<a class="modal" title="'.JText::_('PLG_SYSTEM_RBSL_APP_CONTENT_JOOMLA_SELECT_ARTICLE').'"  href="'.$link.'" rel="{handler: \'iframe\', size: {x: 800, y: 450}}">'.JText::_('PLG_SYSTEM_RBSL_APP_CONTENT_JOOMLA_SELECT_ARTICLE_BUTTON').'</a>';
 		$html[] = '  </div>';
 		$html[] = '</div>';
 
