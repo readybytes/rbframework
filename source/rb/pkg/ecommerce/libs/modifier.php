@@ -104,16 +104,16 @@ class Rb_EcommerceModifier extends Rb_EcommerceLib
 	
 	public static function getSerialList()
 	{
-		return array(	Rb_EcommerceModifier::FIXED_BEFORE_DISCOUNT 			=> Rb_Text::_('COM_RB_ECOMMERCE_MODIFIER_SERIAL_FIXED_BEFORE_DISCOUNT'),
-						Rb_EcommerceModifier::PERCENT_BEFORE_DISCOUNT 			=> Rb_Text::_('COM_RB_ECOMMERCE_MODIFIER_SERIAL_PERCENT_BEFORE_DISCOUNT'),
-						Rb_EcommerceModifier::FIXED_DISCOUNT 					=> Rb_Text::_('COM_RB_ECOMMERCE_MODIFIER_SERIAL_'),
-						Rb_EcommerceModifier::PERCENT_DISCOUNT				 	=> Rb_Text::_('COM_RB_ECOMMERCE_MODIFIER_SERIAL_'),
-						Rb_EcommerceModifier::FIXED_AFTER_DSCOUNT_BEFORE_TAX 	=> Rb_Text::_('COM_RB_ECOMMERCE_MODIFIER_SERIAL_'),
-						Rb_EcommerceModifier::PERCENT_AFTER_DSCOUNT_BEFORE_TAX 	=> Rb_Text::_('COM_RB_ECOMMERCE_MODIFIER_SERIAL_'),
-						Rb_EcommerceModifier::FIXED_TAX 						=> Rb_Text::_('COM_RB_ECOMMERCE_MODIFIER_SERIAL_'),
-						Rb_EcommerceModifier::PERCENT_TAX 						=> Rb_Text::_('COM_RB_ECOMMERCE_MODIFIER_SERIAL_'),
-						Rb_EcommerceModifier::FIXED_AFTER_TAX 					=> Rb_Text::_('COM_RB_ECOMMERCE_MODIFIER_SERIAL_'),
-						Rb_EcommerceModifier::PERCENT_AFTER_TAX 				=> Rb_Text::_('COM_RB_ECOMMERCE_MODIFIER_SERIAL_')
+		return array(	Rb_EcommerceModifier::FIXED_BEFORE_DISCOUNT 			=> JText::_('COM_RB_ECOMMERCE_MODIFIER_SERIAL_FIXED_BEFORE_DISCOUNT'),
+						Rb_EcommerceModifier::PERCENT_BEFORE_DISCOUNT 			=> JText::_('COM_RB_ECOMMERCE_MODIFIER_SERIAL_PERCENT_BEFORE_DISCOUNT'),
+						Rb_EcommerceModifier::FIXED_DISCOUNT 					=> JText::_('COM_RB_ECOMMERCE_MODIFIER_SERIAL_'),
+						Rb_EcommerceModifier::PERCENT_DISCOUNT				 	=> JText::_('COM_RB_ECOMMERCE_MODIFIER_SERIAL_'),
+						Rb_EcommerceModifier::FIXED_AFTER_DSCOUNT_BEFORE_TAX 	=> JText::_('COM_RB_ECOMMERCE_MODIFIER_SERIAL_'),
+						Rb_EcommerceModifier::PERCENT_AFTER_DSCOUNT_BEFORE_TAX 	=> JText::_('COM_RB_ECOMMERCE_MODIFIER_SERIAL_'),
+						Rb_EcommerceModifier::FIXED_TAX 						=> JText::_('COM_RB_ECOMMERCE_MODIFIER_SERIAL_'),
+						Rb_EcommerceModifier::PERCENT_TAX 						=> JText::_('COM_RB_ECOMMERCE_MODIFIER_SERIAL_'),
+						Rb_EcommerceModifier::FIXED_AFTER_TAX 					=> JText::_('COM_RB_ECOMMERCE_MODIFIER_SERIAL_'),
+						Rb_EcommerceModifier::PERCENT_AFTER_TAX 				=> JText::_('COM_RB_ECOMMERCE_MODIFIER_SERIAL_')
 					);
 	}
 	

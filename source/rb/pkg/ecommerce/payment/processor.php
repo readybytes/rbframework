@@ -77,7 +77,7 @@ abstract class Rb_EcommerceProcessor
 		if (empty( $name ))
 		{
 			$r = null;
-			Rb_Error::assert(preg_match('/Processor(.*)/i', get_class($this), $r) , Rb_Text::sprintf('COM_RB_ECOMMERCE_PROCESSOR_ERROR_CANT_GET_OR_PARSE_CLASS_NAME', get_class($this)), Rb_Error::ERROR);
+			Rb_Error::assert(preg_match('/Processor(.*)/i', get_class($this), $r) , JText::sprintf('COM_RB_ECOMMERCE_PROCESSOR_ERROR_CANT_GET_OR_PARSE_CLASS_NAME', get_class($this)), Rb_Error::ERROR);
 
 			$name = strtolower( $r[1] );
 		}

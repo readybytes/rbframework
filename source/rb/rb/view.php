@@ -285,7 +285,7 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 			$image = $this->_component->getNameSmall().'-'.$this->getName().'.png';
 		}
 		
-		Rb_HelperToolbar::title($title,	$image);
+		JToolBarHelper::title($title,	$image);
 	}
 
 	protected function _adminGridToolbar()
@@ -337,7 +337,7 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 		$selMenu	= strtolower(Rb_Factory::getApplication()->input->get('view',$selMenu));
 
 		foreach(self::$_submenus as $menu){
-			Rb_HelperToolbar::addSubMenu($menu, $selMenu, $this->_component->getNameCom());
+			JToolBarHelper::addSubMenu($menu, $selMenu, $this->_component->getNameCom());
 		}
 		return $this;
 	}
