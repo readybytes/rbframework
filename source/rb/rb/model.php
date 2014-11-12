@@ -424,13 +424,25 @@ abstract class Rb_Model extends Rb_AbstractModel
 		Rb_Error::assert(!empty($condition), JText::_('PLG_SYSTEM_RBSL_ERROR_INVALID_CONDITION_TO_DELETE_DATA'));
 
 		$query = new Rb_Query();
-		$query->delete()
+		$query->select('*')
 				->from($this->getTable()->getTableName());
-
-		foreach($condition as $key => $value)
-			$query->where(" $key $operator $value", $glue);
-
-		return $query->dbLoadQuery()->execute();
+				
+		foreach($condition as $key => $value){
+				$query->where("$key $operator $value", $glue);
+		}
+				
+		$records = $query->dbLoadQuery()->loadObjectList($this->getTable()->getKeyName());
+		
+		$result = array();
+		foreach ($records as $index =>$record){
+			$result[] = $this->delete($index);
+		}
+		
+		if (in_array(false, $result)){
+			return false;
+		}
+		
+		return true;
 	}
 
 	/**

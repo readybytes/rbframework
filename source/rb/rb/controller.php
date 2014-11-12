@@ -212,7 +212,7 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 
 		//trigger before
 		$args	= array(&$this, &$task, $this->getName());
-		$result = Rb_HelperPlugin::trigger('on'.$this->_component->getPrefixClass().'ControllerBeforeExecute',$args);
+		$result = Rb_HelperJoomla::triggerPlugin('on'.$this->_component->getPrefixClass().'ControllerBeforeExecute',$args);
 
 		//IMP : check authorize before executing any task
 		//so as to make sure site controller does not execute any task of admin/base controller 
@@ -228,7 +228,7 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 
 		//trigger after
 		$args	= array(&$this, &$task, $this->getName(), &$executeResult);
-		$result = Rb_HelperPlugin::trigger('on'.$this->_component->getPrefixClass().'ControllerAfterExecute', $args);
+		$result = Rb_HelperJoomla::triggerPlugin('on'.$this->_component->getPrefixClass().'ControllerAfterExecute', $args);
 		
 		if($executeResult===false){
 			return false;
@@ -885,7 +885,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 		$args = $this->_getArgs();
 
 		//args must be an array
-		return Rb_HelperPlugin::trigger($event, $args);
+		return Rb_HelperJoomla::triggerPlugin($event, $args);
 	}
 	
 	/**

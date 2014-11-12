@@ -39,7 +39,7 @@ class Rb_EcommerceHelperProcessor extends JObject
 		// load rb_ecommerceprocessor plugin
 		$data = array();
 		$type = 'rb_ecommerceprocessor';
-		Rb_HelperPlugin::loadPlugins($type);
+		Rb_HelperJoomla::loadPlugins($type);
 	}
 	
 	public function push($type, $data)
