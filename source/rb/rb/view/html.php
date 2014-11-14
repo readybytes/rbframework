@@ -60,7 +60,7 @@ class Rb_ViewHtml extends Rb_View
 		if($menu && $menu->title){
 			$title = $menu->title ;
 		}else{
-			$title	= $params->get('page_title', $app->getCfg('sitename'));
+			$title	= $params->get('page_title', $app->get('sitename'));
 		}
 		
 		if ($params->get('menu-meta_description'))		{

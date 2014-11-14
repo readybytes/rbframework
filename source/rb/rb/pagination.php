@@ -26,7 +26,7 @@ class Rb_Pagination extends JPagination
 		$statePrefix		= $model->getContext();
 
 		$app				= Rb_Factory::getApplication();
-		$globalListLimit	= $app->getCfg('list_limit');
+		$globalListLimit	= $app->get('list_limit');
 
 		// Get pagination request variables
 
