@@ -49,6 +49,8 @@ class Rb_EcommerceHelperProcessor extends JObject
 	
 	public function getInstance($name, $config = null)
 	{
+		$name = strtolower($name);
+		
 		if(isset($this->__instances[$name])){
 			if($config != null){
 				$this->__instances[$name]->setConfig($config);
@@ -57,6 +59,14 @@ class Rb_EcommerceHelperProcessor extends JObject
 			return $this->__instances[$name];
 		} 
 		
+		$config 	= ($config === null) ? array() : $config;
+		
+		// Hardcoded : If we want manual processor instance. 
+		// We can't add into load processor otherwise it will display into processor list of any component
+		if ( 'manualpay' == $name ) {
+			$this->__instances[$name] = new Rb_EcommerceProcessorManualpay($config);
+			return $this->__instances[$name];
+		}
 		// load all processors			
 		$this->load();
 		
@@ -65,8 +75,6 @@ class Rb_EcommerceHelperProcessor extends JObject
 		}
 		
 		$classname 	=  $this->__processor_list[$name]['class'];
-		$config 	= ($config === null) ? array() : $config;		
-		
 		$this->__instances[$name] = new $classname($config);
 		
 		return $this->__instances[$name];

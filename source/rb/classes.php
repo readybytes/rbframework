@@ -55,6 +55,7 @@
   'Rb_EcommerceModelformTransaction' => 'pkg/ecommerce/models/transaction.php',
   'Rb_EcommerceModifier' => 'pkg/ecommerce/libs/modifier.php',
   'Rb_EcommerceProcessor' => 'pkg/ecommerce/payment/processor.php',
+  'Rb_EcommerceProcessorManualpay' => 'pkg/ecommerce/processor/manualpay/manualpay.php',
   'Rb_EcommerceRequest' => 'pkg/ecommerce/payment/request.php',
   'Rb_EcommerceResponse' => 'pkg/ecommerce/payment/response.php',
   'Rb_EcommerceTable' => 'pkg/ecommerce/base/table.php',

@@ -212,5 +212,20 @@ class Rb_EcommerceAPI
 	{
 		return Rb_EcommerceFactory::getInstance('country', 'Model', 'Rb_Ecommerce', $refresh);
 	}
+
+	/**
+	 * 
+	 * Invoke to this method when you need to manually process any specific invoice 
+	 * @param NUMERIC $invoice_id 
+	 * @param ARRAY $data, any secondary data
+	 * 
+	 * @return Rb_EcommerceResponse
+	 */
+	public static function invoice_directPay($invoice_id, $data = Array())
+	{
+		$invoice = Rb_EcommerceInvoice::getInstance($invoice_id);
+		$response = $invoice->directPay($data);	
+		return $response;	
+	}
 }
 

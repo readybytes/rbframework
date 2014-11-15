@@ -567,7 +567,71 @@ class Rb_EcommerceInvoice extends Rb_EcommerceLib
 		$invoice = isset($data->request->invoice_id) ? Rb_EcommerceInvoice::getInstance($data->request->invoice_id) : $this;
 		$response = $invoice->getProcessor()->process($data);
 		
+		return $this->_process($invoice, $response, $data);
+	}
+	
+	/**
+	 * 
+	 * Invoke this method when you need to manual paid for particular this invoice
+	 * @param Rb_EcommerceResponse $response
+	 * @param unknown_type $data
+	 * 
+	 * @return Rb_EcommerceResponse 
+	 */
+	public function directPay($bind_data = Array())
+	{
+		//1#. Create response from $bind_data
+		 
+		$response = new Rb_EcommerceResponse();
+		
+		//@TODO:: can we compulsory gateway transaction ID
+		
+		//gateway_txn_id
+		if ( isset($bind_data['gatewaytransaction_id'])) {
+			$response->set('txn_id', $bind_data['gatewaytransaction_id']);	
+		}
+		//gateway_subscr_id
+		if ( isset($bind_data['subscr_id'])) {
+			$response->set('subscr_id', $bind_data['subscr_id']);	
+		}
+		//gateway_parent_txn
+		if ( isset($bind_data['parent_txn'])) {
+			$response->set('parent_txn', $bind_data['parent_txn']);	
+		}
+		//amount
+		if ( isset($bind_data['amount'])) {
+			$response->set('amount', $bind_data['amount']);	
+		}
+		//payment_status
+		if ( isset($bind_data['payment_status'])) {
+			$response->set('payment_status', $bind_data['payment_status']);	
+		}		
+		//message
+		if ( isset($bind_data['message'])) {
+			$response->set('message', $bind_data['message']);	
+		}
+		//params
+		if ( isset($bind_data['params'])) {
+			$response->set('params', $bind_data['params']);	
+		}
+		
+		//2#. Process Invoice without Processor calling
+		return $this->_process($this, $response, $bind_data);
+	}
+
+	/**
+	 * 
+	 * Invoke to process processor's response on invoice
+	 * @param Rb_EcommerceInvoice $invoice
+	 * @param Rb_EcommerceResponse $response
+	 * @param unknown_type $data
+	 * 
+	 * @return Rb_EcommerceResponse
+	 */
+	private function _process(Rb_EcommerceInvoice $invoice, Rb_EcommerceResponse $response, $data )
+	{
 		$helper = $this->getHelper();
+		
 		if($response->get('payment_status') == Rb_EcommerceResponse::PAYMENT_COMPLETE){
 			$invoice->_process_response_payment_completed($response, $data);
 		}
