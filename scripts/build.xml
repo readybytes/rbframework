@@ -3,10 +3,10 @@
 
 	<property 
 			name="jsdirs" 
-			value="${dir.tmp}/media/angular/js/, ${dir.tmp}/media/daterangepicker/js/, ${dir.tmp}/media/jui/js/, ${dir.tmp}/media/nvd3/js, ${dir.tmp}/media/rb/js/" />
+			value="${dir.tmp}/media/angular/js/, ${dir.tmp}/media/daterangepicker/js/, ${dir.tmp}/media/jui/js/, ${dir.tmp}/media/rb/js/" />
 	<property 
 			name="cssdirs" 
-			value="${dir.tmp}/media/font-awesome/css/, ${dir.tmp}/media/daterangepicker/css/, ${dir.tmp}/media/jui/css/, ${dir.tmp}/media/nvd3/css/" />
+			value="${dir.tmp}/media/font-awesome/css/, ${dir.tmp}/media/daterangepicker/css/, ${dir.tmp}/media/jui/css/" />
 		
 	<target name="get_build_number">
 		<exec command="git describe" dir="${dir.root}" outputProperty="build.number"  />

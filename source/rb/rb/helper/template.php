@@ -66,6 +66,8 @@ class Rb_HelperTemplate
 
 	public static function loadMedia($list=array('bootstrap', 'jquery', 'rb'))
 	{
+		$list	= is_array($list) ? $list : array($list);
+		
 		if(in_array('jquery', $list, false)){
 			Rb_Html::_('jquery.framework');
 			Rb_Html::_('jquery.ui');
@@ -93,9 +95,15 @@ class Rb_HelperTemplate
 		}
 		
 		if(in_array('nvd3', $list, false)){
-			Rb_Html::script('plg_system_rbsl/nvd3/d3.v2.min.js');
+			Rb_Html::script('plg_system_rbsl/nvd3/d3.min.js');
 			Rb_Html::script('plg_system_rbsl/nvd3/nv.d3.min.js');
 			Rb_Html::stylesheet('plg_system_rbsl/nvd3/nv.d3.min.css');
+		}
+		
+		if (in_array('daterangepicker', $list, false)){
+			Rb_Html::stylesheet('plg_system_rbsl/daterangepicker/daterangepicker.min.css');
+			Rb_Html::script('plg_system_rbsl/daterangepicker/moment.min.js');
+			Rb_Html::script('plg_system_rbsl/daterangepicker/daterangepicker.min.js');	
 		}
 	}
 	

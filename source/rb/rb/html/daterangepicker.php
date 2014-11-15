@@ -16,6 +16,9 @@ defined('JPATH_PLATFORM') or die;
  */
 abstract class Rb_HtmlDaterangepicker
 {
+	/*
+	 * @deprecated since 1.1 	Use Rb_helperTemplate::loadMedia() instead
+	 */
 	public static function load($attribs = array())
 	{
 		static $loaded = false;

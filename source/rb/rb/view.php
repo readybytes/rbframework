@@ -337,7 +337,8 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 		$selMenu	= strtolower(Rb_Factory::getApplication()->input->get('view',$selMenu));
 
 		foreach(self::$_submenus as $menu){
-			JToolBarHelper::addSubMenu($menu, $selMenu, $this->_component->getNameCom());
+			//IMP :: JToolBarHelper class does not have _addSubMenu function
+			Rb_HelperToolbar::addSubMenu($menu, $selMenu, $this->_component->getNameCom());
 		}
 		return $this;
 	}

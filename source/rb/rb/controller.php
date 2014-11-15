@@ -344,7 +344,7 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 			$orderingField = $model->getTable()->getKeyName();
 
 		$filters = array();
-        $filters['limit']  			 = $app->getUserStateFromRequest('global.list.limit', 'limit', $app->get('list_limit'), 'int');
+        $filters['limit']  			 = $app->getUserStateFromRequest('global.list.limit', 'limit', $app->getCfg('list_limit'), 'int');
         $filters['filter_order']     = $app->getUserStateFromRequest($context.'.filter_order', 'filter_order', $orderingField, 'id');
         $filters['filter_order_Dir'] = $app->getUserStateFromRequest($context.'.filter_order_Dir', 'filter_order_Dir', $this->_defaultOrderingDirection , 'word');
         $filters['filter']			 = $app->getUserStateFromRequest($context.'.filter', 'filter', '', 'string');
