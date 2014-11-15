@@ -13,6 +13,7 @@ defined('JPATH_PLATFORM') or die;
 
 /**
  * @author Gaurav Jain
+ * @deprecated Since 1.1 Use Rb_HelperTemplate::loadMedia() instead
  */
 abstract class Rb_HtmlNvd3
 {
@@ -27,7 +28,7 @@ abstract class Rb_HtmlNvd3
 			$loaded = true;
 			Rb_Html::stylesheet('plg_system_rbsl/nvd3/nv.d3.min.css', $attribs);
 			
-			Rb_Html::script('plg_system_rbsl/nvd3/d3.v2.min.js', $attribs);
+			Rb_Html::script('plg_system_rbsl/nvd3/d3.min.js', $attribs);
 			Rb_Html::script('plg_system_rbsl/nvd3/nv.d3.min.js', $attribs);
 		}
 	}
