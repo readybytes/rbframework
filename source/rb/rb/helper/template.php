@@ -87,7 +87,6 @@ class Rb_HelperTemplate
 		
 		if(in_array('angular', $list, false)){
 			Rb_Html::script('plg_system_rbsl/angular/angular.min.js');
-			Rb_Html::script('plg_system_rbsl/angular/ui-router.min.js');
 		}
 		
 		if(in_array('font-awesome', $list, false)){
