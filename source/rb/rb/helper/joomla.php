@@ -407,7 +407,7 @@ class Rb_HelperJoomla extends Rb_AbstractHelperJoomla
 	
 		/**
         *
-        * @return currently used langauge code
+        * @return currently used language code
         * Also language and locale seperated
         */
        public static function getLanguageCode()
@@ -423,6 +423,20 @@ class Rb_HelperJoomla extends Rb_AbstractHelperJoomla
 		return array('code' => $code, 'language' => $langCode, 'local' => $localCode);
       }
        
+	public static function getLanguages($admin = false)
+	{
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true)
+			->select('*')
+			->from('#__extensions')
+			->where('type=' . $db->quote('language'))
+			->where('state=0')
+			->where('enabled=1')
+			->where('client_id=' . ($admin == true ? 1 : 0));
+		$db->setQuery($query);
+		return $db->loadObjectList('element');
+	}
+      
     public static function isLocalHost()
 	{
 		$root = JURI::root();
