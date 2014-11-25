@@ -40,15 +40,12 @@ class Rb_LayoutFile extends JLayoutFile
 			$this->addIncludePath(rtrim($this->basePath, DIRECTORY_SEPARATOR));
 		}
 		
-		// (3) Standard Joomla! layouts overriden
-		$this->addIncludePaths(JPATH_THEMES . '/' . JFactory::getApplication()->getTemplate() . '/html/layouts');
-
 		// Component layouts & overrides if exist
 		$component = $this->options->get('component', null);
 
 		if (!empty($component))
 		{
-			// (4) Component path
+			// (3) Component path
 			if ($this->options->get('client') == 0)
 			{
 				$this->addIncludePaths(JPATH_SITE . '/components/' . $component . '/layouts');
@@ -57,7 +54,13 @@ class Rb_LayoutFile extends JLayoutFile
 			{
 				$this->addIncludePaths(JPATH_ADMINISTRATOR . '/components/' . $component . '/layouts');
 			}
-
+		}
+		
+		// (4) Standard Joomla! layouts overriden /rb-ecommerce processors 
+		$this->addIncludePaths(JPATH_THEMES . '/' . JFactory::getApplication()->getTemplate() . '/html/layouts');
+		
+		if (!empty($component))
+		{
 			// (5 - highest priority) Component template overrides path
 			$this->addIncludePath(JPATH_THEMES . '/' . JFactory::getApplication()->getTemplate() . '/html/layouts/' . $component);
 		}
