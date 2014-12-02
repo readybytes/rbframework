@@ -92,6 +92,7 @@
   'Rb_HtmlText' => 'rb/html/text.php',
   'Rb_Input' => 'rb/input.php',
   'Rb_Language' => 'rb/language.php',
+  'Rb_LayoutFile' => 'rb/layoutfile.php',
   'Rb_Lib' => 'rb/lib.php',
   'Rb_Model' => 'rb/model.php',
   'Rb_Modelform' => 'rb/modelform.php',
