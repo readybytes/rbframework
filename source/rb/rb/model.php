@@ -711,7 +711,9 @@ abstract class Rb_Model extends Rb_AbstractModel
 	public function filterFormData($data, $itemId = null)
 	{
 		$form = $this->getModelform()->getForm($data);
-		$data = $form->filter($data);
+		if($form instanceof JForm){
+			$data = $form->filter($data);
+		}
 		return $data;
 	}
 }

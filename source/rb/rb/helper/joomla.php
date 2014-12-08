@@ -423,18 +423,25 @@ class Rb_HelperJoomla extends Rb_AbstractHelperJoomla
 		return array('code' => $code, 'language' => $langCode, 'local' => $localCode);
       }
        
-	public static function getLanguages($admin = false)
-	{
-		$db = JFactory::getDbo();
-		$query = $db->getQuery(true)
-			->select('*')
-			->from('#__extensions')
-			->where('type=' . $db->quote('language'))
-			->where('state=0')
-			->where('enabled=1')
-			->where('client_id=' . ($admin == true ? 1 : 0));
-		$db->setQuery($query);
-		return $db->loadObjectList('element');
+	public static function getLanguages($client = 'site')
+	{		
+		static $languages = null;
+		
+		if($languages === null || !isset($languages[$client])){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true)
+		 				->select('*')
+						->from('#__extensions')
+						->where('type=' . $db->quote('language'))
+						->where('state=0')
+						->where('enabled=1')
+						->where('client_id=' . ($client == 'admin' ? 1 : 0))
+						->order('name');
+			$db->setQuery($query);
+			$languages[$client] = $db->loadObjectList('element');
+		}
+		
+		return $languages[$client];
 	}
       
     public static function isLocalHost()
