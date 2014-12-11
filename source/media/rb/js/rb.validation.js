@@ -928,18 +928,200 @@
 
 
 /**
- * @copyright	Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
- */
-
-/**
- * Unobtrusive Form Validation library
  *
+ * ############################################################################################
+ * ######################### 		Rb Credit Card namespace		 ##########################
+ * ############################################################################################
+ * 
+ * 
+ * Check Credit Card Validation 
+ * Inspired by: https://github.com/stripe/jquery.payment
+ *
+ * @package     Rb_pkg
+ * @since       1.1
+ * @author mManishTrivedi
+ * 
+ */
+var rb_credit_card = function() 
+ { 
+	var rb_default_card_format = /(\d{1,4})/g; // Credit card format
+	
+	// Available Credit cards
+	var cards = 
+					[					 
+	 					{
+	 						type: 'visaelectron',
+	 						pattern: /^4(026|17500|405|508|844|91[37])/,
+	 						format: rb_default_card_format,
+	 						length: [16],
+	 						cvcLength: [3],
+	 						luhn: true
+	 					}, {
+	 						type: 'maestro',
+	 						pattern: /^(5(018|0[23]|[68])|6(39|7))/,
+	 						format: rb_default_card_format,
+	 						length: [12, 13, 14, 15, 16, 17, 18, 19],
+	 						cvcLength: [3],
+	 						luhn: true
+	 					}, {
+	 						type: 'forbrugsforeningen',
+	 						pattern: /^600/,
+	 						format: rb_default_card_format,
+	 						length: [16],
+	 						cvcLength: [3],
+	 						luhn: true
+	 					}, {
+	 						type: 'dankort',
+	 						pattern: /^5019/,
+	 						format: rb_default_card_format,
+	 						length: [16],
+	 						cvcLength: [3],
+	 						luhn: true
+	 					}, {
+	 						type: 'visa',
+	 						pattern: /^4/,
+	 						format: rb_default_card_format,
+	 						length: [13, 16],
+	 						cvcLength: [3],
+	 						luhn: true
+	 					}, {
+	 						type: 'mastercard',
+	 						pattern: /^5[0-5]/,
+	 						format: rb_default_card_format,
+	 						length: [16],
+	 						cvcLength: [3],
+	 						luhn: true
+	 					}, {
+	 						type: 'amex',
+	 						pattern: /^3[47]/,
+	 						format: /(\d{1,4})(\d{1,6})?(\d{1,5})?/,
+	 						length: [15],
+	 						cvcLength: [3, 4],
+	 						luhn: true
+	 					}, {
+	 						type: 'dinersclub',
+	 						pattern: /^3[0689]/,
+	 						format: rb_default_card_format,
+	 						length: [14],
+	 						cvcLength: [3],
+	 						luhn: true
+	 					}, {
+	 						type: 'discover',
+	 						pattern: /^6([045]|22)/,
+	 						format: rb_default_card_format,
+	 						length: [16],
+	 						cvcLength: [3],
+	 						luhn: true
+	 					}, {
+	 						type: 'unionpay',
+	 						pattern: /^(62|88)/,
+	 						format: rb_default_card_format,
+	 						length: [16, 17, 18, 19],
+	 						cvcLength: [3],
+	 						luhn: false
+	 					}, {
+	 						type: 'jcb',
+	 						pattern: /^35/,
+	 						format: rb_default_card_format,
+	 						length: [16],
+	 						cvcLength: [3],
+	 						luhn: true
+	 					}
+	 					];
+	/**
+	 *  Invoke to get Card 
+	 *  
+	 * @param Numric Value 
+	 * @returns card object if exist
+	 */
+	var getCard = 
+			function( number)
+			{
+				var card, _i, _len;
+				
+				// \D :: replace any character that's not a digit [^0-9]
+				// /g :: (modifier)global. All matches (don't return on first match)
+				number = (number + '').replace(/\D/g, '');
+				
+				for (_i = 0, _len = cards.length; _i < _len; _i++) {
+					card = cards[_i];
+					if (card.pattern.test(number)) {
+						return card;
+					}
+				}
+				return null;
+			},
+			
+			
+	/**
+	 * Invoke to get Card-type 
+	 *  
+	 * @param Numric Value 
+	 * @returns card-type if exist
+	 */			
+	 getType = 
+			function( number)
+			{
+				var _ref;
+				if (!number) {
+					return null;
+				}
+				
+				return  (_ref = getCard(number)) != null ? _ref.type : null;
+			},
+	
+	/**
+	 * Invoke to check card-number is validate or not.
+	 * 	luhn Checksum Algos apply
+	 * 
+	 * @param Nemeric Number 
+	 * 
+	 * @return (bool) true if valid number 
+	 */
+	isValidLuhn = function(num) 
+			{
+				 var digit, digits, odd, sum, _i, _len;
+				 odd = true;
+				 sum = 0;
+				 digits = (num + '').split('').reverse();
+				 
+				 for (_i = 0, _len = digits.length; _i < _len; _i++) {
+					 digit = digits[_i];
+					 digit = parseInt(digit, 10);
+					 
+					 if ((odd = !odd)) {
+						 digit *= 2;
+					 }
+					 
+					 if (digit > 9) {
+						 digit -= 9;
+					 }
+				 
+					 sum += digit;
+				 }
+				 
+				 return sum % 10 === 0;
+			};
+			
+			
+	return {
+				getCard		:	getCard,	
+				getType 	: 	getType,
+				isValidLuhn	:	isValidLuhn,
+			
+			};
+ }
+	 			
+/**
+ * ############################################################################################
+ * ########################### 		Rb Form Validation		 ##################################
+ * ############################################################################################
+ * 
+ * Unobtrusive Form Validation library
  * Inspired by: Chris Campbell <www.particletree.com>
  *
- * @package     Joomla.Framework
- * @subpackage  Forms
- * @since       1.5
+ * @package     Rb_pkg
+ * @since       1.1
  */
 var Rb_FormValidator = function() {
 	var $, handlers, inputEmail, custom,
@@ -970,11 +1152,13 @@ var Rb_FormValidator = function() {
 
  	handleResponse = function(state, $el, type, msg) {
  		
- 		if($el.attr('id')){
+ 		if ( $el.attr('data-rb-validate-error') ) {
+ 			var $error = $($el.attr('data-rb-validate-error'));
+ 			var $label = false;
+ 		} else if($el.attr('id')) {
  			var $label = $el.data('label');
  			var $error = $('[for="'+$el.attr('id')+'"]').not($label);
- 		}
- 		else{
+ 		} else {
  			var $error = $('[for="'+$el.selector+'"]');
  			var $label = false; 
  		}
@@ -982,8 +1166,6 @@ var Rb_FormValidator = function() {
  		type = typeof type !== 'undefined' ? type : 'error';
  		msg = typeof msg !== 'undefined' ? msg : $el.attr('error-message');
  		
- 	 	
- 	 	var $error = $('[for="'+$el.attr('id')+'"]').not($label);
 
  	 	// Set the element and its label (if exists) invalid state
  	 	if (state === false) {
@@ -999,7 +1181,7 @@ var Rb_FormValidator = function() {
  	 	 	if($error){
  	 	 		$error.removeClass('show');
  	 	 	}
- 	 	 	if($label){
+ 	 	 	if ($label) {
  	 	 	 	$label.removeClass('invalid').attr('aria-invalid', 'false');
  	 	 	}
  	 	}
@@ -1060,7 +1242,7 @@ var Rb_FormValidator = function() {
  	 	 	}
  	 	});
  	 	if (!valid) {
- 	 	 	message = Joomla.JText._('JLIB_FORM_FIELD_INVALID');
+ 	 	 	//message = Joomla.JText._('JLIB_FORM_FIELD_INVALID');
  	 	 	
  	 	 	scrollToError(form);
  	 	 	
@@ -1164,6 +1346,153 @@ var Rb_FormValidator = function() {
 			}
 			return (element.data('fileuploadlimit') > imageSize); 
 	    });
+ 	 	
+ 	 	/*
+ 	 	 * Auto invoke when html element have 'validate-rb-credit-card' class
+ 	 	 *  Validation rule apply according to available creadit cards type 
+ 	 	 */
+ 	 	setHandler('rb-credit-card', function (element, value) {
+ 	 		
+ 	 		//clean value
+ 	 		value = (value + '').replace(/\D/g, '');
+ 	 		 
+ 	 		//Validation-1: get card is exist or not
+ 	 		var rb_card = new rb_credit_card();
+ 	 		
+ 	 		var card = rb_card.getCard(value);
+ 	 		
+ 	 		// Error : Card is not exist
+ 	 		if (!card) {
+ 	 			return false;
+ 	 		}
+ 	 		
+ 	 		//Validation-2 : Check card-number length
+ 	 		if( -1 == rb.jQuery.inArray(value.length, card.length) ) {
+ 	 			return false;
+ 	 		}
+
+ 	 		//Validation-3 : Checksum checking, Validate card number
+ 	 		if (!rb_card.isValidLuhn(value)) {
+ 	 			return false;
+ 	 		}
+ 	 		
+			return true; 
+	    });
+ 	 	
+ 	 	/*
+ 	 	 * Invoke to validate cvc length according to credit card
+ 	 	 * 	- Field must have data attribute "data-rb-validate", This is a creadit-card field. 
+ 	 	 *  
+ 	 	 */
+ 	 	setHandler('rb-cvc-length', function (element, value) {
+ 	 		
+ 	 		var card_number,
+ 	 			card_selector = element.data('rb-validate'),	// get card selector 
+ 	 			rb_card = new rb_credit_card();
+ 	 		
+ 	 		// get cart number
+ 	 		card_number = rb.jQuery(card_selector).val();
+ 	 		
+ 	 		// if card-number is not exit
+ 	 		if (!card_number) {
+ 	 			//error :: card is not exist
+ 	 			return true;
+ 	 		}
+ 	 		
+ 	 		//get card is exist or not
+ 	 		var card = rb_card.getCard(card_number);
+ 	 		
+ 	 		// Validation will not fire if card is not exist 
+ 	 		if (!card) { 
+ 	 			//error :: card is not valid 
+ 	 			return true;
+ 	 		}
+ 	 		
+ 	 		//Validation-1 : cvc length according to card cvc length
+ 	 		if( -1 == rb.jQuery.inArray(value.length, card.cvcLength) ) {
+ 	 			return false;
+ 	 		}
+ 	 		
+ 	 		return true; 
+	    });
+ 	 	
+ 	 	/*
+ 	 	 *  Invoke to validate any field accoring to regex
+ 	 	 *  	- field must have regx patterm(data-rb-validate-pattern)
+ 	 	 *  	- like you want to field have mm/yy value then add data-rb-validate-pattern="^(0[1-9]|1[0-2])/([1-9][4-9])$" as field-attribute
+ 	 	 *  	
+ 	 	 *  
+ 	 	 */
+ 	 	setHandler('rb-regex-pattern', function (element, value) {
+ 	 		
+ 	 		var regex_pattern,  regex_pattern_string = element.data('validate-pattern');
+ 	 		
+ 	 		if (! regex_pattern_string ) {
+ 	 			// Addtribute "data-rb-validate-pattern" is not define 
+ 	 			return true;
+ 	 		}
+ 	 		//get regex object
+ 	 		regex_pattern = new RegExp(regex_pattern_string );
+ 	 		
+ 	 		return regex_pattern.test(value); 
+	    });
+ 	 	
+ 	 	/*
+ 	 	 *  Invoke to validate expiry date with current date 
+ 	 	 *  	- Two fields will use
+ 	 	 *  	- data-rb-validate-type attribute must be required for this validation 
+ 	 	 *  	- data-rb-validate-type have either 'year' or 'month' value. 
+ 	 	 *  	
+ 	 	 */
+ 	 	setHandler('rb-exp-date', function (element, value) {
+ 	 		
+ 	 		var month_number, year_number, date, mm, yyyy, month_el, year_el;
+ 	 		
+ 	 		var l = element.data('rb-validate-type');
+ 	 		
+ 	 		// element find who am I? (Either month-element or year-element )
+ 	 		if ( 'month' === element.data('rb-validate-type') ) {
+ 	 			month_el 	= 	element;
+ 	 			year_el		=	rb.jQuery(element.data('rb-validate'));
+ 	 		} else {
+ 	 			year_el 	= 	element;
+ 	 			month_el	=	rb.jQuery(element.data('rb-validate'));
+ 	 		}
+ 	 		
+ 	 		month_number	= month_el.val();
+ 	 		year_number		= year_el.val();
+ 	 		
+ 	 		if (!month_number && !year_number) {
+ 	 			return false 
+ 	 		}
+ 	 		
+ 	 		date = new Date();
+
+ 	 		mm 		= date.getMonth()+1; // start with 0 ie January is 0! so add 1
+ 	 		yyyy 	= date.getFullYear();
+
+ 	 		year_number	 = parseInt(year_number);
+ 	 		month_number = parseInt(month_number);
+ 	 		
+ 	 		// if input year-number is less than current year then return false 
+ 	 		if ( year_number < yyyy ) {
+ 	 			return false;
+ 	 		}
+ 	 		
+ 	 		// if curent year and input year number same then comapre month 
+ 	 		if (year_number == yyyy && month_number <= mm ) {
+ 	 			return false;
+ 	 		}
+
+ 	 		// if everything is ok then call manually handle-response
+ 	 		// (because both elements are diffrent, So we need manually invoke handle response )
+ 	 		handleResponse(true, month_el);
+ 	 		handleResponse(true, year_el);
+ 	 		
+ 	 		return true;
+ 	 		 
+	    });
+ 	 	
  	 	// Attach to forms with class 'form-validate'
  	 	jQuery(selector).each(function() {
  	 	 	attachToForm(this);
