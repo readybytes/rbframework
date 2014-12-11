@@ -286,7 +286,7 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 		//2: enitityname_id in post
 		//3: cids in post(always)
 		// we will only support ONE id here, to get multiple IDs, respective function will collect cids
-		$post = $this->input->get("{$this->_component->getNameSmall()}_form", Array(), 'ARRAY');
+		$post = $this->input->get("{$this->getControlNamePrefix()}", Array(), 'ARRAY');
 		
 		if( isset($post["{$this->getName()}_id"])  || isset($post['id']) ){
 			$entId = $post["{$this->getName()}_id"];
@@ -410,6 +410,12 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 		}
 		
 		return $ajax_response->sendResponse();
+	}
+	
+	public function getControlNamePrefix()
+	{	
+		// @TODO : Use entity name in the field prefix #59 
+		return $this->_component->getNameSmall().'_form';
 	}
 }
 
@@ -544,7 +550,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 	{
 		//RBFW_TODO : verify form token
 		//try to save
-		$post = $this->input->post->get($this->_component->getNameSmall().'_form', array(), 'array');
+		$post = $this->input->post->get($this->getControlNamePrefix(), array(), 'array');
 		//Currently not required
 		//$post   = $this->_filterPost($post);
 

@@ -42,7 +42,7 @@ abstract class Rb_Modelform extends JModelForm
 	{
 		// Get the form.
 		$name = $this->_component->getNameCom().'.'.$this->getName();
-		$form = $this->loadForm($name, $this->getName(), array('control' => $this->_component->getNameSmall().'_form', 'load_data' => $loadData));
+		$form = $this->loadForm($name, $this->getName(), array('control' => $this->getControlNamePrefix(), 'load_data' => $loadData));
 		if (empty($form)) {
 			return false;
 		}
@@ -53,6 +53,12 @@ abstract class Rb_Modelform extends JModelForm
 		}
 
 		return $form;
+	}
+	
+	public function getControlNamePrefix()
+	{	
+		// @TODO : Use entity name in the field prefix #59 
+		return $this->_component->getNameSmall().'_form';
 	}
 	
 	protected function loadFormData()
