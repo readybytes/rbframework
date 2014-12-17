@@ -49,6 +49,12 @@ class Rb_EcommerceHelperInvoice extends JObject
 		$processor_helper = Rb_EcommerceFactory::getHelper('processor');
 		$processor 		  = $processor_helper->getInstance($processor_type);
 		$invoice_number   = $processor->get_invoice_number($response);
+		
+		// if invoice number is not exist then return 0
+		if (!$invoice_number) {
+			return 0;
+		}
+		
 		return $this->get_id_from_invoice_number($invoice_number);
 	}
 
