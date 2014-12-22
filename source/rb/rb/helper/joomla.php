@@ -10,7 +10,7 @@ if(defined('_JEXEC')===false) die('Restricted access' );
 
 class Rb_AbstractHelperJoomla
 {
-	public static function changePluginState($element, $folder = 'system', $state=parent::ENABLE)
+	public static function changePluginState($element, $folder = 'system', $state = 1)
 	{
 		$db		= Rb_Factory::getDBO();
 		$query	= 'UPDATE '. $db->quoteName( '#__extensions' )
