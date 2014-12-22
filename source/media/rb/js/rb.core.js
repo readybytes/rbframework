@@ -349,7 +349,17 @@ rb.ajax = {
 
 		// properly route the url
 		ajax_url = rb.url.route(url) + '&format=ajax';
-	
+		
+		var spinner_selector = false;
+		// before ajax start, check any spinner selector availble or not if yes then on it
+		if ( typeof data['spinner_selector'] != "undefined" &&  $(data['spinner_selector']).length > 0 ) {
+			spinner_selector = data['spinner_selector'];
+			// remove from data otherwise it will be post
+			delete  data['spinner_selector'];
+			//show spinner
+			$(spinner_selector).show();
+		}	
+		
 		//execute ajax
 		// in jQ1.5+ first argument is url
 		$.ajax(ajax_url, {
@@ -357,8 +367,24 @@ rb.ajax = {
 			cache	: false,
 			data	: data,
 			timeout	: timeout,
-			success	: function(msg){ rb.ajax.success(msg,successCallback,errorCallback); },
-			error	: function(Request, textStatus, errorThrown){rb.ajax.error(Request, textStatus, errorThrown, errorCallback);}
+			success	: function(msg) 
+							{
+								// stop spinner
+								if ( spinner_selector ) {
+									$(spinner_selector).hide();
+								}
+								
+								rb.ajax.success(msg,successCallback,errorCallback); 
+							},
+			error	: function(Request, textStatus, errorThrown)
+							{
+								// stop spinner
+								if ( spinner_selector ) {
+									$(spinner_selector).hide();
+								}
+								
+								rb.ajax.error(Request, textStatus, errorThrown, errorCallback);
+							}
 		});
 	}
 };
