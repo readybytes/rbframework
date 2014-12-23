@@ -352,7 +352,7 @@ rb.ajax = {
 		
 		var spinner_selector = false;
 		// before ajax start, check any spinner selector availble or not if yes then on it
-		if ( typeof data['spinner_selector'] != "undefined" &&  $(data['spinner_selector']).length > 0 ) {
+		if ( data && typeof data['spinner_selector'] != "undefined" &&  $(data['spinner_selector']).length > 0 ) {
 			spinner_selector = data['spinner_selector'];
 			// remove from data otherwise it will be post
 			delete  data['spinner_selector'];
