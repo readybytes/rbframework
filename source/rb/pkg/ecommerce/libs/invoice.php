@@ -463,9 +463,9 @@ class Rb_EcommerceInvoice extends Rb_EcommerceLib
 	private function __requestGetUrl($data)
 	{
 		$url = new stdClass();				
-		$url->notify = isset($data->notify_url) ? $data->notify_url : false;
-		$url->cancel = isset($data->cancel_url) ? $data->cancel_url : false;
-		$url->return = isset($data->return_url) ? $data->return_url : false;
+		$url->notify_url = isset($data->notify_url) ? $data->notify_url : false;
+		$url->cancel_url = isset($data->cancel_url) ? $data->cancel_url : false;
+		$url->return_url = isset($data->return_url) ? $data->return_url : false;
 		
 		return $url;
 	}
