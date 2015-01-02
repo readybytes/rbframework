@@ -1231,7 +1231,7 @@ var Rb_FormValidator = function() {
  	 	var valid = true, i, message, errors, error, label;
  	 	// Validate form fields
  	 	jQuery.each(jQuery(form).find('input, textarea, select, fieldset, button'), function(index, el) {
- 	 	 	if ($(el).is(':visible') && validate(el) === false) {
+ 	 	 	if (($(el).is(':visible') || $(el).hasClass('validate-hidden'))&& validate(el) === false) {
  	 	 	 	valid = false;
  	 	 	}
  	 	});
@@ -1256,7 +1256,14 @@ var Rb_FormValidator = function() {
  		errors = jQuery(form).find("input.invalid, textarea.invalid, select.invalid, fieldset.invalid, button.invalid");
  	 	 	
  	 	var el = $(errors[0]);
-		var elOffset = el.offset().top;
+
+ 	 	if($(el).hasClass('validate-hidden')){
+ 	 		//if hidden element then calculate offset of its error element 	 		
+ 	 		var elOffset = $('[for="'+el.attr('id')+'"]').offset().top;
+ 	 	}else{
+ 	 		var elOffset = el.offset().top;
+ 	 	}
+		
  	    var elHeight = el.height();
  	    var windowHeight = $(window).height();
  	    var offset;
