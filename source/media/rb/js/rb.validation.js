@@ -1171,6 +1171,7 @@ var Rb_FormValidator = function() {
  	 	if (state === false) {
  	 	 	$el.addClass('invalid').attr('aria-invalid', 'true'); 	 	 	
  	 	 	if($error){
+ 	 	 		$error.removeClass('hide');
  	 	 		$error.addClass('show').html(msg);
  	 	 	}
  	 	 	if($label){
@@ -1180,6 +1181,7 @@ var Rb_FormValidator = function() {
  	 	 	$el.removeClass('invalid').attr('aria-invalid', 'false'); 	 	 	
  	 	 	if($error){
  	 	 		$error.removeClass('show');
+ 	 	 		$error.addClass('hide')
  	 	 	}
  	 	 	if ($label) {
  	 	 	 	$label.removeClass('invalid').attr('aria-invalid', 'false');
