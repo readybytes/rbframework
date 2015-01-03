@@ -1353,6 +1353,15 @@ var Rb_FormValidator = function() {
 			}
 			return (element.data('fileuploadlimit') > imageSize); 
 	    });
+		
+		/*
+		 * handler to validate minimum numeric value
+		 * IMP: Element should have a minimum numeric value in data attribute 'data-rb-min'
+		 */
+ 	 	setHandler('min', function (element, value) {
+ 	 		regex = /^(\d|-)?(\d|,)*\.?\d*$/;
+			return (regex.test(value) && value > element.data('rb-min')); 
+	    });
  	 	
  	 	/*
  	 	 * Auto invoke when html element have 'validate-rb-credit-card' class
