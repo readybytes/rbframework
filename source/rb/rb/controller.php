@@ -189,11 +189,11 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 	{
 		// RBFW_TODO : Check for token
 		
-		//populate model state first
-		$this->_populateModelState();
-		
-		// set th original task
+		// set the original task
 		$this->setTask($task);
+		
+		//populate model state first
+		$this->_populateModelState();		
 
 		// find if its a boolean task
 		if(preg_match('/^switchOff/i', $task) || preg_match('/^switchOn/i', $task)) {

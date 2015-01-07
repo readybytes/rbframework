@@ -311,8 +311,8 @@ class Rb_EcommerceInvoice extends Rb_EcommerceLib
 			self::STATUS_DUE 		=> JText::_('PLG_SYSTEM_RBSL_ECOMMERCE_INVOICE_STATUS_DUE'),
 			self::STATUS_PAID		=> JText::_('PLG_SYSTEM_RBSL_ECOMMERCE_INVOICE_STATUS_PAID'),
 			self::STATUS_REFUNDED	=> JText::_('PLG_SYSTEM_RBSL_ECOMMERCE_INVOICE_STATUS_REFUNDED'),
-			self::STATUS_INPROCESS	=> JText::_('PLG_SYSTEM_RBSL_ECOMMERCE_INVOICE_STATUS_PAID'),
-			self::STATUS_EXPIRED	=> JText::_('PLG_SYSTEM_RBSL_ECOMMERCE_INVOICE_STATUS_REFUNDED')		
+			self::STATUS_INPROCESS	=> JText::_('PLG_SYSTEM_RBSL_ECOMMERCE_INVOICE_STATUS_INPROCESS'),
+			self::STATUS_EXPIRED	=> JText::_('PLG_SYSTEM_RBSL_ECOMMERCE_INVOICE_STATUS_EXPIRED')		
 		);
 	}
 	
@@ -463,9 +463,9 @@ class Rb_EcommerceInvoice extends Rb_EcommerceLib
 	private function __requestGetUrl($data)
 	{
 		$url = new stdClass();				
-		$url->notify = isset($data->notify_url) ? $data->notify_url : false;
-		$url->cancel = isset($data->cancel_url) ? $data->cancel_url : false;
-		$url->return = isset($data->return_url) ? $data->return_url : false;
+		$url->notify_url = isset($data->notify_url) ? $data->notify_url : false;
+		$url->cancel_url = isset($data->cancel_url) ? $data->cancel_url : false;
+		$url->return_url = isset($data->return_url) ? $data->return_url : false;
 		
 		return $url;
 	}

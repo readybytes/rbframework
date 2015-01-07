@@ -1171,6 +1171,7 @@ var Rb_FormValidator = function() {
  	 	if (state === false) {
  	 	 	$el.addClass('invalid').attr('aria-invalid', 'true'); 	 	 	
  	 	 	if($error){
+ 	 	 		$error.removeClass('hide');
  	 	 		$error.addClass('show').html(msg);
  	 	 	}
  	 	 	if($label){
@@ -1180,6 +1181,7 @@ var Rb_FormValidator = function() {
  	 	 	$el.removeClass('invalid').attr('aria-invalid', 'false'); 	 	 	
  	 	 	if($error){
  	 	 		$error.removeClass('show');
+ 	 	 		$error.addClass('hide')
  	 	 	}
  	 	 	if ($label) {
  	 	 	 	$label.removeClass('invalid').attr('aria-invalid', 'false');
@@ -1231,7 +1233,7 @@ var Rb_FormValidator = function() {
  	 	var valid = true, i, message, errors, error, label;
  	 	// Validate form fields
  	 	jQuery.each(jQuery(form).find('input, textarea, select, fieldset, button'), function(index, el) {
- 	 	 	if ($(el).is(':visible') && validate(el) === false) {
+ 	 	 	if (($(el).is(':visible') || $(el).hasClass('validate-hidden'))&& validate(el) === false) {
  	 	 	 	valid = false;
  	 	 	}
  	 	});
@@ -1256,7 +1258,14 @@ var Rb_FormValidator = function() {
  		errors = jQuery(form).find("input.invalid, textarea.invalid, select.invalid, fieldset.invalid, button.invalid");
  	 	 	
  	 	var el = $(errors[0]);
-		var elOffset = el.offset().top;
+
+ 	 	if($(el).hasClass('validate-hidden')){
+ 	 		//if hidden element then calculate offset of its error element 	 		
+ 	 		var elOffset = $('[for="'+el.attr('id')+'"]').offset().top;
+ 	 	}else{
+ 	 		var elOffset = el.offset().top;
+ 	 	}
+		
  	    var elHeight = el.height();
  	    var windowHeight = $(window).height();
  	    var offset;
@@ -1345,6 +1354,15 @@ var Rb_FormValidator = function() {
 				  imageSize +=  fileField.files[i].size;
 			}
 			return (element.data('fileuploadlimit') > imageSize); 
+	    });
+		
+		/*
+		 * handler to validate minimum numeric value
+		 * IMP: Element should have a minimum numeric value in data attribute 'data-rb-min'
+		 */
+ 	 	setHandler('min', function (element, value) {
+ 	 		regex = /^(\d|-)?(\d|,)*\.?\d*$/;
+			return (regex.test(value) && value > element.data('rb-min')); 
 	    });
  	 	
  	 	/*

@@ -13,6 +13,12 @@ jimport( 'joomla.application.component.controller' );
 class Rb_AdaptJ16Controller extends JController
 {
 	protected	$_name		= null;
+
+	public function __construct($config = array())
+	{
+		parent::__construct($config);
+		$this->input = JFactory::getApplication()->input;
+	}
 		
 	public function getMessage()
 	{
