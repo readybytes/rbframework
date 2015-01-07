@@ -13,10 +13,6 @@ class Rb_Language extends JLanguage
 {
 	public static function getStrings(JLanguage $instance)
 	{
-		if(RB_CMS_VERSION_FAMILY == '15'){
-			return $instance->_strings;
-		}
-		
 		// for 1.6 +
 		return $instance->strings;
 	}

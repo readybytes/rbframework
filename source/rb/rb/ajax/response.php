@@ -168,7 +168,7 @@ class Rb_AjaxResponse
 	function sendResponse()
 	{
 		//RBFW_TODO : Trigger Event.
-		$isIframe = (bool) JRequest::getVar('isIframe', false);
+		$isIframe = (bool) Rb_Factory::getApplication()->input->get('isIframe', false);
 
 		//  Send text/html if we're using iframe
 		if($isIframe)

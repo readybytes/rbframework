@@ -14,7 +14,7 @@ jimport('joomla.filesystem.file');
 $fileName 	= dirname(__FILE__).DIRECTORY_SEPARATOR.'rb'.DIRECTORY_SEPARATOR.'includes.php';
 
 //do not load RB framework in backend installation screen
-$option	= JRequest::getVar('option');
+$option	= JFactory::getApplication()->input->get('option');
 if($option !== 'com_installer'){
 	//Load framework
 	require_once $fileName;

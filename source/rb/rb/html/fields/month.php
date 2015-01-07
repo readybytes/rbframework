@@ -64,18 +64,18 @@ class Rb_FormFieldMonth extends JFormFieldList
 		}
 		
 		return array(
-            '01'		=> 	Rb_Text::_('JANUARY'.$suffix),
-			'02'		=>  Rb_Text::_('FEBRUARY'.$suffix),
-			'03'		=>  Rb_Text::_('MARCH'.$suffix),
-			'04'		=>  Rb_Text::_('APRIL'.$suffix),
-			'05'		=>  Rb_Text::_('MAY'.$suffix),
-			'06'		=>  Rb_Text::_('JUNE'.$suffix),
-			'07'		=>  Rb_Text::_('JULY'.$suffix),
-			'08'		=>  Rb_Text::_('AUGUST'.$suffix),
-			'09'		=>  Rb_Text::_('SEPTEMBER'.$suffix),
-			'10'		=>  Rb_Text::_('OCTOBER'.$suffix),
-			'11'		=>  Rb_Text::_('NOVEMBER'.$suffix),
-			'12'		=>  Rb_Text::_('DECEMBER'.$suffix)	
+            '01'		=> 	JText::_('JANUARY'.$suffix),
+			'02'		=>  JText::_('FEBRUARY'.$suffix),
+			'03'		=>  JText::_('MARCH'.$suffix),
+			'04'		=>  JText::_('APRIL'.$suffix),
+			'05'		=>  JText::_('MAY'.$suffix),
+			'06'		=>  JText::_('JUNE'.$suffix),
+			'07'		=>  JText::_('JULY'.$suffix),
+			'08'		=>  JText::_('AUGUST'.$suffix),
+			'09'		=>  JText::_('SEPTEMBER'.$suffix),
+			'10'		=>  JText::_('OCTOBER'.$suffix),
+			'11'		=>  JText::_('NOVEMBER'.$suffix),
+			'12'		=>  JText::_('DECEMBER'.$suffix)	
 
 		);
 	}

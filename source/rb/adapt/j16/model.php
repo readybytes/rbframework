@@ -14,6 +14,3 @@ class Rb_AdaptJ16Model extends JModel
 {
 	protected	$_name		= null;
 }
-
-class Rb_AdaptModel extends Rb_AdaptJ16Model
-{}

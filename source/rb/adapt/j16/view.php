@@ -21,5 +21,3 @@ class Rb_AdaptJ16View extends JViewLegacy
 	}
 }
 
-class Rb_AdaptView extends Rb_AdaptJ16View
-{}

@@ -8,9 +8,12 @@
 */
 if(defined('_JEXEC')===false) die('Restricted access' );
 
-jimport( 'joomla.access.rules' );
+if(RB_CMS_ADAPTER==='j16'){
+	class Rb_AdaptController extends Rb_AdaptJ16Controller
+	{}
+}
 
-class Rb_AdaptJ16HelperJoomla
-{}
-
-class Rb_AdaptHelperJoomla extends Rb_AdaptJ16HelperJoomla{}
+if(RB_CMS_ADAPTER==='j35'){
+	class Rb_AdaptController extends Rb_AdaptJ35Controller
+	{}
+}

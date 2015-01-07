@@ -26,14 +26,9 @@ class Rb_HelperLoader
 		if (!is_dir($folder))
 			return;
 		
-		$filetree = Rb_FileTree::getFileTree($folder);
-		if(is_array($filetree)){
-			$files		=	isset($filetree['files'])?$filetree['files']:false;
-			$folders	=	isset($filetree['folders'])?$filetree['folders']:false;
-		}else{
-			$files		=	JFolder::files($folder,".php$");
-			$folders	=	JFolder::folders($folder);
-		}
+		$files		=	JFolder::files($folder,".php$");
+		$folders	=	JFolder::folders($folder);
+
 		
 			
 		if(is_array($files) && count($files)>0){
@@ -75,13 +70,7 @@ class Rb_HelperLoader
 	/* View are stored very differently */
 	static function addAutoLoadViews($baseFolder, $format=RB_REQUEST_DOCUMENT_FORMAT, $prefix='Rb_')
 	{
-		$filetree = Rb_FileTree::getFileTree($baseFolder);
-		if(is_array($filetree)){
-			$files		=	isset($filetree['files'])?$filetree['files']:false;
-			$folders	=	isset($filetree['folders'])?$filetree['folders']:false;
-		}else{
-			$folders	=	JFolder::folders($baseFolder);
-		}
+		$folders	=	JFolder::folders($baseFolder);
 
 		foreach($folders as $folder )
 		{

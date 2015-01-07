@@ -18,15 +18,15 @@ class Rb_HelperTemplate
 		}
 
 		$vars  = new stdClass();
-		
+		$app = Rb_Factory::getApplication();
 		$vars->url = new stdClass();
 		$vars->url->base = JURI::base();
 		$vars->url->root = JURI::root();
 		$vars->url->base_without_scheme = JURI::base(true);
 		$vars->request = new stdClass();
-		$vars->request->option 	= JRequest::getVar('option','');
-		$vars->request->view 	= JRequest::getVar('view','');
-		$vars->request->task 	= JRequest::getVar('task','');
+		$vars->request->option 	= $app->input->get('option','');
+		$vars->request->view 	= $app->input->get('view','');
+		$vars->request->task 	= $app->input->get('task','');
 		
 //		$vars->time = new stdClass();
 //		$vars->time->timzone 	= Rb_HelperJoomla::getUserTimeZone();
@@ -49,6 +49,9 @@ class Rb_HelperTemplate
 	}
 	
 	static $_setupScriptsLoaded = false;
+	/**
+	 *@deprecated use Rb_HelperTemplate::loadMedia()
+	 */
 	public static function loadSetupScripts($jquery=true, $jquery_ui=true)
 	{
 		if(self::$_setupScriptsLoaded === true){
@@ -63,6 +66,8 @@ class Rb_HelperTemplate
 
 	public static function loadMedia($list=array('bootstrap', 'jquery', 'rb'))
 	{
+		$list	= is_array($list) ? $list : array($list);
+		
 		if(in_array('jquery', $list, false)){
 			Rb_Html::_('jquery.framework');
 			Rb_Html::_('jquery.ui');
@@ -82,7 +87,6 @@ class Rb_HelperTemplate
 		
 		if(in_array('angular', $list, false)){
 			Rb_Html::script('plg_system_rbsl/angular/angular.min.js');
-			Rb_Html::script('plg_system_rbsl/angular/ui-router.min.js');
 		}
 		
 		if(in_array('font-awesome', $list, false)){
@@ -90,9 +94,15 @@ class Rb_HelperTemplate
 		}
 		
 		if(in_array('nvd3', $list, false)){
-			Rb_Html::script('plg_system_rbsl/nvd3/d3.v2.min.js');
+			Rb_Html::script('plg_system_rbsl/nvd3/d3.min.js');
 			Rb_Html::script('plg_system_rbsl/nvd3/nv.d3.min.js');
 			Rb_Html::stylesheet('plg_system_rbsl/nvd3/nv.d3.min.css');
+		}
+		
+		if (in_array('daterangepicker', $list, false)){
+			Rb_Html::stylesheet('plg_system_rbsl/daterangepicker/daterangepicker.min.css');
+			Rb_Html::script('plg_system_rbsl/daterangepicker/moment.min.js');
+			Rb_Html::script('plg_system_rbsl/daterangepicker/daterangepicker.min.js');	
 		}
 	}
 	
@@ -112,5 +122,25 @@ class Rb_HelperTemplate
 		
 		// prepend URL-root, and append slash
 		return ($root ? JURI::root() : '').$path.($append ? '/' : '');
+	}
+	
+	/**
+	 * Method to render the layout.
+	 *
+	 * @param   string  $layoutFile   Dot separated path to the layout file, relative to base path
+	 * @param   object  $displayData  Object which properties are used inside the layout file to build displayed output
+	 * @param   string  $basePath     Base path to use when loading layout files
+	 * @param   mixed   $options      Optional custom options to load. JRegistry or array format
+	 *
+	 * @return  string
+	 *
+	 * @since   1.1
+	 */
+	public static function renderLayout($layoutFile, $displayData = null, $basePath = '', $options = null)
+	{
+		$layout = new Rb_LayoutFile($layoutFile, $basePath, $options);
+		$renderedLayout = $layout->render($displayData);
+
+		return $renderedLayout;
 	}
 }

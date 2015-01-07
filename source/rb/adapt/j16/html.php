@@ -418,6 +418,3 @@ class Rb_AdaptJ16Html extends JHtml
 		}
 	}
 }
-
-class Rb_AdaptHtml extends Rb_AdaptJ16Html
-{}

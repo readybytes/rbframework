@@ -347,7 +347,7 @@ abstract class Rb_Lib extends JObject
 		if ($this->_trigger === true) {
 			$args  = array($previousObject, $this, $entity);
 			$event = 'on'.$this->getPrefix().'BeforeSave';
-			$result = Rb_HelperPlugin::trigger($event, $args, '', $this);
+			$result = Rb_HelperJoomla::triggerPlugin($event, $args, $this->getPrefix());
 		}
 
 		// save to data to table
@@ -371,7 +371,7 @@ abstract class Rb_Lib extends JObject
 		if($this->_trigger === true){		
 			$event = 'on'.$this->getPrefix().'AfterSave';
 			$args  = array($previousObject, $this, $entity);
-			Rb_HelperPlugin::trigger($event, $args, '', $this);
+			Rb_HelperJoomla::triggerPlugin($event, $args, $this->getPrefix());
 		}
 
 		return $this;
@@ -397,7 +397,7 @@ abstract class Rb_Lib extends JObject
 			// trigger on before delete
 			$event = 'on'.$this->getPrefix().'BeforeDelete';
 			$args  = array($this, $entity);
-			$result = Rb_HelperPlugin::trigger($event, $args, '', $this);
+			$result = Rb_HelperJoomla::triggerPlugin($event, $args, '', $this);
 		}
 
 		// delete data from table
@@ -415,7 +415,7 @@ abstract class Rb_Lib extends JObject
 		if($this->_trigger === true){
 			$event = 'on'.$this->getPrefix().'AfterDelete';
 			$args  = array($id, $entity);
-			Rb_HelperPlugin::trigger($event, $args, '', $this);
+			Rb_HelperJoomla::triggerPlugin($event, $args, '', $this);
 		}
 			
 		return $this;

@@ -99,7 +99,7 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 		if (empty( $name ))
 		{
 			$r = null;
-			Rb_Error::assert(preg_match('/Controller(.*)/i', get_class($this), $r) , Rb_Text::sprintf('PLG_SYSTEM_RBSL_ERROR_XICONTROLLER_CANT_GET_OR_PARSE_CLASS_NAME', get_class($this)), Rb_Error::ERROR);
+			Rb_Error::assert(preg_match('/Controller(.*)/i', get_class($this), $r) , JText::sprintf('PLG_SYSTEM_RBSL_ERROR_XICONTROLLER_CANT_GET_OR_PARSE_CLASS_NAME', get_class($this)), Rb_Error::ERROR);
 
 			$name = strtolower( $r[1] );
 		}
@@ -116,7 +116,7 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 			return $this->_prefix;
 
 		$r = null;
-		Rb_Error::assert(preg_match('/(.*)Controller/i', get_class($this), $r), Rb_Text::sprintf('PLG_SYSTEM_RBSL_ERROR_CANT_GET_PARSE_CLASS_NAME',Rb_Controller::getName()), Rb_Error::ERROR);
+		Rb_Error::assert(preg_match('/(.*)Controller/i', get_class($this), $r), JText::sprintf('PLG_SYSTEM_RBSL_ERROR_CANT_GET_PARSE_CLASS_NAME',Rb_Controller::getName()), Rb_Error::ERROR);
 
 		$this->_prefix  =  strtolower($r[1]);
 		return $this->_prefix;
@@ -149,7 +149,7 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 		$model	= Rb_Factory::getInstance($name,'Model', $prefix);
 
 		if (!$model) {
-			$this->setError(Rb_Text::_('NOT_ABLE_TO_GET_INSTANCE_OF_MODEL'.' : '.$this->getName()));
+			$this->setError(JText::_('NOT_ABLE_TO_GET_INSTANCE_OF_MODEL'.' : '.$this->getName()));
 		}
 
 		return $model;
@@ -189,11 +189,11 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 	{
 		// RBFW_TODO : Check for token
 		
-		//populate model state first
-		$this->_populateModelState();
-		
-		// set th original task
+		// set the original task
 		$this->setTask($task);
+		
+		//populate model state first
+		$this->_populateModelState();		
 
 		// find if its a boolean task
 		if(preg_match('/^switchOff/i', $task) || preg_match('/^switchOn/i', $task)) {
@@ -212,7 +212,7 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 
 		//trigger before
 		$args	= array(&$this, &$task, $this->getName());
-		$result = Rb_HelperPlugin::trigger('on'.$this->_component->getPrefixClass().'ControllerBeforeExecute',$args);
+		$result = Rb_HelperJoomla::triggerPlugin('on'.$this->_component->getPrefixClass().'ControllerBeforeExecute',$args);
 
 		//IMP : check authorize before executing any task
 		//so as to make sure site controller does not execute any task of admin/base controller 
@@ -228,7 +228,7 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 
 		//trigger after
 		$args	= array(&$this, &$task, $this->getName(), &$executeResult);
-		$result = Rb_HelperPlugin::trigger('on'.$this->_component->getPrefixClass().'ControllerAfterExecute', $args);
+		$result = Rb_HelperJoomla::triggerPlugin('on'.$this->_component->getPrefixClass().'ControllerAfterExecute', $args);
 		
 		if($executeResult===false){
 			return false;
@@ -286,7 +286,7 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 		//2: enitityname_id in post
 		//3: cids in post(always)
 		// we will only support ONE id here, to get multiple IDs, respective function will collect cids
-		$post = $this->input->get("{$this->_component->getNameSmall()}_form", Array(), 'ARRAY');
+		$post = $this->input->get("{$this->getControlNamePrefix()}", Array(), 'ARRAY');
 		
 		if( isset($post["{$this->getName()}_id"])  || isset($post['id']) ){
 			$entId = $post["{$this->getName()}_id"];
@@ -349,7 +349,13 @@ abstract class Rb_AbstractController extends Rb_AdaptController
         $filters['filter_order_Dir'] = $app->getUserStateFromRequest($context.'.filter_order_Dir', 'filter_order_Dir', $this->_defaultOrderingDirection , 'word');
         $filters['filter']			 = $app->getUserStateFromRequest($context.'.filter', 'filter', '', 'string');
 
-        //start link does not redirect to the first page because offset is used as limitstart   
+        // get post data and error fields occured in previous record and clear them also
+        $filters['post_data']	  	 = $app->getUserStateFromRequest($context.'.post_data', 'post_data', array(), 'array');
+        $filters['error_fields'] 	 = $app->getUserStateFromRequest($context.'.error_fields', 'error_fields', array(), 'array');
+        $app->setUserState($context . '.post_data', null);
+        $app->setUserState($context . '.error_fields', null);
+        
+		//start link does not redirect to the first page because offset is used as limitstart   
         $filters['limitstart'] 		 = $this->input->get('limitstart',0);
         //also support generic filters
         $model->_populateGenericFilters($filters);
@@ -405,6 +411,12 @@ abstract class Rb_AbstractController extends Rb_AdaptController
 		
 		return $ajax_response->sendResponse();
 	}
+	
+	public function getControlNamePrefix()
+	{	
+		// @TODO : Use entity name in the field prefix #59 
+		return $this->_component->getNameSmall().'_form';
+	}
 }
 
 abstract class Rb_Controller extends Rb_AbstractController
@@ -425,7 +437,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 	 */
 	function notask()
 	{
-		echo Rb_Text::_('PLG_SYSTEM_RBSL_NO_TASK_PROVIDED');
+		echo JText::_('PLG_SYSTEM_RBSL_NO_TASK_PROVIDED');
 		return false;
 	}
 
@@ -538,7 +550,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 	{
 		//RBFW_TODO : verify form token
 		//try to save
-		$post = $this->input->post->get($this->_component->getNameSmall().'_form', array(), 'array');
+		$post = $this->input->post->get($this->getControlNamePrefix(), array(), 'array');
 		//Currently not required
 		//$post   = $this->_filterPost($post);
 
@@ -552,21 +564,31 @@ abstract class Rb_Controller extends Rb_AbstractController
 			$msgType	=	'error';
 		}
 		else {
-			$this->setMessage(Rb_Text::_($this->_component->getPrefixText().'PLG_SYSTEM_RBSL_ITEM_SAVED_SUCCESSFULLY'));
+			$this->setMessage(JText::_($this->_component->getPrefixText().'PLG_SYSTEM_RBSL_ITEM_SAVED_SUCCESSFULLY'));
 		}
 
 		//perform redirection
 		$redirect  = "index.php?option={$this->_component->getNameCom()}&view={$this->getName()}";
 
-		// We use Table key name to work in both case with or without lib
-		if($this->input->get('task')==='apply' && $msgType != 'error') {
-			$table    	=  $this->getModel()->getTable();
-      		$keyName  	=  $table->getKeyName();
-     		$redirect  .= "&task=edit&id={$table->$keyName}"; 
+		if($msgType != 'error'){
+			// We use Table key name to work in both case with or without lib
+			if($this->input->get('task')==='apply') {
+				$table    	=  $this->getModel()->getTable();
+	      		$keyName  	=  $table->getKeyName();
+	     		$redirect  .= "&task=edit&id={$table->$keyName}"; 
+			}
+	
+		    if($this->input->get('task')==='savenew') {
+				$redirect  .= "&task=new";
+			}
 		}
-
-	   if($this->input->get('task')==='savenew' && $msgType != 'error') {
-			$redirect  .= "&task=new";
+		else{
+			if($itemId){
+				$redirect  .= "&task=edit&id=$itemId";
+			}
+			else{
+				$redirect  .= "&task=new";
+			}
 		}
 		
 		$redirect = Rb_Route::_($redirect);
@@ -598,7 +620,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 	{
 		$errMsg				= '';
 		$messagetype 	= 'message';
-		$message 		= Rb_Text::_($this->_component->getPrefixText().'PLG_SYSTEM_RBSL_ITEMS_DELETED');
+		$message 		= JText::_($this->_component->getPrefixText().'PLG_SYSTEM_RBSL_ITEMS_DELETED');
 
 
 		//ensure model state is blank, so no mishappening :-)
@@ -647,7 +669,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 	{
 		$errMsg				= '';
 		$messagetype 	= 'message';
-		$message 		= Rb_Text::_($this->_component->getPrefixText().'PLG_SYSTEM_RBSL_ITEMS_COPIED');
+		$message 		= JText::_($this->_component->getPrefixText().'PLG_SYSTEM_RBSL_ITEMS_COPIED');
 		
 		$cids = $this->input->get('cid', $cids, 'ARRAY');
 		foreach ($cids as $cid)
@@ -688,7 +710,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 		if($this->_order($change, $cids[0])===false)
 			$this->setMessage($this->getError());
 		else
-			$this->setMessage(Rb_Text::_($this->_component->getPrefixText().'PLG_SYSTEM_RBSL_ITEM_ORDERED_SUCCESSFULLY'));
+			$this->setMessage(JText::_($this->_component->getPrefixText().'PLG_SYSTEM_RBSL_ITEM_ORDERED_SUCCESSFULLY'));
 
 		//perform redirection
 		$this->setRedirect();
@@ -704,7 +726,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 	{
 		$errMsg				= '';
 		$this->messagetype 	= 'notice';
-		$this->message 		= Rb_Text::_($this->_component->getPrefixText().'PLG_SYSTEM_RBSL_ITEMS_REORDERED');
+		$this->message 		= JText::_($this->_component->getPrefixText().'PLG_SYSTEM_RBSL_ITEMS_REORDERED');
 
 		//RBFW_TODO : User proper variable names
 		$ordering 	= $this->input->get('ordering', array(0), 'ARRAY');
@@ -772,7 +794,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 	{
 		$errMsg				= '';
 		$this->messagetype 	= 'notice';
-		$this->message 		= Rb_Text::_($this->_component->getPrefixText().'PLG_SYSTEM_RBSL_ITEMS_REORDERED');
+		$this->message 		= JText::_($this->_component->getPrefixText().'PLG_SYSTEM_RBSL_ITEMS_REORDERED');
 
 		$task	= strtolower($this->input->get('task',	'enable'));
 
@@ -864,12 +886,47 @@ abstract class Rb_Controller extends Rb_AbstractController
 	{
 		//RBFW_TODO:High : Event should be filtered
 		$event 		= $this->input->get('event', $event);
-		Rb_Error::assert($event,Rb_Text::_('PLG_SYSTEM_RBSL_ERROR_PAYPLANS_UNKNOWN_EVENT_TRIGGER_REQUESTED'));
+		Rb_Error::assert($event,'Unknown Event Triggered');
 
 		$args = $this->_getArgs();
 
 		//args must be an array
-		return Rb_HelperPlugin::trigger($event, $args);
+		return Rb_HelperJoomla::triggerPlugin($event, $args);
+	}
+	
+	/**
+	 * 
+	 * Validate an Filter the data w.r.t to its form
+	 * @param array $data
+	 * @param mixed $itemId
+	 * @return boolean
+	 */
+	protected function __validate(array &$data, $itemId=null)
+	{
+		$model = $this->getModel();
+		
+		// IMP: If there is no model, then no validation.
+		//      So return true in this case
+		if(!$model){
+			return true;			
+		}
+		
+		// IMP : Need to merge the data, otherwise filter will remove the data which does not exist in form
+		$data 		 = array_merge($data, $model->filterFormData($data, $itemId));
+		$errorFields = $model->validateFormData($data, $itemId);
+		
+		// if validation failed 
+		// Save the data in session and these data will be fetched and cleared 
+		// while populating controller in next request (redirection)		 		
+		if(count($errorFields) > 0){
+			$app = RB_Factory::getApplication();
+			$context = $this->getModel()->getContext();
+			$app->setUserState($context . '.post_data', $data);			
+			$app->setUserState($context . '.error_fields', $errorFields);
+			return false;
+		}
+		
+		return true;
 	}
 }
 

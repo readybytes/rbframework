@@ -349,7 +349,17 @@ rb.ajax = {
 
 		// properly route the url
 		ajax_url = rb.url.route(url) + '&format=ajax';
-	
+		
+		var spinner_selector = false;
+		// before ajax start, check any spinner selector availble or not if yes then on it
+		if ( data && typeof data['spinner_selector'] != "undefined" &&  $(data['spinner_selector']).length > 0 ) {
+			spinner_selector = data['spinner_selector'];
+			// remove from data otherwise it will be post
+			delete  data['spinner_selector'];
+			//show spinner
+			$(spinner_selector).show();
+		}	
+		
 		//execute ajax
 		// in jQ1.5+ first argument is url
 		$.ajax(ajax_url, {
@@ -357,8 +367,24 @@ rb.ajax = {
 			cache	: false,
 			data	: data,
 			timeout	: timeout,
-			success	: function(msg){ rb.ajax.success(msg,successCallback,errorCallback); },
-			error	: function(Request, textStatus, errorThrown){rb.ajax.error(Request, textStatus, errorThrown, errorCallback);}
+			success	: function(msg) 
+							{
+								// stop spinner
+								if ( spinner_selector ) {
+									$(spinner_selector).hide();
+								}
+								
+								rb.ajax.success(msg,successCallback,errorCallback); 
+							},
+			error	: function(Request, textStatus, errorThrown)
+							{
+								// stop spinner
+								if ( spinner_selector ) {
+									$(spinner_selector).hide();
+								}
+								
+								rb.ajax.error(Request, textStatus, errorThrown, errorCallback);
+							}
 		});
 	}
 };
@@ -397,41 +423,8 @@ rb.iframe = {
 };
 
 
-/*---------------------------------------------------------
-Joomla function available through rb.cms framework 
----------------------------------------------------------*/
-rb.joomla = {};
-
-rb.joomla.text = {
-	// string holder
-	strings: {
-	},
-	
-	// translate
-	"_": function(key, def) {
-		return typeof this.strings[key.toUpperCase()] !== "undefined" ? this.strings[key.toUpperCase()] : def;
-	},
-	
-	// add all keys
-	load: function(object) {
-		for (var key in object) {
-			this.strings[key.toUpperCase()] = object[key];
-		}
-		return this;
-	}
-};
-
-/*---------------------------------------------------------
-	Javascript interface to underline framework 
----------------------------------------------------------*/
-rb.cms = rb.joomla;
-
-
 //Document ready
 $(document).ready(function(){
-
-	// load translation
-	rb.cms.text.load(rb.joomla.text.strings);
 
 	// load timeago
 	$('.rb-timeago').timeago();

@@ -78,7 +78,7 @@ class Rb_Plugin extends JPlugin
 		$this->_tplVars[$key] = $value;
 	}
 
-	protected function _loadTemplate( $tpl = null, $args = null, $type = 'payplans', $layout=null)
+	protected function _loadTemplate( $tpl = null, $args = null, $type = '', $layout=null)
 	{
 		if($args === null){
 			$args= (array)$this->_tplVars;
@@ -116,7 +116,7 @@ class Rb_Plugin extends JPlugin
 	}
 	
 
-    protected function _getTemplatePath($plugin=null, $type='payplans')
+    protected function _getTemplatePath($plugin=null, $type='')
     {
 
         $app = Rb_Factory::getApplication();
@@ -126,11 +126,9 @@ class Rb_Plugin extends JPlugin
 
         //RBFW_TODO : Move paths to addPath function, so that it can be extended.
         // get the template and default paths for the layout
-        $paths[] = JPATH_THEMES.'/'.$app->getTemplate().'/html'.'/'.PAYPLANS_COMPONENT_NAME.DS
-        		 .'_plg'.'/'.$type.'/'.$plugin;
+        $paths[] = JPATH_THEMES.'/'.$app->getTemplate().'/html/plg_'.$type.'_'.$plugin;
 
         $paths[] = Rb_HelperJoomla::getPluginPath($this).'/tmpl';
-        $paths[] = PAYPLANS_PATH_TEMPLATE.'/default'.'/_partials';
 
         //find the path and return
         return $paths;

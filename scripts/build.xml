@@ -3,10 +3,10 @@
 
 	<property 
 			name="jsdirs" 
-			value="${dir.tmp}/media/angular/js/, ${dir.tmp}/media/daterangepicker/js/, ${dir.tmp}/media/jui/js/, ${dir.tmp}/media/nvd3/js, ${dir.tmp}/media/rb/js/" />
+			value="${dir.tmp}/media/angular/js/, ${dir.tmp}/media/daterangepicker/js/, ${dir.tmp}/media/jui/js/, ${dir.tmp}/media/rb/js/" />
 	<property 
 			name="cssdirs" 
-			value="${dir.tmp}/media/font-awesome/css/, ${dir.tmp}/media/daterangepicker/css/, ${dir.tmp}/media/jui/css/, ${dir.tmp}/media/nvd3/css/" />
+			value="${dir.tmp}/media/font-awesome/css/, ${dir.tmp}/media/daterangepicker/css/, ${dir.tmp}/media/jui/css/" />
 		
 	<target name="get_build_number">
 		<exec command="git describe" dir="${dir.root}" outputProperty="build.number"  />
@@ -49,8 +49,27 @@
 			basedir="${dir.tmp}" />
 	</target>
 
+	<target name="generatefiletree">
+		<echo file="${filetree.target}" append="true" msg="$files[]='${filename}'; ${line.separator}" />
+	</target>
+
 	<!-- Global Target -->
 	<target name="export_sourcecode" description="Export files from a local repository to package folder">		
+
+		
+		
+		<!-- loop through files, and call subtask task with set param and absparam -->
+		<property name="filetree.target" value="${dir.src}/rb/_filelist.php" />
+		<echo file="${filetree.target}" append="false" msg="${msg.leftanglebracket}?php ${line.separator} $files = array() ; ${line.separator}" />
+
+		<foreach param="filename" absparam="absfilename" target="generatefiletree">
+		  <fileset dir="${dir.src}/rb/">
+		    <include name="**/*.php"/>
+		  </fileset>
+		</foreach>
+
+		<exec command="php getclassesinfile.php" dir="${dir.root}/scripts" checkreturn="true" passthru="true"/>
+		<delete file="${dir.src}/rb/_filelist.php" />
 
 		<!-- Copy Source Code -->
 		<copy todir="${dir.tmp}" >

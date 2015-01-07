@@ -133,7 +133,11 @@ class Rb_EcommerceInvoice extends Rb_EcommerceLib
 		if(!$this->getId()){
 			return $this;
 		}
-		
+
+		// load transactions and modifiers
+		$this->_loadTransactions();
+		//$this->_loadModifiers();
+
 		// if invoice is still unpaid then every time need to re-calculation (with modifiers)
 		if ($this->getStatus() == self::STATUS_DUE ) {
 			$this->refresh();
@@ -303,12 +307,12 @@ class Rb_EcommerceInvoice extends Rb_EcommerceLib
 	public static function getStatusList()
 	{
 		return array(
-            self::STATUS_NONE		=> Rb_Text::_('PLG_SYSTEM_RBSL_ECOMMERCE_INVOICE_STATUS_NONE'),
-			self::STATUS_DUE 		=> Rb_Text::_('PLG_SYSTEM_RBSL_ECOMMERCE_INVOICE_STATUS_DUE'),
-			self::STATUS_PAID		=> Rb_Text::_('PLG_SYSTEM_RBSL_ECOMMERCE_INVOICE_STATUS_PAID'),
-			self::STATUS_REFUNDED	=> Rb_Text::_('PLG_SYSTEM_RBSL_ECOMMERCE_INVOICE_STATUS_REFUNDED'),
-			self::STATUS_INPROCESS	=> Rb_Text::_('PLG_SYSTEM_RBSL_ECOMMERCE_INVOICE_STATUS_PAID'),
-			self::STATUS_EXPIRED	=> Rb_Text::_('PLG_SYSTEM_RBSL_ECOMMERCE_INVOICE_STATUS_REFUNDED')		
+            self::STATUS_NONE		=> JText::_('PLG_SYSTEM_RBSL_ECOMMERCE_INVOICE_STATUS_NONE'),
+			self::STATUS_DUE 		=> JText::_('PLG_SYSTEM_RBSL_ECOMMERCE_INVOICE_STATUS_DUE'),
+			self::STATUS_PAID		=> JText::_('PLG_SYSTEM_RBSL_ECOMMERCE_INVOICE_STATUS_PAID'),
+			self::STATUS_REFUNDED	=> JText::_('PLG_SYSTEM_RBSL_ECOMMERCE_INVOICE_STATUS_REFUNDED'),
+			self::STATUS_INPROCESS	=> JText::_('PLG_SYSTEM_RBSL_ECOMMERCE_INVOICE_STATUS_INPROCESS'),
+			self::STATUS_EXPIRED	=> JText::_('PLG_SYSTEM_RBSL_ECOMMERCE_INVOICE_STATUS_EXPIRED')		
 		);
 	}
 	
@@ -459,9 +463,9 @@ class Rb_EcommerceInvoice extends Rb_EcommerceLib
 	private function __requestGetUrl($data)
 	{
 		$url = new stdClass();				
-		$url->notify = isset($data->notify_url) ? $data->notify_url : false;
-		$url->cancel = isset($data->cancel_url) ? $data->cancel_url : false;
-		$url->return = isset($data->return_url) ? $data->return_url : false;
+		$url->notify_url = isset($data->notify_url) ? $data->notify_url : false;
+		$url->cancel_url = isset($data->cancel_url) ? $data->cancel_url : false;
+		$url->return_url = isset($data->return_url) ? $data->return_url : false;
 		
 		return $url;
 	}
@@ -563,7 +567,71 @@ class Rb_EcommerceInvoice extends Rb_EcommerceLib
 		$invoice = isset($data->request->invoice_id) ? Rb_EcommerceInvoice::getInstance($data->request->invoice_id) : $this;
 		$response = $invoice->getProcessor()->process($data);
 		
+		return $this->_process($invoice, $response, $data);
+	}
+	
+	/**
+	 * 
+	 * Invoke this method when you need to manual paid for particular this invoice
+	 * @param Rb_EcommerceResponse $response
+	 * @param unknown_type $data
+	 * 
+	 * @return Rb_EcommerceResponse 
+	 */
+	public function directPay($bind_data = Array())
+	{
+		//1#. Create response from $bind_data
+		 
+		$response = new Rb_EcommerceResponse();
+		
+		//@TODO:: can we compulsory gateway transaction ID
+		
+		//gateway_txn_id
+		if ( isset($bind_data['gatewaytransaction_id'])) {
+			$response->set('txn_id', $bind_data['gatewaytransaction_id']);	
+		}
+		//gateway_subscr_id
+		if ( isset($bind_data['subscr_id'])) {
+			$response->set('subscr_id', $bind_data['subscr_id']);	
+		}
+		//gateway_parent_txn
+		if ( isset($bind_data['parent_txn'])) {
+			$response->set('parent_txn', $bind_data['parent_txn']);	
+		}
+		//amount
+		if ( isset($bind_data['amount'])) {
+			$response->set('amount', $bind_data['amount']);	
+		}
+		//payment_status
+		if ( isset($bind_data['payment_status'])) {
+			$response->set('payment_status', $bind_data['payment_status']);	
+		}		
+		//message
+		if ( isset($bind_data['message'])) {
+			$response->set('message', $bind_data['message']);	
+		}
+		//params
+		if ( isset($bind_data['params'])) {
+			$response->set('params', $bind_data['params']);	
+		}
+		
+		//2#. Process Invoice without Processor calling
+		return $this->_process($this, $response, $bind_data);
+	}
+
+	/**
+	 * 
+	 * Invoke to process processor's response on invoice
+	 * @param Rb_EcommerceInvoice $invoice
+	 * @param Rb_EcommerceResponse $response
+	 * @param unknown_type $data
+	 * 
+	 * @return Rb_EcommerceResponse
+	 */
+	private function _process(Rb_EcommerceInvoice $invoice, Rb_EcommerceResponse $response, $data )
+	{
 		$helper = $this->getHelper();
+		
 		if($response->get('payment_status') == Rb_EcommerceResponse::PAYMENT_COMPLETE){
 			$invoice->_process_response_payment_completed($response, $data);
 		}

@@ -8,6 +8,9 @@
 */
 if(defined('_JEXEC')===false) die('Restricted access' );
 
+/**
+ * @deprecated Not used anywhere, if you want to use, then modily the current file and then use it.
+ */
 
 abstract class Rb_Checklist
 {
@@ -82,12 +85,12 @@ abstract class Rb_Checklist
 
 	public function getMessage()
 	{
-		return Rb_Text::_($this->_message);
+		return JText::_($this->_message);
 	}
 
 	public function getTooltip()
 	{
-		return Rb_Text::_('PLG_SYSTEM_RBSL_SETUP_'.JString::strtoupper($this->_name).'_TOOLTIP');
+		return JText::_('PLG_SYSTEM_RBSL_SETUP_'.JString::strtoupper($this->_name).'_TOOLTIP');
 		//return $this->_tooltip;
 	}
 

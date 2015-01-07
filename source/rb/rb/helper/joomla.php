@@ -8,9 +8,9 @@
 */
 if(defined('_JEXEC')===false) die('Restricted access' );
 
-class Rb_AbstractHelperJoomla extends Rb_AdaptHelperJoomla
+class Rb_AbstractHelperJoomla
 {
-	public static function changePluginState($element, $folder = 'system', $state=parent::ENABLE)
+	public static function changePluginState($element, $folder = 'system', $state = 1)
 	{
 		$db		= Rb_Factory::getDBO();
 		$query	= 'UPDATE '. $db->quoteName( '#__extensions' )
@@ -207,7 +207,7 @@ class Rb_AbstractHelperJoomla extends Rb_AdaptHelperJoomla
 		}
 
 		if (empty($title)) {
-			$title = Rb_Text::_('PLG_SYSTEM_RBSL_APP_CONTENT_JOOMLA_SELECT_ARTICLE');
+			$title = JText::_('PLG_SYSTEM_RBSL_APP_CONTENT_JOOMLA_SELECT_ARTICLE');
 		}
 		$title = htmlspecialchars($title, ENT_QUOTES, 'UTF-8');
 
@@ -219,7 +219,7 @@ class Rb_AbstractHelperJoomla extends Rb_AdaptHelperJoomla
 		// The user select button.
 		$html[] = '<div class="button2-left">';
 		$html[] = '  <div class="blank">';
-		$html[] = '	<a class="modal" title="'.Rb_Text::_('PLG_SYSTEM_RBSL_APP_CONTENT_JOOMLA_SELECT_ARTICLE').'"  href="'.$link.'" rel="{handler: \'iframe\', size: {x: 800, y: 450}}">'.JText::_('PLG_SYSTEM_RBSL_APP_CONTENT_JOOMLA_SELECT_ARTICLE_BUTTON').'</a>';
+		$html[] = '	<a class="modal" title="'.JText::_('PLG_SYSTEM_RBSL_APP_CONTENT_JOOMLA_SELECT_ARTICLE').'"  href="'.$link.'" rel="{handler: \'iframe\', size: {x: 800, y: 450}}">'.JText::_('PLG_SYSTEM_RBSL_APP_CONTENT_JOOMLA_SELECT_ARTICLE_BUTTON').'</a>';
 		$html[] = '  </div>';
 		$html[] = '</div>';
 
@@ -255,22 +255,19 @@ class Rb_AbstractHelperJoomla extends Rb_AdaptHelperJoomla
 		return new DateTimeZone($timezone);
 	}
 	
+	//RBFW_TODO : This returns usergroups strings, should be named properly.
 	public static function getJoomlaUserGroups($userid)
 	{
-	  jimport('joomla.user.helper');
-	  $usergroups = JUserHelper::getUserGroups($userid);
-	  if(PAYPLANS_JVERSION_25)
-	  {
-	  	$db      = Rb_Factory::getDBO();
-	  	$groups  = implode(',', $usergroups);
+		jimport('joomla.user.helper');
+		$usergroups = JUserHelper::getUserGroups($userid);
+		
+		$db      = Rb_Factory::getDBO();
+		$groups  = implode(',', $usergroups);
 		$db->setQuery( 'SELECT `title`'
-				. ' FROM #__usergroups'
-				. ' WHERE `id` IN (' . $groups . ')');
+			. ' FROM #__usergroups'
+			. ' WHERE `id` IN (' . $groups . ')');
 		return $db->loadColumn();	
-	  }
 
-	  $joomlagroups = array_keys($usergroups);
-	  return $joomlagroups;
 	}
 
 	public static function getUserEditLink($user)
@@ -322,7 +319,7 @@ class Rb_HelperJoomla extends Rb_AbstractHelperJoomla
 			$dispatcher = JDispatcher::getInstance();
 		}
 
-		//load payplans plugins
+		//load plugins
 		self::loadPlugins($type);
 		//$eventName = $prefix.JString::ucfirst($eventName);
 		return $dispatcher->trigger($eventName, $data);
@@ -332,7 +329,7 @@ class Rb_HelperJoomla extends Rb_AbstractHelperJoomla
 	 * Loads plugin of given type
 	 * @param $type
 	 */
-	static function loadPlugins($type='payplans')
+	static function loadPlugins($type='')
 	{
 		static $loaded = array();
 
@@ -372,16 +369,10 @@ class Rb_HelperJoomla extends Rb_AbstractHelperJoomla
 		
 	public function getLogoutLink($routed=true)
 	{
-		$link = 'index.php?option='.PAYPLANS_COM_USER;
-	
-		if(RB_CMS_VERSION_FAMILY==15){
-			$link .= '&view=user&task=logout';
-		}else{
-			
-			$link .= '&task=user.logout';
-			// add token
-			$link .= '&'.JUtility::getToken().'=1';
-		}
+		$link = 'index.php?option=com_users&task=user.logout';
+		$link .= '&task=user.logout';
+		$link .= '&'.JUtility::getToken().'=1';
+
 		
 		//set return in url to redirect to home page after logout
 		$sitename = JURI::root();
@@ -397,16 +388,10 @@ class Rb_HelperJoomla extends Rb_AbstractHelperJoomla
 
 	public function getLoginLink($routed=true)
 	{
-		$link = 'index.php?option='.PAYPLANS_COM_USER;
-	
-		if(RB_CMS_VERSION_FAMILY==15){
-			$link .= '&view=user&task=login';
-		}else{
-			
-			$link .= '&task=login';
-			// add token
-			$link .= '&'.JUtility::getToken().'=1';
-		}
+		$link = 'index.php?option=com_users&task=login';
+		$link .= '&task=login';
+		$link .= '&'.JUtility::getToken().'=1';
+
 		
 		//set return in url to redirect to home page after login
 		$sitename  = JURI::getInstance()->toString();
@@ -422,26 +407,43 @@ class Rb_HelperJoomla extends Rb_AbstractHelperJoomla
 	
 		/**
         *
-        * @return currently used langauge code
+        * @return currently used language code
         * Also language and locale seperated
         */
        public static function getLanguageCode()
        {
-               //RBFW_TODO : fixit for Joomfish
+           //RBFW_TODO : fixit for Joomfish
+           // as if now no way to collect language code
+           //RBFW_TODO : fixit for 1.7
+           $lang = Rb_Factory::getLanguage();
+           $code = $lang->get('tag');
 
-               $lang = Rb_Factory::getLanguage();
-               if(RB_CMS_VERSION_FAMILY == '15'){
-                       $code = $lang->_lang;
-               }else{
-                       // as if now no way to collect language code
-                       //RBFW_TODO : fixit for 1.7
-                       $code = $lang->get('tag');
-               }
                
-               list ($langCode, $localCode)=explode('-', $code, 2);
-               return array('code' => $code, 'language' => $langCode, 'local' => $localCode);
-       }
+		list ($langCode, $localCode)=explode('-', $code, 2);
+		return array('code' => $code, 'language' => $langCode, 'local' => $localCode);
+      }
        
+	public static function getLanguages($client = 'site')
+	{		
+		static $languages = null;
+		
+		if($languages === null || !isset($languages[$client])){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true)
+		 				->select('*')
+						->from('#__extensions')
+						->where('type=' . $db->quote('language'))
+						->where('state=0')
+						->where('enabled=1')
+						->where('client_id=' . ($client == 'admin' ? 1 : 0))
+						->order('name');
+			$db->setQuery($query);
+			$languages[$client] = $db->loadObjectList('element');
+		}
+		
+		return $languages[$client];
+	}
+      
     public static function isLocalHost()
 	{
 		$root = JURI::root();
@@ -481,7 +483,7 @@ class Rb_HelperJoomla extends Rb_AbstractHelperJoomla
 	// get joomla categories
 	public static function getJoomlaCategories()
 	{
-		$db 	= PayplansFactory::getDBO();
+		$db 	= Rb_Factory::getDBO();
 		
 		$query = 'SELECT  `id`  as category_id, title'
 			 	. ' FROM #__categories'
@@ -498,6 +500,33 @@ class Rb_HelperJoomla extends Rb_AbstractHelperJoomla
 					 ->from('`#__content`')
 					 ->dbLoadQuery()
 					 ->loadObjectList('id');
+	}
+
+
+	public static function addDocumentMetadata($title=null, $keywords=null, $description=null, $robots=null)
+	{
+		$document 	= Rb_Factory::getDocument();		
+
+		// set title
+		if($title)
+		{
+			$document->setTitle($title);
+		}
+
+		if($description)
+		{
+			$document->setDescription($description);
+		}
+
+		if ($keywords)
+		{
+			$document->setMetadata('keywords', $keywords);
+		}
+
+		if($robots)
+		{
+			$document->setMetadata('robots', $robots);
+		}
 	}
 	
 }

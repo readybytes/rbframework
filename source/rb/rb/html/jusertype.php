@@ -21,7 +21,7 @@ class Rb_HtmlJusertype extends Rb_Html
 		
 		if(isset($attr) && isset($attr['userAutocomplete']) && $attr['userAutocomplete'] == false){
 			if(isset($attr['none']))
-                       $options[] = JHTML::_('select.option', '', Rb_Text::_('PLG_SYSTEM_RBSL_SELECT_USERTYPE'));
+                       $options[] = JHTML::_('select.option', '', JText::_('PLG_SYSTEM_RBSL_SELECT_USERTYPE'));
                        
             foreach($groups as $group=>$val){
             	$options[] = JHTML::_('select.option', $val, $val);        
@@ -34,7 +34,7 @@ class Rb_HtmlJusertype extends Rb_Html
 	    return Rb_Html::_('autocomplete.edit', $groups, $name, $attr, $textField, $valueField, $value);		
 	}
 	
-	static function filter($name, $view, Array $filters = array(), $prefix='filter_payplans')
+	static function filter($name, $view, Array $filters = array(), $prefix='')
 	{
 		$elementName  = $prefix.'_'.$view.'_'.$name;
 		$elementValue = @array_shift($filters[$name]);

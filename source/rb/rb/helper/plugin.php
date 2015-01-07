@@ -8,7 +8,9 @@
 */
 if(defined('_JEXEC')===false) die('Restricted access' );
 
-//RBFW_TODO : remove this class
+/*
+ * @deprecated  1.1 Use Rb_HelperJoomla instead.
+ */
 class Rb_HelperPlugin
 {
 	/**
@@ -17,17 +19,17 @@ class Rb_HelperPlugin
 	 * @param array $data
 	 * @return array
 	 */
-	static function trigger($eventName,array &$data =array(), $prefix='')
+	static function trigger($eventName,array &$data =array(), $type='')
 	{
 		//RBFW_TODO : Filter event name, must not start from _
-		return Rb_HelperJoomla::triggerPlugin($eventName, $data, $prefix);
+		return Rb_HelperJoomla::triggerPlugin($eventName, $data, $type);
 	}
 
 	/**
 	 * Loads plugin of given type
 	 * @param $type
 	 */
-	static function loadPlugins($type='payplans')
+	static function loadPlugins($type='')
 	{
 		return Rb_HelperJoomla::loadPlugins($type);
 	}

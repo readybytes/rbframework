@@ -11,6 +11,11 @@ if(defined('_JEXEC')===false) die('Restricted access' );
 
 class Rb_ViewHtml extends Rb_View
 {
+	/*
+	| If set to false, then view should generate and set meta data
+	*/
+	protected $auto_generate_metadata = true;
+
 	protected function _injectTokens($output)
 	{
 		// Form security via token injection
@@ -34,58 +39,51 @@ class Rb_ViewHtml extends Rb_View
 		}
 	}
 	
-	protected function _prepareDocument()
+	protected function generateMetadata()
 	{	
-		if(Rb_Factory::getApplication()->isAdmin()){
+        $app = Rb_Factory::getApplication();
+                
+		if($app->isAdmin()){
 			return true;
 		}
 		
-		$app		= Rb_Factory::getApplication();
-		$params 	= $app->getParams();
-		$document 	= Rb_Factory::getDocument();		
-		$menus		= $app->getMenu();
-		$title		= null;
+		$title 		= null;
+		$keywords 	= null;
+		$description= null; 
+		$robots		= null;
 
 		// Because the application sets a default page title,
 		// we need to get it from the menu item itself
-		$menu = $menus->getActive();
-		if($menu){
-			$params->def('page_heading', $params->def('page_title', $menu->title));
+		$params		= Rb_Factory::getApplication()->getParams();
+		$menu 	= Rb_Factory::getApplication()->getMenu()->getActive();
+
+		if($menu && $menu->title){
+			$title = $menu->title ;
+		}else{
+			$title	= $params->get('page_title', $app->getCfg('sitename'));
 		}
 		
-		$title = $params->get('page_title', '');
-		if (empty($title)) {
-			$title = $app->getCfg('sitename');
-		}
-		elseif ($app->getCfg('sitename_pagetitles', 0) == 1) {
-			$title = Rb_Text::sprintf('JPAGETITLE', $app->getCfg('sitename'), $title);
-		}
-		elseif ($app->getCfg('sitename_pagetitles', 0) == 2) {
-			$title = Rb_Text::sprintf('JPAGETITLE', $title, $app->getCfg('sitename'));
-		}
-		
-		$document->setTitle($title);
-
-		if ($params->get('menu-meta_description'))
-		{
-			$document->setDescription($params->get('menu-meta_description'));
+		if ($params->get('menu-meta_description'))		{
+			$description = $params->get('menu-meta_description');
 		}
 
-		if ($params->get('menu-meta_keywords'))
-		{
-			$document->setMetadata('keywords', $params->get('menu-meta_keywords'));
+		if ($params->get('menu-meta_keywords'))		{
+			$keywords= $params->get('menu-meta_keywords');
 		}
 
-		if ($params->get('robots'))
-		{
-			$document->setMetadata('robots', $params->get('robots'));
+		if ($params->get('robots'))		{
+			$robots = $params->get('robots');
 		}
+
+		Rb_HelperJoomla::addDocumentMetadata($title, $keywords, $description, $robots);
 	}
 	
 	public function render($output, $options)
 	{	
 		// for html pages, genertae meta data.
-		$this->_prepareDocument();
+		if($this->auto_generate_metadata){
+			$this->generateMetadata();
+		}
 				
 		ob_start();
 		echo '<div id="'.$this->_component->getNameSmall().'" class="rb-wrap '.$this->_component->getNameSmall().'-wrap">

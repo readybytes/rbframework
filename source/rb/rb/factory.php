@@ -18,15 +18,9 @@ class Rb_Factory extends Rb_AbstractFactory
 	public static $response = null;
 	
 	//Returns a Model/View/Controller/Table/Lib object
+    static $instance=array();
 	static function getInstance($name, $type='', $prefix='Rb_', $refresh=false)
 	{
-		static $instance=array();
-		
-		//clean cache if required
-		if(self::cleanStaticCache()){
-			$instance=array();
-		}
-
 		//generate class name
 		$className	= $prefix.$type.$name;
 
@@ -37,8 +31,8 @@ class Rb_Factory extends Rb_AbstractFactory
 		//so convert the case so that if instance is available isset does not results false due to case
 		$className = strtolower($className);
 		//if already there is an object
-		if(isset($instance[$className]) && !$refresh){
-			return $instance[$className];
+		if(isset(self::$instance[$className]) && !$refresh){
+			return self::$instance[$className];
 		}
 
 		//class_exists function checks if class exist,
@@ -48,9 +42,9 @@ class Rb_Factory extends Rb_AbstractFactory
 		}
 
 		//create new object, class must be autoloaded
-		$instance[$className]= new $className();
+		self::$instance[$className]= new $className();
 
-		return $instance[$className];
+		return self::$instance[$className];
 	}
 
 	/**
@@ -65,6 +59,11 @@ class Rb_Factory extends Rb_AbstractFactory
   		return self::$response;
   	}
 
+  	/**
+  	 * 
+  	 * @Deprecated 1.1 Use Static variable
+  	 * @param $set
+  	 */
 	static public function cleanStaticCache($set = null)
 	{
 		static $reset = false;
@@ -73,5 +72,15 @@ class Rb_Factory extends Rb_AbstractFactory
 			$reset = $set;
 
 		return $reset;
+	}
+	
+	public static $validator = null;
+	public static function getValidator()
+	{	
+		if(!self::$validator){
+			self::$validator = new RB_Validator();
+		}
+		
+		return self::$validator;
 	}
 }

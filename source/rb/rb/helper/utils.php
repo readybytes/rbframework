@@ -68,4 +68,23 @@ class Rb_HelperUtils
 	   
 	    return $array;
 	}
+	
+	static $tables = null;
+	public static function isTableExist($tableName, $prefix='#__', $refresh=false)
+	{
+		
+		$db		 	   = Rb_Factory::getDBO();
+
+		// load tables if required
+		if(self::$tables == null || $refresh == true){
+			self::$tables	= $db->getTableList();
+		}
+
+
+		//if table name consist #__ replace it.
+		$tableName = str_replace($prefix, $db->getPrefix(), $tableName);
+
+		//check if table exist
+		return in_array($tableName,self::$tables ) ? true : false;
+	}
 }

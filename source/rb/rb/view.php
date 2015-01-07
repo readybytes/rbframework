@@ -61,7 +61,7 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 			return $this->_prefix;
 
 		$r = null;
-		Rb_Error::assert(preg_match('/(.*)View/i', get_class($this), $r), Rb_Text::sprintf('PLG_SYSTEM_RBSL_ERROR_XIVIEW_GETPREFIX_CANT_GET_OR_PARSE_CLASSNAME', get_class($this)), Rb_Error::ERROR);
+		Rb_Error::assert(preg_match('/(.*)View/i', get_class($this), $r), JText::sprintf('PLG_SYSTEM_RBSL_ERROR_XIVIEW_GETPREFIX_CANT_GET_OR_PARSE_CLASSNAME', get_class($this)), Rb_Error::ERROR);
 
 
 		$this->_prefix  =  strtolower($r[1]);
@@ -129,7 +129,7 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 		// Trigger event before we load templates
 		// Different apps will send on respective positions
 		$args	= array(&$this, &$task, $this->getName());		
-		$pluginResult = Rb_HelperPlugin::trigger('on'.$this->_component->getPrefixClass().'ViewBeforeRender',$args, '', $this);
+		$pluginResult = Rb_HelperJoomla::triggerPlugin('on'.$this->_component->getPrefixClass().'ViewBeforeRender',$args, '', $this);
 		$pluginResult = $this->_filterPluginResult($pluginResult);
 		
 		// now get html from different plugins and views
@@ -142,7 +142,7 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 
 		//post template rendering load trigger
 		$args	= array(&$this, &$task, $this->getName(), &$output);
-		$result =  Rb_HelperPlugin::trigger('on'.$this->_component->getPrefixClass().'ViewAfterRender', $args, '', $this);
+		$result =  Rb_HelperJoomla::triggerPlugin('on'.$this->_component->getPrefixClass().'ViewAfterRender', $args, '', $this);
 	
 		//render output
 		return $this->render($output, $this->_renderOptions);
@@ -240,7 +240,7 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 			return '';
 		}
 		
-		if(JRequest::getVar('tmpl')=='component'){
+		if(Rb_Factory::getApplication()->input->get('tmpl')=='component'){
 			return '';
 		}
 		
@@ -278,14 +278,14 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 	protected function _adminToolbarTitle($title=null, $image=null)
 	{
 		if($title === null){
-			$title = Rb_Text::_($this->_component->getPrefixText().'_SUBMENU_'.strtoupper($this->getName()));
+			$title = JText::_($this->_component->getPrefixText().'_SUBMENU_'.strtoupper($this->getName()));
 		}
 		
 		if($image === null){
 			$image = $this->_component->getNameSmall().'-'.$this->getName().'.png';
 		}
 		
-		Rb_HelperToolbar::title($title,	$image);
+		JToolBarHelper::title($title,	$image);
 	}
 
 	protected function _adminGridToolbar()
@@ -334,9 +334,10 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 	protected static $_subMenuRenderingDone = false;
 	public function _adminSubmenu($selMenu = 'dashboard')
 	{
-		$selMenu	= strtolower(JRequest::getVar('view',$selMenu));
+		$selMenu	= strtolower(Rb_Factory::getApplication()->input->get('view',$selMenu));
 
 		foreach(self::$_submenus as $menu){
+			//IMP :: JToolBarHelper class does not have _addSubMenu function
 			Rb_HelperToolbar::addSubMenu($menu, $selMenu, $this->_component->getNameCom());
 		}
 		return $this;
@@ -347,7 +348,7 @@ abstract class Rb_AbstractView extends Rb_AdaptView
 	{
 		//setup the action URL
 		$url 	= 'index.php?option='.$this->_component->getNameCom().'&view='.$this->getName();
-		$task	= JRequest::getVar('task', $task);
+		$task	= Rb_Factory::getApplication()->input->get('task', $task);
 		if($task){
 			$url .= '&task='.$task;
 		}
@@ -507,6 +508,11 @@ abstract class Rb_View extends Rb_AbstractView
 	protected $_validateActions = array('apply', 'save', 'save2new', 'savenew');
 	public function getDynamicJavaScript()
 	{
+		// no need to load these admin specific strings in frontend.
+		if(!Rb_Factory::getApplication()->isAdmin()){
+			return '';
+		}
+
 		// get valid actions for validation submission
 		$validActions = $this->_validateActions;
 		Rb_Error::assert(is_array($validActions));
@@ -562,8 +568,8 @@ abstract class Rb_View extends Rb_AbstractView
 		$heading = $textPrefix.'_ADMIN_BLANK_'.strtoupper($this->getName());
 		$message = $heading.'_MSG';
 		
-		$this->assign('heading', Rb_Text::_($heading));
-		$this->assign('msg', Rb_Text::_($message));
+		$this->assign('heading', JText::_($heading));
+		$this->assign('msg', JText::_($message));
 		$this->assign('filters', $model->getState($model->getContext()));
 		$this->setTpl('blank');
 		
