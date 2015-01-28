@@ -732,6 +732,16 @@ class Rb_EcommerceInvoice extends Rb_EcommerceLib
 		$counter = count($childinvoices) + 1 + 1 ;  // plus 1 is for master invoice and plus 1 for next counter
 
 		$invoice_data = $this->toArray();
+		// XITODO : generate child invoice serial number
+		$unset  = array('status','created_date','paid_date', 'due_date','issue_date', 'refund_date','serial');
+		
+		foreach ($unset as $value)
+		{
+			if (isset($invoice_data[$value])){
+				unset($invoice_data[$value]);
+			}
+		}
+		
 		$invoice_data['master_invoice_id'] = $this->getId();
 		$invoice_data['counter'] = $counter;
 		$new_invoice = Rb_EcommerceInvoice::getInstance();
