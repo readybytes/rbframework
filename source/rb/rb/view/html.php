@@ -56,11 +56,10 @@ class Rb_ViewHtml extends Rb_View
 		// we need to get it from the menu item itself
 		$params		= Rb_Factory::getApplication()->getParams();
 		$menu 	= Rb_Factory::getApplication()->getMenu()->getActive();
-
-		if($menu && $menu->title){
+		
+		$title	= $params->get('page_title', $app->getCfg('sitename'));
+		if(empty($title) && $menu && $menu->title){
 			$title = $menu->title ;
-		}else{
-			$title	= $params->get('page_title', $app->getCfg('sitename'));
 		}
 		
 		if ($params->get('menu-meta_description'))		{
