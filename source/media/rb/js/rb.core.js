@@ -180,13 +180,20 @@ rb.url = {
 		route	:	function(url)
 		{
 			// already a complete URL
-			if(url.indexOf('http://') === -1) {
+			if(url.indexOf(rb_vars['url']['base']) === -1) {
 					// is it already routed URL without http ?
 				  var base2_url_index = url.indexOf(rb_vars['url']['base_without_scheme']);
 				  // only add if, its not routed URL
-				  if(base2_url_index === -1 ){
-					  url = rb_vars['url']['base'] + url;
+				  if(base2_url_index > -1){
+					 url = url.replace(rb_vars['url']['base_without_scheme'], '');
 				  }
+				  
+				  var containsSlash = url.substr(0,1);
+				  if (containsSlash == '/') {
+					  url = url.substr(1);
+				  }
+				  
+				  url = rb_vars['url']['base'] + url;
 			}
 			
 			return url;
