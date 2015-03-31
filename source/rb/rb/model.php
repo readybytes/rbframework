@@ -613,10 +613,10 @@ abstract class Rb_Model extends Rb_AbstractModel
     	
     	while(!empty($cloneValue) && !empty($cloneOP)){
     		$op  = array_shift($cloneOP);
-    		$val = array_shift($cloneValue);
+    		$val = trim(array_shift($cloneValue));
 
 			// discard empty values
-    		if(!isset($val) || '' == trim($val))
+    		if(!isset($val) || '' == $val)
     			continue;
 
     		if(strtoupper($op) == 'LIKE'){
