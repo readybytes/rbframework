@@ -151,6 +151,16 @@ class Rb_EcommerceAPI
 	{
 		return self::transaction_get_model()->loadRecords($query_filters, $query_clean, $empty_record, $orderby);
 	} 
+	
+	public static function transaction_get_object_type_records($object_type)
+	{
+		return self::transaction_get_model()->getOjectTypeRecords($object_type);
+	}	
+
+	public static function transaction_get_object_type_record_count($object_type)
+	{
+		return self::transaction_get_model()->getOjectTypeRecordsCount($object_type);
+	}
 
 	public static function response_get_status_list()
 	{
