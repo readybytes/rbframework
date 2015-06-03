@@ -1287,7 +1287,7 @@ var Rb_FormValidator = function() {
  	 	// Iterate through the form object and attach the validate method to all input fields.
  	 	$(form).find('input, textarea, select, fieldset, button').each(function() {
  	 	 	var $el = $(this), id = $el.attr('id'), tagName = $el.prop("tagName").toLowerCase();
- 	 	 	if(!$el.is(':visible')){
+ 	 	 	if(!$el.is(':visible') && !$el.hasClass('validate-hidden')){
  	 	 		return true;
  	 	 	}
  	 	 	if ($el.hasClass('required')) {
@@ -1300,6 +1300,12 @@ var Rb_FormValidator = function() {
  	 	 	 	 	});
  	 	 	 	}
  	 	 	} else {
+				//in case of chosen
+ 	 	 		if($el.hasClass('validate-hidden')){
+ 	 	 			$el.on('change', function() {
+ 	 	 	 	 	 	return validate(this);
+ 	 	 	 	 	});
+ 	 	 		}
  	 	 	 	if (tagName !== 'fieldset') {
  	 	 	 	 	$el.on('blur', function() {
  	 	 	 	 	 	return validate(this);
