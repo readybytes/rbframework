@@ -32,5 +32,29 @@ define('RB_ECOMMERCE_EXPIRATION_TYPE_FIXED', 	'fixed');
 define('RB_ECOMMERCE_EXPIRATION_TYPE_FOREVER', 	'forever');
 define('RB_ECOMMERCE_EXPIRATION_TYPE_RECURRING','recurring');
 
+//version in current code
+$version = new JVersion();
+$major  = str_replace('.', '', $version->RELEASE);
+	
+$family  = '25';
+switch($major){			
+	case '16':
+	case '17':
+	case '25':
+	case '30':
+	case '31':
+	case '32':
+	case '33':
+
+		$family='33';
+		break;
+
+	case ($major > 33):
+		$family='35';
+		break;			
+	}
+
+define('RB_CMS_ECOM_ADAPTER', 		'j'.$family);
+
 // object to identify extension, create once, so same can be consumed by constructors
 Rb_Extension::getInstance(RB_ECOMMERCE_COMPONENT_NAME, array('prefix_css'=>'rb_ecommerce'));

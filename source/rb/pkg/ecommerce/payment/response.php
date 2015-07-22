@@ -11,46 +11,12 @@
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
-/** 
- * Response Base Class
- * @author Gaurav Jain
- */
-class Rb_EcommerceResponse extends Rb_Registry
-{	
-	const NONE              = '';
-	const PAYMENT_COMPLETE 	= 'payment_complete';
-	const PAYMENT_REFUND 	= 'payment_refund';
-	const PAYMENT_PENDING 	= 'payment_pending';
-	const PAYMENT_FAIL		= 'payment_fail';
-	
-	const SUBSCR_START		= 'subscr_start';
-	const SUBSCR_CANCEL		= 'subscr_cancel';
-	const SUBSCR_END		= 'subscr_end';
-	const SUBSCR_FAIL		= 'subscr_fail';
-	
-	const NOTIFICATION		= 'notification';
-	const FAIL				= 'fail';
-	
-	public function set($path, $value)
-	{
-		parent::set($path, $value);		
-		return $this;
-	}
-	
-    public static function getStatusList()
-	{
-		return array(
-		    self::NONE 				=> JText::_('PLG_SYSTEM_RBSL_ECOMMERCE_TANSACTION_STATUS_NONE'),
-			self::PAYMENT_COMPLETE 	=> JText::_('PLG_SYSTEM_RBSL_ECOMMERCE_TANSACTION_STATUS_PAYMENT_COMPLETE'),
-	        self::PAYMENT_REFUND	=> JText::_('PLG_SYSTEM_RBSL_ECOMMERCE_TANSACTION_STATUS_PAYMENT_REFUND'),
-			self::PAYMENT_PENDING	=> JText::_('PLG_SYSTEM_RBSL_ECOMMERCE_TANSACTION_STATUS_PAYMENT_PENDING'),
-			self::PAYMENT_FAIL 	    => JText::_('PLG_SYSTEM_RBSL_ECOMMERCE_TANSACTION_STATUS_PAYMENT_FAIL'),
-		    self::SUBSCR_START	    => JText::_('PLG_SYSTEM_RBSL_ECOMMERCE_TANSACTION_STATUS_SUBSCR_START'),
-			self::SUBSCR_CANCEL  	=> JText::_('PLG_SYSTEM_RBSL_ECOMMERCE_TANSACTION_STATUS_SUBSCR_CANCEL'),
-			self::SUBSCR_END 	    => JText::_('PLG_SYSTEM_RBSL_ECOMMERCE_TANSACTION_STATUS_SUBSCR_END'),
-		    self::SUBSCR_FAIL   	=> JText::_('PLG_SYSTEM_RBSL_ECOMMERCE_TANSACTION_STATUS_SUBSCR_FAIL'),
-			self::NOTIFICATION  	=> JText::_('PLG_SYSTEM_RBSL_ECOMMERCE_TANSACTION_STATUS_NOTIFICATION'),
-			self::FAIL    	        => JText::_('PLG_SYSTEM_RBSL_ECOMMERCE_TANSACTION_STATUS_FAIL')	
-		);
-	}	
+if(RB_CMS_ECOM_ADAPTER==='j33'){
+	class Rb_EcommerceResponse extends Rb_EcommerceAdaptJ33Response
+	{}
+}
+
+if(RB_CMS_ECOM_ADAPTER==='j35'){
+	class Rb_EcommerceResponse extends Rb_EcommerceAdaptJ35Response
+	{}
 }
