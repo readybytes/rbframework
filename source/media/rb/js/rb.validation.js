@@ -687,6 +687,7 @@
 					return {regex: regexFromString($this.data("validation" + name + "Regex"))};
 				},
 				validate: function ($this, value, validator) {
+					value = value.trim();
 					return (!validator.regex.test(value) && ! validator.negative)
 						|| (validator.regex.test(value) && validator.negative);
 				}
