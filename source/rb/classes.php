@@ -58,6 +58,8 @@
   'Rb_EcommerceProcessorManualpay' => 'pkg/ecommerce/processor/manualpay/manualpay.php',
   'Rb_EcommerceRequest' => 'pkg/ecommerce/payment/request.php',
   'Rb_EcommerceResponse' => 'pkg/ecommerce/payment/response.php',
+  'Rb_EcommerceAdaptJ33Response' => 'pkg/ecommerce/payment/adapt/j33/response.php',
+  'Rb_EcommerceAdaptJ35Response' => 'pkg/ecommerce/payment/adapt/j35/response.php',
   'Rb_EcommerceTable' => 'pkg/ecommerce/base/table.php',
   'Rb_EcommerceTableCountry' => 'pkg/ecommerce/tables/country.php',
   'Rb_EcommerceTableCurrency' => 'pkg/ecommerce/tables/currency.php',
