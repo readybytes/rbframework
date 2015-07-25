@@ -99,7 +99,7 @@ ENGINE = MyISAM
 DEFAULT CHARACTER SET = utf8 ; 
 
 INSERT IGNORE INTO `#__rb_ecommerce_currency` (`currency_id`, `title`, `published`, `params`, `symbol`) VALUES
-('ADP', 'Andorran Peseta', 1, NULL, NULL),
+('ADP', 'Andorran Peseta', 1, NULL, '₧'),
 ('AED', 'United Arab Emirates Dirham', 1, NULL, 'د.إ'),
 ('AFA', 'Afghanistan Afghani', 1, NULL, NULL),
 ('ALL', 'Albanian Lek', 1, NULL, 'L'),
@@ -124,7 +124,7 @@ INSERT IGNORE INTO `#__rb_ecommerce_currency` (`currency_id`, `title`, `publishe
 ('BZD', 'Belize Dollar', 1, NULL, '$'),
 ('CAD', 'Canadian Dollar', 1, NULL, '$'),
 ('CHF', 'Swiss Franc', 1, NULL, 'Fr'),
-('CLF', 'Chilean Unidades de Fomento', 1, NULL, NULL),
+('CLF', 'Chilean Unidades de Fomento', 1, NULL, 'UF'),
 ('CLP', 'Chilean Peso', 1, NULL, '$'),
 ('CNY', 'Yuan (Chinese) Renminbi', 1, NULL, '¥'),
 ('COP', 'Colombian Peso', 1, NULL, '$'),
@@ -132,11 +132,11 @@ INSERT IGNORE INTO `#__rb_ecommerce_currency` (`currency_id`, `title`, `publishe
 ('CZK', 'Czech Koruna', 1, NULL, 'Kč'),
 ('CUP', 'Cuban Peso', 1, NULL, '$'),
 ('CVE', 'Cape Verde Escudo', 1, NULL, '$, Es'),
-('CYP', 'Cyprus Pound', 1, NULL, NULL),
+('CYP', 'Cyprus Pound', 1, NULL, '£'),
 ('DKK', 'Danish Krone', 1, NULL, 'kr'),
 ('DOP', 'Dominican Peso', 1, NULL, '$'),
 ('DZD', 'Algerian Dinar', 1, NULL, 'د.ج'),
-('ECS', 'Ecuador Sucre', 1, NULL, NULL),
+('ECS', 'Ecuador Sucre', 1, NULL, 'S/.'),
 ('EGP', 'Egyptian Pound', 1, NULL, '£,ج.م'),
 ('ETB', 'Ethiopian Birr', 1, NULL, 'Br'),
 ('EUR', 'Euro', 1, NULL, '€'),
@@ -155,7 +155,7 @@ INSERT IGNORE INTO `#__rb_ecommerce_currency` (`currency_id`, `title`, `publishe
 ('HTG', 'Haitian Gourde', 1, NULL, 'G'),
 ('HUF', 'Hungarian Forint', 1, NULL, 'Ft'),
 ('IDR', 'Indonesian Rupiah', 1, NULL, 'Rp'),
-('IEP', 'Irish Punt', 1, NULL, NULL),
+('IEP', 'Irish Punt', 1, NULL, '£'),
 ('ILS', 'Israeli Shekel', 1, NULL, '₪'),
 ('INR', 'Indian Rupee', 1, NULL, '₨'),
 ('IQD', 'Iraqi Dinar', 1, NULL, 'ع.د'),
@@ -181,11 +181,11 @@ INSERT IGNORE INTO `#__rb_ecommerce_currency` (`currency_id`, `title`, `publishe
 ('MNT', 'Mongolian Tugrik', 1, NULL, '₮'),
 ('MOP', 'Macau Pataca', 1, NULL, 'P'),
 ('MRO', 'Mauritanian Ouguiya', 1, NULL, 'UM'),
-('MTL', 'Maltese Lira', 1, NULL, NULL),
+('MTL', 'Maltese Lira', 1, NULL, '₤'),
 ('MUR', 'Mauritius Rupee', 1, NULL, '₨'),
 ('MVR', 'Maldive Rufiyaa', 1, NULL, 'ރ.'),
 ('MWK', 'Malawi Kwacha', 1, NULL, 'MK'),
-('MXN', 'Mexican Peso', 1, NULL, NULL),
+('MXN', 'Mexican Peso', 1, NULL, '$'),
 ('MYR', 'Malaysian Ringgit', 1, NULL, 'RM'),
 ('MZM', 'Mozambique Metical', 1, NULL, NULL),
 ('NGN', 'Nigerian Naira', 1, NULL, '₦'),
@@ -216,7 +216,7 @@ INSERT IGNORE INTO `#__rb_ecommerce_currency` (`currency_id`, `title`, `publishe
 ('SRG', 'Suriname Guilder', 1, NULL, NULL),
 ('STD', 'Sao Tome and Principe Dobra', 1, NULL, 'Db'),
 ('RUB', 'Russian Ruble', 1, NULL, 'р.'),
-('SVC', 'El Salvador Colon', 1, NULL, NULL),
+('SVC', 'El Salvador Colon', 1, NULL, '₡'),
 ('SYP', 'Syrian Potmd', 1, NULL, '£, ل.'),
 ('SZL', 'Swaziland Lilangeni', 1, NULL, 'L'),
 ('THB', 'Thai Bath', 1, NULL, '฿'),
@@ -240,12 +240,11 @@ INSERT IGNORE INTO `#__rb_ecommerce_currency` (`currency_id`, `title`, `publishe
 ('ZAR', 'South African Rand', 1, NULL, 'R'),
 ('ZMK', 'Zambian Kwacha', 1, NULL, 'ZK'),
 ('ZRZ', 'Zaire Zaire', 1, NULL, NULL),
-('ZWD', 'Zimbabwe Dollar', 1, NULL, NULL),
+('ZWD', 'Zimbabwe Dollar', 1, NULL, '$'),
 ('HRK', 'Croatian kuna' , 1, NULL, 'Kn'),
 ('LTL', 'Lithuanian litas', '1', NULL , 'Lt'), 
 ('LVL', 'Latvian lats', '1', NULL , 'Ls'),
-('SKK', 'Slovak Koruna', 1, NULL, NULL);
-
+('SKK', 'Slovak Koruna', 1, NULL, 'Sk');
 
 INSERT IGNORE INTO `#__rb_ecommerce_country` 
 (`country_id` , `title` , `isocode3`, `isocode2`)
