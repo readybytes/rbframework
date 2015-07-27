@@ -34,6 +34,7 @@
   'Rb_EcommerceFactory' => 'pkg/ecommerce/base/factory.php',
   'Rb_EcommerceFormFieldCountries' => 'pkg/ecommerce/html/fields/countries.php',
   'Rb_EcommerceFormFieldCurrencies' => 'pkg/ecommerce/html/fields/currencies.php',
+  'Rb_EcommerceHtmlCountries' => 'pkg/ecommerce/html/html/countries.php',
   'Rb_EcommerceHelper' => 'pkg/ecommerce/base/helper.php',
   'Rb_EcommerceHelperInvoice' => 'pkg/ecommerce/helpers/invoice.php',
   'Rb_EcommerceHelperModifier' => 'pkg/ecommerce/helpers/modifier.php',
