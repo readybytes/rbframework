@@ -445,7 +445,7 @@ class Rb_EcommerceInvoice extends Rb_EcommerceLib
 		return $payment_data;
 	}
 	
-	private function __requestGetUserData()
+	private function __requestGetUserData($data)
 	{
 		// set user data also
 		$userid 			 	= $this->getBuyer();
@@ -456,6 +456,33 @@ class Rb_EcommerceInvoice extends Rb_EcommerceLib
 		$user_data->username 	= $user->get('username');
 		$user_data->email 	 	= $user->get('email');
 		$user_data->ip_address 	= isset($_SERVER['REMOTE_ADDR'])?$_SERVER['REMOTE_ADDR'] : '';
+		$user_data->billing_address = new stdClass();
+		$user_data->shipping_address = new stdClass();
+		
+		if(isset($data->billing_address)){
+			$user_data->billing_address->to  = $data->billing_address['to'];
+			$user_data->billing_address->phone_number  = $data->billing_address['phone_number'];
+			$user_data->billing_address->address  = $data->billing_address['address'];
+			$user_data->billing_address->zipcode  = $data->billing_address['zipcode'];
+			$user_data->billing_address->state  = $data->billing_address['state'];
+			$user_data->billing_address->country->isocode2  = $data->billing_address['country']['isocode2'];
+			$user_data->billing_address->country->isocode3  = $data->billing_address['country']['isocode3'];
+			$user_data->billing_address->city  = $data->billing_address['city'];
+			$user_data->billing_address->vat_number  = $data->billing_address['vat_number'];
+			
+		}
+		
+		if(isset($data->shipping_address)){
+				$user_data->shipping_address->to  = $data->shipping_address['to'];
+				$user_data->shipping_address->phone_number  = $data->shipping_address['phone_number'];
+				$user_data->shipping_address->address  = $data->shipping_address['address'];
+				$user_data->shipping_address->zipcode  = $data->shipping_address['zipcode'];
+				$user_data->shipping_address->state  = $data->shipping_address['state'];
+				$user_data->shipping_address->country->isocode2  = $data->shipping_address['country']['isocode2'];
+				$user_data->shipping_address->country->isocode3  = $data->shipping_address['country']['isocode3'];
+				$user_data->shipping_address->city  = $data->shipping_address['city'];
+				$user_data->shipping_address->vat_number  = $data->shipping_address['vat_number'];
+		}
 
 		return $user_data;
 	}
@@ -478,7 +505,7 @@ class Rb_EcommerceInvoice extends Rb_EcommerceLib
 		$request->set('type', 'build');		
 		// call on newly created invoice [optional]
 		$request->set('payment_data', $this->__requestGetPaymentData());
-		$request->set('user_data', $this->__requestGetUserData());		
+		$request->set('user_data', $this->__requestGetUserData($data));		
 		$request->set('url_data', $this->__requestGetUrl($data));
 		$request->set('post_data', (object)$data);
 		$request->set('processor_data', $this->getProcessorData());
@@ -501,7 +528,7 @@ class Rb_EcommerceInvoice extends Rb_EcommerceLib
 		$request->set('type', 'payment');		
 		// call on newly created invoice [optional]
 		$request->set('payment_data', $invoice->__requestGetPaymentData());
-		$request->set('user_data', $this->__requestGetUserData());		
+		$request->set('user_data', $this->__requestGetUserData($data));		
 		$request->set('url_data', $this->__requestGetUrl($data));
 		$request->set('post_data', (object)$data);
 		$request->set('processor_data', $this->getProcessorData());	
@@ -522,7 +549,7 @@ class Rb_EcommerceInvoice extends Rb_EcommerceLib
 		$request = new Rb_EcommerceRequest();
 		$request->set('type', 'cancel');
 		// call on newly created invoice [optional]		
-		$request->set('user_data', $this->__requestGetUserData());		
+		$request->set('user_data', $this->__requestGetUserData($data));		
 		$request->set('url_data', $this->__requestGetUrl($data));
 		$request->set('post_data', (object)$data);
 		$request->set('processor_data', $this->getProcessorData());	
@@ -541,7 +568,7 @@ class Rb_EcommerceInvoice extends Rb_EcommerceLib
 		$request = new Rb_EcommerceRequest();
 		$request->set('type', 'refund');		
 		$request->set('payment_data', $this->__requestGetPaymentData());		
-		$request->set('user_data', $this->__requestGetUserData());		
+		$request->set('user_data', $this->__requestGetUserData($data));		
 		$request->set('url_data', $this->__requestGetUrl($data));
 		$request->set('post_data', (object)$data);
 		$request->set('processor_data', $this->getProcessorData());	
