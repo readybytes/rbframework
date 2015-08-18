@@ -688,7 +688,7 @@ abstract class Rb_Controller extends Rb_AbstractController
 	}
 	
 
-	public function _copy()
+	public function _copy($itemId)
 	{
 		$this->setError('IMPLEMENT_COPY_FUNCTION');
 		return false;
