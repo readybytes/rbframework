@@ -25,4 +25,20 @@ class Rb_EcommerceHtmlCountries
 		return Rb_Html::_('select.genericlist', $available_countries, $name, $attr, $valueFieldName, 'title', $value, $idtag);
 	}
 	
+	static function filter($name, $view, Array $filters = array(), $prefix)
+	{
+		$elementName  = $prefix.'_'.$view.'_'.$name;
+		$elementValue = @array_shift($filters[$name]);
+		
+		$options    = array();
+		$options[0] = array('title'=>JText::_('Select Country'), 'value'=>'');
+		$countries  = Rb_EcommerceFactory::getInstance('country', 'Model', 'Rb_Ecommerce')
+											->loadRecords();
+		
+		foreach ($countries as $key => $country){			
+			$options[$key] = array('title' => $country->title, 'value' => $key);
+		}
+		
+		return JHtml::_('select.genericlist', $options, $elementName.'[]', 'onchange="document.adminForm.submit();"', 'value', 'title', $elementValue);
+	}
 }
